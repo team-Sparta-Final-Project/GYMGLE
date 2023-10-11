@@ -13,8 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        // Do any additional setup after loading the view.
-        print("테스트 - s")
+        print("테스트 - 뷰디드로드")
     }
 
 
