@@ -14,6 +14,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         print("테스트 - 뷰디드로드")
+        print("a")
     }
 
 
