@@ -1,0 +1,487 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBB72AD6668200BFA23C /* AppDelegate.swift */; };
+		2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBB92AD6668200BFA23C /* SceneDelegate.swift */; };
+		2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBBB2AD6668200BFA23C /* ViewController.swift */; };
+		2730BBC22AD6668200BFA23C /* GYMGLE.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBC02AD6668200BFA23C /* GYMGLE.xcdatamodeld */; };
+		2730BBC42AD6668400BFA23C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2730BBC32AD6668400BFA23C /* Assets.xcassets */; };
+		2730BBC72AD6668400BFA23C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2730BBC52AD6668400BFA23C /* LaunchScreen.storyboard */; };
+		2730BBD32AD6684D00BFA23C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2730BBD22AD6684D00BFA23C /* GoogleService-Info.plist */; };
+		2730BBE82AD66F0000BFA23C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBE72AD66F0000BFA23C /* SnapKit */; };
+		2730BBEB2AD6B13500BFA23C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBEA2AD6B13500BFA23C /* FirebaseAnalytics */; };
+		2730BBED2AD6B13500BFA23C /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBEC2AD6B13500BFA23C /* FirebaseDatabase */; };
+		2730BBEF2AD6B13500BFA23C /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBEE2AD6B13500BFA23C /* FirebaseDatabaseSwift */; };
+		2730BBF12AD6B13500BFA23C /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBF02AD6B13500BFA23C /* FirebaseMessaging */; };
+		2730BBF42AD6B9DC00BFA23C /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBF32AD6B9DC00BFA23C /* QRCode */; };
+		2730BBF72AD6BA0200BFA23C /* QRCodeReader in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBF62AD6BA0200BFA23C /* QRCodeReader */; };
+		2730BBFA2AD6BA1600BFA23C /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBF92AD6BA1600BFA23C /* Then */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2730BBB42AD6668200BFA23C /* GYMGLE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GYMGLE.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2730BBB72AD6668200BFA23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2730BBB92AD6668200BFA23C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		2730BBBB2AD6668200BFA23C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2730BBC12AD6668200BFA23C /* GYMGLE.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GYMGLE.xcdatamodel; sourceTree = "<group>"; };
+		2730BBC32AD6668400BFA23C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2730BBC62AD6668400BFA23C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2730BBC82AD6668400BFA23C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2730BBD22AD6684D00BFA23C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2730BBB12AD6668200BFA23C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2730BBEF2AD6B13500BFA23C /* FirebaseDatabaseSwift in Frameworks */,
+				2730BBED2AD6B13500BFA23C /* FirebaseDatabase in Frameworks */,
+				2730BBF42AD6B9DC00BFA23C /* QRCode in Frameworks */,
+				2730BBFA2AD6BA1600BFA23C /* Then in Frameworks */,
+				2730BBF12AD6B13500BFA23C /* FirebaseMessaging in Frameworks */,
+				2730BBEB2AD6B13500BFA23C /* FirebaseAnalytics in Frameworks */,
+				2730BBF72AD6BA0200BFA23C /* QRCodeReader in Frameworks */,
+				2730BBE82AD66F0000BFA23C /* SnapKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2730BBAB2AD6668200BFA23C = {
+			isa = PBXGroup;
+			children = (
+				2730BBB62AD6668200BFA23C /* GYMGLE */,
+				2730BBB52AD6668200BFA23C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2730BBB52AD6668200BFA23C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2730BBB42AD6668200BFA23C /* GYMGLE.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2730BBB62AD6668200BFA23C /* GYMGLE */ = {
+			isa = PBXGroup;
+			children = (
+				2730BBB72AD6668200BFA23C /* AppDelegate.swift */,
+				2730BBB92AD6668200BFA23C /* SceneDelegate.swift */,
+				2730BBBB2AD6668200BFA23C /* ViewController.swift */,
+				2730BBC32AD6668400BFA23C /* Assets.xcassets */,
+				2730BBC52AD6668400BFA23C /* LaunchScreen.storyboard */,
+				2730BBC82AD6668400BFA23C /* Info.plist */,
+				2730BBD22AD6684D00BFA23C /* GoogleService-Info.plist */,
+				2730BBC02AD6668200BFA23C /* GYMGLE.xcdatamodeld */,
+			);
+			path = GYMGLE;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2730BBB32AD6668200BFA23C /* GYMGLE */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2730BBCB2AD6668400BFA23C /* Build configuration list for PBXNativeTarget "GYMGLE" */;
+			buildPhases = (
+				2730BBB02AD6668200BFA23C /* Sources */,
+				2730BBB12AD6668200BFA23C /* Frameworks */,
+				2730BBB22AD6668200BFA23C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GYMGLE;
+			packageProductDependencies = (
+				2730BBE72AD66F0000BFA23C /* SnapKit */,
+				2730BBEA2AD6B13500BFA23C /* FirebaseAnalytics */,
+				2730BBEC2AD6B13500BFA23C /* FirebaseDatabase */,
+				2730BBEE2AD6B13500BFA23C /* FirebaseDatabaseSwift */,
+				2730BBF02AD6B13500BFA23C /* FirebaseMessaging */,
+				2730BBF32AD6B9DC00BFA23C /* QRCode */,
+				2730BBF62AD6BA0200BFA23C /* QRCodeReader */,
+				2730BBF92AD6BA1600BFA23C /* Then */,
+			);
+			productName = GYMGLE;
+			productReference = 2730BBB42AD6668200BFA23C /* GYMGLE.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2730BBAC2AD6668200BFA23C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					2730BBB32AD6668200BFA23C = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 2730BBAF2AD6668200BFA23C /* Build configuration list for PBXProject "GYMGLE" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2730BBAB2AD6668200BFA23C;
+			packageReferences = (
+				2730BBE62AD66EFF00BFA23C /* XCRemoteSwiftPackageReference "SnapKit" */,
+				2730BBE92AD6B13500BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				2730BBF22AD6B9DC00BFA23C /* XCRemoteSwiftPackageReference "QRCode" */,
+				2730BBF52AD6BA0200BFA23C /* XCRemoteSwiftPackageReference "QRCodeReader.swift" */,
+				2730BBF82AD6BA1600BFA23C /* XCRemoteSwiftPackageReference "Then" */,
+			);
+			productRefGroup = 2730BBB52AD6668200BFA23C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2730BBB32AD6668200BFA23C /* GYMGLE */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2730BBB22AD6668200BFA23C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2730BBC72AD6668400BFA23C /* LaunchScreen.storyboard in Resources */,
+				2730BBD32AD6684D00BFA23C /* GoogleService-Info.plist in Resources */,
+				2730BBC42AD6668400BFA23C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2730BBB02AD6668200BFA23C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2730BBC22AD6668200BFA23C /* GYMGLE.xcdatamodeld in Sources */,
+				2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */,
+				2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */,
+				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		2730BBC52AD6668400BFA23C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2730BBC62AD6668400BFA23C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2730BBC92AD6668400BFA23C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2730BBCA2AD6668400BFA23C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2730BBCC2AD6668400BFA23C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GYMGLE/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "DoubleK-JP-Management.GYMGLE";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2730BBCD2AD6668400BFA23C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GYMGLE/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "DoubleK-JP-Management.GYMGLE";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2730BBAF2AD6668200BFA23C /* Build configuration list for PBXProject "GYMGLE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2730BBC92AD6668400BFA23C /* Debug */,
+				2730BBCA2AD6668400BFA23C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2730BBCB2AD6668400BFA23C /* Build configuration list for PBXNativeTarget "GYMGLE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2730BBCC2AD6668400BFA23C /* Debug */,
+				2730BBCD2AD6668400BFA23C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2730BBE62AD66EFF00BFA23C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		2730BBE92AD6B13500BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+		2730BBF22AD6B9DC00BFA23C /* XCRemoteSwiftPackageReference "QRCode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmrschmidt/QRCode.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		2730BBF52AD6BA0200BFA23C /* XCRemoteSwiftPackageReference "QRCodeReader.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yannickl/QRCodeReader.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+		2730BBF82AD6BA1600BFA23C /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2730BBE72AD66F0000BFA23C /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BBE62AD66EFF00BFA23C /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		2730BBEA2AD6B13500BFA23C /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BBE92AD6B13500BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		2730BBEC2AD6B13500BFA23C /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BBE92AD6B13500BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		2730BBEE2AD6B13500BFA23C /* FirebaseDatabaseSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BBE92AD6B13500BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabaseSwift;
+		};
+		2730BBF02AD6B13500BFA23C /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BBE92AD6B13500BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		2730BBF32AD6B9DC00BFA23C /* QRCode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BBF22AD6B9DC00BFA23C /* XCRemoteSwiftPackageReference "QRCode" */;
+			productName = QRCode;
+		};
+		2730BBF62AD6BA0200BFA23C /* QRCodeReader */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BBF52AD6BA0200BFA23C /* XCRemoteSwiftPackageReference "QRCodeReader.swift" */;
+			productName = QRCodeReader;
+		};
+		2730BBF92AD6BA1600BFA23C /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BBF82AD6BA1600BFA23C /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		2730BBC02AD6668200BFA23C /* GYMGLE.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2730BBC12AD6668200BFA23C /* GYMGLE.xcdatamodel */,
+			);
+			currentVersion = 2730BBC12AD6668200BFA23C /* GYMGLE.xcdatamodel */;
+			path = GYMGLE.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 2730BBAC2AD6668200BFA23C /* Project object */;
+}
