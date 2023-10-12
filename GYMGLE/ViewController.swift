@@ -19,13 +19,13 @@ class ViewController: UIViewController {
         
         //MARK: - 암호화 (CryptoKit 이용)
         let str = "hello World"
-        let data = Data(str.utf8) // 인코딩? 타입을 데이터타입으로 변환
-//        let digest = SHA256.hash(data: data)
-//        let hash = digest.compactMap { String(format: "%02x", $0)}.joined()
+        let data = Data(str.utf8)
+        let digest = SHA256.hash(data: data)
+        let hash = digest.compactMap { String(format: "%02x", $0)}.joined()
         
         let key = SymmetricKey(size: .bits256)
-//        let message = str.data(using: .utf8)!
-        let sealed = try! AES.GCM.seal(data, using: key) // 비밀번호 저장 -> 서버에 전송하면 될것같음
+        let message = str.data(using: .utf8)!
+        let sealed = try! AES.GCM.seal(data, using: key)
                 
         let decryptedData = try? AES.GCM.open(sealed, using: key)
         print(String(data: decryptedData ?? Data(), encoding: .utf8) ?? "")
