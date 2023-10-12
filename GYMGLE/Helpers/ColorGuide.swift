@@ -28,4 +28,3 @@ public enum ColorGuide {
     static let notice = UIColor(red: 0.07, green: 0.09, blue: 0.14, alpha: 1.00) //유저 게시판
     static let userBackGround = UIColor(red: 0.01, green: 0.04, blue: 0.10, alpha: 1.00) // 유저 배경색
 }
-
