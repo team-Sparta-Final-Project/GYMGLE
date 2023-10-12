@@ -19,29 +19,30 @@ class ViewController: UIViewController {
         
         //MARK: - 암호화 (CryptoKit 이용)
         let str = "hello World"
-        let data = Data(str.utf8)
-        let digest = SHA256.hash(data: data)
-        let hash = digest.compactMap { String(format: "%02x", $0)}.joined()
+        let data = Data(str.utf8) // 인코딩? 타입을 데이터타입으로 변환
+//        let digest = SHA256.hash(data: data)
+//        let hash = digest.compactMap { String(format: "%02x", $0)}.joined()
         
         let key = SymmetricKey(size: .bits256)
-        let message = str.data(using: .utf8)!
-        let sealed = try! AES.GCM.seal(message, using: key)
-        
+//        let message = str.data(using: .utf8)!
+        let sealed = try! AES.GCM.seal(data, using: key) // 비밀번호 저장 -> 서버에 전송하면 될것같음
+                
         let decryptedData = try? AES.GCM.open(sealed, using: key)
         print(String(data: decryptedData ?? Data(), encoding: .utf8) ?? "")
         
         //MARK: - FireBase 테스트
-        fireBaseTest(title: "제목", name: "공성표", string: "아무내용") // 등록 테스트 코드
+//        fireBaseTest(title: "배열저장가능?", name: ["배열1","배열2"], string: "테스트") // 등록 테스트 코드
+//
+//        fireBaseReadTest("배열저장가능?") // read 테스트 코드
         
-        fireBaseReadTest("제목") // read 테스트 코드
-        
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) { // 그냥 3초 후에 배경색 빨강으로 바꾸는 코드
-            self.view.backgroundColor = .red
-        }
     }
     
-    private func fireBaseTest(title:String,name:String,string:String){
+
+}
+
+//MARK: - 파이어베이스 관련 익스텐션
+extension ViewController {
+    private func fireBaseTest(title:String,name:[String],string:String){
         let object: [String:Any] = ["이름":name as NSObject, "그냥 스트링":string]
         database.child(title).setValue(object)
         
@@ -52,9 +53,6 @@ class ViewController: UIViewController {
             guard let value = snapshot.value as? [String:Any] else { return }
             print("테스트 - \(value)")
         })
-
     }
-    
-    
 }
 

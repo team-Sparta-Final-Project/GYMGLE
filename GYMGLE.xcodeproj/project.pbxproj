@@ -22,6 +22,8 @@
 		2730BC172AD77C7F00BFA23C /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BC162AD77C7F00BFA23C /* FirebaseDatabase */; };
 		2730BC192AD77C7F00BFA23C /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BC182AD77C7F00BFA23C /* FirebaseDatabaseSwift */; };
 		2730BC1B2AD77C7F00BFA23C /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BC1A2AD77C7F00BFA23C /* FirebaseMessaging */; };
+		2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC342AD8065900BFA23C /* InitialViewController.swift */; };
+		2730BC372AD806AA00BFA23C /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC362AD806AA00BFA23C /* View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,8 @@
 		2730BBC62AD6668400BFA23C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2730BBC82AD6668400BFA23C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2730BBFE2AD77AC500BFA23C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2730BC342AD8065900BFA23C /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		2730BC362AD806AA00BFA23C /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +81,142 @@
 				2730BBB72AD6668200BFA23C /* AppDelegate.swift */,
 				2730BBB92AD6668200BFA23C /* SceneDelegate.swift */,
 				2730BBBB2AD6668200BFA23C /* ViewController.swift */,
-				2730BBC32AD6668400BFA23C /* Assets.xcassets */,
+				2730BC242AD7E6FB00BFA23C /* Model */,
+				2730BC2A2AD7FE3B00BFA23C /* Pages */,
 				2730BBC52AD6668400BFA23C /* LaunchScreen.storyboard */,
+				2730BBC32AD6668400BFA23C /* Assets.xcassets */,
 				2730BBC82AD6668400BFA23C /* Info.plist */,
 				2730BBFE2AD77AC500BFA23C /* GoogleService-Info.plist */,
 			);
 			path = GYMGLE;
+			sourceTree = "<group>";
+		};
+		2730BC242AD7E6FB00BFA23C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2730BC2A2AD7FE3B00BFA23C /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				2730BC402AD8105E00BFA23C /* User */,
+				2730BC3F2AD8105900BFA23C /* Admin */,
+				2730BC2D2AD801D700BFA23C /* InitialViewPage */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		2730BC2D2AD801D700BFA23C /* InitialViewPage */ = {
+			isa = PBXGroup;
+			children = (
+				2730BC322AD8055100BFA23C /* ViewController */,
+				2730BC312AD8054B00BFA23C /* View */,
+			);
+			path = InitialViewPage;
+			sourceTree = "<group>";
+		};
+		2730BC2E2AD801E100BFA23C /* AdminLoginPage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AdminLoginPage;
+			sourceTree = "<group>";
+		};
+		2730BC312AD8054B00BFA23C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2730BC362AD806AA00BFA23C /* View.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2730BC322AD8055100BFA23C /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2730BC342AD8065900BFA23C /* InitialViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		2730BC332AD8060300BFA23C /* AdminRegisterPage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AdminRegisterPage;
+			sourceTree = "<group>";
+		};
+		2730BC382AD8083B00BFA23C /* AdminRootPage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AdminRootPage;
+			sourceTree = "<group>";
+		};
+		2730BC392AD8084600BFA23C /* UserRootPage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UserRootPage;
+			sourceTree = "<group>";
+		};
+		2730BC3A2AD809C400BFA23C /* UserRegisterPage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UserRegisterPage;
+			sourceTree = "<group>";
+		};
+		2730BC3B2AD80B3E00BFA23C /* UserManagePage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UserManagePage;
+			sourceTree = "<group>";
+		};
+		2730BC3D2AD8102400BFA23C /* AdminNoticePage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AdminNoticePage;
+			sourceTree = "<group>";
+		};
+		2730BC3E2AD8103100BFA23C /* QRcodeCheckPage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = QRcodeCheckPage;
+			sourceTree = "<group>";
+		};
+		2730BC3F2AD8105900BFA23C /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				2730BC412AD8109100BFA23C /* AdminNoticeDetailPage */,
+				2730BC3D2AD8102400BFA23C /* AdminNoticePage */,
+				2730BC382AD8083B00BFA23C /* AdminRootPage */,
+				2730BC332AD8060300BFA23C /* AdminRegisterPage */,
+				2730BC2E2AD801E100BFA23C /* AdminLoginPage */,
+				2730BC3E2AD8103100BFA23C /* QRcodeCheckPage */,
+			);
+			path = Admin;
+			sourceTree = "<group>";
+		};
+		2730BC402AD8105E00BFA23C /* User */ = {
+			isa = PBXGroup;
+			children = (
+				2730BC3B2AD80B3E00BFA23C /* UserManagePage */,
+				2730BC3A2AD809C400BFA23C /* UserRegisterPage */,
+				2730BC392AD8084600BFA23C /* UserRootPage */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		2730BC412AD8109100BFA23C /* AdminNoticeDetailPage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AdminNoticeDetailPage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,6 +310,8 @@
 			files = (
 				2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */,
 				2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */,
+				2730BC372AD806AA00BFA23C /* View.swift in Sources */,
+				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,7 +380,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -298,7 +434,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
