@@ -10,18 +10,18 @@
 		2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBB72AD6668200BFA23C /* AppDelegate.swift */; };
 		2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBB92AD6668200BFA23C /* SceneDelegate.swift */; };
 		2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBBB2AD6668200BFA23C /* ViewController.swift */; };
-		2730BBC22AD6668200BFA23C /* GYMGLE.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBC02AD6668200BFA23C /* GYMGLE.xcdatamodeld */; };
 		2730BBC42AD6668400BFA23C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2730BBC32AD6668400BFA23C /* Assets.xcassets */; };
 		2730BBC72AD6668400BFA23C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2730BBC52AD6668400BFA23C /* LaunchScreen.storyboard */; };
-		2730BBD32AD6684D00BFA23C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2730BBD22AD6684D00BFA23C /* GoogleService-Info.plist */; };
 		2730BBE82AD66F0000BFA23C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBE72AD66F0000BFA23C /* SnapKit */; };
-		2730BBEB2AD6B13500BFA23C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBEA2AD6B13500BFA23C /* FirebaseAnalytics */; };
-		2730BBED2AD6B13500BFA23C /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBEC2AD6B13500BFA23C /* FirebaseDatabase */; };
-		2730BBEF2AD6B13500BFA23C /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBEE2AD6B13500BFA23C /* FirebaseDatabaseSwift */; };
-		2730BBF12AD6B13500BFA23C /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBF02AD6B13500BFA23C /* FirebaseMessaging */; };
 		2730BBF42AD6B9DC00BFA23C /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBF32AD6B9DC00BFA23C /* QRCode */; };
 		2730BBF72AD6BA0200BFA23C /* QRCodeReader in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBF62AD6BA0200BFA23C /* QRCodeReader */; };
 		2730BBFA2AD6BA1600BFA23C /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BBF92AD6BA1600BFA23C /* Then */; };
+		2730BBFF2AD77AC500BFA23C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2730BBFE2AD77AC500BFA23C /* GoogleService-Info.plist */; };
+		2730BC132AD77C7F00BFA23C /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BC122AD77C7F00BFA23C /* FirebaseAnalytics */; };
+		2730BC152AD77C7F00BFA23C /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BC142AD77C7F00BFA23C /* FirebaseAnalyticsSwift */; };
+		2730BC172AD77C7F00BFA23C /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BC162AD77C7F00BFA23C /* FirebaseDatabase */; };
+		2730BC192AD77C7F00BFA23C /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BC182AD77C7F00BFA23C /* FirebaseDatabaseSwift */; };
+		2730BC1B2AD77C7F00BFA23C /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BC1A2AD77C7F00BFA23C /* FirebaseMessaging */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,11 +29,10 @@
 		2730BBB72AD6668200BFA23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2730BBB92AD6668200BFA23C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		2730BBBB2AD6668200BFA23C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		2730BBC12AD6668200BFA23C /* GYMGLE.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GYMGLE.xcdatamodel; sourceTree = "<group>"; };
 		2730BBC32AD6668400BFA23C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2730BBC62AD6668400BFA23C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2730BBC82AD6668400BFA23C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2730BBD22AD6684D00BFA23C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2730BBFE2AD77AC500BFA23C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,13 +40,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2730BBEF2AD6B13500BFA23C /* FirebaseDatabaseSwift in Frameworks */,
-				2730BBED2AD6B13500BFA23C /* FirebaseDatabase in Frameworks */,
+				2730BC1B2AD77C7F00BFA23C /* FirebaseMessaging in Frameworks */,
+				2730BC192AD77C7F00BFA23C /* FirebaseDatabaseSwift in Frameworks */,
+				2730BC152AD77C7F00BFA23C /* FirebaseAnalyticsSwift in Frameworks */,
 				2730BBF42AD6B9DC00BFA23C /* QRCode in Frameworks */,
 				2730BBFA2AD6BA1600BFA23C /* Then in Frameworks */,
-				2730BBF12AD6B13500BFA23C /* FirebaseMessaging in Frameworks */,
-				2730BBEB2AD6B13500BFA23C /* FirebaseAnalytics in Frameworks */,
 				2730BBF72AD6BA0200BFA23C /* QRCodeReader in Frameworks */,
+				2730BC132AD77C7F00BFA23C /* FirebaseAnalytics in Frameworks */,
+				2730BC172AD77C7F00BFA23C /* FirebaseDatabase in Frameworks */,
 				2730BBE82AD66F0000BFA23C /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,8 +80,7 @@
 				2730BBC32AD6668400BFA23C /* Assets.xcassets */,
 				2730BBC52AD6668400BFA23C /* LaunchScreen.storyboard */,
 				2730BBC82AD6668400BFA23C /* Info.plist */,
-				2730BBD22AD6684D00BFA23C /* GoogleService-Info.plist */,
-				2730BBC02AD6668200BFA23C /* GYMGLE.xcdatamodeld */,
+				2730BBFE2AD77AC500BFA23C /* GoogleService-Info.plist */,
 			);
 			path = GYMGLE;
 			sourceTree = "<group>";
@@ -104,13 +103,14 @@
 			name = GYMGLE;
 			packageProductDependencies = (
 				2730BBE72AD66F0000BFA23C /* SnapKit */,
-				2730BBEA2AD6B13500BFA23C /* FirebaseAnalytics */,
-				2730BBEC2AD6B13500BFA23C /* FirebaseDatabase */,
-				2730BBEE2AD6B13500BFA23C /* FirebaseDatabaseSwift */,
-				2730BBF02AD6B13500BFA23C /* FirebaseMessaging */,
 				2730BBF32AD6B9DC00BFA23C /* QRCode */,
 				2730BBF62AD6BA0200BFA23C /* QRCodeReader */,
 				2730BBF92AD6BA1600BFA23C /* Then */,
+				2730BC122AD77C7F00BFA23C /* FirebaseAnalytics */,
+				2730BC142AD77C7F00BFA23C /* FirebaseAnalyticsSwift */,
+				2730BC162AD77C7F00BFA23C /* FirebaseDatabase */,
+				2730BC182AD77C7F00BFA23C /* FirebaseDatabaseSwift */,
+				2730BC1A2AD77C7F00BFA23C /* FirebaseMessaging */,
 			);
 			productName = GYMGLE;
 			productReference = 2730BBB42AD6668200BFA23C /* GYMGLE.app */;
@@ -142,10 +142,10 @@
 			mainGroup = 2730BBAB2AD6668200BFA23C;
 			packageReferences = (
 				2730BBE62AD66EFF00BFA23C /* XCRemoteSwiftPackageReference "SnapKit" */,
-				2730BBE92AD6B13500BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				2730BBF22AD6B9DC00BFA23C /* XCRemoteSwiftPackageReference "QRCode" */,
 				2730BBF52AD6BA0200BFA23C /* XCRemoteSwiftPackageReference "QRCodeReader.swift" */,
 				2730BBF82AD6BA1600BFA23C /* XCRemoteSwiftPackageReference "Then" */,
+				2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 2730BBB52AD6668200BFA23C /* Products */;
 			projectDirPath = "";
@@ -162,8 +162,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2730BBC72AD6668400BFA23C /* LaunchScreen.storyboard in Resources */,
-				2730BBD32AD6684D00BFA23C /* GoogleService-Info.plist in Resources */,
 				2730BBC42AD6668400BFA23C /* Assets.xcassets in Resources */,
+				2730BBFF2AD77AC500BFA23C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,7 +174,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2730BBC22AD6668200BFA23C /* GYMGLE.xcdatamodeld in Sources */,
 				2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */,
 				2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
@@ -393,14 +392,6 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		2730BBE92AD6B13500BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.0.0;
-			};
-		};
 		2730BBF22AD6B9DC00BFA23C /* XCRemoteSwiftPackageReference "QRCode" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dmrschmidt/QRCode.git";
@@ -425,6 +416,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -432,26 +431,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2730BBE62AD66EFF00BFA23C /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		2730BBEA2AD6B13500BFA23C /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2730BBE92AD6B13500BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		2730BBEC2AD6B13500BFA23C /* FirebaseDatabase */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2730BBE92AD6B13500BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseDatabase;
-		};
-		2730BBEE2AD6B13500BFA23C /* FirebaseDatabaseSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2730BBE92AD6B13500BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseDatabaseSwift;
-		};
-		2730BBF02AD6B13500BFA23C /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2730BBE92AD6B13500BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
 		};
 		2730BBF32AD6B9DC00BFA23C /* QRCode */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -468,20 +447,32 @@
 			package = 2730BBF82AD6BA1600BFA23C /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
 		};
-/* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		2730BBC02AD6668200BFA23C /* GYMGLE.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				2730BBC12AD6668200BFA23C /* GYMGLE.xcdatamodel */,
-			);
-			currentVersion = 2730BBC12AD6668200BFA23C /* GYMGLE.xcdatamodel */;
-			path = GYMGLE.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
+		2730BC122AD77C7F00BFA23C /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
 		};
-/* End XCVersionGroup section */
+		2730BC142AD77C7F00BFA23C /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		2730BC162AD77C7F00BFA23C /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		2730BC182AD77C7F00BFA23C /* FirebaseDatabaseSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabaseSwift;
+		};
+		2730BC1A2AD77C7F00BFA23C /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2730BBAC2AD6668200BFA23C /* Project object */;
 }
