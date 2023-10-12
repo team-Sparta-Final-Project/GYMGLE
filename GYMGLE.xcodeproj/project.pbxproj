@@ -24,6 +24,8 @@
 		2730BC1B2AD77C7F00BFA23C /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BC1A2AD77C7F00BFA23C /* FirebaseMessaging */; };
 		2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC342AD8065900BFA23C /* InitialViewController.swift */; };
 		2730BC372AD806AA00BFA23C /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC362AD806AA00BFA23C /* View.swift */; };
+		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
+		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,8 @@
 		2730BBFE2AD77AC500BFA23C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2730BC342AD8065900BFA23C /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		2730BC362AD806AA00BFA23C /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
+		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,8 +82,9 @@
 		2730BBB62AD6668200BFA23C /* GYMGLE */ = {
 			isa = PBXGroup;
 			children = (
-				2730BBB72AD6668200BFA23C /* AppDelegate.swift */,
-				2730BBB92AD6668200BFA23C /* SceneDelegate.swift */,
+				63D855F02AD81289008429BC /* Helpers */,
+				63D855EF2AD8126F008429BC /* Extension */,
+				63D855EE2AD81261008429BC /* Application */,
 				2730BBBB2AD6668200BFA23C /* ViewController.swift */,
 				2730BC242AD7E6FB00BFA23C /* Model */,
 				2730BC2A2AD7FE3B00BFA23C /* Pages */,
@@ -219,6 +224,31 @@
 			path = AdminNoticeDetailPage;
 			sourceTree = "<group>";
 		};
+		63D855EE2AD81261008429BC /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				2730BBB72AD6668200BFA23C /* AppDelegate.swift */,
+				2730BBB92AD6668200BFA23C /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		63D855EF2AD8126F008429BC /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		63D855F02AD81289008429BC /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				63D855F12AD812A0008429BC /* ColorGuide.swift */,
+				63D855F32AD812C3008429BC /* FontGuide.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -308,7 +338,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63D855F42AD812C3008429BC /* FontGuide.swift in Sources */,
 				2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */,
+				63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */,
 				2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* View.swift in Sources */,
 				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
