@@ -18,7 +18,6 @@ extension UIButton {
         self.setTitleColor(setTitleColor, for: .normal)
         self.titleLabel?.font = font
         self.translatesAutoresizingMaskIntoConstraints = false
-//        self.clipsToBounds = true 트루로 설정할시 그림자 잘리는 문제 발생함
     }
 
     static func GYMGLEButtonPreset(_ title:String) -> UIButton{
@@ -29,8 +28,16 @@ extension UIButton {
         }
         return button
     }
-    
-    
-    
-    
+    func shadowButtonMakeUI(backgroundColor: UIColor, cornerRadius: CGFloat, shadowColor: CGColor, shadowOpacity: Float, shadowRadius: CGFloat, setTitle: String, font: UIFont, setTitleColor:  UIColor) {
+        self.backgroundColor = backgroundColor
+        self.setTitle(setTitle, for: .normal)
+        self.setTitleColor(setTitleColor, for: .normal)
+        self.titleLabel?.font = font
+        self.layer.cornerRadius = cornerRadius
+        self.layer.shadowColor = shadowColor
+        self.layer.shadowOpacity = shadowOpacity
+        self.layer.shadowOffset = CGSize.zero
+        self.layer.shadowRadius = shadowRadius
+        self.translatesAutoresizingMaskIntoConstraints = false
+    }
 }
