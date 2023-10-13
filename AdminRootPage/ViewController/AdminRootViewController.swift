@@ -19,7 +19,12 @@ final class AdminRootViewController: UIViewController {
         super.viewDidLoad()
 
     }
+
+}
+
+private extension AdminRootViewController {
     
-
-
+    func buttonTappedSetting() {
+        //adminRootView.gymSettingButton.addTarget(self, action: <#T##Selector#>, for: .touchUpInside)
+    }
 }

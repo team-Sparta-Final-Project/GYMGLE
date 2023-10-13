@@ -40,9 +40,43 @@ final class AdminRootView: UIView {
         return stack
     }()
     
-    private lazy var gymSettingButton: UIButton = {
+    lazy var gymSettingButton: UIButton = {
         let button = UIButton()
-        //button.buttonMakeUI(backgroundColor: <#T##UIColor#>, cornerRadius: <#T##CGFloat#>, borderWidth: <#T##CGFloat#>, borderColor: <#T##CGColor#>, setTitle: <#T##String#>, font: <#T##UIFont#>, setTitleColor: <#T##UIColor#>)
+        button.buttonMakeUI(backgroundColor: ColorGuide.main, cornerRadius: 10.0, borderWidth: 0.0, borderColor: UIColor
+            .clear.cgColor, setTitle: "개인/보안", font: FontGuide.size16Bold, setTitleColor: UIColor.white)
+        return button
+    }()
+    
+    // 회원등록 버튼
+    private lazy var gymUserRegisterButton: UIButton = {
+        let button = UIButton()
+        button.buttonMakeUI(backgroundColor: ColorGuide.main, cornerRadius: 10.0, borderWidth: 0.0, borderColor: UIColor
+            .clear.cgColor, setTitle: "개인/보안", font: FontGuide.size16Bold, setTitleColor: UIColor.white)
+        return button
+    }()
+    
+    //회원관리 버튼
+    private lazy var gymUserManageButton: UIButton = {
+        let button = UIButton()
+        button.buttonMakeUI(backgroundColor: ColorGuide.main, cornerRadius: 10.0, borderWidth: 0.0, borderColor: UIColor
+            .clear.cgColor, setTitle: "개인/보안", font: FontGuide.size16Bold, setTitleColor: UIColor.white)
+        return button
+    }()
+    
+    //QR 스캐너 버튼
+    private lazy var gymQRCodeButton: UIButton = {
+        let button = UIButton()
+        button.buttonMakeUI(backgroundColor: ColorGuide.main, cornerRadius: 10.0, borderWidth: 0.0, borderColor: UIColor
+            .clear.cgColor, setTitle: "개인/보안", font: FontGuide.size16Bold, setTitleColor: UIColor.white)
+        return button
+    }()
+    
+    
+    //공지사항 버튼
+    private lazy var gymNoticeButton: UIButton = {
+        let button = UIButton()
+        button.buttonMakeUI(backgroundColor: ColorGuide.main, cornerRadius: 10.0, borderWidth: 0.0, borderColor: UIColor
+            .clear.cgColor, setTitle: "개인/보안", font: FontGuide.size16Bold, setTitleColor: UIColor.white)
         return button
     }()
     
