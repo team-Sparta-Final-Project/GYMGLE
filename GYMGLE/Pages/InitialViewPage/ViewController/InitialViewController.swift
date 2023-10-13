@@ -3,7 +3,7 @@ import UIKit
 class InitialViewController: UIViewController {
     
     override func loadView() {
-        view = ViewView()
+        view = InitialView()
     }
     
     override func viewDidLoad() {
