@@ -29,6 +29,10 @@
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
 		D14ECB3B2AD9096D00FF7853 /* AdminLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB3A2AD9096D00FF7853 /* AdminLoginViewController.swift */; };
 		D14ECB3D2AD9098500FF7853 /* AdminLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB3C2AD9098500FF7853 /* AdminLoginView.swift */; };
+		D14ECB402AD9109200FF7853 /* AdminRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB3F2AD9109200FF7853 /* AdminRegisterViewController.swift */; };
+		D14ECB422AD910AC00FF7853 /* AdminRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB412AD910AC00FF7853 /* AdminRegisterView.swift */; };
+		D14ECB442AD917D600FF7853 /* Extension_UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB432AD917D600FF7853 /* Extension_UIView.swift */; };
+		D14ECB482AD928FF00FF7853 /* Extension_CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +51,10 @@
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
 		D14ECB3A2AD9096D00FF7853 /* AdminLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdminLoginViewController.swift; path = AdminLoginPage/ViewController/AdminLoginViewController.swift; sourceTree = SOURCE_ROOT; };
 		D14ECB3C2AD9098500FF7853 /* AdminLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdminLoginView.swift; path = AdminLoginPage/View/AdminLoginView.swift; sourceTree = SOURCE_ROOT; };
+		D14ECB3F2AD9109200FF7853 /* AdminRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdminRegisterViewController.swift; path = AdminLoginPage/View/AdminRegisterViewController.swift; sourceTree = SOURCE_ROOT; };
+		D14ECB412AD910AC00FF7853 /* AdminRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdminRegisterView.swift; path = AdminLoginPage/View/AdminRegisterView.swift; sourceTree = SOURCE_ROOT; };
+		D14ECB432AD917D600FF7853 /* Extension_UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIView.swift; sourceTree = "<group>"; };
+		D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_CALayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +245,7 @@
 		2730BC442AD8D09400BFA23C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D14ECB412AD910AC00FF7853 /* AdminRegisterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -244,6 +253,7 @@
 		2730BC452AD8D09800BFA23C /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				D14ECB3F2AD9109200FF7853 /* AdminRegisterViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -261,6 +271,8 @@
 			isa = PBXGroup;
 			children = (
 				63D855F52AD81BBA008429BC /* Extension_UIButton.swift */,
+				D14ECB432AD917D600FF7853 /* Extension_UIView.swift */,
+				D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -380,15 +392,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				D14ECB3D2AD9098500FF7853 /* AdminLoginView.swift in Sources */,
+				D14ECB442AD917D600FF7853 /* Extension_UIView.swift in Sources */,
 				63D855F42AD812C3008429BC /* FontGuide.swift in Sources */,
 				63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */,
+				D14ECB422AD910AC00FF7853 /* AdminRegisterView.swift in Sources */,
 				2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */,
 				D14ECB3B2AD9096D00FF7853 /* AdminLoginViewController.swift in Sources */,
 				63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */,
 				2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */,
+				D14ECB482AD928FF00FF7853 /* Extension_CALayer.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
 				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
+				D14ECB402AD9109200FF7853 /* AdminRegisterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
