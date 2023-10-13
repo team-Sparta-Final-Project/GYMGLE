@@ -15,8 +15,8 @@ public enum FontGuide {
             UIFontDescriptor.AttributeName.size: size,
             UIFontDescriptor.AttributeName.featureSettings: [
                 [
-                    UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType,
-                    UIFontDescriptor.FeatureKey.typeIdentifier: kMonospacedNumbersSelector,
+                    UIFontDescriptor.FeatureKey.type: kNumberSpacingType,
+                    UIFontDescriptor.FeatureKey.selector: kMonospacedNumbersSelector,
                 ],
             ],
         ]
@@ -31,12 +31,7 @@ public enum FontGuide {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.minimumLineHeight = lineHeight
         paragraphStyle.maximumLineHeight = lineHeight
-        
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont(descriptor: customFontDescriptor, size: size),
-            .paragraphStyle: paragraphStyle,
-        ]
-        
+                
         return UIFont(descriptor: customFontDescriptor, size: size)
     }
     
