@@ -27,6 +27,8 @@
 		2730BC1B2AD77C7F00BFA23C /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BC1A2AD77C7F00BFA23C /* FirebaseMessaging */; };
 		2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC342AD8065900BFA23C /* InitialViewController.swift */; };
 		2730BC372AD806AA00BFA23C /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC362AD806AA00BFA23C /* View.swift */; };
+		2730BC432AD8D07A00BFA23C /* AdminRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC422AD8D07A00BFA23C /* AdminRegisterViewController.swift */; };
+		2730BC472AD8D0A900BFA23C /* AdminRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC462AD8D0A900BFA23C /* AdminRegisterView.swift */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
@@ -46,6 +48,8 @@
 		2730BBFE2AD77AC500BFA23C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2730BC342AD8065900BFA23C /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		2730BC362AD806AA00BFA23C /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		2730BC422AD8D07A00BFA23C /* AdminRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminRegisterViewController.swift; sourceTree = "<group>"; };
+		2730BC462AD8D0A900BFA23C /* AdminRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminRegisterView.swift; sourceTree = "<group>"; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
@@ -156,6 +160,8 @@
 		2730BC332AD8060300BFA23C /* AdminRegisterPage */ = {
 			isa = PBXGroup;
 			children = (
+				2730BC452AD8D09800BFA23C /* ViewController */,
+				2730BC442AD8D09400BFA23C /* View */,
 			);
 			path = AdminRegisterPage;
 			sourceTree = "<group>";
@@ -234,6 +240,22 @@
 			);
 			name = AdminNoticeDetailPage;
 			path = AdminNoticePage/AdminNoticeDetailPage;
+			sourceTree = "<group>";
+		};
+		2730BC442AD8D09400BFA23C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2730BC462AD8D0A900BFA23C /* AdminRegisterView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2730BC452AD8D09800BFA23C /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2730BC422AD8D07A00BFA23C /* AdminRegisterViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		63D855EE2AD81261008429BC /* Application */ = {
@@ -359,6 +381,7 @@
 				2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* View.swift in Sources */,
 				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
+				2730BC432AD8D07A00BFA23C /* AdminRegisterViewController.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
 				07997FF72AD843A5002ACFCB /* UserRootViewController.swift in Sources */,
 				07997FF92AD843BD002ACFCB /* UserRootModel.swift in Sources */,
