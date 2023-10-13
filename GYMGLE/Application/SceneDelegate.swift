@@ -14,9 +14,39 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        let tabBarController = UITabBarController()
+        
+        let viewController1 = UINavigationController(rootViewController: UserRootViewController())
+        let viewController2 = UINavigationController(rootViewController: InitialViewController())
+        let viewController3 = UINavigationController(rootViewController: UserRootViewController())
+        let viewController4 = UINavigationController(rootViewController: InitialViewController())
+        
+        tabBarController.setViewControllers([viewController1, viewController2, viewController3, viewController4], animated: true)
+        
+        tabBarController.tabBar.tintColor = ColorGuide.white
+        
+        if let items = tabBarController.tabBar.items {
+            items[0].selectedImage = UIImage(systemName: "house.fill")
+            items[0].image = UIImage(systemName: "house")
+            items[0].title = "홈"
             
+            items[1].selectedImage = UIImage(systemName: "doc.fill")
+            items[1].image = UIImage(systemName: "doc")
+            items[1].title = "공지사항"
+            
+            items[2].selectedImage = UIImage(systemName: "qrcode")
+            items[2].image = UIImage(systemName: "qrcode")
+            items[2].title = "QR코드"
+            
+            items[3].selectedImage = UIImage(systemName: "person.fill")
+            items[3].image = UIImage(systemName: "person")
+            items[3].title = "마이페이지"
+        }
+    
+        
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = InitialViewController()
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
 
