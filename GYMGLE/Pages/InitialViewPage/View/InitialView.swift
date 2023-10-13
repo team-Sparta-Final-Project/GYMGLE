@@ -45,7 +45,7 @@ class InitialView: UIView {
     }
     
     private lazy var adminButton = UIButton().then {
-        $0.buttonMakeUI(backgroundColor: .clear, cornerRadius: 20, borderWidth: 1, borderColor: ColorGuide.shadowBorder.cgColor, setTitle: "관리자모드", font: FontGuide.size14Bold, setTitleColor: ColorGuide.main)
+        $0.buttonMakeUI(backgroundColor: .white, cornerRadius: 20, borderWidth: 0.5, borderColor: ColorGuide.shadowBorder.cgColor, setTitle: "관리자모드", font: FontGuide.size14Bold, setTitleColor: ColorGuide.main)
         $0.layer.shadowColor = UIColor.black.cgColor
         $0.layer.shadowOpacity = 0.25
         $0.layer.shadowRadius = 2.0
