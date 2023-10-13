@@ -8,6 +8,8 @@
 import UIKit
 
 class AdminLoginView: UIView {
+    
+    // MARK: - Properties
 
     private lazy var imageView = UIImageView().then {
         $0.image = UIImage(named: "GYMGLE")
@@ -65,17 +67,13 @@ class AdminLoginView: UIView {
         $0.layer.shadowOffset = CGSize(width: 0, height: 1)
     }
     
+    // MARK: - Initialization
+    
     override init(frame: CGRect) {
         super .init(frame: frame)
         self.backgroundColor = .white
-        addSubview(imageView)
-        addSubview(loginLabel)
-        addSubview(idTextField)
-        addSubview(passwordTextField)
-        addSubview(loginButton)
-        addSubview(divider)
-        addSubview(registerButton)
-        addSubview(userButton)
+        
+        addSubviews(imageView, loginLabel, idTextField, passwordTextField, loginButton, divider, registerButton, userButton)
         
         imageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(220)

@@ -4,6 +4,8 @@ import SnapKit
 
 class InitialView: UIView {
     
+    // MARK: - Properties
+    
     private lazy var imageView = UIImageView().then {
         $0.image = UIImage(named: "GYMGLE")
     }
@@ -52,15 +54,13 @@ class InitialView: UIView {
         $0.layer.shadowOffset = CGSize(width: 0, height: 1)
     }
     
+    // MARK: - Initialization
+    
     override init(frame: CGRect) {
         super .init(frame: frame)
         self.backgroundColor = .white
-        addSubview(imageView)
-        addSubview(loginLabel)
-        addSubview(idTextField)
-        addSubview(passwordTextField)
-        addSubview(loginButton)
-        addSubview(adminButton)
+        
+        addSubviews(imageView, loginLabel, idTextField, passwordTextField, loginButton, adminButton)
         
         imageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(260)
