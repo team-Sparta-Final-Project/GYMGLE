@@ -24,6 +24,9 @@
 		2730BC1B2AD77C7F00BFA23C /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 2730BC1A2AD77C7F00BFA23C /* FirebaseMessaging */; };
 		2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC342AD8065900BFA23C /* InitialViewController.swift */; };
 		2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC362AD806AA00BFA23C /* InitialView.swift */; };
+		630A0BEA2AD9263C00525A6E /* AdminRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630A0BE92AD9263C00525A6E /* AdminRootViewController.swift */; };
+		630A0BEC2AD9265100525A6E /* AdminRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630A0BEB2AD9265100525A6E /* AdminRootView.swift */; };
+		630A0BEE2AD9269100525A6E /* Extension_UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630A0BED2AD9269100525A6E /* Extension_UILabel.swift */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
@@ -40,6 +43,9 @@
 		2730BBFE2AD77AC500BFA23C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2730BC342AD8065900BFA23C /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		2730BC362AD806AA00BFA23C /* InitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialView.swift; sourceTree = "<group>"; };
+		630A0BE92AD9263C00525A6E /* AdminRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdminRootViewController.swift; path = AdminRootPage/ViewController/AdminRootViewController.swift; sourceTree = SOURCE_ROOT; };
+		630A0BEB2AD9265100525A6E /* AdminRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdminRootView.swift; path = AdminRootPage/View/AdminRootView.swift; sourceTree = SOURCE_ROOT; };
+		630A0BED2AD9269100525A6E /* Extension_UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UILabel.swift; sourceTree = "<group>"; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
@@ -159,6 +165,8 @@
 		2730BC382AD8083B00BFA23C /* AdminRootPage */ = {
 			isa = PBXGroup;
 			children = (
+				630A0BE82AD9262900525A6E /* View */,
+				630A0BE72AD9261800525A6E /* ViewController */,
 			);
 			path = AdminRootPage;
 			sourceTree = "<group>";
@@ -231,7 +239,6 @@
 		2730BC442AD8D09400BFA23C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2730BC462AD8D0A900BFA23C /* AdminRegisterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -239,9 +246,24 @@
 		2730BC452AD8D09800BFA23C /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				2730BC422AD8D07A00BFA23C /* AdminRegisterViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		630A0BE72AD9261800525A6E /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				630A0BE92AD9263C00525A6E /* AdminRootViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		630A0BE82AD9262900525A6E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				630A0BEB2AD9265100525A6E /* AdminRootView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		63D855EE2AD81261008429BC /* Application */ = {
@@ -257,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				63D855F52AD81BBA008429BC /* Extension_UIButton.swift */,
+				630A0BED2AD9269100525A6E /* Extension_UILabel.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -360,15 +383,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				63D855F42AD812C3008429BC /* FontGuide.swift in Sources */,
+				630A0BEA2AD9263C00525A6E /* AdminRootViewController.swift in Sources */,
 				63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */,
 				2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */,
 				63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */,
 				2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */,
+				630A0BEE2AD9269100525A6E /* Extension_UILabel.swift in Sources */,
+				630A0BEC2AD9265100525A6E /* AdminRootView.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
 				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
-				2730BC432AD8D07A00BFA23C /* AdminRegisterViewController.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
-				2730BC472AD8D0A900BFA23C /* AdminRegisterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
