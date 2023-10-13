@@ -27,6 +27,8 @@
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
+		D14ECB3B2AD9096D00FF7853 /* AdminLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB3A2AD9096D00FF7853 /* AdminLoginViewController.swift */; };
+		D14ECB3D2AD9098500FF7853 /* AdminLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB3C2AD9098500FF7853 /* AdminLoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,8 @@
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
+		D14ECB3A2AD9096D00FF7853 /* AdminLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdminLoginViewController.swift; path = AdminLoginPage/ViewController/AdminLoginViewController.swift; sourceTree = SOURCE_ROOT; };
+		D14ECB3C2AD9098500FF7853 /* AdminLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdminLoginView.swift; path = AdminLoginPage/View/AdminLoginView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,8 @@
 		2730BC2E2AD801E100BFA23C /* AdminLoginPage */ = {
 			isa = PBXGroup;
 			children = (
+				D14ECB382AD9093700FF7853 /* ViewController */,
+				D14ECB392AD9094000FF7853 /* View */,
 			);
 			path = AdminLoginPage;
 			sourceTree = "<group>";
@@ -231,7 +237,6 @@
 		2730BC442AD8D09400BFA23C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2730BC462AD8D0A900BFA23C /* AdminRegisterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -239,7 +244,6 @@
 		2730BC452AD8D09800BFA23C /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				2730BC422AD8D07A00BFA23C /* AdminRegisterViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -268,6 +272,22 @@
 				63D855F32AD812C3008429BC /* FontGuide.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		D14ECB382AD9093700FF7853 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D14ECB3A2AD9096D00FF7853 /* AdminLoginViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		D14ECB392AD9094000FF7853 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D14ECB3C2AD9098500FF7853 /* AdminLoginView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -359,16 +379,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D14ECB3D2AD9098500FF7853 /* AdminLoginView.swift in Sources */,
 				63D855F42AD812C3008429BC /* FontGuide.swift in Sources */,
 				63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */,
 				2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */,
+				D14ECB3B2AD9096D00FF7853 /* AdminLoginViewController.swift in Sources */,
 				63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */,
 				2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
 				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
-				2730BC432AD8D07A00BFA23C /* AdminRegisterViewController.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
-				2730BC472AD8D0A900BFA23C /* AdminRegisterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
