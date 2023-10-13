@@ -24,7 +24,6 @@ class ViewController: UIViewController {
         let hash = digest.compactMap { String(format: "%02x", $0)}.joined()
         
         let key = SymmetricKey(size: .bits256)
-        let message = str.data(using: .utf8)!
         let sealed = try! AES.GCM.seal(data, using: key)
                 
         let decryptedData = try? AES.GCM.open(sealed, using: key)
