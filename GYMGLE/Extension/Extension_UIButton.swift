@@ -30,6 +30,20 @@ extension UIButton {
         return button
     }
     
+    static func GYMGLEWhiteButtonPreset(_ title:String) -> UIButton{
+        // 짐블 흰색 색 버튼 생성 메서드
+        lazy var button = UIButton().then {
+            $0.buttonMakeUI(backgroundColor: UIColor.white, cornerRadius: 15.0, borderWidth: 0.0, borderColor: UIColor
+                .clear.cgColor, setTitle: title, font: FontGuide.size14, setTitleColor: ColorGuide.textHint)
+            
+            $0.layer.shadowColor = ColorGuide.black.cgColor
+            $0.layer.shadowOpacity = 0.25
+            $0.layer.shadowOffset = CGSize(width: 0, height: 1)
+            $0.layer.shadowRadius = 6 / UIScreen.main.scale
+            
+        }
+        return button
+    }
     
     
     
