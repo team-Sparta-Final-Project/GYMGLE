@@ -9,7 +9,6 @@ import UIKit
 
 final class AdminNoticeDetailViewController: UIViewController {
     
-    
     private let adminNoticeDetailView = AdminNoticeDetailView()
     
     // MARK: - life cycle
@@ -21,6 +20,9 @@ final class AdminNoticeDetailViewController: UIViewController {
         super.viewDidLoad()
         viewSetting()
     }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         adminNoticeDetailView.endEditing(true)
     }
@@ -29,8 +31,33 @@ final class AdminNoticeDetailViewController: UIViewController {
 private extension AdminNoticeDetailViewController {
     func viewSetting() {
         adminNoticeDetailView.contentTextView.delegate = self
+        registerForKeyboardNotifications()
+    }
+    
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
+// MARK: - @objc func
+extension AdminNoticeDetailViewController {
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let keyboardHeight = keyboardFrame.height
+            let textFieldFrameInWindow = adminNoticeDetailView.contentNumberLabel.convert(adminNoticeDetailView.contentNumberLabel.bounds, to: nil)
+            let maxY = textFieldFrameInWindow.maxY
+            if maxY > (adminNoticeDetailView.frame.size.height - keyboardHeight) {
+                let scrollOffset = maxY - (adminNoticeDetailView.frame.size.height - keyboardHeight)
+                adminNoticeDetailView.frame.origin.y = -scrollOffset
+            }
+        }
+    }
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        adminNoticeDetailView.frame.origin.y = 0
+    }
+}
+
 // MARK: - UITextViewDelegate
 extension AdminNoticeDetailViewController: UITextViewDelegate {
     

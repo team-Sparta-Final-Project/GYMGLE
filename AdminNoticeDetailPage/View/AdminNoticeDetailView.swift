@@ -77,10 +77,10 @@ private extension AdminNoticeDetailView {
             topDivider.heightAnchor.constraint(equalToConstant: 2),
             topDivider.topAnchor.constraint(equalTo: self.pageTitleLabel.bottomAnchor, constant: 60),
             
-            contentTextView.topAnchor.constraint(equalTo: self.topDivider.bottomAnchor, constant: 10),
+            contentTextView.topAnchor.constraint(equalTo: self.topDivider.bottomAnchor, constant: 8),
             contentTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             contentTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            contentTextView.bottomAnchor.constraint(equalTo: self.bottomDivider.topAnchor, constant: -10),
+            contentTextView.bottomAnchor.constraint(equalTo: self.bottomDivider.topAnchor, constant: 0),
             
             bottomDivider.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             bottomDivider.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
