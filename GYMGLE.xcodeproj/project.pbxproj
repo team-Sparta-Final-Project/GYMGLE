@@ -29,7 +29,7 @@
 		2730BC722AD9575400BFA23C /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC712AD9575400BFA23C /* TextFieldCell.swift */; };
 		2730BC742AD9575C00BFA23C /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC732AD9575C00BFA23C /* CustomTextField.swift */; };
 		2730BC762AD9576500BFA23C /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC752AD9576500BFA23C /* LabelCell.swift */; };
-		2730BC782AD9576D00BFA23C /* TopBorderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC772AD9576D00BFA23C /* TopBorderCell.swift */; };
+		2730BC782AD9576D00BFA23C /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC772AD9576D00BFA23C /* EmptyCell.swift */; };
 		2730BC7A2AD9577C00BFA23C /* UserRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC792AD9577C00BFA23C /* UserRegisterViewController.swift */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
@@ -58,7 +58,7 @@
 		2730BC712AD9575400BFA23C /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextFieldCell.swift; path = UserRegisterPage/View/Components/TextFieldCell.swift; sourceTree = SOURCE_ROOT; };
 		2730BC732AD9575C00BFA23C /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomTextField.swift; path = UserRegisterPage/View/Components/CustomTextField.swift; sourceTree = SOURCE_ROOT; };
 		2730BC752AD9576500BFA23C /* LabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LabelCell.swift; path = UserRegisterPage/View/Components/LabelCell.swift; sourceTree = SOURCE_ROOT; };
-		2730BC772AD9576D00BFA23C /* TopBorderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TopBorderCell.swift; path = UserRegisterPage/View/Components/TopBorderCell.swift; sourceTree = SOURCE_ROOT; };
+		2730BC772AD9576D00BFA23C /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EmptyCell.swift; path = UserRegisterPage/View/Components/EmptyCell.swift; sourceTree = SOURCE_ROOT; };
 		2730BC792AD9577C00BFA23C /* UserRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRegisterViewController.swift; path = UserRegisterPage/ViewController/UserRegisterViewController.swift; sourceTree = SOURCE_ROOT; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
@@ -298,7 +298,7 @@
 				2730BC712AD9575400BFA23C /* TextFieldCell.swift */,
 				2730BC732AD9575C00BFA23C /* CustomTextField.swift */,
 				2730BC752AD9576500BFA23C /* LabelCell.swift */,
-				2730BC772AD9576D00BFA23C /* TopBorderCell.swift */,
+				2730BC772AD9576D00BFA23C /* EmptyCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -440,7 +440,7 @@
 				D14ECB3D2AD9098500FF7853 /* AdminLoginView.swift in Sources */,
 				D14ECB442AD917D600FF7853 /* Extension_UIView.swift in Sources */,
 				2730BC7A2AD9577C00BFA23C /* UserRegisterViewController.swift in Sources */,
-				2730BC782AD9576D00BFA23C /* TopBorderCell.swift in Sources */,
+				2730BC782AD9576D00BFA23C /* EmptyCell.swift in Sources */,
 				2730BC762AD9576500BFA23C /* LabelCell.swift in Sources */,
 				63D855F42AD812C3008429BC /* FontGuide.swift in Sources */,
 				63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */,

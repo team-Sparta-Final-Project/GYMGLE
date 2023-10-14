@@ -10,6 +10,9 @@ class LabelCell:UITableViewCell {
         label.textColor = ColorGuide.textHint
         label.font = FontGuide.size14Bold
         
+        
+        self.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
+        self.contentView.clipsToBounds = true
         self.contentView.addSubview(label)
         
         

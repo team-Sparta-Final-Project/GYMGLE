@@ -11,8 +11,15 @@ class TextFieldCell:UITableViewCell {
         textField.textColor = ColorGuide.textHint
         textField.font = FontGuide.size14Bold
         
-        self.contentView.addSubview(textField)
+        self.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
+        self.contentView.clipsToBounds = true
         
+        
+//        var test = self.contentView.layer.frame.width
+//        var test2 = self.frame.width
+//        print("테스트 - \(test)","테스트 - \(test2)",separator: "\n")
+        
+        self.contentView.addSubview(textField)
         
         textField.snp.makeConstraints{
             $0.left.equalToSuperview()
