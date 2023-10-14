@@ -7,8 +7,8 @@ class UserTableView: UITableView {
     var labelCellData:[String] = ["등록 기간","","추가 정보"]
     var buttonCellData:[String] = ["회원 아이디"]
     var buttonText:[String] = ["중복 확인","확인"]
-    var emptyCellHeight:Int?
-    var cellHeight:Int?
+    var emptyCellHeight:Int = 12
+    var cellHeight:Int = 40
     
     //MARK: - 라이프사이클
     override init(frame: CGRect, style: UITableView.Style) {
@@ -72,9 +72,9 @@ extension UserTableView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if cellData[indexPath.row] == "" {
-            return CGFloat(emptyCellHeight ?? 12)
+            return CGFloat(emptyCellHeight)
         } else {
-            return CGFloat(cellHeight ?? 40)
+            return CGFloat(cellHeight)
         }
     }
     

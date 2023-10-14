@@ -31,11 +31,6 @@
 		2730BC762AD9576500BFA23C /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC752AD9576500BFA23C /* LabelCell.swift */; };
 		2730BC782AD9576D00BFA23C /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC772AD9576D00BFA23C /* EmptyCell.swift */; };
 		2730BC7A2AD9577C00BFA23C /* UserRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC792AD9577C00BFA23C /* UserRegisterViewController.swift */; };
-		2730BC7E2ADA2E2200BFA23C /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 2730BC7D2ADA2E2200BFA23C /* .gitkeep */; };
-		2730BC802ADA2E5000BFA23C /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 2730BC7F2ADA2E5000BFA23C /* .gitkeep */; };
-		2730BC822ADA2E6300BFA23C /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 2730BC812ADA2E6300BFA23C /* .gitkeep */; };
-		2730BC842ADA2E7400BFA23C /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 2730BC832ADA2E7400BFA23C /* .gitkeep */; };
-		2730BC862ADA2F2F00BFA23C /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 2730BC852ADA2F2F00BFA23C /* .gitkeep */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
@@ -440,12 +435,7 @@
 			files = (
 				2730BBC72AD6668400BFA23C /* LaunchScreen.storyboard in Resources */,
 				2730BBC42AD6668400BFA23C /* Assets.xcassets in Resources */,
-				2730BC802ADA2E5000BFA23C /* .gitkeep in Resources */,
-				2730BC822ADA2E6300BFA23C /* .gitkeep in Resources */,
 				2730BBFF2AD77AC500BFA23C /* GoogleService-Info.plist in Resources */,
-				2730BC7E2ADA2E2200BFA23C /* .gitkeep in Resources */,
-				2730BC842ADA2E7400BFA23C /* .gitkeep in Resources */,
-				2730BC862ADA2F2F00BFA23C /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
