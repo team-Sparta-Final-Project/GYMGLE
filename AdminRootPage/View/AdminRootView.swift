@@ -82,6 +82,8 @@ final class AdminRootView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+// MARK: - extension
 private extension AdminRootView {
     func viewMakeUI() {
         topMakeUI()

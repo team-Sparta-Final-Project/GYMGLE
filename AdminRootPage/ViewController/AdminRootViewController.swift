@@ -11,6 +11,8 @@ final class AdminRootViewController: UIViewController {
 
     private let adminRootView = AdminRootView()
     
+    // MARK: - life cycle
+
     override func loadView() {
         view = adminRootView
     }
@@ -22,6 +24,7 @@ final class AdminRootViewController: UIViewController {
 
 }
 
+// MARK: - extension
 private extension AdminRootViewController {
     
     func buttonTappedSetting() {
