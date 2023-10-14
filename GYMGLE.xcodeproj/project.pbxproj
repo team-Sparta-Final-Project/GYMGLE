@@ -35,6 +35,7 @@
 		2730BC802ADA2E5000BFA23C /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 2730BC7F2ADA2E5000BFA23C /* .gitkeep */; };
 		2730BC822ADA2E6300BFA23C /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 2730BC812ADA2E6300BFA23C /* .gitkeep */; };
 		2730BC842ADA2E7400BFA23C /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 2730BC832ADA2E7400BFA23C /* .gitkeep */; };
+		2730BC862ADA2F2F00BFA23C /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 2730BC852ADA2F2F00BFA23C /* .gitkeep */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
@@ -68,6 +69,7 @@
 		2730BC7F2ADA2E5000BFA23C /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		2730BC812ADA2E6300BFA23C /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		2730BC832ADA2E7400BFA23C /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitkeep; path = UserRegisterPage/.gitkeep; sourceTree = SOURCE_ROOT; };
+		2730BC852ADA2F2F00BFA23C /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitkeep; path = UserRootPage/.gitkeep; sourceTree = SOURCE_ROOT; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 		2730BC392AD8084600BFA23C /* UserRootPage */ = {
 			isa = PBXGroup;
 			children = (
+				2730BC852ADA2F2F00BFA23C /* .gitkeep */,
 			);
 			path = UserRootPage;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				2730BBFF2AD77AC500BFA23C /* GoogleService-Info.plist in Resources */,
 				2730BC7E2ADA2E2200BFA23C /* .gitkeep in Resources */,
 				2730BC842ADA2E7400BFA23C /* .gitkeep in Resources */,
+				2730BC862ADA2F2F00BFA23C /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
