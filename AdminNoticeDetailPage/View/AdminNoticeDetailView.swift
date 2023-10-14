@@ -40,6 +40,14 @@ final class AdminNoticeDetailView: UIView {
         return divider
     }()
     
+    lazy var contentNumberLabel: UILabel = {
+        let label = UILabel()
+        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .center)
+        label.text = "\(contentTextView.text.count)/400"
+        return label
+    }()
+    
+    
     lazy var createButton: UIButton = {
         let button = UIButton()
         button.buttonMakeUI(backgroundColor: ColorGuide.main, cornerRadius: 10.0, borderWidth: 0.0, borderColor: UIColor
@@ -62,7 +70,7 @@ final class AdminNoticeDetailView: UIView {
 private extension AdminNoticeDetailView {
     
     func viewMakeUI() {
-        var views = [pageTitleLabel, topDivider, contentTextView, bottomDivider, createButton]
+        let views = [pageTitleLabel, topDivider, contentTextView, bottomDivider, contentNumberLabel, createButton]
         for view in views {
             self.addSubview(view)
         }
@@ -84,6 +92,9 @@ private extension AdminNoticeDetailView {
             bottomDivider.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
             bottomDivider.bottomAnchor.constraint(equalTo: self.createButton.topAnchor, constant: -104),
             bottomDivider.heightAnchor.constraint(equalToConstant: 2),
+            
+            contentNumberLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -26),
+            contentNumberLabel.topAnchor.constraint(equalTo: self.bottomDivider.bottomAnchor, constant: 10),
             
             createButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             createButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
