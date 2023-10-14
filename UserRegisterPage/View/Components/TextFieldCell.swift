@@ -11,6 +11,8 @@ class TextFieldCell:UITableViewCell {
         textField.textColor = ColorGuide.textHint
         textField.font = FontGuide.size14Bold
         
+        self.backgroundColor = .clear
+        
         self.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
         self.contentView.clipsToBounds = true
         

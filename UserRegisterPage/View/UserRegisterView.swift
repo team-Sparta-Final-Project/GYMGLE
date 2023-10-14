@@ -10,7 +10,6 @@ class UserRegisterView: UIView {
     //MARK: - View 자체 라이프사이클
     override init(frame: CGRect) {
         super .init(frame: frame)
-        self.backgroundColor = .white
         configure()
     }
     

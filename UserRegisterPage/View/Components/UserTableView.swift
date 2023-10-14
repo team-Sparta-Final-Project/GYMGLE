@@ -13,6 +13,8 @@ class UserTableView: UITableView {
     //MARK: - 라이프사이클
     override init(frame: CGRect, style: UITableView.Style) {
         super .init(frame: frame, style: style)
+        
+        self.backgroundColor = .clear
     
         self.delegate = self
         self.dataSource = self

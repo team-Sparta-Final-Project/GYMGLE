@@ -10,6 +10,7 @@ class LabelCell:UITableViewCell {
         label.textColor = ColorGuide.textHint
         label.font = FontGuide.size14Bold
         
+        self.backgroundColor = .clear
         
         self.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
         self.contentView.clipsToBounds = true
