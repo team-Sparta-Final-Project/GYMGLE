@@ -10,12 +10,29 @@ import UIKit
 final class AdminNoticeView: UIView {
 
     // MARK: - UI Properties
-
+    private lazy var pageTitleLabel: UILabel = {
+        let label = UILabel()
+        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size32Bold, textAligment: .center)
+        label.text = "공지사항"
+        return label
+    }()
     
+    lazy var noticeCreateButton: UIButton = {
+        let button = UIButton()
+        button.buttonImageMakeUI(image: "pencil", color: ColorGuide.black, backgroundColor: .white, cornerRadius: 10, shadowColor: ColorGuide.shadowBorder.cgColor, shadowOpacity: 1.0, shadowRadius: 8)
+        return button
+    }()
+    
+    lazy var noticeTableView: UITableView = {
+        let table = UITableView()
+        table.backgroundColor = UIColor.black
+        return table
+    }()
     
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
+        viewMakeUI()
     }
     
     required init?(coder: NSCoder) {
@@ -24,3 +41,26 @@ final class AdminNoticeView: UIView {
     
 }
 // MARK: - extension
+private extension AdminNoticeView {
+    func viewMakeUI() {
+        let views = [pageTitleLabel, noticeCreateButton, noticeTableView]
+        for view in views {
+            self.addSubview(view)
+        }
+        
+        NSLayoutConstraint.activate([
+            pageTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
+            pageTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 88),
+            
+            noticeCreateButton.centerYAnchor.constraint(equalTo: self.pageTitleLabel.centerYAnchor),
+            noticeCreateButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
+            noticeCreateButton.heightAnchor.constraint(equalToConstant: 40),
+            noticeCreateButton.widthAnchor.constraint(equalToConstant: 40),
+            
+            noticeTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
+            noticeTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
+            noticeTableView.topAnchor.constraint(equalTo: self.pageTitleLabel.bottomAnchor, constant: 56),
+            noticeTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+    }
+}
