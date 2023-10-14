@@ -25,10 +25,6 @@ class UserRegisterView: UIView {
         centerTableView()
         
     }
-    //MARK: - 뷰 configure
-    
-    
-    
     //MARK: - 테이블뷰 configure
     func heightConfigure(cellHeight:Int, emptyCellHeight:Int){
         tableView.cellHeight = cellHeight

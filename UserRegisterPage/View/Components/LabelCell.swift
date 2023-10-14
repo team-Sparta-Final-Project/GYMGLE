@@ -29,7 +29,15 @@ class LabelCell:UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    enum textType{
-        case label, textField
+    func setButton(_ title:String){
+        lazy var CheckButton = UIButton.GYMGLEWhiteButtonPreset(title)
+        
+        self.contentView.addSubview(CheckButton)
+        CheckButton.snp.makeConstraints{
+            $0.right.equalToSuperview()
+            $0.centerY.equalToSuperview()
+            $0.width.equalTo(74)
+            $0.height.equalTo(26)
+        }
     }
 }

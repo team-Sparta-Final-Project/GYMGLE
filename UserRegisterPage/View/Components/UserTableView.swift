@@ -50,6 +50,11 @@ extension UserTableView: UITableViewDataSource {
         }else if labelCellData.contains(cellData[indexPath.row]){
             let cell = LabelCell()
             cell.label.text = cellData[indexPath.row]
+            if buttonCellData.contains(cellData[indexPath.row]) {
+                
+                cell.setButton(buttonText.first ?? "미설정")
+                buttonText.remove(at: 0)
+            }
             return cell
 
         }
