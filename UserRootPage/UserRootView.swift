@@ -9,8 +9,12 @@ import SnapKit
 import UIKit
 import SwiftUI
 import Then
+import Charts
 
 class UserRootView: UIView {
+    
+    let players = ["ozil", "ramsy", "lasu", "auba"]
+    let goals = [5, 2, 15, 53]
     
     private lazy var healthName = UILabel().then {
         $0.textColor = ColorGuide.white
@@ -88,19 +92,23 @@ class UserRootView: UIView {
     }
     private lazy var inBtn = UIButton().then {
         $0.backgroundColor = ColorGuide.white
+        $0.setBackgroundColor(ColorGuide.main, for: .highlighted)
         $0.setTitleColor(ColorGuide.main, for: .normal)
         $0.setTitleColor(ColorGuide.white, for: .highlighted)
-
         $0.setTitle("입실하기", for: .normal)
         $0.titleLabel?.font = FontGuide.size14Bold
         $0.layer.cornerRadius = 20
+        $0.clipsToBounds = true
     }
     private lazy var outBtn = UIButton().then {
         $0.backgroundColor = ColorGuide.main
+        $0.setBackgroundColor(ColorGuide.white, for: .highlighted)
         $0.setTitleColor(ColorGuide.white, for: .normal)
+        $0.setTitleColor(ColorGuide.main, for: .highlighted)
         $0.setTitle("퇴실하기", for: .normal)
         $0.layer.cornerRadius = 20
         $0.titleLabel?.font = FontGuide.size14Bold
+        $0.clipsToBounds = true
     }
     
     
@@ -143,7 +151,7 @@ class UserRootView: UIView {
         addSubview(outBtn)
         
         healthName.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(140)
+            $0.top.equalToSuperview().offset(90)
             $0.leading.equalToSuperview().offset(20)
         }
         healthNameSub.snp.makeConstraints {
@@ -222,5 +230,52 @@ class UserRootView: UIView {
         }
         
     }
+    
+//    private func animate(){
+//        let animation = CATransition()
+//        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+//        animation.duration = duration
+//        animation.type = .moveIn
+//        animation.subtype = .fromTop
+//        animation.delegate = self
+//
+//        self.layer.add(animation, forKey: CATransitionType.push.rawValue)
+//    }
+    
+//    func customizeChart(dataPoints: [String], values:[Double]){
+//        var dataEntries: [ChartDataEntry] = []
+//        for i in 0..<dataPoints.count {
+//            let dataEntry = PieChartDataEntry(value: values[i], label: dataPoints[i], data: dataPoints[i] as AnyObject)
+//            dataEntries.append(dataEntry)
+//
+//        }
+//        let pieChartDataSet = PieChartDataSet(entries: dataEntries, label: nil)
+//        pieChartDataSet.colors = colorsOfCharts(numbersOfColor: dataPoints.count)
+//        private func colorsOfCharts(numbersOfColor: Int) -> [UIColor] {
+//          var colors: [UIColor] = []
+//          for _ in 0..<numbersOfColor {
+//            let red = Double(arc4random_uniform(256))
+//            let green = Double(arc4random_uniform(256))
+//            let blue = Double(arc4random_uniform(256))
+//            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
+//            colors.append(color)
+//          }
+//            return colors
+//        }
+//    }
+    
 }
 
+extension UIButton {
+    func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
+        UIGraphicsBeginImageContext(CGSize(width: 1.0, height: 1.0))
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        context.setFillColor(color.cgColor)
+        context.fill(CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0))
+        
+        let backgroundImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+         
+        self.setBackgroundImage(backgroundImage, for: state)
+    }
+}
