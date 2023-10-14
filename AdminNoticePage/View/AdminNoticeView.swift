@@ -25,7 +25,7 @@ final class AdminNoticeView: UIView {
     
     lazy var noticeTableView: UITableView = {
         let table = UITableView()
-        table.backgroundColor = UIColor.black
+        table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
     
@@ -38,7 +38,6 @@ final class AdminNoticeView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 // MARK: - extension
 private extension AdminNoticeView {
@@ -52,15 +51,15 @@ private extension AdminNoticeView {
             pageTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             pageTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 88),
             
-            noticeCreateButton.centerYAnchor.constraint(equalTo: self.pageTitleLabel.centerYAnchor),
+            noticeCreateButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 88),
             noticeCreateButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
             noticeCreateButton.heightAnchor.constraint(equalToConstant: 40),
             noticeCreateButton.widthAnchor.constraint(equalToConstant: 40),
             
-            noticeTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            noticeTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            noticeTableView.topAnchor.constraint(equalTo: self.pageTitleLabel.bottomAnchor, constant: 56),
-            noticeTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            noticeTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
+            noticeTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -0),
+            noticeTableView.topAnchor.constraint(equalTo: pageTitleLabel.bottomAnchor, constant: 56),
+            noticeTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -0),
         ])
     }
 }

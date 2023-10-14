@@ -31,6 +31,7 @@
 		63879E492ADA7AB000FA23BD /* AdminNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63879E482ADA7AB000FA23BD /* AdminNoticeViewController.swift */; };
 		63879E4D2ADA7AD900FA23BD /* AdminNoticeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63879E4C2ADA7AD900FA23BD /* AdminNoticeDetailViewController.swift */; };
 		63879E4F2ADA7AF200FA23BD /* AdminNoticeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63879E4E2ADA7AF200FA23BD /* AdminNoticeDetailView.swift */; };
+		63AD94D42ADADBEF0019C478 /* AdminNoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD94D32ADADBEF0019C478 /* AdminNoticeTableViewCell.swift */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
@@ -54,6 +55,7 @@
 		63879E482ADA7AB000FA23BD /* AdminNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdminNoticeViewController.swift; path = AdminNoticePage/ViewController/AdminNoticeViewController.swift; sourceTree = SOURCE_ROOT; };
 		63879E4C2ADA7AD900FA23BD /* AdminNoticeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdminNoticeDetailViewController.swift; path = AdminNoticeDetailPage/ViewController/AdminNoticeDetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		63879E4E2ADA7AF200FA23BD /* AdminNoticeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdminNoticeDetailView.swift; path = AdminNoticeDetailPage/View/AdminNoticeDetailView.swift; sourceTree = SOURCE_ROOT; };
+		63AD94D32ADADBEF0019C478 /* AdminNoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdminNoticeTableViewCell.swift; path = AdminNoticePage/View/AdminNoticeTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				63879E462ADA7A8B00FA23BD /* AdminNoticeView.swift */,
+				63AD94D32ADADBEF0019C478 /* AdminNoticeTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				63879E472ADA7A8B00FA23BD /* AdminNoticeView.swift in Sources */,
 				63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */,
 				2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */,
+				63AD94D42ADADBEF0019C478 /* AdminNoticeTableViewCell.swift in Sources */,
 				63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */,
 				63879E4F2ADA7AF200FA23BD /* AdminNoticeDetailView.swift in Sources */,
 				2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */,
