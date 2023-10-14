@@ -41,31 +41,31 @@ final class AdminRootView: UIView {
         return button
     }()
     // 회원등록 버튼
-    private lazy var gymUserRegisterButton: UIButton = {
+    lazy var gymUserRegisterButton: UIButton = {
         let button = UIButton()
         button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 10.0, borderWidth: 1.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "회원등록", font: FontGuide.size19Bold, setTitleColor: ColorGuide.black)
         return button
     }()
     //회원관리 버튼
-    private lazy var gymUserManageButton: UIButton = {
+    lazy var gymUserManageButton: UIButton = {
         let button = UIButton()
         button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 10.0, borderWidth: 1.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "회원관리", font: FontGuide.size19Bold, setTitleColor: ColorGuide.black)
         return button
     }()
     //QR 스캐너 버튼
-    private lazy var gymQRCodeButton: UIButton = {
+    lazy var gymQRCodeButton: UIButton = {
         let button = UIButton()
         button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 10.0, borderWidth: 1.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "QR스캐너", font: FontGuide.size19Bold, setTitleColor: ColorGuide.black)
         return button
     }()
     //공지사항 버튼
-    private lazy var gymNoticeButton: UIButton = {
+    lazy var gymNoticeButton: UIButton = {
         let button = UIButton()
         button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 10.0, borderWidth: 1.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "공지작성", font: FontGuide.size19Bold, setTitleColor: ColorGuide.black)
         return button
     }()
     //로그아웃 버튼
-    private lazy var logOutButton: UIButton = {
+    lazy var logOutButton: UIButton = {
         let button = UIButton()
         button.buttonMakeUI(backgroundColor: ColorGuide.main, cornerRadius: 10.0, borderWidth: 0.0, borderColor: UIColor
             .clear.cgColor, setTitle: "로그아웃", font: FontGuide.size19Bold, setTitleColor: UIColor.white)

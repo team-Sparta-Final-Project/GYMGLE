@@ -32,12 +32,26 @@ private extension AdminNoticeDetailViewController {
     func viewSetting() {
         adminNoticeDetailView.contentTextView.delegate = self
         registerForKeyboardNotifications()
+        allButtonTapped()
     }
     
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
+    func allButtonTapped() {
+        adminNoticeDetailView.createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
+    }
+    func textViewIsEmptyAlert() {
+        let alert = UIAlertController(title: "공지사항이 없습니다!", message: "", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .default)
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(ok)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 }
 // MARK: - @objc func
 extension AdminNoticeDetailViewController {
@@ -56,20 +70,27 @@ extension AdminNoticeDetailViewController {
     @objc private func keyboardWillHide(_ notification: Notification) {
         adminNoticeDetailView.frame.origin.y = 0
     }
+    @objc private func createButtonTapped() {
+        if adminNoticeDetailView.contentTextView.text.isEmpty {
+            textViewIsEmptyAlert()
+        } else {
+            // 여기에 등록 및 수정 코드 작성❗️
+        }
+    }
 }
 
 // MARK: - UITextViewDelegate
 extension AdminNoticeDetailViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == "텍스트를 여기에 입력하세요." {
+        if textView.text == "공지사항을 입력하세요." {
             textView.text = nil
             textView.textColor = ColorGuide.black
         }
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = "텍스트를 여기에 입력하세요."
+            textView.text = "공지사항을 입력하세요."
             textView.textColor = .lightGray
         }
     }

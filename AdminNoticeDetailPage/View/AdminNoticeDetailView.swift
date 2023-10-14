@@ -25,7 +25,7 @@ final class AdminNoticeDetailView: UIView {
     
     lazy var contentTextView: UITextView = {
         let textView = UITextView()
-        textView.text = "텍스트를 여기에 입력하세요."
+        textView.text = "공지사항을 입력하세요."
         textView.font = FontGuide.size16
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
