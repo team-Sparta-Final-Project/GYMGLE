@@ -17,24 +17,21 @@ final class AdminNoticeDetailViewController: UIViewController {
     override func loadView() {
         view = adminNoticeDetailView
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewSetting()
-        
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         adminNoticeDetailView.endEditing(true)
     }
 }
 // MARK: - extension
-
 private extension AdminNoticeDetailViewController {
     func viewSetting() {
         adminNoticeDetailView.contentTextView.delegate = self
     }
 }
-
+// MARK: - UITextViewDelegate
 extension AdminNoticeDetailViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -43,19 +40,16 @@ extension AdminNoticeDetailViewController: UITextViewDelegate {
             textView.textColor = ColorGuide.black
         }
     }
-    // 입력이 끝났을때
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.text = "텍스트를 여기에 입력하세요."
             textView.textColor = .lightGray
         }
     }
-    
     func textViewDidChange(_ textView: UITextView) {
         if adminNoticeDetailView.contentTextView.text.count > 400 {
             adminNoticeDetailView.contentTextView.deleteBackward()
         }
-        
         adminNoticeDetailView.contentNumberLabel.text = "\(adminNoticeDetailView.contentTextView.text.count)/400"
         
         if adminNoticeDetailView.contentTextView.text.count > 380 {

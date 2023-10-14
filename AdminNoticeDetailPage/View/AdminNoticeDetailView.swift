@@ -8,9 +8,7 @@
 import UIKit
 
 final class AdminNoticeDetailView: UIView {
-
     // MARK: - UI Properties
-    
     private lazy var pageTitleLabel: UILabel = {
         let label = UILabel()
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size32Bold, textAligment: .center)
@@ -47,7 +45,6 @@ final class AdminNoticeDetailView: UIView {
         return label
     }()
     
-    
     lazy var createButton: UIButton = {
         let button = UIButton()
         button.buttonMakeUI(backgroundColor: ColorGuide.main, cornerRadius: 10.0, borderWidth: 0.0, borderColor: UIColor
@@ -60,15 +57,12 @@ final class AdminNoticeDetailView: UIView {
         self.backgroundColor = UIColor.white
         viewMakeUI()
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 // MARK: - extension
-
 private extension AdminNoticeDetailView {
-    
     func viewMakeUI() {
         let views = [pageTitleLabel, topDivider, contentTextView, bottomDivider, contentNumberLabel, createButton]
         for view in views {
