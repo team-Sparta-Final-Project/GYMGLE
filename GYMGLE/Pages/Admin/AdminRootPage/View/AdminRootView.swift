@@ -11,7 +11,7 @@ final class AdminRootView: UIView {
     private lazy var pageTitleLabel: UILabel = {
         let label = UILabel()
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size32Bold, textAligment: .center)
-        label.text = "헬스장 등록"
+        label.text = "헬스장 관리"
         return label
     }()
     private lazy var gymNameLabel: UILabel = {
@@ -37,7 +37,7 @@ final class AdminRootView: UIView {
     }()
     lazy var gymSettingButton: UIButton = {
         let button = UIButton()
-        button.shadowButtonMakeUI(backgroundColor: .white, cornerRadius: 16, shadowColor: ColorGuide.shadowBorder.cgColor, shadowOpacity: 1.0, shadowRadius: 8, setTitle: "개인/보안", font: FontGuide.size14, setTitleColor: ColorGuide.main)
+        button.buttonMakeUI(backgroundColor: .white, cornerRadius: 16, borderWidth: 1.5, borderColor: ColorGuide.textHint.cgColor, setTitle: "개인/보안", font: FontGuide.size16, setTitleColor: ColorGuide.main)
         return button
     }()
     // 회원등록 버튼
@@ -61,7 +61,7 @@ final class AdminRootView: UIView {
     //공지사항 버튼
     lazy var gymNoticeButton: UIButton = {
         let button = UIButton()
-        button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 10.0, borderWidth: 1.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "공지작성", font: FontGuide.size19Bold, setTitleColor: ColorGuide.black)
+        button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 10.0, borderWidth: 1.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "공지사항", font: FontGuide.size19Bold, setTitleColor: ColorGuide.black)
         return button
     }()
     //로그아웃 버튼
