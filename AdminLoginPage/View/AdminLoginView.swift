@@ -1,11 +1,16 @@
-import UIKit
-import Then
-import SnapKit
+//
+//  AdminLoginView.swift
+//  GYMGLE
+//
+//  Created by 조규연 on 10/13/23.
+//
 
-class InitialView: UIView {
+import UIKit
+
+class AdminLoginView: UIView {
     
     // MARK: - Properties
-    
+
     private lazy var imageView = UIImageView().then {
         $0.image = UIImage(named: "GYMGLE")
     }
@@ -13,7 +18,7 @@ class InitialView: UIView {
     private lazy var loginLabel = UILabel().then {
         $0.textColor = ColorGuide.black
         $0.font = UIFont.boldSystemFont(ofSize: 18)
-        $0.text = "로그인"
+        $0.text = "관리자 로그인"
     }
     
     private lazy var idTextField = UITextField().then {
@@ -30,8 +35,16 @@ class InitialView: UIView {
     
     private var loginButton: UIButton = UIButton.GYMGLEButtonPreset("로그인")
     
-    private lazy var adminButton = UIButton().then {
-        $0.buttonMakeUI(backgroundColor: .white, cornerRadius: 20, borderWidth: 0.5, borderColor: ColorGuide.shadowBorder.cgColor, setTitle: "관리자모드", font: FontGuide.size14Bold, setTitleColor: ColorGuide.main)
+    private lazy var divider = UIView().then {
+        $0.backgroundColor = .gray
+    }
+    
+    private lazy var registerButton = UIButton().then {
+        $0.buttonMakeUI(backgroundColor: .white, cornerRadius: 10, borderWidth: 0, borderColor: UIColor.clear.cgColor, setTitle: "새로운 헬스장 등록", font: FontGuide.size14Bold, setTitleColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.61))
+    }
+    
+    private lazy var userButton = UIButton().then {
+        $0.buttonMakeUI(backgroundColor: .white, cornerRadius: 20, borderWidth: 0.5, borderColor: ColorGuide.shadowBorder.cgColor, setTitle: "회원모드", font: FontGuide.size14Bold, setTitleColor: ColorGuide.main)
     }
     
     // MARK: - Initialization
@@ -40,7 +53,7 @@ class InitialView: UIView {
         super .init(frame: frame)
         self.backgroundColor = .white
         
-        addSubviews(imageView, loginLabel, idTextField, passwordTextField, loginButton, adminButton)
+        addSubviews(imageView, loginLabel, idTextField, passwordTextField, loginButton, divider, registerButton, userButton)
         
         imageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(88)
@@ -71,7 +84,19 @@ class InitialView: UIView {
             $0.height.equalTo(44)
         }
         
-        adminButton.snp.makeConstraints {
+        divider.snp.makeConstraints {
+            $0.top.equalTo(loginButton.snp.bottom).offset(25)
+            $0.left.right.equalToSuperview().inset(30)
+            $0.height.equalTo(0.5)
+        }
+        
+        registerButton.snp.makeConstraints {
+            $0.top.equalTo(loginButton.snp.bottom).offset(30)
+            $0.left.right.equalToSuperview().inset(45)
+            $0.height.equalTo(46)
+        }
+        
+        userButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(-60)
             $0.right.equalToSuperview().offset(-28)
             $0.width.equalTo(90)
@@ -82,4 +107,5 @@ class InitialView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 }
