@@ -21,6 +21,11 @@ class AdminLoginViewController: UIViewController {
         configureNav()
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) { // 네비게이션바 숨기기
+        navigationController?.navigationBar.isHidden = true
+    }
+
 }
 
 // MARK: - Configure

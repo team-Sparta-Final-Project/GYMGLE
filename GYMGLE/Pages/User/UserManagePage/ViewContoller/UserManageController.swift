@@ -5,7 +5,7 @@ class UserManageViewController: UIViewController {
     let pageTitle = "회원 관리"
     let buttonTitle = "등록하기"
     
-    let cells = ["김기호","공성표","박성원","조규연"]
+    let cells = ["김기호","공성표","박성원","조규연","김기호","공성표","박성원","조규연","김기호","공성표","박성원","조규연","김기호","공성표","박성원","조규연","김기호","공성표","박성원","조규연","김기호","공성표","박성원","조규연","김기호","공성표","박성원","조규연","김기호","공성표","박성원","조규연","김기호","공성표","박성원","조규연","김기호","공성표","박성원","조규연","김기호","공성표","박성원","조규연","김기호","공성표","박성원","조규연","김기호","공성표","박성원","조규연","김기호","공성표","박성원","조규연","김기호","공성표","박성원","조규연"]
 //    let labelCells = ["회원 이름","회원 전화번호","등록 기간","추가 정보","텍스트 필드"]
 //    let buttonCells = ["추가 정보"]
 //    let buttonText = ["성별"]
@@ -27,6 +27,11 @@ class UserManageViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
     }
+    
+    override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
+        navigationController?.navigationBar.isHidden = false
+    }
+
     
 }
 //

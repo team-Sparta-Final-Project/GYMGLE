@@ -20,6 +20,11 @@ final class AdminRootViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         allButtonTapped()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) { // 네비게이션바 숨기기
+        navigationController?.navigationBar.isHidden = true
     }
 
 }

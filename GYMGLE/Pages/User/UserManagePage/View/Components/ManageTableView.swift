@@ -17,11 +17,10 @@ class ManageTableView: UITableView {
     
         self.delegate = self
         self.dataSource = self
-        self.isScrollEnabled = false
-        self.allowsSelection = false
+        self.allowsSelection = true
 
         self.separatorStyle = .none
-        self.clipsToBounds = false
+        self.clipsToBounds = true
     }
     
     required init?(coder: NSCoder) {

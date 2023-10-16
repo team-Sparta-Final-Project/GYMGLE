@@ -25,6 +25,10 @@ final class AdminNoticeViewController: UIViewController {
         allSetting()
         adminNoticeView.noticeTableView.reloadData()
     }
+    override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
+        navigationController?.navigationBar.isHidden = false
+    }
+
 }
 
 // MARK: - extension
