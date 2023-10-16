@@ -38,6 +38,12 @@
 		2730BC992ADC2E2900BFA23C /* ManageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC982ADC2E2900BFA23C /* ManageTableView.swift */; };
 		630A0BEE2AD9269100525A6E /* Extension_UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630A0BED2AD9269100525A6E /* Extension_UILabel.swift */; };
 		630CE14B2ADD1B5E001EC547 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE14A2ADD1B5E001EC547 /* TabbarViewController.swift */; };
+		630CE14D2ADD5C8A001EC547 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE14C2ADD5C8A001EC547 /* User.swift */; };
+		630CE14F2ADD5C92001EC547 /* Notice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE14E2ADD5C92001EC547 /* Notice.swift */; };
+		630CE1512ADD5CAC001EC547 /* GymInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE1502ADD5CAC001EC547 /* GymInfo.swift */; };
+		630CE1532ADD5CB8001EC547 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE1522ADD5CB8001EC547 /* Account.swift */; };
+		630CE1552ADD5CD0001EC547 /* InAndOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE1542ADD5CD0001EC547 /* InAndOut.swift */; };
+		630CE1622ADD62AD001EC547 /* DataTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE1612ADD62AD001EC547 /* DataTestViewController.swift */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
@@ -89,6 +95,12 @@
 		2730BC982ADC2E2900BFA23C /* ManageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageTableView.swift; sourceTree = "<group>"; };
 		630A0BED2AD9269100525A6E /* Extension_UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UILabel.swift; sourceTree = "<group>"; };
 		630CE14A2ADD1B5E001EC547 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
+		630CE14C2ADD5C8A001EC547 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = GYMGLE/User.swift; sourceTree = SOURCE_ROOT; };
+		630CE14E2ADD5C92001EC547 /* Notice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Notice.swift; path = GYMGLE/Notice.swift; sourceTree = SOURCE_ROOT; };
+		630CE1502ADD5CAC001EC547 /* GymInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GymInfo.swift; path = GYMGLE/GymInfo.swift; sourceTree = SOURCE_ROOT; };
+		630CE1522ADD5CB8001EC547 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Account.swift; path = GYMGLE/Account.swift; sourceTree = SOURCE_ROOT; };
+		630CE1542ADD5CD0001EC547 /* InAndOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InAndOut.swift; path = GYMGLE/InAndOut.swift; sourceTree = SOURCE_ROOT; };
+		630CE1612ADD62AD001EC547 /* DataTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTestViewController.swift; sourceTree = "<group>"; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
@@ -182,6 +194,12 @@
 		2730BC242AD7E6FB00BFA23C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				630CE14C2ADD5C8A001EC547 /* User.swift */,
+				630CE14E2ADD5C92001EC547 /* Notice.swift */,
+				630CE1502ADD5CAC001EC547 /* GymInfo.swift */,
+				630CE1522ADD5CB8001EC547 /* Account.swift */,
+				630CE1542ADD5CD0001EC547 /* InAndOut.swift */,
+				630CE1612ADD62AD001EC547 /* DataTestViewController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -592,6 +610,7 @@
 				63D855F42AD812C3008429BC /* FontGuide.swift in Sources */,
 				D1E018712ADCEC5C00D1C53D /* AdminLoginViewController.swift in Sources */,
 				63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */,
+				630CE1552ADD5CD0001EC547 /* InAndOut.swift in Sources */,
 				D1E0186B2ADCEC2C00D1C53D /* AdminRegisterView.swift in Sources */,
 				2730BC8A2ADC1E1700BFA23C /* UserManageView.swift in Sources */,
 				07997FF52AD84390002ACFCB /* UserRootView.swift in Sources */,
@@ -601,11 +620,13 @@
 				2730BC992ADC2E2900BFA23C /* ManageTableView.swift in Sources */,
 				63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */,
 				2730BC882ADC1DC500BFA23C /* UserManageController.swift in Sources */,
+				630CE1532ADD5CB8001EC547 /* Account.swift in Sources */,
 				D1E0187D2ADCEE0000D1C53D /* CustomTextCell.swift in Sources */,
 				D1E0186F2ADCEC4B00D1C53D /* AdminLoginView.swift in Sources */,
 				D1E018692ADCEC1A00D1C53D /* AdminRootViewController.swift in Sources */,
 				D1E018652ADCEBFA00D1C53D /* AdminNoticeViewController.swift in Sources */,
 				D1E0185F2ADCEB6700D1C53D /* AdminNoticeDetailView.swift in Sources */,
+				630CE1512ADD5CAC001EC547 /* GymInfo.swift in Sources */,
 				0744286F2ADD0D8800EB7D05 /* QrCodeView.swift in Sources */,
 				D1E018812ADCEE0000D1C53D /* CustomTextView.swift in Sources */,
 				2730BC8F2ADC206B00BFA23C /* CustomSearchBar.swift in Sources */,
@@ -619,12 +640,15 @@
 				D14ECB482AD928FF00FF7853 /* Extension_CALayer.swift in Sources */,
 				D1E018802ADCEE0000D1C53D /* UserTableView.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
+				630CE14F2ADD5C92001EC547 /* Notice.swift in Sources */,
 				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
 				D1E018612ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
 				D1E0187F2ADCEE0000D1C53D /* TextFieldCell.swift in Sources */,
 				2730BC972ADC2DF500BFA23C /* ManageLabelCell.swift in Sources */,
+				630CE1622ADD62AD001EC547 /* DataTestViewController.swift in Sources */,
 				D1E0187E2ADCEE0000D1C53D /* EmptyCell.swift in Sources */,
+				630CE14D2ADD5C8A001EC547 /* User.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
 				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
