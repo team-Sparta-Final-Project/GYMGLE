@@ -12,7 +12,8 @@ class LabelCell:UITableViewCell {
         
         self.backgroundColor = .clear
         
-//        self.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
+        self.layer.frame.size.width = 344.5
+        self.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
         self.contentView.clipsToBounds = true
         self.contentView.addSubview(label)
         

@@ -16,8 +16,8 @@ extension CALayer {
                 border.frame = CGRect.init(x: 0, y: 0, width: 999, height: width)
                 break
             case UIRectEdge.bottom:
-//                border.frame = CGRect.init(x: 0, y: frame.height, width: frame.width, height: width)
-                border.frame = CGRect.init(x: 0, y: frame.height, width: 999, height: width)
+                border.frame = CGRect.init(x: 0, y: frame.height, width: frame.width, height: width)
+//                border.frame = CGRect.init(x: 0, y: frame.height, width: 999, height: width)
                 break
             case UIRectEdge.left:
                 border.frame = CGRect.init(x: 0, y: 0, width: width, height: frame.height)
