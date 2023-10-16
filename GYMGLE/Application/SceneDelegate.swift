@@ -24,7 +24,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         tabBarController.setViewControllers([viewController1, viewController2, viewController3, viewController4], animated: true)
         
+        tabBarController.tabBar.backgroundColor = ColorGuide.userBackGround
         tabBarController.tabBar.tintColor = ColorGuide.white
+        tabBarController.tabBar.layer.shadowColor = ColorGuide.white.cgColor
+        tabBarController.tabBar.layer.shadowOpacity = 0.25
+        tabBarController.tabBar.layer.shadowRadius = 2
+        tabBarController.tabBar.layer.shadowOffset = CGSize(width: 0, height: 0)
         
         if let items = tabBarController.tabBar.items {
             items[0].selectedImage = UIImage(systemName: "house.fill")

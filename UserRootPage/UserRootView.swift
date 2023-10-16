@@ -12,7 +12,7 @@ import Then
 import Charts
 
 class UserRootView: UIView {
-    
+        
     let players = ["ozil", "ramsy", "lasu", "auba"]
     let goals = [5, 2, 15, 53]
     
@@ -30,6 +30,8 @@ class UserRootView: UIView {
         $0.backgroundColor = ColorGuide.notice
         $0.layer.cornerRadius = 20
         $0.tintColor = .white
+        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(noticePlaceTapped)))
+
     }
     private lazy var noticeBell = UIImageView().then {
         $0.image = UIImage(named: "bell.fill")
@@ -38,7 +40,14 @@ class UserRootView: UIView {
     private lazy var noticeText = UILabel().then {
         $0.textColor = ColorGuide.white
         $0.font = FontGuide.size14
-        $0.text = "이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~"
+        $0.text = """
+이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
+이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
+이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
+이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
+이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
+
+"""
     }
     private lazy var yesterUserPlace = UIView().then {
         $0.backgroundColor = ColorGuide.userBackGround
@@ -89,6 +98,27 @@ class UserRootView: UIView {
     private lazy var chartPlace = UIView().then {
         $0.backgroundColor = ColorGuide.notice
         $0.layer.cornerRadius = 20
+        $0.layer.shadowColor = ColorGuide.goldTier.cgColor
+        $0.layer.shadowOpacity = 1
+        $0.layer.shadowRadius = 4
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chartPlaceTapped)))
+    }
+    private lazy var chartTopText = UILabel().then {
+        $0.textColor = ColorGuide.white
+        $0.font = FontGuide.size14Bold
+        $0.text = "저번주 나의 운동량은.."
+    }
+    
+    private lazy var chartMidText = UILabel().then {
+        $0.textColor = ColorGuide.white
+        $0.font = FontGuide.size32Bold
+        $0.text = "상위 34% 에요!"
+    }
+    private lazy var chartBottomText = UILabel().then {
+        $0.textColor = ColorGuide.white
+        $0.font = FontGuide.size14Bold
+        $0.text = "꾸준함이 중요하죠!"
     }
     private lazy var inBtn = UIButton().then {
         $0.backgroundColor = ColorGuide.white
@@ -122,15 +152,57 @@ class UserRootView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-//
-//    func action(){
-//        inBtn.addTarget(self, action: #selector(colorSwitch), for: .touchUpInside)
-//    }
-//    @objc func colorSwitch(){
-//        inBtn.backgroundColor = ColorGuide.main
-//        inBtn.setTitleColor(ColorGuide.white, for: .normal)
-//    }
+    var isNoticePlaceExpanded = false
+
+        @objc func noticePlaceTapped() {
+            
+            
+            if isNoticePlaceExpanded {
+                UIView.animate(withDuration: 0.3) {
+                    self.noticePlace.snp.updateConstraints { make in
+                        make.height.equalTo(50)
+                        self.noticeText.numberOfLines = 1
+
+                    }
+                    
+                }
+            } else {
+                UIView.animate(withDuration: 0.3) {
+                    self.noticePlace.snp.updateConstraints { make in
+                        make.height.equalTo(300)
+                        self.noticeText.numberOfLines = 0
+
+                        // 다른 제약을 변경하려면 여기에 추가
+                    }
+                }
+            }
+            isNoticePlaceExpanded.toggle()
+        }
     
+    @objc func chartPlaceTapped() {
+//        chartPlace.layer.shadowOpacity = 1
+//        chartPlace.layer.shadowRadius = 10
+//        chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
+//
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//            self.chartPlace.layer.shadowOpacity = 1
+//            self.chartPlace.layer.shadowRadius = 4
+//            self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
+//        }
+        UIView.animate(withDuration: 0.5, animations: {
+                self.chartPlace.layer.shadowOpacity = 1
+                self.chartPlace.layer.shadowRadius = 15
+                self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
+            }) { (completed) in
+                // 2초 후에 사라지는 애니메이션
+                UIView.animate(withDuration: 0.5, delay: 1.0, options: .curveEaseOut, animations: {
+                    self.chartPlace.layer.shadowOpacity = 1
+                    self.chartPlace.layer.shadowRadius = 4
+                    self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
+                }, completion: nil)
+            }
+    }
+
     func setupUI(){
         self.backgroundColor = ColorGuide.userBackGround
         addSubview(healthName)
@@ -147,6 +219,9 @@ class UserRootView: UIView {
         addSubview(nowUserMyung)
         addSubview(nowUserText)
         addSubview(chartPlace)
+        addSubview(chartTopText)
+        addSubview(chartMidText)
+        addSubview(chartBottomText)
         addSubview(inBtn)
         addSubview(outBtn)
         
@@ -165,13 +240,13 @@ class UserRootView: UIView {
             $0.height.equalTo(50)
         }
         noticeBell.snp.makeConstraints {
-            $0.centerY.equalTo(noticePlace.snp.centerY)
+            $0.top.equalTo(noticePlace.snp.top).offset(18)
             $0.leading.equalTo(noticePlace.snp.leading).offset(16)
             $0.height.equalTo(16)
             $0.width.equalTo(16)
         }
         noticeText.snp.makeConstraints {
-            $0.centerY.equalTo(noticePlace.snp.centerY)
+            $0.top.equalTo(noticePlace.snp.top).offset(18)
             $0.leading.equalTo(noticePlace.snp.leading).offset(42)
         }
         yesterUserPlace.snp.makeConstraints {
@@ -215,6 +290,18 @@ class UserRootView: UIView {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(190)
+        }
+        chartTopText.snp.makeConstraints {
+            $0.top.equalTo(chartPlace.snp.top).offset(22)
+            $0.leading.equalTo(chartPlace.snp.leading).offset(30)
+        }
+        chartMidText.snp.makeConstraints {
+            $0.centerX.equalTo(chartPlace.snp.centerX)
+            $0.centerY.equalTo(chartPlace.snp.centerY)
+        }
+        chartBottomText.snp.makeConstraints {
+            $0.bottom.equalTo(chartPlace.snp.bottom).offset(-22)
+            $0.trailing.equalTo(chartPlace.snp.trailing).offset(-30)
         }
         inBtn.snp.makeConstraints {
             $0.top.equalTo(chartPlace.snp.bottom).offset(12)
