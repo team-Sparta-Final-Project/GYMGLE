@@ -11,15 +11,25 @@ import SwiftUI
 
 class UserRootViewController: UIViewController {
     
+    let first = UserRootView()
+    
     override func loadView() {
-        view = UserRootView()
+        view = first
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        first.inBtn.addTarget(self, action: #selector(inButtonClick), for: .touchUpInside)
                 
     }
     
+    @objc func inButtonClick(){
+        let QrCodeViewController = QrCodeViewController()
+        
+        self.present(QrCodeViewController, animated: true)
+    }
+
 }
 
 
