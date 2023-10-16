@@ -18,29 +18,33 @@ class UserRootView: UIView {
     let animationDuration = 2.0
     
     private lazy var healthName = UILabel().then {
-        $0.textColor = ColorGuide.white
+        $0.textColor = ColorGuide.black
         $0.font = FontGuide.size26Bold
         $0.text = "김기호"
     }
     private lazy var healthNameSub = UILabel().then {
-        $0.textColor = ColorGuide.white
+        $0.textColor = ColorGuide.black
         $0.font = FontGuide.size14Bold
         $0.text = "님 오늘도 힘내볼까요!"
     }
     private lazy var noticePlace = UIView().then {
-        $0.backgroundColor = ColorGuide.notice
+        $0.backgroundColor = ColorGuide.white
         $0.layer.cornerRadius = 20
         $0.tintColor = .white
+        $0.layer.shadowColor = ColorGuide.main.cgColor
+        $0.layer.shadowOpacity = 1
+        $0.layer.shadowRadius = 2
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(noticePlaceTapped)))
 
     }
     private lazy var noticeBell = UIImageView().then {
         $0.image = UIImage(named: "bell.fill")
-        $0.backgroundColor = .white
+        $0.backgroundColor = ColorGuide.black
     }
     private lazy var noticeText = UILabel().then {
-        $0.textColor = ColorGuide.white
-        $0.font = FontGuide.size14
+        $0.textColor = ColorGuide.black
+        $0.font = FontGuide.size14Bold
         $0.text = """
 이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
 이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
@@ -51,21 +55,21 @@ class UserRootView: UIView {
 """
     }
     private lazy var yesterUserPlace = UIView().then {
-        $0.backgroundColor = ColorGuide.userBackGround
+        $0.backgroundColor = ColorGuide.white
         $0.layer.cornerRadius = 20
         $0.layer.shadowColor = ColorGuide.main.cgColor
         $0.layer.shadowOpacity = 1
-        $0.layer.shadowRadius = 4
+        $0.layer.shadowRadius = 2
         $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(startNumberAnimation)))
     }
     private lazy var yesterUserNumberPlace = UIView().then {
-        $0.backgroundColor = ColorGuide.userBackGround
+        $0.backgroundColor = ColorGuide.white
         $0.clipsToBounds = true
         $0.addSubview(yesterUserNumber)
     }
     private lazy var yesterUserNumber = UILabel().then {
-        $0.textColor = ColorGuide.white
+        $0.textColor = ColorGuide.main
         $0.font = FontGuide.size50Bold
         $0.text = "66"
     }
@@ -80,16 +84,16 @@ class UserRootView: UIView {
         $0.text = "어제 이시간 이용객 수"
     }
     private lazy var nowUserPlace = UIView().then {
-        $0.backgroundColor = ColorGuide.userBackGround
+        $0.backgroundColor = ColorGuide.main
         $0.layer.cornerRadius = 20
-        $0.layer.shadowColor = ColorGuide.main.cgColor
+        $0.layer.shadowColor = ColorGuide.black.cgColor
         $0.layer.shadowOpacity = 1
-        $0.layer.shadowRadius = 4
+        $0.layer.shadowRadius = 2
         $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(startNumberAnimation2)))
     }
     private lazy var nowUserNumberPlace = UIView().then {
-        $0.backgroundColor = ColorGuide.userBackGround
+        $0.backgroundColor = ColorGuide.main
         $0.clipsToBounds = true
         $0.addSubview(nowUserNumber)
     }
@@ -99,17 +103,17 @@ class UserRootView: UIView {
         $0.text = "12"
     }
     private lazy var nowUserMyung = UILabel().then {
-        $0.textColor = ColorGuide.white
+        $0.textColor = ColorGuide.main
         $0.font = FontGuide.size14Bold
         $0.text = "명"
     }
     private lazy var nowUserText = UILabel().then {
-        $0.textColor = ColorGuide.main
+        $0.textColor = ColorGuide.white
         $0.font = FontGuide.size14Bold
         $0.text = "지금 헬스장 이용객 수"
     }
     private lazy var chartPlace = UIView().then {
-        $0.backgroundColor = ColorGuide.notice
+        $0.backgroundColor = ColorGuide.white
         $0.layer.cornerRadius = 20
         $0.layer.shadowColor = ColorGuide.goldTier.cgColor
         $0.layer.shadowOpacity = 1
@@ -118,26 +122,26 @@ class UserRootView: UIView {
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chartPlaceTapped)))
     }
     private lazy var chartTopText = UILabel().then {
-        $0.textColor = ColorGuide.white
+        $0.textColor = ColorGuide.main
         $0.font = FontGuide.size14Bold
         $0.text = "저번주 나의 운동량은.."
     }
     
     private lazy var chartMidText = UILabel().then {
-        $0.textColor = ColorGuide.white
+        $0.textColor = ColorGuide.goldTier
         $0.font = FontGuide.size32Bold
         $0.text = "상위 4% 에요!"
     }
     private lazy var chartBottomText = UILabel().then {
-        $0.textColor = ColorGuide.white
+        $0.textColor = ColorGuide.main
         $0.font = FontGuide.size14Bold
         $0.text = "와우! 운동 러버시군요!"
     }
     var inBtn = UIButton().then {
-        $0.backgroundColor = ColorGuide.white
-        $0.setBackgroundColor(ColorGuide.main, for: .highlighted)
-        $0.setTitleColor(ColorGuide.main, for: .normal)
-        $0.setTitleColor(ColorGuide.white, for: .highlighted)
+        $0.backgroundColor = ColorGuide.main
+        $0.setBackgroundColor(ColorGuide.black, for: .highlighted)
+        $0.setTitleColor(ColorGuide.white, for: .normal)
+        $0.setTitleColor(ColorGuide.main, for: .highlighted)
         $0.setTitle("입실하기", for: .normal)
         $0.titleLabel?.font = FontGuide.size14Bold
         $0.layer.cornerRadius = 20
@@ -145,7 +149,7 @@ class UserRootView: UIView {
     }
     private lazy var outBtn = UIButton().then {
         $0.backgroundColor = ColorGuide.main
-        $0.setBackgroundColor(ColorGuide.white, for: .highlighted)
+        $0.setBackgroundColor(ColorGuide.black, for: .highlighted)
         $0.setTitleColor(ColorGuide.white, for: .normal)
         $0.setTitleColor(ColorGuide.main, for: .highlighted)
         $0.setTitle("퇴실하기", for: .normal)
@@ -224,7 +228,7 @@ class UserRootView: UIView {
         
     }
     func setupUI(){
-        self.backgroundColor = ColorGuide.userBackGround
+        self.backgroundColor = ColorGuide.white
         addSubview(healthName)
         addSubview(healthNameSub)
         addSubview(noticePlace)

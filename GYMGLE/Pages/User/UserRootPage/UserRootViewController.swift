@@ -28,8 +28,6 @@ class UserRootViewController: UIViewController {
         let QrCodeViewController = QrCodeViewController()
         
         self.present(QrCodeViewController, animated: true)
-        
-        print("dsf")
     }
 
 }
