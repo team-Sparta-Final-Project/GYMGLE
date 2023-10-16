@@ -39,11 +39,11 @@ class AdminLoginView: UIView {
         $0.backgroundColor = .gray
     }
     
-    private lazy var registerButton = UIButton().then {
+    lazy var registerButton = UIButton().then {
         $0.buttonMakeUI(backgroundColor: .white, cornerRadius: 10, borderWidth: 0, borderColor: UIColor.clear.cgColor, setTitle: "새로운 헬스장 등록", font: FontGuide.size14Bold, setTitleColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.61))
     }
     
-    private lazy var userButton = UIButton().then {
+    lazy var userButton = UIButton().then {
         $0.buttonMakeUI(backgroundColor: .white, cornerRadius: 20, borderWidth: 0.5, borderColor: ColorGuide.shadowBorder.cgColor, setTitle: "회원모드", font: FontGuide.size14Bold, setTitleColor: ColorGuide.main)
     }
     

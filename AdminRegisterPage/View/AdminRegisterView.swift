@@ -69,7 +69,7 @@ class AdminRegisterView: UIView {
         $0.layer.addBorder([.bottom], color: .gray, width: 0.5)
     }
     
-    private lazy var validCheckButton = UIButton().then {
+    lazy var validCheckButton = UIButton().then {
         $0.buttonMakeUI(backgroundColor: .systemGray6, cornerRadius: 16, borderWidth: 0.5, borderColor: ColorGuide.shadowBorder.cgColor, setTitle: "확인", font: UIFont.systemFont(ofSize: 13), setTitleColor: ColorGuide.black)
     }
     
@@ -86,7 +86,7 @@ class AdminRegisterView: UIView {
         $0.layer.addBorder([.bottom], color: .gray, width: 0.5)
     }
     
-    private lazy var duplicationCheckButton = UIButton().then {
+    lazy var duplicationCheckButton = UIButton().then {
         $0.buttonMakeUI(backgroundColor: .systemGray6, cornerRadius: 16, borderWidth: 0.5, borderColor: ColorGuide.shadowBorder.cgColor, setTitle: "중복확인", font: UIFont.systemFont(ofSize: 13), setTitleColor: ColorGuide.black)
     }
     
@@ -103,7 +103,7 @@ class AdminRegisterView: UIView {
         $0.layer.addBorder([.bottom], color: .gray, width: 0.5)
     }
     
-    private var registerButton: UIButton = UIButton.GYMGLEButtonPreset("등록")
+    lazy var registerButton: UIButton = UIButton.GYMGLEButtonPreset("등록")
 
     // MARK: - Initialization
     

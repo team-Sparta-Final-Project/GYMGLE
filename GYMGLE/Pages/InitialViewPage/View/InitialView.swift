@@ -30,7 +30,7 @@ class InitialView: UIView {
     
     private var loginButton: UIButton = UIButton.GYMGLEButtonPreset("로그인")
     
-    private lazy var adminButton = UIButton().then {
+    lazy var adminButton = UIButton().then {
         $0.buttonMakeUI(backgroundColor: .white, cornerRadius: 20, borderWidth: 0.5, borderColor: ColorGuide.shadowBorder.cgColor, setTitle: "관리자모드", font: FontGuide.size14Bold, setTitleColor: ColorGuide.main)
     }
     
