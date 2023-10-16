@@ -50,19 +50,27 @@ extension UserTableView: UITableViewDataSource {
             let cell = EmptyCell()
             return cell
         }else if labelCellData.contains(cellData[indexPath.row]){
+            
             let cell = LabelCell()
+            if cellData[indexPath.row] == "추가 정보" {
+            }else{
+                cell.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
+            }
             cell.label.text = cellData[indexPath.row]
             if buttonCellData.contains(cellData[indexPath.row]) {
                 
                 cell.setButton(buttonText.first ?? "미설정")
                 buttonText.remove(at: 0)
             }
+            
             return cell
 
         }
         else {
             let cell = TextFieldCell()
-            cell.textField.placeholder = cellData[indexPath.row]
+            cell.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
+//            cell.textField.placeholder = cellData[indexPath.row]
+            cell.placeHolderLabel.text = cellData[indexPath.row]
             if buttonCellData.contains(cellData[indexPath.row]) {
                 
                 cell.setButton(buttonText.first ?? "미설정")

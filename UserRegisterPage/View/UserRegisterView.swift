@@ -5,7 +5,7 @@ class UserRegisterView: UIView {
     lazy var label = UILabel()
     lazy var tableView = UserTableView()
     lazy var button:UIButton = UIButton.GYMGLEButtonPreset("버튼 타이틀")
-    
+    lazy var textView = UITextView()
     
     //MARK: - View 자체 라이프사이클
     override init(frame: CGRect) {
@@ -22,7 +22,7 @@ class UserRegisterView: UIView {
         topLabel()
         bottomButton()
         centerTableView()
-        
+        addTextView()
     }
     //MARK: - 테이블뷰 configure
     func heightConfigure(cellHeight:Int, emptyCellHeight:Int){
@@ -61,9 +61,28 @@ class UserRegisterView: UIView {
         tableView.snp.makeConstraints{
             $0.top.equalTo(label.snp.bottom).offset(35)
             $0.left.right.equalToSuperview().inset(24)
-            $0.bottom.equalTo(button.snp.top).inset(-18)
+            $0.bottom.equalTo(button.snp.top).inset(-350)
         }
     }
+    //MARK: - 텍스트 뷰
+    private func addTextView(){
+        
+        textView.backgroundColor = .clear
+        textView.layer.borderWidth = 2
+        textView.layer.borderColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1).cgColor
+        textView.layer.cornerRadius = 10
+        self.addSubview(textView)
+        
+        
+        textView.snp.makeConstraints{
+            $0.left.right.equalToSuperview().inset(24)
+            $0.top.equalTo(tableView.snp.bottom).inset(10)
+            $0.bottom.equalTo(button.snp.top).offset(-264)
+        }
+    }
+    
+    
+    
     //MARK: - 바텀 버튼
     private func bottomButton(){
         

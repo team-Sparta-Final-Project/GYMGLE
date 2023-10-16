@@ -16,11 +16,17 @@ class CustomTextField: UITextField {
 }
 
 extension CustomTextField: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("테스트 - 수정시작됨")
-        print(textField.text)
-        
-    }
+    
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        self.backgroundColor = .cyan
+//        print("테스트 - 수정시작됨")
+//        
+//    }
+//
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        self.backgroundColor = .darkGray
+//        print("테스트 - 수정끝")
+//    }
     
     
 }
