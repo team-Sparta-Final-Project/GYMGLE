@@ -1,6 +1,7 @@
 import UIKit
 
 class UserManageView: UIView {
+    //test
     //MARK: - UI 컴포넌트 선언부
     lazy var label = UILabel()
     lazy var tableView = ManageTableView()
