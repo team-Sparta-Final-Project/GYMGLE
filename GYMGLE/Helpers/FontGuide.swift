@@ -34,9 +34,14 @@ public enum FontGuide {
                 
         return UIFont(descriptor: customFontDescriptor, size: size)
     }
+    static let size50 = customFont(size: 50, lineHeight: 40)
+    static let size50Bold = customFont(size: 50, lineHeight: 40, isBold: true)
     
     static let size32 = customFont(size: 32, lineHeight: 40)
     static let size32Bold = customFont(size: 32, lineHeight: 40, isBold: true)
+    
+    static let size26 = customFont(size: 26, lineHeight: 32)
+    static let size26Bold = customFont(size: 26, lineHeight: 32, isBold: true)
     
     static let size24 = customFont(size: 24, lineHeight: 32)
     static let size24Bold = customFont(size: 24, lineHeight: 32, isBold: true)

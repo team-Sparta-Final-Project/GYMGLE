@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0761A5222AD93D47002EECED /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0761A5212AD93D47002EECED /* Charts.framework */; };
+		07997FF52AD84390002ACFCB /* UserRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07997FF42AD84390002ACFCB /* UserRootView.swift */; };
+		07997FF72AD843A5002ACFCB /* UserRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07997FF62AD843A5002ACFCB /* UserRootViewController.swift */; };
+		07997FF92AD843BD002ACFCB /* UserRootModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07997FF82AD843BD002ACFCB /* UserRootModel.swift */; };
 		2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBB72AD6668200BFA23C /* AppDelegate.swift */; };
 		2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBB92AD6668200BFA23C /* SceneDelegate.swift */; };
 		2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBBB2AD6668200BFA23C /* ViewController.swift */; };
@@ -58,6 +62,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0761A5212AD93D47002EECED /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = System/Library/Frameworks/Charts.framework; sourceTree = SDKROOT; };
+		07997FF42AD84390002ACFCB /* UserRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootView.swift; path = UserRootPage/UserRootView.swift; sourceTree = SOURCE_ROOT; };
+		07997FF62AD843A5002ACFCB /* UserRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootViewController.swift; path = UserRootPage/UserRootViewController.swift; sourceTree = SOURCE_ROOT; };
+		07997FF82AD843BD002ACFCB /* UserRootModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootModel.swift; path = UserRootPage/UserRootModel.swift; sourceTree = SOURCE_ROOT; };
 		2730BBB42AD6668200BFA23C /* GYMGLE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GYMGLE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2730BBB72AD6668200BFA23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2730BBB92AD6668200BFA23C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +125,7 @@
 				2730BBFA2AD6BA1600BFA23C /* Then in Frameworks */,
 				2730BBF72AD6BA0200BFA23C /* QRCodeReader in Frameworks */,
 				2730BC132AD77C7F00BFA23C /* FirebaseAnalytics in Frameworks */,
+				0761A5222AD93D47002EECED /* Charts.framework in Frameworks */,
 				2730BC172AD77C7F00BFA23C /* FirebaseDatabase in Frameworks */,
 				2730BBE82AD66F0000BFA23C /* SnapKit in Frameworks */,
 			);
@@ -125,11 +134,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0761A5202AD93D47002EECED /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0761A5212AD93D47002EECED /* Charts.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2730BBAB2AD6668200BFA23C = {
 			isa = PBXGroup;
 			children = (
 				2730BBB62AD6668200BFA23C /* GYMGLE */,
 				2730BBB52AD6668200BFA23C /* Products */,
+				0761A5202AD93D47002EECED /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -231,7 +249,9 @@
 		2730BC392AD8084600BFA23C /* UserRootPage */ = {
 			isa = PBXGroup;
 			children = (
-				2730BC852ADA2F2F00BFA23C /* .gitkeep */,
+				07997FF42AD84390002ACFCB /* UserRootView.swift */,
+				07997FF62AD843A5002ACFCB /* UserRootViewController.swift */,
+				07997FF82AD843BD002ACFCB /* UserRootModel.swift */,
 			);
 			path = UserRootPage;
 			sourceTree = "<group>";
@@ -301,7 +321,8 @@
 				63879E4B2ADA7ABF00FA23BD /* ViewController */,
 				63879E4A2ADA7AB700FA23BD /* View */,
 			);
-			path = AdminNoticeDetailPage;
+			name = AdminNoticeDetailPage;
+			path = AdminNoticePage/AdminNoticeDetailPage;
 			sourceTree = "<group>";
 		};
 		2730BC442AD8D09400BFA23C /* View */ = {
@@ -575,6 +596,7 @@
 				63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */,
 				D14ECB422AD910AC00FF7853 /* AdminRegisterView.swift in Sources */,
 				2730BC8A2ADC1E1700BFA23C /* UserManageView.swift in Sources */,
+				07997FF52AD84390002ACFCB /* UserRootView.swift in Sources */,
 				2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */,
 				2730BC9D2ADC34BF00BFA23C /* CustomTextCell.swift in Sources */,
 				63AD94D42ADADBEF0019C478 /* AdminNoticeTableViewCell.swift in Sources */,
@@ -600,6 +622,11 @@
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
 				D14ECB402AD9109200FF7853 /* AdminRegisterViewController.swift in Sources */,
 				2730BC972ADC2DF500BFA23C /* ManageLabelCell.swift in Sources */,
+				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
+				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
+				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
+				07997FF72AD843A5002ACFCB /* UserRootViewController.swift in Sources */,
+				07997FF92AD843BD002ACFCB /* UserRootModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -740,6 +767,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GYMGLE/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -766,6 +794,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GYMGLE/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
