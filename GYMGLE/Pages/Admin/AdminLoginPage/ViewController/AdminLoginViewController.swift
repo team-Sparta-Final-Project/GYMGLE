@@ -37,6 +37,7 @@ private extension AdminLoginViewController {
     func addButtonMethod() {
         adminLoginView.userButton.addTarget(self, action: #selector(userButtonTapped), for: .touchUpInside)
         adminLoginView.registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
+        adminLoginView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
     }
     
     @objc func userButtonTapped() {
@@ -45,6 +46,11 @@ private extension AdminLoginViewController {
     
     @objc func registerButtonTapped() {
         let vc = AdminRegisterViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func loginButtonTapped() {
+        let vc = AdminRootViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
 }
