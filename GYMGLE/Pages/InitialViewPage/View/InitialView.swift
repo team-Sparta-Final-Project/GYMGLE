@@ -28,7 +28,7 @@ class InitialView: UIView {
         $0.font = FontGuide.size14
     }
     
-    private var loginButton: UIButton = UIButton.GYMGLEButtonPreset("로그인")
+    lazy var loginButton: UIButton = UIButton.GYMGLEButtonPreset("로그인")
     
     lazy var adminButton = UIButton().then {
         $0.buttonMakeUI(backgroundColor: .white, cornerRadius: 20, borderWidth: 0.5, borderColor: ColorGuide.shadowBorder.cgColor, setTitle: "관리자모드", font: FontGuide.size14Bold, setTitleColor: ColorGuide.main)

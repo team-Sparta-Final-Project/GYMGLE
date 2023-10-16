@@ -33,7 +33,7 @@ class AdminLoginView: UIView {
         $0.font = FontGuide.size14
     }
     
-    private var loginButton: UIButton = UIButton.GYMGLEButtonPreset("로그인")
+    lazy var loginButton: UIButton = UIButton.GYMGLEButtonPreset("로그인")
     
     private lazy var divider = UIView().then {
         $0.backgroundColor = .gray
