@@ -43,7 +43,7 @@ extension UIButton {
     func buttonImageMakeUI(image: String, color: UIColor, backgroundColor: UIColor, cornerRadius: CGFloat, shadowColor: CGColor, shadowOpacity: Float, shadowRadius: CGFloat) {
         self.backgroundColor = backgroundColor
         self.setImage(UIImage(systemName: "\(image)"), for: .normal) //선택 x
-        self.setImage(UIImage(systemName: "\(image)"), for: .selected) //선택 x
+        self.setImage(UIImage(systemName: "\(image)"), for: .selected) //선택 o
         self.tintColor = color // 아이콘 색상
         self.layer.cornerRadius = cornerRadius
         self.layer.shadowColor = shadowColor
@@ -52,6 +52,13 @@ extension UIButton {
         self.layer.shadowRadius = shadowRadius
         self.translatesAutoresizingMaskIntoConstraints = false
     }
+    
+    func buttonImageMakeUI(image: String, color: UIColor) {
+        self.setImage(UIImage(systemName: "\(image)"), for: .normal) //선택 x
+        self.tintColor = color // 아이콘 색상
+        self.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
     static func GYMGLEWhiteButtonPreset(_ title:String) -> UIButton{
         // 짐블 흰색 색 버튼 생성 메서드
         lazy var button = UIButton().then {

@@ -38,7 +38,7 @@ private extension InitialViewController {
     }
     
     @objc func loginButtonTapped() {
-        let vc = UserRootViewController()
+        let vc = TabbarViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
 }

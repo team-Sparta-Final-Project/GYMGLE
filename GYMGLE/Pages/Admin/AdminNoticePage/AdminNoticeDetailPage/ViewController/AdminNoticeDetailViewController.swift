@@ -20,6 +20,12 @@ final class AdminNoticeDetailViewController: UIViewController {
         super.viewDidLoad()
         viewSetting()
     }
+    
+    override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
+        navigationController?.navigationBar.isHidden = false
+    }
+
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }

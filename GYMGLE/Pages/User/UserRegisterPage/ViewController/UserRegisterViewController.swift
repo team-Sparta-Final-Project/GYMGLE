@@ -35,5 +35,10 @@ class UserRegisterViewController: UIViewController {
         self.view.backgroundColor = .white
     }
     
+    override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
+        navigationController?.navigationBar.isHidden = false
+    }
+
+    
 }
 //
