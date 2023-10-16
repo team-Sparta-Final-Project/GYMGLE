@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0744286D2ADD0B1B00EB7D05 /* QrCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0744286C2ADD0B1B00EB7D05 /* QrCodeViewController.swift */; };
+		0744286F2ADD0D8800EB7D05 /* QrCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0744286E2ADD0D8800EB7D05 /* QrCodeView.swift */; };
 		0761A5222AD93D47002EECED /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0761A5212AD93D47002EECED /* Charts.framework */; };
 		07997FF52AD84390002ACFCB /* UserRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07997FF42AD84390002ACFCB /* UserRootView.swift */; };
 		07997FF72AD843A5002ACFCB /* UserRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07997FF62AD843A5002ACFCB /* UserRootViewController.swift */; };
@@ -62,6 +64,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0744286C2ADD0B1B00EB7D05 /* QrCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrCodeViewController.swift; sourceTree = "<group>"; };
+		0744286E2ADD0D8800EB7D05 /* QrCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrCodeView.swift; sourceTree = "<group>"; };
 		0761A5212AD93D47002EECED /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = System/Library/Frameworks/Charts.framework; sourceTree = SDKROOT; };
 		07997FF42AD84390002ACFCB /* UserRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootView.swift; path = GYMGLE/Pages/User/UserRootPage/UserRootView.swift; sourceTree = SOURCE_ROOT; };
 		07997FF62AD843A5002ACFCB /* UserRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootViewController.swift; path = GYMGLE/Pages/User/UserRootPage/UserRootViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -244,9 +248,11 @@
 		2730BC392AD8084600BFA23C /* UserRootPage */ = {
 			isa = PBXGroup;
 			children = (
+				07997FF42AD84390002ACFCB /* UserRootView.swift */,
 				07997FF82AD843BD002ACFCB /* UserRootModel.swift */,
 				07997FF62AD843A5002ACFCB /* UserRootViewController.swift */,
-				07997FF42AD84390002ACFCB /* UserRootView.swift */,
+				0744286E2ADD0D8800EB7D05 /* QrCodeView.swift */,
+				0744286C2ADD0B1B00EB7D05 /* QrCodeViewController.swift */,
 			);
 			path = UserRootPage;
 			sourceTree = "<group>";
@@ -579,6 +585,7 @@
 				2730BC7A2AD9577C00BFA23C /* UserRegisterViewController.swift in Sources */,
 				D1E018672ADCEC0C00D1C53D /* AdminRootView.swift in Sources */,
 				D1E018632ADCEBE000D1C53D /* AdminNoticeView.swift in Sources */,
+				0744286D2ADD0B1B00EB7D05 /* QrCodeViewController.swift in Sources */,
 				63D855F42AD812C3008429BC /* FontGuide.swift in Sources */,
 				D1E018712ADCEC5C00D1C53D /* AdminLoginViewController.swift in Sources */,
 				63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */,
@@ -595,6 +602,7 @@
 				D1E018692ADCEC1A00D1C53D /* AdminRootViewController.swift in Sources */,
 				D1E018652ADCEBFA00D1C53D /* AdminNoticeViewController.swift in Sources */,
 				D1E0185F2ADCEB6700D1C53D /* AdminNoticeDetailView.swift in Sources */,
+				0744286F2ADD0D8800EB7D05 /* QrCodeView.swift in Sources */,
 				D1E018812ADCEE0000D1C53D /* CustomTextView.swift in Sources */,
 				2730BC8F2ADC206B00BFA23C /* CustomSearchBar.swift in Sources */,
 				2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */,

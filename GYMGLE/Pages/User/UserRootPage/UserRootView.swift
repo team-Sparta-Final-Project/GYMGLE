@@ -12,19 +12,20 @@ import Then
 import Charts
 
 class UserRootView: UIView {
-        
-    let players = ["ozil", "ramsy", "lasu", "auba"]
-    let goals = [5, 2, 15, 53]
+    
+    var currentValue = 0
+    let targetValue = 66
+    let animationDuration = 2.0
     
     private lazy var healthName = UILabel().then {
         $0.textColor = ColorGuide.white
         $0.font = FontGuide.size26Bold
-        $0.text = "만나 짐"
+        $0.text = "김기호"
     }
     private lazy var healthNameSub = UILabel().then {
         $0.textColor = ColorGuide.white
         $0.font = FontGuide.size14Bold
-        $0.text = "오늘도 힘내볼까요!"
+        $0.text = "님 오늘도 힘내볼까요!"
     }
     private lazy var noticePlace = UIView().then {
         $0.backgroundColor = ColorGuide.notice
@@ -56,6 +57,12 @@ class UserRootView: UIView {
         $0.layer.shadowOpacity = 1
         $0.layer.shadowRadius = 4
         $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(startNumberAnimation)))
+    }
+    private lazy var yesterUserNumberPlace = UIView().then {
+        $0.backgroundColor = ColorGuide.userBackGround
+        $0.clipsToBounds = true
+        $0.addSubview(yesterUserNumber)
     }
     private lazy var yesterUserNumber = UILabel().then {
         $0.textColor = ColorGuide.white
@@ -79,6 +86,12 @@ class UserRootView: UIView {
         $0.layer.shadowOpacity = 1
         $0.layer.shadowRadius = 4
         $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(startNumberAnimation2)))
+    }
+    private lazy var nowUserNumberPlace = UIView().then {
+        $0.backgroundColor = ColorGuide.userBackGround
+        $0.clipsToBounds = true
+        $0.addSubview(nowUserNumber)
     }
     private lazy var nowUserNumber = UILabel().then {
         $0.textColor = ColorGuide.white
@@ -113,14 +126,14 @@ class UserRootView: UIView {
     private lazy var chartMidText = UILabel().then {
         $0.textColor = ColorGuide.white
         $0.font = FontGuide.size32Bold
-        $0.text = "상위 34% 에요!"
+        $0.text = "상위 4% 에요!"
     }
     private lazy var chartBottomText = UILabel().then {
         $0.textColor = ColorGuide.white
         $0.font = FontGuide.size14Bold
-        $0.text = "꾸준함이 중요하죠!"
+        $0.text = "와우! 운동 러버시군요!"
     }
-    private lazy var inBtn = UIButton().then {
+    var inBtn = UIButton().then {
         $0.backgroundColor = ColorGuide.white
         $0.setBackgroundColor(ColorGuide.main, for: .highlighted)
         $0.setTitleColor(ColorGuide.main, for: .normal)
@@ -155,8 +168,6 @@ class UserRootView: UIView {
     var isNoticePlaceExpanded = false
 
         @objc func noticePlaceTapped() {
-            
-            
             if isNoticePlaceExpanded {
                 UIView.animate(withDuration: 0.3) {
                     self.noticePlace.snp.updateConstraints { make in
@@ -180,15 +191,6 @@ class UserRootView: UIView {
         }
     
     @objc func chartPlaceTapped() {
-//        chartPlace.layer.shadowOpacity = 1
-//        chartPlace.layer.shadowRadius = 10
-//        chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
-//
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-//            self.chartPlace.layer.shadowOpacity = 1
-//            self.chartPlace.layer.shadowRadius = 4
-//            self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
-//        }
         UIView.animate(withDuration: 0.5, animations: {
                 self.chartPlace.layer.shadowOpacity = 1
                 self.chartPlace.layer.shadowRadius = 15
@@ -202,7 +204,25 @@ class UserRootView: UIView {
                 }, completion: nil)
             }
     }
-
+    @objc func startNumberAnimation(){
+        let transition = CATransition()
+                transition.duration = 1
+                transition.timingFunction = .init(name: .easeInEaseOut)
+                transition.type = .push
+                transition.subtype = .fromTop
+                yesterUserNumber.layer.add(transition, forKey: CATransitionType.push.rawValue)
+    }
+    @objc func startNumberAnimation2(){
+        let transition = CATransition()
+                transition.duration = 1
+                transition.timingFunction = .init(name: .easeInEaseOut)
+                transition.type = .push
+                transition.subtype = .fromTop
+                nowUserNumber.layer.add(transition, forKey: CATransitionType.push.rawValue)
+    }
+    @objc func reloadView(){
+        
+    }
     func setupUI(){
         self.backgroundColor = ColorGuide.userBackGround
         addSubview(healthName)
@@ -211,11 +231,13 @@ class UserRootView: UIView {
         addSubview(noticeBell)
         addSubview(noticeText)
         addSubview(yesterUserPlace)
-        addSubview(yesterUserNumber)
+        addSubview(yesterUserNumberPlace)
+//        addSubview(yesterUserNumber)
         addSubview(yesterUserMyung)
         addSubview(yesterUserText)
         addSubview(nowUserPlace)
-        addSubview(nowUserNumber)
+        addSubview(nowUserNumberPlace)
+//        addSubview(nowUserNumber)
         addSubview(nowUserMyung)
         addSubview(nowUserText)
         addSubview(chartPlace)
@@ -230,7 +252,7 @@ class UserRootView: UIView {
             $0.leading.equalToSuperview().offset(20)
         }
         healthNameSub.snp.makeConstraints {
-            $0.bottom.equalTo(healthName.snp.bottom).offset(0)
+            $0.bottom.equalTo(healthName.snp.bottom).offset(-4)
             $0.leading.equalTo(healthName.snp.trailing).offset(4)
         }
         noticePlace.snp.makeConstraints {
@@ -255,9 +277,15 @@ class UserRootView: UIView {
             $0.top.equalTo(noticePlace.snp.bottom).offset(12)
             $0.height.equalTo(170)
         }
-        yesterUserNumber.snp.makeConstraints {
+        yesterUserNumberPlace.snp.makeConstraints {
             $0.centerY.equalTo(yesterUserPlace.snp.centerY).offset(-5)
             $0.centerX.equalTo(yesterUserPlace.snp.centerX).offset(-10)
+            $0.width.equalTo(120)
+            $0.height.equalTo(50)
+        }
+        yesterUserNumber.snp.makeConstraints {
+            $0.centerY.equalTo(yesterUserNumberPlace.snp.centerY).offset(0)
+            $0.centerX.equalTo(yesterUserNumberPlace.snp.centerX).offset(0)
         }
         yesterUserMyung.snp.makeConstraints {
             $0.bottom.equalTo(yesterUserNumber.snp.bottom).offset(-10)
@@ -272,6 +300,12 @@ class UserRootView: UIView {
             $0.width.equalTo(170)
             $0.top.equalTo(noticePlace.snp.bottom).offset(12)
             $0.height.equalTo(170)
+        }
+        nowUserNumberPlace.snp.makeConstraints {
+            $0.centerY.equalTo(nowUserPlace.snp.centerY).offset(-5)
+            $0.centerX.equalTo(nowUserPlace.snp.centerX).offset(-10)
+            $0.width.equalTo(120)
+            $0.height.equalTo(50)
         }
         nowUserNumber.snp.makeConstraints {
             $0.centerY.equalTo(nowUserPlace.snp.centerY).offset(-5)
