@@ -35,6 +35,7 @@
 		2730BC972ADC2DF500BFA23C /* ManageLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC962ADC2DF500BFA23C /* ManageLabelCell.swift */; };
 		2730BC992ADC2E2900BFA23C /* ManageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC982ADC2E2900BFA23C /* ManageTableView.swift */; };
 		630A0BEE2AD9269100525A6E /* Extension_UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630A0BED2AD9269100525A6E /* Extension_UILabel.swift */; };
+		630CE14B2ADD1B5E001EC547 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE14A2ADD1B5E001EC547 /* TabbarViewController.swift */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
@@ -83,6 +84,7 @@
 		2730BC962ADC2DF500BFA23C /* ManageLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageLabelCell.swift; sourceTree = "<group>"; };
 		2730BC982ADC2E2900BFA23C /* ManageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageTableView.swift; sourceTree = "<group>"; };
 		630A0BED2AD9269100525A6E /* Extension_UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UILabel.swift; sourceTree = "<group>"; };
+		630CE14A2ADD1B5E001EC547 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				63D855EF2AD8126F008429BC /* Extension */,
 				63D855EE2AD81261008429BC /* Application */,
 				2730BBBB2AD6668200BFA23C /* ViewController.swift */,
+				630CE14A2ADD1B5E001EC547 /* TabbarViewController.swift */,
 				2730BC242AD7E6FB00BFA23C /* Model */,
 				2730BC2A2AD7FE3B00BFA23C /* Pages */,
 				2730BBC52AD6668400BFA23C /* LaunchScreen.storyboard */,
@@ -585,6 +588,7 @@
 				D1E0186B2ADCEC2C00D1C53D /* AdminRegisterView.swift in Sources */,
 				2730BC8A2ADC1E1700BFA23C /* UserManageView.swift in Sources */,
 				07997FF52AD84390002ACFCB /* UserRootView.swift in Sources */,
+				630CE14B2ADD1B5E001EC547 /* TabbarViewController.swift in Sources */,
 				D1E0186D2ADCEC3800D1C53D /* AdminRegisterViewController.swift in Sources */,
 				2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */,
 				2730BC992ADC2E2900BFA23C /* ManageTableView.swift in Sources */,
