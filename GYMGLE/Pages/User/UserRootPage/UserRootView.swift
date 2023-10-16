@@ -74,7 +74,7 @@ class UserRootView: UIView {
         $0.text = "66"
     }
     private lazy var yesterUserMyung = UILabel().then {
-        $0.textColor = ColorGuide.white
+        $0.textColor = ColorGuide.main
         $0.font = FontGuide.size14Bold
         $0.text = "명"
     }
@@ -103,7 +103,7 @@ class UserRootView: UIView {
         $0.text = "12"
     }
     private lazy var nowUserMyung = UILabel().then {
-        $0.textColor = ColorGuide.main
+        $0.textColor = ColorGuide.white
         $0.font = FontGuide.size14Bold
         $0.text = "명"
     }
