@@ -16,13 +16,13 @@ class InitialView: UIView {
         $0.text = "로그인"
     }
     
-    private lazy var idTextField = UITextField().then {
+    lazy var idTextField = UITextField().then {
         $0.borderStyle = .roundedRect
         $0.placeholder = "아이디"
         $0.font = FontGuide.size14
     }
     
-    private lazy var passwordTextField = UITextField().then {
+    lazy var passwordTextField = UITextField().then {
         $0.borderStyle = .roundedRect
         $0.placeholder = "비밀번호"
         $0.font = FontGuide.size14
