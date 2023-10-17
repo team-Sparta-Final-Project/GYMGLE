@@ -13,17 +13,17 @@ import Charts
 
 class UserRootView: UIView {
     
-    var user: User? {
-        didSet {
-            healthName.text = user?.name
-            let isGym = user?.isInGym
-            if isGym == true{
-                nowUserNumber.text = "1"
-            }else{
-                nowUserNumber.text = "0"
-            }
-        }
-    }
+//    var user: User? {
+//        didSet {
+//            healthName.text = user?.name
+//            let isGym = user?.isInGym
+//            if isGym == true{
+//                nowUserNumber.text = "1"
+//            }else{
+//                nowUserNumber.text = "0"
+//            }
+//        }
+//    }
     var noticeWrite: Notice? {
         didSet {
             noticeText.text = noticeWrite?.content
@@ -47,7 +47,7 @@ class UserRootView: UIView {
     private lazy var healthName = UILabel().then {
         $0.textColor = ColorGuide.black
         $0.font = FontGuide.size26Bold
-        $0.text = user?.name
+        $0.text = "김기호"
     }
     private lazy var healthNameSub = UILabel().then {
         $0.textColor = ColorGuide.black
@@ -254,6 +254,21 @@ class UserRootView: UIView {
     @objc func reloadView(){
         
     }
+    //❗️
+    // MARK: - 데이터 전달 및 받기
+    
+    func userDataSetting(userName: String, gymInUserCount: String, yesterUserCount: String) {
+        healthName.text = userName
+        nowUserNumber.text = gymInUserCount
+        yesterUserNumber.text = yesterUserCount
+    }
+
+
+    
+    
+    
+    
+    //❗️
     func setupUI(){
         self.backgroundColor = ColorGuide.white
         addSubview(healthName)
