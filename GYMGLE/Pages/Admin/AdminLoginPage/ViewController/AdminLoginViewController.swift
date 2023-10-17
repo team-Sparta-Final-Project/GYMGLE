@@ -10,6 +10,7 @@ import UIKit
 class AdminLoginViewController: UIViewController {
     
     private let adminLoginView = AdminLoginView()
+    let dataTest = DataTest.shared
     
     override func loadView() {
         view = adminLoginView
@@ -54,7 +55,19 @@ private extension AdminLoginViewController {
     }
     
     @objc func loginButtonTapped() {
-        let vc = AdminRootViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        
+        for gymInfo in dataTest.gymList {
+            if gymInfo.gymAccount.id == adminLoginView.idTextField.text && gymInfo.gymAccount.password == adminLoginView.passwordTextField.text {
+                let vc = AdminRootViewController()
+                navigationController?.pushViewController(vc, animated: true)
+                return
+            }
+        }
+        
+        let alert = UIAlertController(title: "로그인 실패",
+                                      message: "유효한 계정이 아닙니다.",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }

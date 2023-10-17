@@ -23,7 +23,6 @@ class TextFieldCell:UITableViewCell {
         textField.backgroundColor = .clear
         
         self.layer.frame.size.width = 344.5
-//        self.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
         self.contentView.clipsToBounds = true
         
         makeUI()
@@ -31,7 +30,6 @@ class TextFieldCell:UITableViewCell {
         self.contentView.addSubview(placeHolderLabel)
         self.contentView.addSubview(textField)
         
-//        placeHolderLabel.backgroundColor = .blue
         
         placeHolderLabel.snp.makeConstraints{
             $0.left.equalToSuperview()
@@ -94,5 +92,9 @@ extension TextFieldCell: UITextFieldDelegate{
         }
 
     }
-    
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        print("테스트 - 텍스트필드 수정중...")        
+        return true
+    }
 }
