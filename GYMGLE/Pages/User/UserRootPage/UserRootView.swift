@@ -12,15 +12,34 @@ import Then
 import Charts
 
 class UserRootView: UIView {
-//    
-//    var user: User? {
-//        didSet {
-//            healthName.text = user?.name
-//        }
-//    }
-//
-//    
-    let userMore = UserRootViewController()
+    
+    var user: User? {
+        didSet {
+            healthName.text = user?.name
+            let isGym = user?.isInGym
+            if isGym == true{
+                nowUserNumber.text = "1"
+            }else{
+                nowUserNumber.text = "0"
+            }
+        }
+    }
+    var noticeWrite: Notice? {
+        didSet {
+            noticeText.text = noticeWrite?.content
+        }
+    }
+    var sinceTime: InAndOut? {
+        didSet {
+            if let sinceTime = sinceTime {
+                let minutes = sinceTime.sinceInAndOutTime / 60
+                chartMidText.text = "\(minutes) 분"
+            } else {
+                chartMidText.text = "운동을 안하셨군요?"
+            }
+        }
+    }
+    
     var currentValue = 0
     let targetValue = 66
     let animationDuration = 2.0
@@ -28,7 +47,7 @@ class UserRootView: UIView {
     private lazy var healthName = UILabel().then {
         $0.textColor = ColorGuide.black
         $0.font = FontGuide.size26Bold
-        $0.text = "아뇨"
+        $0.text = user?.name
     }
     private lazy var healthNameSub = UILabel().then {
         $0.textColor = ColorGuide.black
@@ -89,7 +108,7 @@ class UserRootView: UIView {
     private lazy var yesterUserText = UILabel().then {
         $0.textColor = ColorGuide.main
         $0.font = FontGuide.size14Bold
-        $0.text = "어제 이시간 이용객 수"
+        $0.text = "저번 주 이시간 이용객 수"
     }
     private lazy var nowUserPlace = UIView().then {
         $0.backgroundColor = ColorGuide.main

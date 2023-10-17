@@ -44,11 +44,11 @@ class DataTest {
                        
                        gymInAndOutLog: [InAndOut(id: "sdasd",
                                                  inTime: Date(),
-                                                 outTime: Date()),
+                                                 outTime: Date(), sinceInAndOutTime: 1212),
                                         
                                         InAndOut(id: "sdasd",
                                                  inTime: Date(),
-                                                 outTime: Date())
+                                                 outTime: Date(), sinceInAndOutTime: 1212)
                        ]
     )
 
