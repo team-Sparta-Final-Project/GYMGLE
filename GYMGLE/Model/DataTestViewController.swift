@@ -43,20 +43,20 @@ final class DataTest {
                        
                        noticeList: [Notice(date: Date(),
                                            content: "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼"),
-                                    Notice(date: datecomponent(1, 8, 12),
+                                    Notice(date: datecomponent(month: 1, day: 8, hour: 12),
                                                         content: "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼"),
-                                    Notice(date: datecomponent(1, 1, 12),
+                                    Notice(date: datecomponent(month: 1, day: 1, hour: 12),
                                                         content: "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼")
                        ],
                    
 
                        gymInAndOutLog: [InAndOut(id: "sdasd",
                                                  inTime: datecomponent(month: 1, day: 8, hour: 12),
-                                                 outTime: datecomponent(month: 1, day: 8, hour: 14)),
+                                                 outTime: datecomponent(month: 1, day: 8, hour: 14), sinceInAndOutTime: 12),
                                         
                                         InAndOut(id: "sdasd",
                                                  inTime: datecomponent(month: 1, day: 1, hour: 12),
-                                                 outTime: datecomponent(month: 1, day: 1, hour: 14))
+                                                 outTime: datecomponent(month: 1, day: 1, hour: 14), sinceInAndOutTime: 12)
                        ]
     )
     
