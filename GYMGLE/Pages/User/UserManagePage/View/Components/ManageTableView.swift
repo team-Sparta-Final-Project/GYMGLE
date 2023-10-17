@@ -4,9 +4,7 @@ class ManageTableView: UITableView {
     
     //MARK: - 셀 설정
     var cellData:[String] = ["회원 이름","","회원 전화번호","","회원 아이디","","회원 비밀번호","","등록 기간","","추가 정보"]
-    var labelCellData:[String] = ["등록 기간","","추가 정보"]
-    var buttonCellData:[String] = ["회원 아이디"]
-    var buttonText:[String] = ["중복 확인","확인"]
+    var phoneData:[String] = []
     var cellHeight:Int = 40
     
     //MARK: - 라이프사이클
@@ -46,7 +44,7 @@ extension ManageTableView: UITableViewDataSource {
         
         let cell = ManageLabelCell()
         cell.name.text = cellData[indexPath.row]
-        cell.phone.text = "01011112222"
+        cell.phone.text = phoneData[indexPath.row]
         cell.gender.text = "남"
         
         return cell

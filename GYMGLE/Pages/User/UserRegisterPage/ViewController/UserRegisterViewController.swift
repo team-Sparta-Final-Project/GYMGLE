@@ -14,9 +14,9 @@ class UserRegisterViewController: UIViewController {
     let cellHeight = 45
     let emptyCellHeight = 24
     
+    let viewConfigure = UserRegisterView()
+    
     override func loadView() {
-        let viewConfigure = UserRegisterView()
-        
         viewConfigure.heightConfigure(cellHeight: cellHeight, emptyCellHeight: emptyCellHeight)
         viewConfigure.dataSourceConfigure(
             cells: cells,
@@ -33,6 +33,8 @@ class UserRegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        viewConfigure.button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
@@ -40,5 +42,15 @@ class UserRegisterViewController: UIViewController {
     }
 
     
+    @objc func buttonClicked(){
+        print("buttonClicked")
+        let nameCell = self.viewConfigure.tableView.subviews[6] as? UITableViewCell
+        let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
+        guard let nameText = nameTextField?.text else { return }
+        let phoneCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
+        let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
+        guard let phoneText = phoneTextField?.text else { return }
+        
+        DataManager.addGymUser(name: nameText, number: phoneText)
+    }
 }
-//
