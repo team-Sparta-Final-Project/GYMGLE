@@ -12,7 +12,15 @@ import Then
 import Charts
 
 class UserRootView: UIView {
-    
+//    
+//    var user: User? {
+//        didSet {
+//            healthName.text = user?.name
+//        }
+//    }
+//
+//    
+    let userMore = UserRootViewController()
     var currentValue = 0
     let targetValue = 66
     let animationDuration = 2.0
@@ -20,7 +28,7 @@ class UserRootView: UIView {
     private lazy var healthName = UILabel().then {
         $0.textColor = ColorGuide.black
         $0.font = FontGuide.size26Bold
-        $0.text = "김기호"
+        $0.text = "아뇨"
     }
     private lazy var healthNameSub = UILabel().then {
         $0.textColor = ColorGuide.black
