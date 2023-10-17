@@ -14,9 +14,15 @@ class UserRootViewController: UIViewController {
     let first = UserRootView()
     var userListArray: [User] = []
     let userDataManager = UserDataManager()
+    var user: User?
+    var gymInfo: GymInfo?
+    
+    
     override func loadView() {
         view = first
+        
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +33,14 @@ class UserRootViewController: UIViewController {
         dataSetting()
     }
     
-    @objc func inButtonClick(){
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getLastWeek()
+        
+    }
+    
+    @objc func inButtonClick() {
         let QrCodeViewController = QrCodeViewController()
         
         self.present(QrCodeViewController, animated: true)
@@ -37,49 +50,66 @@ class UserRootViewController: UIViewController {
         var name = userListArray[0].name //김기호
         var gymInCount = String(userListArray.filter{$0.isInGym == true}.count) // 4
         
-        
         first.userDataSetting(userName: name, gymInUserCount: gymInCount, yesterUserCount: "22")
     }
     
-    
-    
+    func getLastWeek() {
+        let log = gymInfo?.gymInAndOutLog
+        
+        let currentDate = Date()
+        
+        let calendar = Calendar.current
+        let lastWeek = calendar.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
+        
+        let filteredUsers = log?.filter { user in
+            let inTime = user.inTime
+            let outTime = user.outTime
+            if inTime <= lastWeek && outTime >= lastWeek {
+                return true
+            }
+            return false
+        }
+        if let userCount = filteredUsers?.count {
+            first.yesterUserNumber.text = String(userCount)
+        }
+    }
 }
-    
+
 
 
 //시간 차이나오게 하는 코드
 //let timeDifference = endSubscriptionDate.timeIntervalSince(startSubscriptionDate)
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //#if DEBUG
 //
 //struct ViewControllerRepresentable: UIViewControllerRepresentable{
-//    
+//
 //    //    update
 //    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-//        
+//
 //    }
 //    @available(iOS 13.0, *)
 //    func makeUIViewController(context: Context) -> UIViewController {
 //        UserRootViewController()
 //    }
 //    //    makeui
-//    
+//
 //}
 //
 //
@@ -87,7 +117,7 @@ class UserRootViewController: UIViewController {
 //    static var previews: some View{
 //        ViewControllerRepresentable()
 //            .previewDisplayName("아이폰 14")
-//        
+//
 //    }
 //}
 //

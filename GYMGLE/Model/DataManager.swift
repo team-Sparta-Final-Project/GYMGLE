@@ -50,10 +50,10 @@ var gyms:GymInfo = GymInfo(gymAccount: Account(id: "사장계정",
                            
                            gymInAndOutLog: [InAndOut(id: "회원1",
                                                      inTime: Date(),
-                                                     outTime: Date(), sinceInAndOutTime: 1212),
+                                                     outTime: Date(), sinceInAndOutTime: 12),
                                             
                                             InAndOut(id: "회원2",
                                                      inTime: Date(),
-                                                     outTime: Date(), sinceInAndOutTime: 1212)
+                                                     outTime: Date(), sinceInAndOutTime: 12)
                            ]
         )
