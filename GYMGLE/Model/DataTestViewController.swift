@@ -13,7 +13,7 @@ final class DataTest {
     
     lazy var test = GymInfo(gymAccount: Account(id: "asdff",
                                            password: "asdff",
-                                           accountType: 1),
+                                           accountType: 0),
                        gymName: "aksd",
                        gymPhoneNumber: "01-03132",
                        gymnumber: "0123456789",
@@ -21,7 +21,7 @@ final class DataTest {
                        gymUserList: [
                         User(account: Account(id: "asd",
                                               password: "asd",
-                                              accountType: 1),
+                                              accountType: 2),
                                               name: "asd",
                                               number: "01031023",
                                               startSubscriptionDate: Date(),
@@ -31,7 +31,7 @@ final class DataTest {
                         
                         User(account: Account(id: "asdf",
                                               password: "asdf",
-                                              accountType: 1),
+                                              accountType: 2),
                                               name: "asdf",
                                               number: "01031024",
                                               startSubscriptionDate: Date(),

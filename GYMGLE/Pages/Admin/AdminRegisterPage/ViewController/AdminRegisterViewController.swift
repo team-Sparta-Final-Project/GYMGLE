@@ -123,7 +123,7 @@ private extension AdminRegisterViewController {
            let gymName = adminRegisterView.adminNameTextField.text,
            let gymPhoneNumber = adminRegisterView.adminNameTextField.text,
            let gymNumber = adminRegisterView.registerNumberTextField.text {
-            let account = Account(id: id, password: password, accountType: 3)
+            let account = Account(id: id, password: password, accountType: 0)
             let gymInfo = GymInfo(gymAccount: account, gymName: gymName, gymPhoneNumber: gymPhoneNumber, gymnumber: gymNumber, gymUserList: [], noticeList: [], gymInAndOutLog: [])
             
             if id.count >= 1 && password.count >= 1 && gymName.count >= 1 && gymPhoneNumber.count >= 1 && gymNumber.count == 10 {
