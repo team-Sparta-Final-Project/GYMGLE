@@ -59,6 +59,7 @@ private extension AdminLoginViewController {
         for gymInfo in dataTest.gymList {
             if gymInfo.gymAccount.id == adminLoginView.idTextField.text && gymInfo.gymAccount.password == adminLoginView.passwordTextField.text {
                 let vc = AdminRootViewController()
+                vc.gymInfo = gymInfo
                 navigationController?.pushViewController(vc, animated: true)
                 return
             }

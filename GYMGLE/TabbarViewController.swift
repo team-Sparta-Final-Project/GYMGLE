@@ -8,20 +8,31 @@
 import UIKit
 
 final class TabbarViewController: UITabBarController {
+    
+    var user: User?
+    var gymInfo: GymInfo?
+    
     enum TabBarMenu: Int {
         case userRootVC = 0
         case initialVC
         case userRootVC2
         case initialVC2
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setTabControllers()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setTabControllers()
         self.delegate = self
     }
     
     func setTabControllers() {
         let userRootVC = UserRootViewController()
+        userRootVC.user = user
+        userRootVC.gymInfo = gymInfo
         let naviUserRootVC = UINavigationController(rootViewController: userRootVC)
         
         let initialVC = InitialViewController()

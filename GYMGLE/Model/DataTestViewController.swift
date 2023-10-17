@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class DataTest {
+class DataTest {
     //test1
 
     static let shared = DataTest()
@@ -16,7 +16,7 @@ final class DataTest {
                                            password: "asdff",
                                            accountType: 0),
                        gymName: "aksd",
-                       gymPhoneNumber: "01-03132",
+                       gymPhoneNumber: "010-0313-2222",
                        gymnumber: "0123456789",
                        
                        gymUserList: [
@@ -28,7 +28,7 @@ final class DataTest {
                                               startSubscriptionDate: Date(),
                                               endSubscriptionDate: Date(),
                                               userInfo: "addwd",
-                                              isInGym: false),
+                                              isInGym: true),
                         
                         User(account: Account(id: "asdf",
                                               password: "asdf",
@@ -43,20 +43,20 @@ final class DataTest {
                        
                        noticeList: [Notice(date: Date(),
                                            content: "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼"),
-                                    Notice(date: datecomponent(1, 8, 12),
+                                    Notice(date: datecomponent(month: 1, day: 8, hour: 12),
                                                         content: "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼"),
-                                    Notice(date: datecomponent(1, 1, 12),
+                                    Notice(date: datecomponent(month: 1, day: 1, hour: 12),
                                                         content: "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼")
                        ],
                    
 
                        gymInAndOutLog: [InAndOut(id: "sdasd",
-                                                 inTime: datecomponent(month: 1, day: 8, hour: 12),
-                                                 outTime: datecomponent(month: 1, day: 8, hour: 14)),
+                                                 inTime: Date(timeIntervalSinceNow: -604800),
+                                                 outTime: Date(timeIntervalSinceNow: -601200), sinceInAndOutTime: 12),
                                         
-                                        InAndOut(id: "sdasd",
-                                                 inTime: datecomponent(month: 1, day: 1, hour: 12),
-                                                 outTime: datecomponent(month: 1, day: 1, hour: 14))
+                                        InAndOut(id: "sdas",
+                                                 inTime: Date(timeIntervalSinceNow: -604800),
+                                                 outTime: Date(timeIntervalSinceNow: -601200), sinceInAndOutTime: 12)
                        ]
     )
     
