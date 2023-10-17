@@ -12,4 +12,5 @@ struct InAndOut {
     var id: String
     var inTime: Date
     var outTime: Date
+    var sinceInAndOutTime : Double
 }
