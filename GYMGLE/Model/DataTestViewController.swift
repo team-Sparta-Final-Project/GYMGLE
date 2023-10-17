@@ -9,6 +9,7 @@ import UIKit
 
 final class DataTest {
     //test1
+
     static let shared = DataTest()
     
     lazy var test = GymInfo(gymAccount: Account(id: "asdff",
@@ -41,9 +42,14 @@ final class DataTest {
                        ],
                        
                        noticeList: [Notice(date: Date(),
-                                           content: "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼")
+                                           content: "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼"),
+                                    Notice(date: datecomponent(1, 8, 12),
+                                                        content: "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼"),
+                                    Notice(date: datecomponent(1, 1, 12),
+                                                        content: "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼")
                        ],
-                       
+                   
+
                        gymInAndOutLog: [InAndOut(id: "sdasd",
                                                  inTime: datecomponent(month: 1, day: 8, hour: 12),
                                                  outTime: datecomponent(month: 1, day: 8, hour: 14)),
@@ -55,6 +61,11 @@ final class DataTest {
     )
     
     lazy var gymList: [GymInfo] = [test]
+  
+  
+      func getDummyData() -> GymInfo {
+        return self.test
+    }
     
     func datecomponent(month: Int, day: Int, hour: Int) -> Date {
         var components = DateComponents()
