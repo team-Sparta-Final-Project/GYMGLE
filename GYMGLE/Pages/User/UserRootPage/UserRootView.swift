@@ -20,7 +20,7 @@ class UserRootView: UIView {
 //    }
 //
 //    
-    let userMore = UserRootViewController()
+    //let userMore = UserRootViewController()
     var currentValue = 0
     let targetValue = 66
     let animationDuration = 2.0
