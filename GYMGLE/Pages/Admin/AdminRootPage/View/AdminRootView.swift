@@ -37,7 +37,7 @@ final class AdminRootView: UIView {
     }()
     lazy var gymSettingButton: UIButton = {
         let button = UIButton()
-        button.buttonMakeUI(backgroundColor: .white, cornerRadius: 16, borderWidth: 1.5, borderColor: ColorGuide.textHint.cgColor, setTitle: "개인/보안", font: FontGuide.size16, setTitleColor: ColorGuide.main)
+        button.buttonMakeUI(backgroundColor: .white, cornerRadius: 16, borderWidth: 1.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "개인/보안", font: FontGuide.size16, setTitleColor: ColorGuide.main)
         return button
     }()
     // 회원등록 버튼
@@ -81,6 +81,11 @@ final class AdminRootView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func dataSetting(_ gymName: String,_ gymNumber: String) {
+        gymNameLabel.text = gymName
+        gymNumberLabel.text = gymNumber
+    }
 }
 
 // MARK: - extension
@@ -112,7 +117,7 @@ private extension AdminRootView {
         ])
     }
     func middleMakeUI() {
-        var middleView = [gymUserRegisterButton, gymUserManageButton, gymQRCodeButton, gymNoticeButton]
+        let middleView = [gymUserRegisterButton, gymUserManageButton, gymQRCodeButton, gymNoticeButton]
         for view in middleView {
             self.addSubview(view)
         }

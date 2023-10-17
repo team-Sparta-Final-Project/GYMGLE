@@ -10,10 +10,8 @@ import UIKit
 final class AdminNoticeViewController: UIViewController {
 
     // MARK: - dummyData
-    
-    let nameDummyData = ["만나짐", "만나짐", "만나짐", "만나짐", "만나짐", "만나짐", "만나짐", "만나짐"]
-    let contentDummyData = ["추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼", "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼", "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼", "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼", "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼", "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼", "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼", "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼"]
-    let dateDummyData = ["10/10", "10/10", "10/10", "10/10", "10/10", "10/10", "10/10", "10/10"]
+    private let dummyDataManager = DataTest()
+    var dummyDataList: [GymInfo] = []
 
     private let adminNoticeView = AdminNoticeView()
     
@@ -23,6 +21,8 @@ final class AdminNoticeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
+        dummyDataList.append(dummyDataManager.test)
+        print(dummyDataList[0].noticeList)
         adminNoticeView.noticeTableView.reloadData()
     }
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
@@ -49,6 +49,17 @@ private extension AdminNoticeViewController {
         adminNoticeView.noticeTableView.rowHeight = UITableView.automaticDimension
         adminNoticeView.noticeTableView.register(AdminNoticeTableViewCell.self, forCellReuseIdentifier: AdminNoticeTableViewCell.identifier)
     }
+    func dateToString(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+    
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .full
+        formatter.dateFormat = "MM/dd"
+
+        return formatter.string(from: date)
+    }
+   
 }
 
 // MARK: -  @objc func
@@ -62,15 +73,16 @@ extension AdminNoticeViewController {
 
 extension AdminNoticeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return nameDummyData.count
+        return dummyDataList.first(where: {$0.gymName == "만나짐"})!.noticeList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AdminNoticeTableViewCell.identifier, for: indexPath) as! AdminNoticeTableViewCell
+        var date = dateToString(date: dummyDataList.first(where: {$0.gymName == "만나짐"})!.noticeList[indexPath.row].date)
+        cell.nameLabel.text = "만나짐"
+        cell.contentLabel.text = dummyDataList.first(where: {$0.gymName == "만나짐"})!.noticeList[indexPath.row].content
+        cell.dateLabel.text = date
         
-        cell.nameLabel.text = nameDummyData[indexPath.row]
-        cell.contentLabel.text = contentDummyData[indexPath.row]
-        cell.dateLabel.text = dateDummyData[indexPath.row]
         cell.selectionStyle = .none
         tableView.separatorStyle = .none
         return cell
