@@ -10,7 +10,7 @@ import UIKit
 final class AdminRootViewController: UIViewController {
 
     private let adminRootView = AdminRootView()
-    
+    private let dummyDataManager = DataTest()
     // MARK: - life cycle
 
     override func loadView() {
@@ -20,7 +20,7 @@ final class AdminRootViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         allButtonTapped()
-        
+        adminRootView.dataSetting(dummyDataManager.test.gymName, dummyDataManager.test.gymnumber)
     }
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 숨기기
@@ -71,6 +71,6 @@ extension AdminRootViewController {
     }
     //로그아웃 버튼
     @objc private func logOutButtonTapped() {
-        
+
     }
 }
