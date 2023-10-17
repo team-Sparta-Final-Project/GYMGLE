@@ -38,7 +38,22 @@ private extension InitialViewController {
     }
     
     @objc func loginButtonTapped() {
-        let vc = TabbarViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        let datatest = DataTest()
+        
+        for gymInfo in datatest.gymList {
+            for user in gymInfo.gymUserList {
+                if user.account.id == initialView.idTextField.text && user.account.password == initialView.passwordTextField.text {
+                    let vc = TabbarViewController()
+                    navigationController?.pushViewController(vc, animated: true)
+                    return
+                }
+            }
+        }
+        
+        let alert = UIAlertController(title: "로그인 실패",
+                                      message: "유효한 계정이 아닙니다.",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }

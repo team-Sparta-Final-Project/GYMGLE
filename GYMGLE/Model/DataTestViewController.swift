@@ -7,19 +7,21 @@
 
 import UIKit
 
-class DataTest {
+final class DataTest {
     //test1
-    var test = GymInfo(gymAccount: Account(id: "asd",
-                                           password: "asd",
-                                           accountType: 1),
+    static let shared = DataTest()
+    
+    lazy var test = GymInfo(gymAccount: Account(id: "asdff",
+                                           password: "asdff",
+                                           accountType: 0),
                        gymName: "aksd",
                        gymPhoneNumber: "01-03132",
-                       gymnumber: "123123",
+                       gymnumber: "0123456789",
                        
                        gymUserList: [
                         User(account: Account(id: "asd",
                                               password: "asd",
-                                              accountType: 1),
+                                              accountType: 2),
                                               name: "asd",
                                               number: "01031023",
                                               startSubscriptionDate: Date(),
@@ -27,15 +29,15 @@ class DataTest {
                                               userInfo: "addwd",
                                               isInGym: false),
                         
-                        User(account: Account(id: "asd",
-                                              password: "asd",
-                                              accountType: 1),
-                                              name: "asd",
-                                              number: "01031023",
+                        User(account: Account(id: "asdf",
+                                              password: "asdf",
+                                              accountType: 2),
+                                              name: "asdf",
+                                              number: "01031024",
                                               startSubscriptionDate: Date(),
                                               endSubscriptionDate: Date(),
-                                              userInfo: "addwd",
-                                              isInGym: false)
+                                              userInfo: "addwdf",
+                                              isInGym: true)
                        ],
                        
                        noticeList: [Notice(date: Date(),
@@ -43,21 +45,16 @@ class DataTest {
                        ],
                        
                        gymInAndOutLog: [InAndOut(id: "sdasd",
-                                                 inTime: Date(),
-                                                 outTime: Date()),
+                                                 inTime: datecomponent(month: 1, day: 8, hour: 12),
+                                                 outTime: datecomponent(month: 1, day: 8, hour: 14)),
                                         
                                         InAndOut(id: "sdasd",
-                                                 inTime: Date(),
-                                                 outTime: Date())
+                                                 inTime: datecomponent(month: 1, day: 1, hour: 12),
+                                                 outTime: datecomponent(month: 1, day: 1, hour: 14))
                        ]
     )
-
     
-    
-    
-//    var id: String
-//    var inTime: Date
-//    var outTime: Date
+    lazy var gymList: [GymInfo] = [test]
     
     func datecomponent(month: Int, day: Int, hour: Int) -> Date {
         var components = DateComponents()
