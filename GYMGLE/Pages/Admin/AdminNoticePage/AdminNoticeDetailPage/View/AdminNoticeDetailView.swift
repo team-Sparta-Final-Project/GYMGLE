@@ -27,6 +27,9 @@ final class AdminNoticeDetailView: UIView {
         let textView = UITextView()
         textView.text = "공지사항을 입력하세요."
         textView.font = FontGuide.size16
+        textView.autocapitalizationType = .none // 자동으로 맨 앞을 대문자로 할건지
+        textView.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
+        textView.spellCheckingType = .no //스펠링 체크
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()

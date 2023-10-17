@@ -50,7 +50,7 @@ private extension AdminNoticeDetailViewController {
         adminNoticeDetailView.createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
     }
     func textViewIsEmptyAlert() {
-        let alert = UIAlertController(title: "공지사항이 없습니다!", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "공지사항이 비었습니다!", message: "", preferredStyle: .alert)
         let ok = UIAlertAction(title: "확인", style: .default)
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(ok)

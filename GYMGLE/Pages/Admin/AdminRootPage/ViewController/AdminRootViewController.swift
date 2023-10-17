@@ -71,6 +71,7 @@ extension AdminRootViewController {
     }
     //로그아웃 버튼
     @objc private func logOutButtonTapped() {
-        
+        let adminLoginVC = AdminLoginViewController()
+        self.navigationController?.popViewController(animated: true)
     }
 }
