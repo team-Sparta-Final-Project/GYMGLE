@@ -19,7 +19,7 @@ final class AdminNoticeView: UIView {
     
     lazy var noticeCreateButton: UIButton = {
         let button = UIButton()
-        button.buttonImageMakeUI(image: "pencil", color: ColorGuide.black, backgroundColor: .white, cornerRadius: 10, shadowColor: ColorGuide.shadowBorder.cgColor, shadowOpacity: 0, shadowRadius: 8)
+        button.buttonImageMakeUI(backgroundColor: .white, image: "pencil", color: ColorGuide.black, cornerRadius: 10, borderWidth: 1, borderColor: ColorGuide.textHint.cgColor)
         return button
     }()
     

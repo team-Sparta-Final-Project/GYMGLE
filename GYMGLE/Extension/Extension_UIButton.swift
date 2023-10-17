@@ -9,6 +9,7 @@ import UIKit
 
 extension UIButton {
     
+    //텍스트 버튼
     func buttonMakeUI(backgroundColor: UIColor,cornerRadius: CGFloat, borderWidth: CGFloat, borderColor: CGColor, setTitle: String, font: UIFont, setTitleColor:  UIColor) {
         self.backgroundColor = backgroundColor
         self.layer.cornerRadius = cornerRadius
@@ -28,6 +29,8 @@ extension UIButton {
         }
         return button
     }
+    
+    //그림자 있는 텍스트 버튼
     func shadowButtonMakeUI(backgroundColor: UIColor, cornerRadius: CGFloat, shadowColor: CGColor, shadowOpacity: Float, shadowRadius: CGFloat, setTitle: String, font: UIFont, setTitleColor:  UIColor) {
         self.backgroundColor = backgroundColor
         self.setTitle(setTitle, for: .normal)
@@ -40,7 +43,9 @@ extension UIButton {
         self.layer.shadowRadius = shadowRadius
         self.translatesAutoresizingMaskIntoConstraints = false
     }
-    func buttonImageMakeUI(image: String, color: UIColor, backgroundColor: UIColor, cornerRadius: CGFloat, shadowColor: CGColor, shadowOpacity: Float, shadowRadius: CGFloat) {
+    
+    //그림자 있는 이미지버튼
+    func shadowButtonImageMakeUI(image: String, color: UIColor, backgroundColor: UIColor, cornerRadius: CGFloat, shadowColor: CGColor, shadowOpacity: Float, shadowRadius: CGFloat) {
         self.backgroundColor = backgroundColor
         self.setImage(UIImage(systemName: "\(image)"), for: .normal) //선택 x
         self.setImage(UIImage(systemName: "\(image)"), for: .selected) //선택 o
@@ -53,9 +58,14 @@ extension UIButton {
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    func buttonImageMakeUI(image: String, color: UIColor) {
+    // 이미지 버튼
+    func buttonImageMakeUI(backgroundColor: UIColor, image: String, color: UIColor, cornerRadius: CGFloat, borderWidth: CGFloat, borderColor: CGColor) {
+        self.backgroundColor = backgroundColor
         self.setImage(UIImage(systemName: "\(image)"), for: .normal) //선택 x
         self.tintColor = color // 아이콘 색상
+        self.layer.cornerRadius = cornerRadius
+        self.layer.borderWidth = borderWidth
+        self.layer.borderColor = borderColor
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     

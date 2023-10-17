@@ -37,7 +37,7 @@ final class AdminRootView: UIView {
     }()
     lazy var gymSettingButton: UIButton = {
         let button = UIButton()
-        button.buttonMakeUI(backgroundColor: .white, cornerRadius: 16, borderWidth: 1.5, borderColor: ColorGuide.textHint.cgColor, setTitle: "개인/보안", font: FontGuide.size16, setTitleColor: ColorGuide.main)
+        button.buttonMakeUI(backgroundColor: .white, cornerRadius: 16, borderWidth: 1.2, borderColor: ColorGuide.textHint.cgColor, setTitle: "개인/보안", font: FontGuide.size14, setTitleColor: ColorGuide.main)
         return button
     }()
     // 회원등록 버튼
