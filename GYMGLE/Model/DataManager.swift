@@ -35,8 +35,8 @@ class DataManager {
     }
 }
 
-var gyms:GymInfo = GymInfo(gymAccount: Account(id: "사장계정",
-                                               password: "비번1",
+var gyms:GymInfo = GymInfo(gymAccount: Account(id: "D",
+                                               password: "D",
                                                accountType: 0),
                            gymName: "만나짐",
                            gymPhoneNumber: "01088884444",
