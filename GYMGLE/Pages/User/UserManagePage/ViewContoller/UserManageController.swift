@@ -11,6 +11,7 @@ class UserManageViewController: UIViewController {
     let cellHeight = 45
     
     override func loadView() {
+        
         let viewConfigure = UserManageView()
         
         userConfigure()

@@ -10,7 +10,7 @@ import UIKit
 class AdminLoginViewController: UIViewController {
     
     private let adminLoginView = AdminLoginView()
-    let dataTest = DataTest.shared
+    let dataTest = DataManager.shared
     
     override func loadView() {
         view = adminLoginView

@@ -38,7 +38,7 @@ private extension InitialViewController {
     }
     
     @objc func loginButtonTapped() {
-        let datatest = DataTest()
+        let datatest = DataManager.shared
         
         for gymInfo in datatest.gymList {
             for user in gymInfo.gymUserList {

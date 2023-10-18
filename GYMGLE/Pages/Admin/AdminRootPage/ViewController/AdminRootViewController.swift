@@ -10,7 +10,7 @@ import UIKit
 final class AdminRootViewController: UIViewController {
 
     private let adminRootView = AdminRootView()
-    private let DataManager = DataTest.shared
+    private let DataManager = DataManager.shared
     var gymInfo: GymInfo?
     // MARK: - life cycle
 

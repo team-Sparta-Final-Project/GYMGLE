@@ -10,7 +10,7 @@ import UIKit
 final class AdminNoticeDetailViewController: UIViewController {
     
     private let adminNoticeDetailView = AdminNoticeDetailView()
-    let dataTest = DataTest.shared
+    let dataTest = DataManager.shared
     var noticeInfo: Notice? {
         didSet {
             adminNoticeDetailView.contentTextView.text = noticeInfo?.content
