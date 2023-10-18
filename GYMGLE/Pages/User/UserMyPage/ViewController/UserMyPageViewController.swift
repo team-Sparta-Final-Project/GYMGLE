@@ -34,6 +34,7 @@ private extension UserMyPageViewController {
     }
     
     @objc func logOutButtonTapped() {
-        navigationController?.popToRootViewController(animated: true)
+        let vc = InitialViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
