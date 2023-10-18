@@ -44,6 +44,8 @@ private extension InitialViewController {
             for user in gymInfo.gymUserList {
                 if user.account.id == initialView.idTextField.text && user.account.password == initialView.passwordTextField.text {
                     let vc = TabbarViewController()
+                    vc.user = user
+                    vc.gymInfo = gymInfo
                     navigationController?.pushViewController(vc, animated: true)
                     return
                 }

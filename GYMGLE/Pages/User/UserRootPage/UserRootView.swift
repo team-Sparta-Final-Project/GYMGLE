@@ -95,7 +95,7 @@ class UserRootView: UIView {
         $0.clipsToBounds = true
         $0.addSubview(yesterUserNumber)
     }
-    private lazy var yesterUserNumber = UILabel().then {
+    lazy var yesterUserNumber = UILabel().then {
         $0.textColor = ColorGuide.main
         $0.font = FontGuide.size50Bold
         $0.text = "66"

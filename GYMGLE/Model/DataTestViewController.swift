@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class DataTest {
+class DataTest {
     //test1
 
     static let shared = DataTest()
@@ -16,7 +16,7 @@ final class DataTest {
                                            password: "asdff",
                                            accountType: 0),
                        gymName: "aksd",
-                       gymPhoneNumber: "01-03132",
+                       gymPhoneNumber: "010-0313-2222",
                        gymnumber: "0123456789",
                        
                        gymUserList: [
@@ -28,7 +28,7 @@ final class DataTest {
                                               startSubscriptionDate: Date(),
                                               endSubscriptionDate: Date(),
                                               userInfo: "addwd",
-                                              isInGym: false),
+                                              isInGym: true),
                         
                         User(account: Account(id: "asdf",
                                               password: "asdf",
@@ -51,12 +51,12 @@ final class DataTest {
                    
 
                        gymInAndOutLog: [InAndOut(id: "sdasd",
-                                                 inTime: datecomponent(month: 1, day: 8, hour: 12),
-                                                 outTime: datecomponent(month: 1, day: 8, hour: 14), sinceInAndOutTime: 12),
+                                                 inTime: Date(timeIntervalSinceNow: -604800),
+                                                 outTime: Date(timeIntervalSinceNow: -601200), sinceInAndOutTime: 12),
                                         
-                                        InAndOut(id: "sdasd",
-                                                 inTime: datecomponent(month: 1, day: 1, hour: 12),
-                                                 outTime: datecomponent(month: 1, day: 1, hour: 14), sinceInAndOutTime: 12)
+                                        InAndOut(id: "sdas",
+                                                 inTime: Date(timeIntervalSinceNow: -604800),
+                                                 outTime: Date(timeIntervalSinceNow: -601200), sinceInAndOutTime: 12)
                        ]
     )
     
