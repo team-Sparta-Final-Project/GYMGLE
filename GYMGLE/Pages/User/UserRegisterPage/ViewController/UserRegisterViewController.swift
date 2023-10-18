@@ -62,6 +62,25 @@ class UserRegisterViewController: UIViewController {
         phoneTextField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
     }
     
+    func showToast(message: String) {
+        let toastView = ToastView()
+        toastView.configure()
+        toastView.text = message
+        view.addSubview(toastView)
+        toastView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
+            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
+        ])
+        UIView.animate(withDuration: 2.5, delay: 0.2) { //2.5초
+            toastView.alpha = 0
+        } completion: { _ in
+            toastView.removeFromSuperview()
+        }
+    }
+    
     @objc private func didChangeText(){
         let nameCell = self.viewConfigure.tableView.subviews[6] as? UITableViewCell
         let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
@@ -96,7 +115,7 @@ class UserRegisterViewController: UIViewController {
     
     @objc func buttonClicked(){
         if isCellEmpty {
-            
+            showToast(message: "작성 안된 곳이 있습니다.")
         }
         else {
             let nameCell = self.viewConfigure.tableView.subviews[6] as? UITableViewCell
