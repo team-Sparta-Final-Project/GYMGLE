@@ -35,8 +35,8 @@ final class TabbarViewController: UITabBarController {
         userRootVC.gymInfo = gymInfo
         let naviUserRootVC = UINavigationController(rootViewController: userRootVC)
         
-        let initialVC = InitialViewController()
-        let naviInitialVC = UINavigationController(rootViewController: initialVC)
+        let communityVC = UserCommunityViewController()
+        let naviCommuVC = UINavigationController(rootViewController: communityVC)
         
         let userRootVC2 = UserRootViewController()
         let naviUserRootVC2 = UINavigationController(rootViewController: userRootVC2)
@@ -44,7 +44,7 @@ final class TabbarViewController: UITabBarController {
         let initialVC2 = InitialViewController()
         let naviInitialVC2 = UINavigationController(rootViewController: initialVC2)
         
-        let controllers = [naviUserRootVC, naviInitialVC, naviUserRootVC2, naviInitialVC2]
+        let controllers = [naviUserRootVC, naviCommuVC, naviUserRootVC2, naviInitialVC2]
         self.viewControllers = controllers
         
         self.tabBar.layer.borderWidth = 1
@@ -62,7 +62,7 @@ final class TabbarViewController: UITabBarController {
         self.tabBar.items![1].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         self.tabBar.items![1].image = UIImage(systemName: "doc")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.textHint)
         self.tabBar.items![1].selectedImage = UIImage(systemName: "doc.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.main)
-        self.tabBar.items![1].title = "공지사항"
+        self.tabBar.items![1].title = "커뮤니티"
         
        
         self.tabBar.items![2].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)

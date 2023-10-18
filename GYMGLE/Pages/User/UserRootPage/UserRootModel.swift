@@ -7,10 +7,10 @@
 
 import SnapKit
 import UIKit
-
-struct UserRootList{
-    var healthName: String
-    var noticeList: String
-    var nowUser: Int
-    var yesterUser: Int
-}
+//
+//struct UserRootList{
+//    var healthName: String
+//    var noticeList: String
+//    var nowUser: Int
+//    var yesterUser: Int
+//}
