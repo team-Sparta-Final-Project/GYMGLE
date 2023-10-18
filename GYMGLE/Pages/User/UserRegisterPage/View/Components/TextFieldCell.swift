@@ -14,13 +14,12 @@ class TextFieldCell:UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super .init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        textField.delegate = self
-                
+                        
         textField.textColor = ColorGuide.textHint
         textField.font = FontGuide.size14Bold
         
         textField.backgroundColor = .clear
+        textField.delegate = self
         
         self.layer.frame.size.width = 344.5
         self.contentView.clipsToBounds = true
@@ -94,7 +93,7 @@ extension TextFieldCell: UITextFieldDelegate{
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        print("테스트 - 텍스트필드 수정중...")        
+        print("테스트 - 텍스트필드 수정중...")
         return true
     }
 }

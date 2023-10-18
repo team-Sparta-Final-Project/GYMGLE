@@ -37,6 +37,8 @@
 		2730BC972ADC2DF500BFA23C /* ManageLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC962ADC2DF500BFA23C /* ManageLabelCell.swift */; };
 		2730BC992ADC2E2900BFA23C /* ManageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC982ADC2E2900BFA23C /* ManageTableView.swift */; };
 		27AB3F992ADE149D0002A123 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AB3F982ADE149D0002A123 /* DataManager.swift */; };
+		27E24B802ADF8A790031122F /* UserRegisterViewIDPWController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E24B7F2ADF8A790031122F /* UserRegisterViewIDPWController.swift */; };
+		27E24B852ADF9E010031122F /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E24B842ADF9E010031122F /* PopUpView.swift */; };
 		630A0BEE2AD9269100525A6E /* Extension_UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630A0BED2AD9269100525A6E /* Extension_UILabel.swift */; };
 		630CE14B2ADD1B5E001EC547 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE14A2ADD1B5E001EC547 /* TabbarViewController.swift */; };
 		630CE14D2ADD5C8A001EC547 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE14C2ADD5C8A001EC547 /* User.swift */; };
@@ -51,6 +53,8 @@
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
 		D14ECB442AD917D600FF7853 /* Extension_UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB432AD917D600FF7853 /* Extension_UIView.swift */; };
 		D14ECB482AD928FF00FF7853 /* Extension_CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */; };
+		D16920A72ADFBB9F00BE1A2B /* UserMyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */; };
+		D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */; };
 		D1E0185F2ADCEB6700D1C53D /* AdminNoticeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E0185E2ADCEB6700D1C53D /* AdminNoticeDetailView.swift */; };
 		D1E018612ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E018602ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift */; };
 		D1E018632ADCEBE000D1C53D /* AdminNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E018622ADCEBE000D1C53D /* AdminNoticeView.swift */; };
@@ -96,6 +100,8 @@
 		2730BC962ADC2DF500BFA23C /* ManageLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageLabelCell.swift; sourceTree = "<group>"; };
 		2730BC982ADC2E2900BFA23C /* ManageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageTableView.swift; sourceTree = "<group>"; };
 		27AB3F982ADE149D0002A123 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		27E24B7F2ADF8A790031122F /* UserRegisterViewIDPWController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegisterViewIDPWController.swift; sourceTree = "<group>"; };
+		27E24B842ADF9E010031122F /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
 		630A0BED2AD9269100525A6E /* Extension_UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UILabel.swift; sourceTree = "<group>"; };
 		630CE14A2ADD1B5E001EC547 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
 		630CE14C2ADD5C8A001EC547 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = GYMGLE/User.swift; sourceTree = SOURCE_ROOT; };
@@ -110,6 +116,8 @@
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
 		D14ECB432AD917D600FF7853 /* Extension_UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIView.swift; sourceTree = "<group>"; };
 		D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_CALayer.swift; sourceTree = "<group>"; };
+		D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageView.swift; sourceTree = "<group>"; };
+		D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageViewController.swift; sourceTree = "<group>"; };
 		D1E0185E2ADCEB6700D1C53D /* AdminNoticeDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdminNoticeDetailView.swift; path = GYMGLE/Pages/Admin/AdminNoticePage/AdminNoticeDetailPage/View/AdminNoticeDetailView.swift; sourceTree = SOURCE_ROOT; };
 		D1E018602ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdminNoticeDetailViewController.swift; path = GYMGLE/Pages/Admin/AdminNoticePage/AdminNoticeDetailPage/ViewController/AdminNoticeDetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		D1E018622ADCEBE000D1C53D /* AdminNoticeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminNoticeView.swift; sourceTree = "<group>"; };
@@ -333,6 +341,7 @@
 		2730BC402AD8105E00BFA23C /* User */ = {
 			isa = PBXGroup;
 			children = (
+				D16920A32ADFBB7A00BE1A2B /* UserMyPage */,
 				2730BC3B2AD80B3E00BFA23C /* UserManagePage */,
 				2730BC3A2AD809C400BFA23C /* UserRegisterPage */,
 				2730BC392AD8084600BFA23C /* UserRootPage */,
@@ -379,6 +388,7 @@
 			isa = PBXGroup;
 			children = (
 				2730BC792AD9577C00BFA23C /* UserRegisterViewController.swift */,
+				27E24B7F2ADF8A790031122F /* UserRegisterViewIDPWController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -386,6 +396,7 @@
 		2730BC6E2AD9573300BFA23C /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				27E24B812ADF97A30031122F /* PopUp */,
 				D1E0187A2ADCEE0000D1C53D /* UserTableView.swift */,
 				D1E018772ADCEE0000D1C53D /* CustomTextCell.swift */,
 				D1E0187B2ADCEE0000D1C53D /* CustomTextView.swift */,
@@ -422,6 +433,14 @@
 				2730BC962ADC2DF500BFA23C /* ManageLabelCell.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		27E24B812ADF97A30031122F /* PopUp */ = {
+			isa = PBXGroup;
+			children = (
+				27E24B842ADF9E010031122F /* PopUpView.swift */,
+			);
+			path = PopUp;
 			sourceTree = "<group>";
 		};
 		630A0BE72AD9261800525A6E /* ViewController */ = {
@@ -515,6 +534,31 @@
 			isa = PBXGroup;
 			children = (
 				D1E0186E2ADCEC4B00D1C53D /* AdminLoginView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D16920A32ADFBB7A00BE1A2B /* UserMyPage */ = {
+			isa = PBXGroup;
+			children = (
+				D16920A52ADFBB8C00BE1A2B /* View */,
+				D16920A42ADFBB8400BE1A2B /* ViewController */,
+			);
+			path = UserMyPage;
+			sourceTree = "<group>";
+		};
+		D16920A42ADFBB8400BE1A2B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		D16920A52ADFBB8C00BE1A2B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -615,6 +659,7 @@
 				0744286D2ADD0B1B00EB7D05 /* QrCodeViewController.swift in Sources */,
 				63D855F42AD812C3008429BC /* FontGuide.swift in Sources */,
 				D1E018712ADCEC5C00D1C53D /* AdminLoginViewController.swift in Sources */,
+				D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */,
 				63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */,
 				630CE1552ADD5CD0001EC547 /* InAndOut.swift in Sources */,
 				D1E0186B2ADCEC2C00D1C53D /* AdminRegisterView.swift in Sources */,
@@ -629,6 +674,7 @@
 				630CE1532ADD5CB8001EC547 /* Account.swift in Sources */,
 				D1E0187D2ADCEE0000D1C53D /* CustomTextCell.swift in Sources */,
 				D1E0186F2ADCEC4B00D1C53D /* AdminLoginView.swift in Sources */,
+				27E24B852ADF9E010031122F /* PopUpView.swift in Sources */,
 				D1E018692ADCEC1A00D1C53D /* AdminRootViewController.swift in Sources */,
 				D1E018652ADCEBFA00D1C53D /* AdminNoticeViewController.swift in Sources */,
 				D1E0185F2ADCEB6700D1C53D /* AdminNoticeDetailView.swift in Sources */,
@@ -653,6 +699,7 @@
 				27AB3F992ADE149D0002A123 /* DataManager.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
 				D1E0187F2ADCEE0000D1C53D /* TextFieldCell.swift in Sources */,
+				D16920A72ADFBB9F00BE1A2B /* UserMyPageView.swift in Sources */,
 				2730BC972ADC2DF500BFA23C /* ManageLabelCell.swift in Sources */,
 				630CE1622ADD62AD001EC547 /* DataTestViewController.swift in Sources */,
 				D1E0187E2ADCEE0000D1C53D /* EmptyCell.swift in Sources */,
@@ -663,6 +710,7 @@
 				07997FF72AD843A5002ACFCB /* UserRootViewController.swift in Sources */,
 				D1E0187C2ADCEE0000D1C53D /* LabelCell.swift in Sources */,
 				07997FF92AD843BD002ACFCB /* UserRootModel.swift in Sources */,
+				27E24B802ADF8A790031122F /* UserRegisterViewIDPWController.swift in Sources */,
 				D1E018832ADCEEED00D1C53D /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
