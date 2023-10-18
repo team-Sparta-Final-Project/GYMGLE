@@ -19,11 +19,11 @@ class DataManager {
         )
     }
     
-    static func addGymUser(name:String,number:String){
+    static func addGymUser(name:String,number:String,id:String,password:String){
         
         gyms.gymUserList.append(
-        User(account: Account(id: "회원기본아이디",
-                              password: "회원비번",
+        User(account: Account(id: id,
+                              password: password,
                               accountType: 2),
                               name: name,
                               number: number,
@@ -35,14 +35,22 @@ class DataManager {
     }
 }
 
-var gyms:GymInfo = GymInfo(gymAccount: Account(id: "D",
-                                               password: "D",
+var gyms:GymInfo = GymInfo(gymAccount: Account(id: "123",
+                                               password: "123",
                                                accountType: 0),
                            gymName: "만나짐",
                            gymPhoneNumber: "01088884444",
                            gymnumber: "사업자등록번호",
                            
-                           gymUserList: [],
+                           gymUserList: [User(account: Account(id: "123",
+                                                               password: "회원비번",
+                                                               accountType: 2),
+                                                               name: "123",
+                                                               number: "010-\(Int.random(in: 1000...9999))-\(Int.random(in: 1000...9999))",
+                                                               startSubscriptionDate: Date(),
+                                                               endSubscriptionDate: Date(),
+                                                               userInfo: "추가정보",
+                                              isInGym: true)],
                            
                            noticeList: [Notice(date: Date(),
                                                content: "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼")

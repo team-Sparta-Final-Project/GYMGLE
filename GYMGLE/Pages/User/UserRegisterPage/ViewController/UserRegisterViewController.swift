@@ -65,10 +65,12 @@ class UserRegisterViewController: UIViewController {
     @objc private func didChangeText(){
         let nameCell = self.viewConfigure.tableView.subviews[6] as? UITableViewCell
         let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
+        guard let nameText = nameTextField?.text else { return }
         let phoneCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
         let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
+        guard let phoneText = phoneTextField?.text else { return }
         
-        if nameTextField?.text != "" && phoneTextField?.text != ""{
+        if nameText != "" && phoneText.count >= 11{
             self.viewConfigure.button.backgroundColor = ColorGuide.main
             isCellEmpty = false
         }else{
@@ -104,8 +106,11 @@ class UserRegisterViewController: UIViewController {
             let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
             guard let phoneText = phoneTextField?.text else { return }
 
-            DataManager.addGymUser(name: nameText, number: phoneText)
-            navigationController?.pushViewController(UserRegisterViewIDPWController(), animated: true)
+            let IdPwVC = UserRegisterViewIDPWController()
+            IdPwVC.name = nameText
+            IdPwVC.phone = phoneText
+            
+            navigationController?.pushViewController(IdPwVC, animated: true)
 
         }
     }
