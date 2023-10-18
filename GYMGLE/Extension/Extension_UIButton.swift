@@ -40,7 +40,9 @@ extension UIButton {
         self.layer.shadowRadius = shadowRadius
         self.translatesAutoresizingMaskIntoConstraints = false
     }
-    func buttonImageMakeUI(image: String, color: UIColor, backgroundColor: UIColor, cornerRadius: CGFloat, shadowColor: CGColor, shadowOpacity: Float, shadowRadius: CGFloat) {
+    
+    //그림자가 있는 이미지버튼
+    func shadowButtonImageMakeUI(image: String, color: UIColor, backgroundColor: UIColor, cornerRadius: CGFloat, shadowColor: CGColor, shadowOpacity: Float, shadowRadius: CGFloat) {
         self.backgroundColor = backgroundColor
         self.setImage(UIImage(systemName: "\(image)"), for: .normal) //선택 x
         self.setImage(UIImage(systemName: "\(image)"), for: .selected) //선택 o
@@ -50,6 +52,17 @@ extension UIButton {
         self.layer.shadowOpacity = shadowOpacity
         self.layer.shadowOffset = CGSize.zero
         self.layer.shadowRadius = shadowRadius
+        self.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    // 이미지 버튼
+    func buttonImageMakeUI(backgroundColor: UIColor, image: String, color: UIColor, cornerRadius: CGFloat, borderWidth: CGFloat, borderColor: CGColor) {
+        self.backgroundColor = backgroundColor
+        self.setImage(UIImage(systemName: "\(image)"), for: .normal) //선택 x
+        self.tintColor = color // 아이콘 색상
+        self.layer.cornerRadius = cornerRadius
+        self.layer.borderWidth = borderWidth
+        self.layer.borderColor = borderColor
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     

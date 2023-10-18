@@ -10,7 +10,12 @@ import UIKit
 final class AdminNoticeDetailViewController: UIViewController {
     
     private let adminNoticeDetailView = AdminNoticeDetailView()
-    
+    let dataTest = DataTest.shared
+    var noticeInfo: Notice? {
+        didSet {
+            adminNoticeDetailView.contentTextView.text = noticeInfo?.content
+        }
+    }
     // MARK: - life cycle
     
     override func loadView() {
@@ -33,7 +38,7 @@ final class AdminNoticeDetailViewController: UIViewController {
         adminNoticeDetailView.endEditing(true)
     }
 }
-// MARK: - extension
+// MARK: - extension (custom func)
 private extension AdminNoticeDetailViewController {
     func viewSetting() {
         adminNoticeDetailView.contentTextView.delegate = self
@@ -49,15 +54,25 @@ private extension AdminNoticeDetailViewController {
     func allButtonTapped() {
         adminNoticeDetailView.createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
     }
-    func textViewIsEmptyAlert() {
-        let alert = UIAlertController(title: "공지사항이 없습니다!", message: "", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "확인", style: .default)
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        alert.addAction(ok)
-        alert.addAction(cancel)
-        self.present(alert, animated: true, completion: nil)
-    }
     
+    func showToast(message: String) {
+        let toastView = ToastView()
+        toastView.configure()
+        toastView.text = message
+        view.addSubview(toastView)
+        toastView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
+            toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
+            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
+        ])
+        UIView.animate(withDuration: 2.5, delay: 0.2) { //2.5초
+            toastView.alpha = 0
+        } completion: { _ in
+            toastView.removeFromSuperview()
+        }
+    }
 }
 // MARK: - @objc func
 extension AdminNoticeDetailViewController {
@@ -77,10 +92,25 @@ extension AdminNoticeDetailViewController {
         adminNoticeDetailView.frame.origin.y = 0
     }
     @objc private func createButtonTapped() {
-        if adminNoticeDetailView.contentTextView.text.isEmpty {
-            textViewIsEmptyAlert()
+        if adminNoticeDetailView.contentTextView.text.isEmpty || adminNoticeDetailView.contentTextView.text == "공지사항을 입력하세요." {
+            showToast(message: "내용물이 비었습니다.")
         } else {
             // 여기에 등록 및 수정 코드 작성❗️
+            if noticeInfo == nil {
+                let date = Date()
+                let content = adminNoticeDetailView.contentTextView.text
+                
+                var newNotice = Notice(date: date, content: content ?? "")
+                print(newNotice)
+                dataTest.makeNoticeList(newNotice)
+
+                
+                
+            } else {
+                noticeInfo?.content = adminNoticeDetailView.contentTextView.text
+                noticeInfo?.date = Date()
+            }
+            self.navigationController?.popViewController(animated: true)
         }
     }
 }

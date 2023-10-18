@@ -33,18 +33,14 @@ final class TabbarViewController: UITabBarController {
         let userRootVC = UserRootViewController()
         userRootVC.user = user
         userRootVC.gymInfo = gymInfo
-        let naviUserRootVC = UINavigationController(rootViewController: userRootVC)
         
-        let communityVC = UserCommunityViewController()
-        let naviCommuVC = UINavigationController(rootViewController: communityVC)
+        let initialVC = InitialViewController()
         
         let userRootVC2 = UserRootViewController()
-        let naviUserRootVC2 = UINavigationController(rootViewController: userRootVC2)
         
-        let initialVC2 = InitialViewController()
-        let naviInitialVC2 = UINavigationController(rootViewController: initialVC2)
+        let myVC = UserMyPageViewController()
         
-        let controllers = [naviUserRootVC, naviCommuVC, naviUserRootVC2, naviInitialVC2]
+        let controllers = [userRootVC, initialVC, userRootVC2, myVC]
         self.viewControllers = controllers
         
         self.tabBar.layer.borderWidth = 1
