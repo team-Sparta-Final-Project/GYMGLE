@@ -10,23 +10,24 @@ import UIKit
 final class AdminNoticeViewController: UIViewController {
 
     // MARK: - dummyData
-    private let dummyDataManager = DataTest()
-    var dummyDataList: [GymInfo] = []
+    private let dummyDataManager = DataTest.shared
+    var gymInfo: GymInfo?
 
     private let adminNoticeView = AdminNoticeView()
     
     override func loadView() {
         view = adminNoticeView
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
-        dummyDataList.append(dummyDataManager.test)
-        print(dummyDataList[0].noticeList)
-        adminNoticeView.noticeTableView.reloadData()
     }
+    
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
+        super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
+        adminNoticeView.noticeTableView.reloadData()
     }
 
 }
@@ -73,14 +74,14 @@ extension AdminNoticeViewController {
 
 extension AdminNoticeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummyDataList.first(where: {$0.gymName == "만나짐"})!.noticeList.count
+        return dummyDataManager.test.noticeList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AdminNoticeTableViewCell.identifier, for: indexPath) as! AdminNoticeTableViewCell
-        var date = dateToString(date: dummyDataList.first(where: {$0.gymName == "만나짐"})!.noticeList[indexPath.row].date)
-        cell.nameLabel.text = "만나짐"
-        cell.contentLabel.text = dummyDataList.first(where: {$0.gymName == "만나짐"})!.noticeList[indexPath.row].content
+        var date = dateToString(date: dummyDataManager.test.noticeList[indexPath.row].date)
+        cell.nameLabel.text = gymInfo?.gymName
+        cell.contentLabel.text = dummyDataManager.test.noticeList[indexPath.row].content
         cell.dateLabel.text = date
         
         cell.selectionStyle = .none
@@ -91,6 +92,9 @@ extension AdminNoticeViewController: UITableViewDataSource {
 
 extension AdminNoticeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       // 클릭 시 코드 구현❗️
+       
+        let adminNoticeDetailVC = AdminNoticeDetailViewController()
+        adminNoticeDetailVC.noticeInfo = dummyDataManager.test.noticeList[indexPath.row]
+        navigationController?.pushViewController(adminNoticeDetailVC, animated: true)
     }
 }

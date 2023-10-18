@@ -45,7 +45,7 @@
 		630CE1532ADD5CB8001EC547 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE1522ADD5CB8001EC547 /* Account.swift */; };
 		630CE1552ADD5CD0001EC547 /* InAndOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE1542ADD5CD0001EC547 /* InAndOut.swift */; };
 		630CE1622ADD62AD001EC547 /* DataTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE1612ADD62AD001EC547 /* DataTestViewController.swift */; };
-		635192DE2ADE623100465BCD /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635192DD2ADE623100465BCD /* UserDataManager.swift */; };
+		630EDE172ADFBC8300B37982 /* Extension_ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
@@ -104,7 +104,7 @@
 		630CE1522ADD5CB8001EC547 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Account.swift; path = GYMGLE/Account.swift; sourceTree = SOURCE_ROOT; };
 		630CE1542ADD5CD0001EC547 /* InAndOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InAndOut.swift; path = GYMGLE/InAndOut.swift; sourceTree = SOURCE_ROOT; };
 		630CE1612ADD62AD001EC547 /* DataTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTestViewController.swift; sourceTree = "<group>"; };
-		635192DD2ADE623100465BCD /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
+		630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_ToastView.swift; sourceTree = "<group>"; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
@@ -205,7 +205,6 @@
 				630CE1542ADD5CD0001EC547 /* InAndOut.swift */,
 				630CE1612ADD62AD001EC547 /* DataTestViewController.swift */,
 				27AB3F982ADE149D0002A123 /* DataManager.swift */,
-				635192DD2ADE623100465BCD /* UserDataManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -490,6 +489,7 @@
 				630A0BED2AD9269100525A6E /* Extension_UILabel.swift */,
 				D14ECB432AD917D600FF7853 /* Extension_UIView.swift */,
 				D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */,
+				630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -636,9 +636,9 @@
 				0744286F2ADD0D8800EB7D05 /* QrCodeView.swift in Sources */,
 				D1E018812ADCEE0000D1C53D /* CustomTextView.swift in Sources */,
 				2730BC8F2ADC206B00BFA23C /* CustomSearchBar.swift in Sources */,
-				635192DE2ADE623100465BCD /* UserDataManager.swift in Sources */,
 				2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */,
 				630A0BEE2AD9269100525A6E /* Extension_UILabel.swift in Sources */,
+				630EDE172ADFBC8300B37982 /* Extension_ToastView.swift in Sources */,
 				D1E018732ADCECAF00D1C53D /* AdminNoticeTableViewCell.swift in Sources */,
 				D1E018752ADCEDF100D1C53D /* UserRegisterView.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,

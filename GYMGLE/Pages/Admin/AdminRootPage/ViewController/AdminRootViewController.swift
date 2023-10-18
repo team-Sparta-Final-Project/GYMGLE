@@ -16,15 +16,15 @@ final class AdminRootViewController: UIViewController {
 
     override func loadView() {
         view = adminRootView
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         allButtonTapped()
-//        adminRootView.dataSetting(dummyDataManager.test.gymName, dummyDataManager.test.gymnumber)
     }
     
-    override func viewWillAppear(_ animated: Bool) { // 네비게이션바 숨기기
+    override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = true
         adminRootView.dataSetting(gymInfo?.gymName ?? "", gymInfo?.gymPhoneNumber ?? "")
     }
@@ -46,10 +46,11 @@ private extension AdminRootViewController {
 
 // MARK: - @objc func
 extension AdminRootViewController {
-    //개인/보안 버튼
+    //로그아웃 버튼
     @objc private func gymSettingButtonTapped() {
-        let adminNoticeVC = AdminNoticeViewController()
-        self.navigationController?.pushViewController(adminNoticeVC, animated: true)
+        if let adminLoginVC = self.navigationController?.viewControllers[1] {
+            self.navigationController?.popToViewController(adminLoginVC, animated: true)
+        }
     }
     //회원등록 버튼
     @objc private func gymUserRegisterButtonTapped() {
@@ -69,10 +70,14 @@ extension AdminRootViewController {
     //공지사항 버튼
     @objc private func gymNoticeButtonTapped() {
         let adminNoticeVC = AdminNoticeViewController()
+        adminNoticeVC.gymInfo = gymInfo
         self.navigationController?.pushViewController(adminNoticeVC, animated: true)
     }
-    //로그아웃 버튼
+    //탈퇴 버튼
     @objc private func logOutButtonTapped() {
-
+        dummyDataManager.gymList.removeAll(where: {$0.gymAccount.id == gymInfo?.gymAccount.id})
+        if let adminLoginVC = self.navigationController?.viewControllers[1] {
+            self.navigationController?.popToViewController(adminLoginVC, animated: true)
+        }
     }
 }

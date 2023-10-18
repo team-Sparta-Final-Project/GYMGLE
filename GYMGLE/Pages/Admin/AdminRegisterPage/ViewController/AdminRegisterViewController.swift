@@ -128,7 +128,6 @@ private extension AdminRegisterViewController {
             
             if id.count >= 1 && password.count >= 1 && gymName.count >= 1 && gymPhoneNumber.count >= 1 && gymNumber.count == 10 {
                 dataTest.gymList.append(gymInfo)
-                print(dataTest.gymList)
             } else {
                 let alert = UIAlertController(title: "등록할 수 없습니다.",
                                               message: "올바르지 않은 정보가 있습니다. 다시 입력해주세요.",

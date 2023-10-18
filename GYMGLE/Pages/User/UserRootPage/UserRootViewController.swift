@@ -12,8 +12,6 @@ import SwiftUI
 class UserRootViewController: UIViewController {
     
     let first = UserRootView()
-    var userListArray: [User] = []
-    let userDataManager = UserDataManager()
     var user: User?
     var gymInfo: GymInfo?
     
@@ -27,10 +25,6 @@ class UserRootViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         first.inBtn.addTarget(self, action: #selector(inButtonClick), for: .touchUpInside)
-        userDataManager.makeUserList()
-        userListArray = userDataManager.getUserList()
-        print(userListArray)
-        dataSetting()
     }
     
     
@@ -44,13 +38,6 @@ class UserRootViewController: UIViewController {
         let QrCodeViewController = QrCodeViewController()
         
         self.present(QrCodeViewController, animated: true)
-    }
-    
-    func dataSetting() {
-        var name = userListArray[0].name //김기호
-        var gymInCount = String(userListArray.filter{$0.isInGym == true}.count) // 4
-        
-        first.userDataSetting(userName: name, gymInUserCount: gymInCount, yesterUserCount: "22")
     }
     
     func getLastWeek() {
