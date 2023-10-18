@@ -37,6 +37,8 @@
 		2730BC972ADC2DF500BFA23C /* ManageLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC962ADC2DF500BFA23C /* ManageLabelCell.swift */; };
 		2730BC992ADC2E2900BFA23C /* ManageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC982ADC2E2900BFA23C /* ManageTableView.swift */; };
 		27AB3F992ADE149D0002A123 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AB3F982ADE149D0002A123 /* DataManager.swift */; };
+		27E24B802ADF8A790031122F /* UserRegisterViewIDPWController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E24B7F2ADF8A790031122F /* UserRegisterViewIDPWController.swift */; };
+		27E24B852ADF9E010031122F /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E24B842ADF9E010031122F /* PopUpView.swift */; };
 		630A0BEE2AD9269100525A6E /* Extension_UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630A0BED2AD9269100525A6E /* Extension_UILabel.swift */; };
 		630CE14B2ADD1B5E001EC547 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE14A2ADD1B5E001EC547 /* TabbarViewController.swift */; };
 		630CE14D2ADD5C8A001EC547 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE14C2ADD5C8A001EC547 /* User.swift */; };
@@ -95,6 +97,8 @@
 		2730BC962ADC2DF500BFA23C /* ManageLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageLabelCell.swift; sourceTree = "<group>"; };
 		2730BC982ADC2E2900BFA23C /* ManageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageTableView.swift; sourceTree = "<group>"; };
 		27AB3F982ADE149D0002A123 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		27E24B7F2ADF8A790031122F /* UserRegisterViewIDPWController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegisterViewIDPWController.swift; sourceTree = "<group>"; };
+		27E24B842ADF9E010031122F /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
 		630A0BED2AD9269100525A6E /* Extension_UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UILabel.swift; sourceTree = "<group>"; };
 		630CE14A2ADD1B5E001EC547 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
 		630CE14C2ADD5C8A001EC547 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = GYMGLE/User.swift; sourceTree = SOURCE_ROOT; };
@@ -377,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				2730BC792AD9577C00BFA23C /* UserRegisterViewController.swift */,
+				27E24B7F2ADF8A790031122F /* UserRegisterViewIDPWController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -384,6 +389,7 @@
 		2730BC6E2AD9573300BFA23C /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				27E24B812ADF97A30031122F /* PopUp */,
 				D1E0187A2ADCEE0000D1C53D /* UserTableView.swift */,
 				D1E018772ADCEE0000D1C53D /* CustomTextCell.swift */,
 				D1E0187B2ADCEE0000D1C53D /* CustomTextView.swift */,
@@ -420,6 +426,14 @@
 				2730BC962ADC2DF500BFA23C /* ManageLabelCell.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		27E24B812ADF97A30031122F /* PopUp */ = {
+			isa = PBXGroup;
+			children = (
+				27E24B842ADF9E010031122F /* PopUpView.swift */,
+			);
+			path = PopUp;
 			sourceTree = "<group>";
 		};
 		630A0BE72AD9261800525A6E /* ViewController */ = {
@@ -626,6 +640,7 @@
 				630CE1532ADD5CB8001EC547 /* Account.swift in Sources */,
 				D1E0187D2ADCEE0000D1C53D /* CustomTextCell.swift in Sources */,
 				D1E0186F2ADCEC4B00D1C53D /* AdminLoginView.swift in Sources */,
+				27E24B852ADF9E010031122F /* PopUpView.swift in Sources */,
 				D1E018692ADCEC1A00D1C53D /* AdminRootViewController.swift in Sources */,
 				D1E018652ADCEBFA00D1C53D /* AdminNoticeViewController.swift in Sources */,
 				D1E0185F2ADCEB6700D1C53D /* AdminNoticeDetailView.swift in Sources */,
@@ -659,6 +674,7 @@
 				07997FF72AD843A5002ACFCB /* UserRootViewController.swift in Sources */,
 				D1E0187C2ADCEE0000D1C53D /* LabelCell.swift in Sources */,
 				07997FF92AD843BD002ACFCB /* UserRootModel.swift in Sources */,
+				27E24B802ADF8A790031122F /* UserRegisterViewIDPWController.swift in Sources */,
 				D1E018832ADCEEED00D1C53D /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,8 +12,8 @@ class DataTest {
 
     static let shared = DataTest()
     
-    lazy var test = GymInfo(gymAccount: Account(id: "asdff",
-                                           password: "asdff",
+    lazy var test = GymInfo(gymAccount: Account(id: "",
+                                           password: "",
                                            accountType: 0),
                        gymName: "aksd",
                        gymPhoneNumber: "010-0313-2222",
