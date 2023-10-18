@@ -34,10 +34,6 @@ class UserManageViewController: UIViewController {
 
     private func userConfigure(){
         
-        for i in 1...10{
-            DataManager.randomGymUser(id: "회원\(i)", name: "회원이름\(i)", isIn: true)
-        }
-        
         cells = gyms.gymUserList.map { $0.name }
         phones = gyms.gymUserList.map { $0.number }
         
