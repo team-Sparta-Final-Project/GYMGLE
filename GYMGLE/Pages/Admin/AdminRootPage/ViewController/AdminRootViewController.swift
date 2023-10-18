@@ -10,7 +10,7 @@ import UIKit
 final class AdminRootViewController: UIViewController {
 
     private let adminRootView = AdminRootView()
-    private let dummyDataManager = DataTest()
+    private let DataManager = DataTest.shared
     var gymInfo: GymInfo?
     // MARK: - life cycle
 
@@ -75,7 +75,8 @@ extension AdminRootViewController {
     }
     //탈퇴 버튼
     @objc private func logOutButtonTapped() {
-        dummyDataManager.gymList.removeAll(where: {$0.gymAccount.id == gymInfo?.gymAccount.id})
+        DataManager.gymList.removeAll(where: {$0.gymAccount.id == gymInfo?.gymAccount.id})
+        print(DataManager.gymList)
         if let adminLoginVC = self.navigationController?.viewControllers[1] {
             self.navigationController?.popToViewController(adminLoginVC, animated: true)
         }
