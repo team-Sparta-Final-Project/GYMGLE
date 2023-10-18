@@ -14,7 +14,7 @@ class AdminRegisterViewController: UIViewController {
     private var isIdDuplicated: Bool = false
     private var isNumberDuplicated: Bool = false
     private var isValid: Bool = false
-    let dataTest = DataTest.shared
+    let dataTest = DataManager.shared
     var parameters: [String: [String]] = [:]
     
     // MARK: - Life Cycle

@@ -18,5 +18,7 @@ final class ToastView: UILabel {
         self.clipsToBounds = true
         self.numberOfLines = 2
     }
+    
+    
 }
 

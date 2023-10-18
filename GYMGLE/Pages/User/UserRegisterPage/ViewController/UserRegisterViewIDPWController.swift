@@ -75,7 +75,7 @@ class UserRegisterViewIDPWController: UIViewController {
         let idTextField = idCell?.contentView.subviews[1] as? UITextField
         guard let idText = idTextField?.text else { return }
         
-        let idList = gyms.gymUserList.map{
+        let idList = DataManager.shared.gymInfo.gymUserList.map{
             $0.account.id
         }
         if idList.contains(idText) {
@@ -131,7 +131,7 @@ class UserRegisterViewIDPWController: UIViewController {
             let pwField = pwCell?.contentView.subviews[1] as? UITextField
             guard let pwText = pwField?.text else { return }
             
-            DataManager.addGymUser(name: name, number: phone, id:idText,password: pwText)
+            DataManager.shared.addGymUser(id: idText, password: pwText, name: name, type: 2, number: phone)
             
             let adminRootVC = navigationController!.viewControllers[2]
             navigationController?.popToViewController(adminRootVC, animated: true)
