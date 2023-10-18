@@ -37,7 +37,7 @@ final class AdminRootView: UIView {
     }()
     lazy var gymSettingButton: UIButton = {
         let button = UIButton()
-        button.buttonMakeUI(backgroundColor: .white, cornerRadius: 16, borderWidth: 1.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "개인/보안", font: FontGuide.size16, setTitleColor: ColorGuide.main)
+        button.buttonMakeUI(backgroundColor: .white, cornerRadius: 16, borderWidth: 1.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "로그아웃", font: FontGuide.size16Bold, setTitleColor: ColorGuide.main)
         return button
     }()
     // 회원등록 버튼
@@ -68,7 +68,7 @@ final class AdminRootView: UIView {
     lazy var logOutButton: UIButton = {
         let button = UIButton()
         button.buttonMakeUI(backgroundColor: ColorGuide.main, cornerRadius: 10.0, borderWidth: 0.0, borderColor: UIColor
-            .clear.cgColor, setTitle: "로그아웃", font: FontGuide.size19Bold, setTitleColor: UIColor.white)
+            .clear.cgColor, setTitle: "회원 탈퇴", font: FontGuide.size19Bold, setTitleColor: UIColor.white)
         return button
     }()
     // MARK: - init

@@ -41,7 +41,7 @@ class DataTest {
                                               isInGym: true)
                        ],
                        
-                       noticeList: [Notice(date: Date(),
+                            noticeList: [Notice(date: Date(),
                                            content: "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼"),
                                     Notice(date: datecomponent(month: 1, day: 8, hour: 12),
                                                         content: "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼"),
@@ -62,9 +62,9 @@ class DataTest {
     
     lazy var gymList: [GymInfo] = [test]
   
-  
-      func getDummyData() -> GymInfo {
-        return self.test
+    func makeNoticeList(_ notice: Notice) {
+        self.test.noticeList.append(notice)
+        //gymList[0].noticeList.append(notice)
     }
     
     func datecomponent(month: Int, day: Int, hour: Int) -> Date {

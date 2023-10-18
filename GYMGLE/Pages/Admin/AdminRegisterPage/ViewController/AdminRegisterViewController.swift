@@ -181,6 +181,7 @@ private extension AdminRegisterViewController {
            let gymNumber = adminRegisterView.registerNumberTextField.text {
             let account = Account(id: id, password: password, accountType: 0)
             let gymInfo = GymInfo(gymAccount: account, gymName: gymName, gymPhoneNumber: gymPhoneNumber, gymnumber: gymNumber, gymUserList: [], noticeList: [], gymInAndOutLog: [])
+
             // 헬스장 추가
             dataTest.gymList.append(gymInfo)
         }
