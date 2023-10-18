@@ -13,7 +13,9 @@ class AdminRegisterViewController: UIViewController {
     private let adminRegisterView = AdminRegisterView()
     private var isIdDuplicated: Bool = false
     private var isNumberDuplicated: Bool = false
+    private var isValid: Bool = false
     let dataTest = DataTest.shared
+    var parameters: [String: [String]] = [:]
     
     // MARK: - Life Cycle
     
@@ -67,15 +69,22 @@ private extension AdminRegisterViewController {
     }
     
     @objc func validCheckButtonTapped() {
-        validCheck()
+        numberDuplicateCheck()
         voidCheck(textField: adminRegisterView.registerNumberTextField)
-        let alert = UIAlertController(title: "사업자 등록 번호 중복확인",
-                                      message: "중복되지 않는 사업자 등록 번호입니다.",
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-        
-        isNumberDuplicated = false
+        parameters = ["b_no":[adminRegisterView.registerNumberTextField.text!]]
+        loadAPI(parameters: parameters) { [weak self] in
+            guard let self else { return }
+            DispatchQueue.main.async {
+                self.validCheck()
+                let alert = UIAlertController(title: "사업자 등록 번호 중복확인",
+                                              message: "중복되지 않는 사업자 등록 번호입니다.",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                
+                self.isNumberDuplicated = false
+            }
+        }
     }
     
     @objc func duplicationCheckButtonTapped() {
@@ -91,7 +100,7 @@ private extension AdminRegisterViewController {
     }
     
     @objc func registerButtonTapped() {
-        if !isIdDuplicated && !isNumberDuplicated {
+        if !isIdDuplicated && !isNumberDuplicated && isValid {
             registerGym()
             let vc = AdminLoginViewController()
             navigationController?.pushViewController(vc, animated: true)
@@ -120,7 +129,7 @@ private extension AdminRegisterViewController {
         }
     }
     
-    func validCheck() {
+    func numberDuplicateCheck() {
         for gymInfo in dataTest.gymList {
             if gymInfo.gymnumber == adminRegisterView.registerNumberTextField.text {
                 let alert = UIAlertController(title: "사업자 등록 번호 중복",
@@ -147,6 +156,23 @@ private extension AdminRegisterViewController {
         }
     }
     
+    func validCheck() {
+        if isValid {
+            let alert = UIAlertController(title: "사업자 등록번호 확인",
+                                          message: "유효한 사업자 등록번호입니다.",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "사업자 등록번호 확인",
+                                          message: "유효하지 않은 사업자 등록번호입니다. 다시 입력해주세요.",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
+        return
+    }
+    
     func registerGym() {
         if let id = adminRegisterView.idTextField.text,
            let password = adminRegisterView.passwordTextField.text,
@@ -159,6 +185,45 @@ private extension AdminRegisterViewController {
             dataTest.gymList.append(gymInfo)
         }
     }
+}
+
+// MARK: - 사업자등록번호 진위확인 API
+
+extension AdminRegisterViewController {
+    // 사업자 등록번호
+    func loadAPI(parameters: [String: [String]], completion: @escaping () -> Void) {
+        let url = URL(string: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=%2BOc%2FfCL8SbceIGb1K%2FNBvoWNBA1SLS153VGLIDJIFQ3yt0m3Hui01FHuxVVSWZg8gDmPL8rhc1IIlvssUA7utw%3D%3D")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let jsonData = try? JSONSerialization.data(withJSONObject: parameters)
+        request.httpBody = jsonData
+        // URLSession을 사용하여 요청 보내기
+        URLSession.shared.dataTask(with: request) {[weak self] (data, response, error) in
+            guard let self else { return }
+          if let error = error {
+            print("오류: \(error)")
+          } else if let data = data {
+            guard let result = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+              return
+            }
+            if let data = result["data"] as? [[String:String]],
+              let b_stt_cd = data.first?["b_stt_cd"] {
+              print("사업자유효:\(b_stt_cd)")
+                if b_stt_cd == "01" {
+                    self.isValid = true
+                } else {
+                    self.isValid = false
+                }
+              // if b_stt_cd = "01" 계속사업자
+              // "02" 휴업자
+              // "03" 폐업자
+            }
+          }
+            completion()
+        }
+        .resume()
+      }
 }
 
 // MARK: - UITextFieldDelegate
