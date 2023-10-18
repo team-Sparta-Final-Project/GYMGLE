@@ -35,8 +35,8 @@ class UserManageViewController: UIViewController {
 
     private func userConfigure(){
         
-        cells = gyms.gymUserList.map { $0.name }
-        phones = gyms.gymUserList.map { $0.number }
+        cells = DataManager.shared.gymInfo.gymUserList.map { $0.name }
+        phones = DataManager.shared.gymInfo.gymUserList.map { $0.number }
         
         
     }

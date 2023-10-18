@@ -13,8 +13,8 @@ class DataManager {
                        gymnumber: "0123456789",
                        
                        gymUserList: [
-                        User(account: Account(id: "asd",
-                                              password: "asd",
+                        User(account: Account(id: "",
+                                              password: "",
                                               accountType: 2),
                                               name: "asd",
                                               number: "01031023",
