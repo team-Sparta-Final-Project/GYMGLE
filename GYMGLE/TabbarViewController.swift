@@ -34,13 +34,13 @@ final class TabbarViewController: UITabBarController {
         userRootVC.user = user
         userRootVC.gymInfo = gymInfo
         
-        let initialVC = InitialViewController()
+        let communnityVC = UserCommunityViewController()
         
         let userRootVC2 = UserRootViewController()
         
         let myVC = UserMyPageViewController()
         
-        let controllers = [userRootVC, initialVC, userRootVC2, myVC]
+        let controllers = [userRootVC, communnityVC, userRootVC2, myVC]
         self.viewControllers = controllers
         
         self.tabBar.layer.borderWidth = 1
