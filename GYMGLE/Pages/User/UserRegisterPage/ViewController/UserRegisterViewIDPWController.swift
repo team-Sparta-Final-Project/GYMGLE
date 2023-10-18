@@ -16,6 +16,7 @@ class UserRegisterViewIDPWController: UIViewController {
     
     let viewConfigure = UserRegisterView()
     
+    private var isCellEmpty = true
     
     
     override func loadView() {
@@ -36,6 +37,7 @@ class UserRegisterViewIDPWController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.viewConfigure.button.backgroundColor = .lightGray
         viewConfigure.button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         
     }
@@ -43,24 +45,52 @@ class UserRegisterViewIDPWController: UIViewController {
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         navigationController?.navigationBar.isHidden = false
     }
+    override func viewDidAppear(_ animated: Bool) {
+        let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
+        let idTextField = idCell?.contentView.subviews[1] as? UITextField
+        let pwCell = self.viewConfigure.tableView.subviews[0] as? UITableViewCell
+        let pwField = pwCell?.contentView.subviews[1] as? UITextField
+        
+        idTextField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
+        pwField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
+    }
 
     
+    @objc private func didChangeText(){
+        let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
+        let idTextField = idCell?.contentView.subviews[1] as? UITextField
+        guard let idText = idTextField?.text else { return }
+        let pwCell = self.viewConfigure.tableView.subviews[0] as? UITableViewCell
+        let pwField = pwCell?.contentView.subviews[1] as? UITextField
+        guard let pwText = pwField?.text else { return }
 
+        if idText != "" && pwText != ""{
+            self.viewConfigure.button.backgroundColor = ColorGuide.main
+            isCellEmpty = false
+        }else{
+            self.viewConfigure.button.backgroundColor = .lightGray
+            isCellEmpty = true
+        }
+    }
     
     @objc func buttonClicked(){
-        print("buttonClicked")
-//        let nameCell = self.viewConfigure.tableView.subviews[6] as? UITableViewCell
-//        let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
-//        guard let nameText = nameTextField?.text else { return }
-//        let phoneCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
-//        let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
-//        guard let phoneText = phoneTextField?.text else { return }
-        
+        if isCellEmpty {
+            
+        }
+        else {
+            let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
+            let idTextField = idCell?.contentView.subviews[1] as? UITextField
+            guard let idText = idTextField?.text else { return }
+            let pwCell = self.viewConfigure.tableView.subviews[0] as? UITableViewCell
+            let pwField = pwCell?.contentView.subviews[1] as? UITextField
+            guard let pwText = pwField?.text else { return }
+            
+            let adminRootVC = navigationController!.viewControllers[2]
+            navigationController?.popToViewController(adminRootVC, animated: true)
+        }
+
 //        DataManager.addGymUser(name: nameText, number: phoneText)
-//        navigationController?.popToRootViewController(animated: true)
         
-        let adminRootVC = navigationController!.viewControllers[2]
-        navigationController?.popToViewController(adminRootVC, animated: true)
         
     }
     

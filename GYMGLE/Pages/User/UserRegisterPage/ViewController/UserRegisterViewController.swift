@@ -14,6 +14,8 @@ class UserRegisterViewController: UIViewController {
     let cellHeight = 45
     let emptyCellHeight = 24
     
+    private var isCellEmpty = true
+    
     let viewConfigure = UserRegisterView()
     
     override func loadView() {
@@ -33,6 +35,7 @@ class UserRegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.viewConfigure.button.backgroundColor = .lightGray
         self.viewConfigure.button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(endEdit))
@@ -48,6 +51,30 @@ class UserRegisterViewController: UIViewController {
         let dateCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
         let dateButton = dateCell?.contentView.subviews[1] as? UIButton
         dateButton?.addTarget(self, action: #selector(showPopUp), for: .touchUpInside)
+        
+        
+        let nameCell = self.viewConfigure.tableView.subviews[6] as? UITableViewCell
+        let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
+        let phoneCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
+        let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
+
+        nameTextField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
+        phoneTextField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
+    }
+    
+    @objc private func didChangeText(){
+        let nameCell = self.viewConfigure.tableView.subviews[6] as? UITableViewCell
+        let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
+        let phoneCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
+        let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
+        
+        if nameTextField?.text != "" && phoneTextField?.text != ""{
+            self.viewConfigure.button.backgroundColor = ColorGuide.main
+            isCellEmpty = false
+        }else{
+            self.viewConfigure.button.backgroundColor = .lightGray
+            isCellEmpty = true
+        }
     }
     
     @objc func endEdit(){
@@ -66,15 +93,21 @@ class UserRegisterViewController: UIViewController {
     }
     
     @objc func buttonClicked(){
-        print("buttonClicked")
-        let nameCell = self.viewConfigure.tableView.subviews[6] as? UITableViewCell
-        let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
-        guard let nameText = nameTextField?.text else { return }
-        let phoneCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
-        let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
-        guard let phoneText = phoneTextField?.text else { return }
-        
-        DataManager.addGymUser(name: nameText, number: phoneText)
-        navigationController?.pushViewController(UserRegisterViewIDPWController(), animated: true)
+        if isCellEmpty {
+            
+        }
+        else {
+            let nameCell = self.viewConfigure.tableView.subviews[6] as? UITableViewCell
+            let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
+            guard let nameText = nameTextField?.text else { return }
+            let phoneCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
+            let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
+            guard let phoneText = phoneTextField?.text else { return }
+
+            DataManager.addGymUser(name: nameText, number: phoneText)
+            navigationController?.pushViewController(UserRegisterViewIDPWController(), animated: true)
+
+        }
     }
 }
+
