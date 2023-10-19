@@ -114,6 +114,7 @@ extension AdminRootViewController {
             // 데이터베이스에서 삭제
             let userRef = Database.database().reference().child("users").child(user.uid)
             userRef.removeValue()
+            signOut()
         } else {
             print("로그인 정보가 존재하지 않습니다.")
         }

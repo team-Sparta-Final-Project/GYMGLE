@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct User { //일반 유저
+struct User: Codable { //일반 유저
     
     var account: Account
     let name: String

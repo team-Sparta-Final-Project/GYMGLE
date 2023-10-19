@@ -305,18 +305,35 @@ extension AdminRegisterViewController {
     func createUser() {
         guard let id = adminRegisterView.idTextField.text else { return }
         guard let pw = adminRegisterView.passwordTextField.text else { return }
+        guard let gymName = adminRegisterView.adminNameTextField.text else { return }
+        guard let gymPhoneNumber = adminRegisterView.phoneTextField.text else { return }
+        guard let gymNumber = adminRegisterView.registerNumberTextField.text else { return }
+        let gymInfo = GymInfo(gymAccount: Account(id: id, password: pw, accountType: 0),
+                              gymName: gymName,
+                              gymPhoneNumber: gymPhoneNumber,
+                              gymnumber: gymNumber,
+                              gymUserList: [],
+                              noticeList: [],
+                              gymInAndOutLog: [])
         
         Auth.auth().createUser(withEmail: id, password: pw) { result, error in
             if let error = error {
                 print(error)
             } else {
-                let role = "admin"
-                if let user = result?.user {
-                    let userRef = Database.database().reference().child("users").child(user.uid)
-                    userRef.setValue(["role": role])
+                do {
+                    let gymInfoData = try JSONEncoder().encode(gymInfo)
+                    let gymInfoJSON = try JSONSerialization.jsonObject(with: gymInfoData, options: [])
+                    
+                    if let user = result?.user {
+                        let userRef = Database.database().reference().child("users").child(user.uid)
+                        userRef.child("gymInfo").setValue(gymInfoJSON)
+                    }
+                    
+                    let vc = AdminLoginViewController()
+                    self.navigationController?.pushViewController(vc, animated: true)
+                } catch {
+                    print("JSON 인코딩 에러")
                 }
-                let vc = AdminLoginViewController()
-                self.navigationController?.pushViewController(vc, animated: true)
             }
         }
     }

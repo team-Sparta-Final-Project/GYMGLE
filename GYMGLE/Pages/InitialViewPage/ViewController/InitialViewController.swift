@@ -77,12 +77,16 @@ private extension InitialViewController {
             
             userRef.observeSingleEvent(of: .value) { (snapshot) in
                 if let userData = snapshot.value as? [String: Any],
-                   let role = userData["role"] as? String {
-                    if role == "admin" {
+                   let gymInfo = userData["gymInfo"] as? [String: Any],
+                   let gymAccount = gymInfo["gymAccount"] as? [String: Any],
+                   let accountType = gymAccount["accountType"] as? Int {
+                    if accountType == 0 {
                         self.navigationController?.pushViewController(AdminRootViewController(), animated: true)
-                    } else if role == "user" {
-                        self.navigationController?.pushViewController(TabbarViewController(), animated: true)
-                    }
+                    } 
+//                    User.account.acccountType 으로 해야함
+//                    else if accountType == 2 {
+//                        self.navigationController?.pushViewController(TabbarViewController(), animated: true)
+//                    }
                 }
             }
         }

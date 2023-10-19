@@ -58,16 +58,6 @@ private extension AdminLoginViewController {
     }
     
     @objc func loginButtonTapped() {
-        
-        //        for gymInfo in dataTest.gymList {
-        //            if gymInfo.gymAccount.id == adminLoginView.idTextField.text && gymInfo.gymAccount.password == adminLoginView.passwordTextField.text {
-        //                LoginManager.updateLoginStatus(isLoggedIn: true, userType: .admin)
-        //                let vc = AdminRootViewController()
-        //                vc.gymInfo = gymInfo
-        //                navigationController?.pushViewController(vc, animated: true)
-        //                return
-        //            }
-        //        }
         signIn()
     }
 }
@@ -90,10 +80,14 @@ extension AdminLoginViewController {
                 if let user = result?.user {
                     let userRef = Database.database().reference().child("users").child(user.uid)
                     
-                    userRef.observeSingleEvent(of: .value) { (snapshot) in
+                    userRef.observeSingleEvent(of: .value) { (snapshot)  in
                         if let userData = snapshot.value as? [String: Any],
-                           let role = userData["role"] as? String {
-                            if role == "admin" {
+                           let gymInfo = userData["gymInfo"] as? [String: Any],
+                           let gymAccount = gymInfo["gymAccount"] as? [String: Any],
+                           let accountType = gymAccount["accountType"] as? Int {
+                            // 헬스장 사장님
+                            // 트레이너는 User.account.acccountType 으로 해야함
+                            if accountType == 0 {
                                 let vc = AdminRootViewController()
                                 self.navigationController?.pushViewController(vc, animated: true)
                             } else {
