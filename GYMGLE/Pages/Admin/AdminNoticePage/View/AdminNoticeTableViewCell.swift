@@ -53,23 +53,33 @@ private extension AdminNoticeTableViewCell {
             self.contentView.addSubview(view)
         }
         NSLayoutConstraint.activate([
+            
+            //topDivider
             topDivider.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
             topDivider.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 22),
             topDivider.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant:-22),
             topDivider.heightAnchor.constraint(equalToConstant: 0.8),
+            
+            //nameLabel
             nameLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 48),
-            nameLabel.topAnchor.constraint(equalTo: self.topDivider.bottomAnchor, constant: 12),
+            nameLabel.topAnchor.constraint(equalTo: self.topDivider.bottomAnchor, constant: 20),
             nameLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -48),
+            
+            //contentLabel
             contentLabel.topAnchor.constraint(equalTo: self.nameLabel.bottomAnchor, constant: 10),
             contentLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 48),
             contentLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -48),
+            
+            //dateLabel
             dateLabel.topAnchor.constraint(equalTo: self.contentLabel.bottomAnchor, constant: 10),
             dateLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 48),
             dateLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -48),
-            dateLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -12),
+            dateLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -20),
+            
+            //bottomDivider
             bottomDivider.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 22),
             bottomDivider.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -22),
-            bottomDivider.heightAnchor.constraint(equalToConstant: 0.5),
+            bottomDivider.heightAnchor.constraint(equalToConstant: 1),
             bottomDivider.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
         ])
     }
