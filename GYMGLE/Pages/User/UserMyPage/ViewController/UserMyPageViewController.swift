@@ -34,6 +34,7 @@ private extension UserMyPageViewController {
     }
     
     @objc func logOutButtonTapped() {
+        LoginManager.updateLoginStatus(isLoggedIn: false, userType: .user)
         let vc = InitialViewController()
         navigationController?.pushViewController(vc, animated: true)
     }

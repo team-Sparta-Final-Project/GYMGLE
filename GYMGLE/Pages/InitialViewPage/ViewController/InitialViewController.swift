@@ -43,6 +43,7 @@ private extension InitialViewController {
         for gymInfo in datatest.gymList {
             for user in gymInfo.gymUserList {
                 if user.account.id == initialView.idTextField.text && user.account.password == initialView.passwordTextField.text {
+                    LoginManager.updateLoginStatus(isLoggedIn: true, userType: .user)
                     let vc = TabbarViewController()
                     vc.user = user
                     vc.gymInfo = gymInfo

@@ -48,9 +48,13 @@ private extension AdminRootViewController {
 extension AdminRootViewController {
     //로그아웃 버튼
     @objc private func gymSettingButtonTapped() {
-        if let adminLoginVC = self.navigationController?.viewControllers[1] {
-            self.navigationController?.popToViewController(adminLoginVC, animated: true)
-        }
+//        if let adminLoginVC = self.navigationController?.viewControllers[1] {
+//            LoginManager.updateLoginStatus(isLoggedIn: false, userType: .admin)
+//            self.navigationController?.popToViewController(adminLoginVC, animated: true)
+//        }
+        LoginManager.updateLoginStatus(isLoggedIn: false, userType: .admin)
+        let adminLoginVC = AdminLoginViewController()
+        self.navigationController?.pushViewController(adminLoginVC, animated: true)
     }
     //회원등록 버튼
     @objc private func gymUserRegisterButtonTapped() {
@@ -77,8 +81,11 @@ extension AdminRootViewController {
     @objc private func logOutButtonTapped() {
         dataManager.gymList.removeAll(where: {$0.gymAccount.id == gymInfo?.gymAccount.id})
         print(dataManager.gymList)
-        if let adminLoginVC = self.navigationController?.viewControllers[1] {
-            self.navigationController?.popToViewController(adminLoginVC, animated: true)
-        }
+//        if let adminLoginVC = self.navigationController?.viewControllers[1] {
+//            self.navigationController?.popToViewController(adminLoginVC, animated: true)
+//        }
+        LoginManager.updateLoginStatus(isLoggedIn: false, userType: .admin)
+        let adminLoginVC = AdminLoginViewController()
+        self.navigationController?.pushViewController(adminLoginVC, animated: true)
     }
 }
