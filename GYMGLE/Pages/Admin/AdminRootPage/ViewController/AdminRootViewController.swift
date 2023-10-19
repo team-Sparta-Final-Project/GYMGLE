@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseCore
 
 final class AdminRootViewController: UIViewController {
 
@@ -48,11 +50,8 @@ private extension AdminRootViewController {
 extension AdminRootViewController {
     //로그아웃 버튼
     @objc private func gymSettingButtonTapped() {
-//        if let adminLoginVC = self.navigationController?.viewControllers[1] {
-//            LoginManager.updateLoginStatus(isLoggedIn: false, userType: .admin)
-//            self.navigationController?.popToViewController(adminLoginVC, animated: true)
-//        }
         LoginManager.updateLoginStatus(isLoggedIn: false, userType: .admin)
+        signOut()
         let adminLoginVC = AdminLoginViewController()
         self.navigationController?.pushViewController(adminLoginVC, animated: true)
     }
@@ -79,13 +78,41 @@ extension AdminRootViewController {
     }
     //탈퇴 버튼
     @objc private func logOutButtonTapped() {
-        dataManager.gymList.removeAll(where: {$0.gymAccount.id == gymInfo?.gymAccount.id})
-        print(dataManager.gymList)
-//        if let adminLoginVC = self.navigationController?.viewControllers[1] {
-//            self.navigationController?.popToViewController(adminLoginVC, animated: true)
-//        }
-        LoginManager.updateLoginStatus(isLoggedIn: false, userType: .admin)
-        let adminLoginVC = AdminLoginViewController()
-        self.navigationController?.pushViewController(adminLoginVC, animated: true)
+//        dataManager.gymList.removeAll(where: {$0.gymAccount.id == gymInfo?.gymAccount.id})
+        deleteAccount()
+    }
+}
+
+// MARK: - Firebase Auth
+
+extension AdminRootViewController {
+    
+    // MARK: - 로그아웃
+    
+    func signOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+    }
+    
+    // MARK: - 회원탈퇴
+    
+    func deleteAccount() {
+        if let user = Auth.auth().currentUser {
+            user.delete { error in
+                if let error = error {
+                    print("delete Error : ", error)
+                } else {
+                    LoginManager.updateLoginStatus(isLoggedIn: false, userType: .admin)
+                    let adminLoginVC = AdminLoginViewController()
+                    self.navigationController?.pushViewController(adminLoginVC, animated: true)
+                }
+            }
+        } else {
+            print("로그인 정보가 존재하지 않습니다.")
+        }
     }
 }

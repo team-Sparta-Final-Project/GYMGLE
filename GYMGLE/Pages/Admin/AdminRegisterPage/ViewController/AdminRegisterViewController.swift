@@ -113,8 +113,6 @@ private extension AdminRegisterViewController {
     @objc func registerButtonTapped() {
         if !isIdDuplicated && !isNumberDuplicated && isValid && allValid {
             registerGym()
-            let vc = AdminLoginViewController()
-            navigationController?.pushViewController(vc, animated: true)
         } else {
             let alert = UIAlertController(title: "등록할 수 없습니다.",
                                           message: "올바르지 않은 정보가 있습니다. 다시 입력해주세요.",
@@ -197,6 +195,7 @@ private extension AdminRegisterViewController {
 
             // 헬스장 추가
             dataTest.gymList.append(gymInfo)
+            // 회원가입
             createUser()
         }
     }
@@ -300,7 +299,9 @@ extension AdminRegisterViewController {
         }
     }
     
-    fileprivate func createUser() {
+    // MARK: - 회원가입
+    
+    func createUser() {
         guard let id = adminRegisterView.idTextField.text else { return }
         guard let pw = adminRegisterView.passwordTextField.text else { return }
         
@@ -310,7 +311,8 @@ extension AdminRegisterViewController {
             }
             
             if let result = result {
-                print(result)
+                let vc = AdminLoginViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
             }
         }
     }

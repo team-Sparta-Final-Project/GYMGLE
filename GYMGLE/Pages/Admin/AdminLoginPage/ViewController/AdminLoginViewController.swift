@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseCore
 
 class AdminLoginViewController: UIViewController {
     
@@ -15,7 +17,7 @@ class AdminLoginViewController: UIViewController {
     override func loadView() {
         view = adminLoginView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addButtonMethod()
@@ -25,7 +27,7 @@ class AdminLoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 숨기기
         navigationController?.navigationBar.isHidden = true
     }
-
+    
 }
 
 // MARK: - Configure
@@ -56,20 +58,47 @@ private extension AdminLoginViewController {
     
     @objc func loginButtonTapped() {
         
-        for gymInfo in dataTest.gymList {
-            if gymInfo.gymAccount.id == adminLoginView.idTextField.text && gymInfo.gymAccount.password == adminLoginView.passwordTextField.text {
+        //        for gymInfo in dataTest.gymList {
+        //            if gymInfo.gymAccount.id == adminLoginView.idTextField.text && gymInfo.gymAccount.password == adminLoginView.passwordTextField.text {
+        //                LoginManager.updateLoginStatus(isLoggedIn: true, userType: .admin)
+        //                let vc = AdminRootViewController()
+        //                vc.gymInfo = gymInfo
+        //                navigationController?.pushViewController(vc, animated: true)
+        //                return
+        //            }
+        //        }
+        signIn()
+    }
+}
+
+// MARK: - Firebase Auth
+
+extension AdminLoginViewController {
+    
+    // MARK: - 로그인
+    
+    func signIn() {
+        guard let id = adminLoginView.idTextField.text else { return }
+        guard let pw = adminLoginView.passwordTextField.text else { return }
+        
+        Auth.auth().signIn(withEmail: id, password: pw) { result, error in
+            if result == nil {
+                if let error = error {
+                    print(error)
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "로그인 실패",
+                                                      message: "유효한 계정이 아닙니다.",
+                                                      preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            } else {
                 LoginManager.updateLoginStatus(isLoggedIn: true, userType: .admin)
                 let vc = AdminRootViewController()
-                vc.gymInfo = gymInfo
-                navigationController?.pushViewController(vc, animated: true)
+                self.navigationController?.pushViewController(vc, animated: true)
                 return
             }
         }
-        
-        let alert = UIAlertController(title: "로그인 실패",
-                                      message: "유효한 계정이 아닙니다.",
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
     }
 }
