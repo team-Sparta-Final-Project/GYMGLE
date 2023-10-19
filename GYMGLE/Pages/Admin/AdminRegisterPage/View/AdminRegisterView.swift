@@ -75,7 +75,7 @@ class AdminRegisterView: UIView {
     
     lazy var idTextField = UITextField().then {
         $0.borderStyle = .none
-        $0.placeholder = "아이디"
+        $0.placeholder = "아이디 (example@example.com)"
         $0.font = FontGuide.size14
         
         let placeholderPadding = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: $0.frame.height))
@@ -92,7 +92,7 @@ class AdminRegisterView: UIView {
     
     lazy var passwordTextField = UITextField().then {
         $0.borderStyle = .none
-        $0.placeholder = "비밀번호"
+        $0.placeholder = "비밀번호 (8~16자리 영문, 숫자, 특수문자 모두 포함)"
         $0.font = FontGuide.size14
         
         let placeholderPadding = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: $0.frame.height))

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseCore
 
 class AdminRegisterViewController: UIViewController {
     
@@ -14,8 +16,17 @@ class AdminRegisterViewController: UIViewController {
     private var isIdDuplicated: Bool = false
     private var isNumberDuplicated: Bool = false
     private var isValid: Bool = false
+    private var emailValid: Bool = false
+    private var pwValid: Bool = false
+    private var allValid: Bool = false
+    
     let dataTest = DataManager.shared
+    
     var parameters: [String: [String]] = [:]
+    // 이메일 정규식: 알파벳과 숫자 중간에 @가 포함되며 끝 2~3자리 앞에 .이 포함
+    let emailPattern = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$"
+    // 비밀번호 정규식: 8~16자리 알파벳, 영어, 특수문자가 포함
+    let pwPattern = "^.*(?=^.{8,16}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$"
     
     // MARK: - Life Cycle
     
@@ -100,7 +111,7 @@ private extension AdminRegisterViewController {
     }
     
     @objc func registerButtonTapped() {
-        if !isIdDuplicated && !isNumberDuplicated && isValid {
+        if !isIdDuplicated && !isNumberDuplicated && isValid && allValid {
             registerGym()
             let vc = AdminLoginViewController()
             navigationController?.pushViewController(vc, animated: true)
@@ -173,6 +184,8 @@ private extension AdminRegisterViewController {
         return
     }
     
+    
+    
     func registerGym() {
         if let id = adminRegisterView.idTextField.text,
            let password = adminRegisterView.passwordTextField.text,
@@ -184,6 +197,7 @@ private extension AdminRegisterViewController {
 
             // 헬스장 추가
             dataTest.gymList.append(gymInfo)
+            createUser()
         }
     }
 }
@@ -242,8 +256,62 @@ extension AdminRegisterViewController: UITextFieldDelegate {
             // 유효성 검사
             let isDataValid = id.count >= 1 && password.count >= 1 && gymName.count >= 1 && adminNumber.count >= 1 && gymPhoneNumber.count == 13 && gymNumber.count == 10
             
+            checkID()
+            checkPW()
+            checkAll()
             registerButton.isEnabled = isDataValid
             registerButton.backgroundColor = isDataValid ? ColorGuide.main : UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
+        }
+    }
+}
+
+// MARK: - Firebase Auth
+
+extension AdminRegisterViewController {
+    
+    // MARK: - 이메일 비밀번호 정규식 체크
+
+    func isValid(text: String, pattern: String) -> Bool {
+        let pred = NSPredicate(format: "SELF MATCHES %@", pattern)
+        return pred.evaluate(with: text)
+    }
+    
+    func checkID() {
+        if isValid(text: adminRegisterView.idTextField.text!, pattern: emailPattern) {
+            emailValid = true
+        } else {
+            emailValid = false
+        }
+    }
+    
+    func checkPW() {
+        if isValid(text: adminRegisterView.passwordTextField.text!, pattern: pwPattern) {
+            pwValid = true
+        } else {
+            pwValid = false
+        }
+    }
+    
+    func checkAll() {
+        if emailValid && pwValid {
+            allValid = true
+        } else {
+            allValid = false
+        }
+    }
+    
+    fileprivate func createUser() {
+        guard let id = adminRegisterView.idTextField.text else { return }
+        guard let pw = adminRegisterView.passwordTextField.text else { return }
+        
+        Auth.auth().createUser(withEmail: id, password: pw) { result, error in
+            if let error = error {
+                print(error)
+            }
+            
+            if let result = result {
+                print(result)
+            }
         }
     }
 }
