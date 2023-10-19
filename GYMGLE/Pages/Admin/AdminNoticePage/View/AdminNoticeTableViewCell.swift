@@ -40,6 +40,7 @@ final class AdminNoticeTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         cellMakeUI()
+        self.contentView.backgroundColor = .white
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -58,7 +59,7 @@ private extension AdminNoticeTableViewCell {
             topDivider.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
             topDivider.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 22),
             topDivider.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant:-22),
-            topDivider.heightAnchor.constraint(equalToConstant: 0.8),
+            topDivider.heightAnchor.constraint(equalToConstant: 1.0),
             
             //nameLabel
             nameLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 48),
@@ -79,7 +80,7 @@ private extension AdminNoticeTableViewCell {
             //bottomDivider
             bottomDivider.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 22),
             bottomDivider.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -22),
-            bottomDivider.heightAnchor.constraint(equalToConstant: 1),
+            bottomDivider.heightAnchor.constraint(equalToConstant: 0.6),
             bottomDivider.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
         ])
     }
