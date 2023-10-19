@@ -59,6 +59,13 @@ class DataManager {
         self.gymInfo.noticeList.append(notice)
     }
     
+    func updateNotice(_ notice: Notice) {
+        for (index, existednotice) in gymInfo.noticeList.enumerated() {
+            if existednotice.date == notice.date {
+                gymInfo.noticeList[index] = notice
+            }
+        }
+    }
     
     //MARK: - 싱글톤 메서드
     
