@@ -77,8 +77,8 @@ extension AdminRootViewController {
     }
     //큐알코드 버튼
     @objc private func gymQRCodeButtonTapped() {
-        let adminNoticeVC = AdminNoticeViewController()
-        self.navigationController?.pushViewController(adminNoticeVC, animated: true)
+        let qrcodeCheckVC = QRcodeCheckViewController()
+        self.navigationController?.pushViewController(qrcodeCheckVC, animated: true)
     }
     //공지사항 버튼
     @objc private func gymNoticeButtonTapped() {
