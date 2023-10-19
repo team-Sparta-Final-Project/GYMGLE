@@ -52,8 +52,6 @@
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
 		D14ECB442AD917D600FF7853 /* Extension_UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB432AD917D600FF7853 /* Extension_UIView.swift */; };
 		D14ECB482AD928FF00FF7853 /* Extension_CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */; };
-		D1635A422AE0BF1400CDEF11 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1635A412AE0BF1400CDEF11 /* LoginManager.swift */; };
-		D1635A442AE0C06100CDEF11 /* UserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1635A432AE0C06100CDEF11 /* UserType.swift */; };
 		D1635A462AE0F9CD00CDEF11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D1635A452AE0F9CD00CDEF11 /* FirebaseAuth */; };
 		D16920A72ADFBB9F00BE1A2B /* UserMyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */; };
 		D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */; };
@@ -117,8 +115,6 @@
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
 		D14ECB432AD917D600FF7853 /* Extension_UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIView.swift; sourceTree = "<group>"; };
 		D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_CALayer.swift; sourceTree = "<group>"; };
-		D1635A412AE0BF1400CDEF11 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
-		D1635A432AE0C06100CDEF11 /* UserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserType.swift; sourceTree = "<group>"; };
 		D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageView.swift; sourceTree = "<group>"; };
 		D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageViewController.swift; sourceTree = "<group>"; };
 		D1E0185E2ADCEB6700D1C53D /* AdminNoticeDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdminNoticeDetailView.swift; path = GYMGLE/Pages/Admin/AdminNoticePage/AdminNoticeDetailPage/View/AdminNoticeDetailView.swift; sourceTree = SOURCE_ROOT; };
@@ -216,8 +212,6 @@
 				630CE1522ADD5CB8001EC547 /* Account.swift */,
 				630CE1542ADD5CD0001EC547 /* InAndOut.swift */,
 				630CE1612ADD62AD001EC547 /* DataManager.swift */,
-				D1635A412AE0BF1400CDEF11 /* LoginManager.swift */,
-				D1635A432AE0C06100CDEF11 /* UserType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -660,11 +654,9 @@
 			files = (
 				D14ECB442AD917D600FF7853 /* Extension_UIView.swift in Sources */,
 				2730BC7A2AD9577C00BFA23C /* UserRegisterViewController.swift in Sources */,
-				D1635A442AE0C06100CDEF11 /* UserType.swift in Sources */,
 				D1E018672ADCEC0C00D1C53D /* AdminRootView.swift in Sources */,
 				D1E018632ADCEBE000D1C53D /* AdminNoticeView.swift in Sources */,
 				0744286D2ADD0B1B00EB7D05 /* QrCodeViewController.swift in Sources */,
-				D1635A422AE0BF1400CDEF11 /* LoginManager.swift in Sources */,
 				63D855F42AD812C3008429BC /* FontGuide.swift in Sources */,
 				D1E018712ADCEC5C00D1C53D /* AdminLoginViewController.swift in Sources */,
 				D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */,

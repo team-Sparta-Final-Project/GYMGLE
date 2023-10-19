@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseCore
+import FirebaseDatabase
 
 class AdminRegisterViewController: UIViewController {
     
@@ -192,7 +193,7 @@ private extension AdminRegisterViewController {
            let gymNumber = adminRegisterView.registerNumberTextField.text {
             let account = Account(id: id, password: password, accountType: 0)
             let gymInfo = GymInfo(gymAccount: account, gymName: gymName, gymPhoneNumber: gymPhoneNumber, gymnumber: gymNumber, gymUserList: [], noticeList: [], gymInAndOutLog: [])
-
+            
             // 헬스장 추가
             dataTest.gymList.append(gymInfo)
             // 회원가입
@@ -215,29 +216,29 @@ extension AdminRegisterViewController {
         // URLSession을 사용하여 요청 보내기
         URLSession.shared.dataTask(with: request) {[weak self] (data, response, error) in
             guard let self else { return }
-          if let error = error {
-            print("오류: \(error)")
-          } else if let data = data {
-            guard let result = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-              return
-            }
-            if let data = result["data"] as? [[String:String]],
-              let b_stt_cd = data.first?["b_stt_cd"] {
-              print("사업자유효:\(b_stt_cd)")
-                if b_stt_cd == "01" {
-                    self.isValid = true
-                } else {
-                    self.isValid = false
+            if let error = error {
+                print("오류: \(error)")
+            } else if let data = data {
+                guard let result = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                    return
                 }
-              // if b_stt_cd = "01" 계속사업자
-              // "02" 휴업자
-              // "03" 폐업자
+                if let data = result["data"] as? [[String:String]],
+                   let b_stt_cd = data.first?["b_stt_cd"] {
+                    print("사업자유효:\(b_stt_cd)")
+                    if b_stt_cd == "01" {
+                        self.isValid = true
+                    } else {
+                        self.isValid = false
+                    }
+                    // if b_stt_cd = "01" 계속사업자
+                    // "02" 휴업자
+                    // "03" 폐업자
+                }
             }
-          }
             completion()
         }
         .resume()
-      }
+    }
 }
 
 // MARK: - UITextFieldDelegate
@@ -269,7 +270,7 @@ extension AdminRegisterViewController: UITextFieldDelegate {
 extension AdminRegisterViewController {
     
     // MARK: - 이메일 비밀번호 정규식 체크
-
+    
     func isValid(text: String, pattern: String) -> Bool {
         let pred = NSPredicate(format: "SELF MATCHES %@", pattern)
         return pred.evaluate(with: text)
@@ -308,9 +309,12 @@ extension AdminRegisterViewController {
         Auth.auth().createUser(withEmail: id, password: pw) { result, error in
             if let error = error {
                 print(error)
-            }
-            
-            if let result = result {
+            } else {
+                let role = "admin"
+                if let user = result?.user {
+                    let userRef = Database.database().reference().child("users").child(user.uid)
+                    userRef.setValue(["role": role])
+                }
                 let vc = AdminLoginViewController()
                 self.navigationController?.pushViewController(vc, animated: true)
             }

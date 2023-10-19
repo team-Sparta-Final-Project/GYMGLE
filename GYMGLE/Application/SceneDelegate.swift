@@ -15,22 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
-        let userType = UserType(rawValue: UserDefaults.standard.string(forKey: "userType") ?? "")
-        
-        var rootViewController: UIViewController
-        
-        switch (isLoggedIn, userType) {
-        case (true, .user):
-            rootViewController = TabbarViewController()
-        case (true, .admin):
-            rootViewController = AdminRootViewController()
-        default:
-            rootViewController = InitialViewController()
-        }
-        
         window = UIWindow(windowScene: windowScene)
-        let navi = UINavigationController(rootViewController: rootViewController)
+        let navi = UINavigationController(rootViewController: InitialViewController())
         window?.rootViewController = navi
         window?.makeKeyAndVisible()
     }
@@ -64,6 +50,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Save changes in the application's managed object context when the application transitions to the background.
     }
+    
 
 
 }

@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseCore
+import FirebaseDatabase
 
 class AdminLoginViewController: UIViewController {
     
@@ -82,22 +83,31 @@ extension AdminLoginViewController {
         guard let pw = adminLoginView.passwordTextField.text else { return }
         
         Auth.auth().signIn(withEmail: id, password: pw) { result, error in
-            if result == nil {
-                if let error = error {
-                    print(error)
-                    DispatchQueue.main.async {
-                        let alert = UIAlertController(title: "로그인 실패",
-                                                      message: "유효한 계정이 아닙니다.",
-                                                      preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
+            if let error = error {
+                print(error)
+                
+            } else {
+                if let user = result?.user {
+                    let userRef = Database.database().reference().child("users").child(user.uid)
+                    
+                    userRef.observeSingleEvent(of: .value) { (snapshot) in
+                        if let userData = snapshot.value as? [String: Any],
+                           let role = userData["role"] as? String {
+                            if role == "admin" {
+                                let vc = AdminRootViewController()
+                                self.navigationController?.pushViewController(vc, animated: true)
+                            } else {
+                                DispatchQueue.main.async {
+                                    let alert = UIAlertController(title: "로그인 실패",
+                                                                  message: "유효한 계정이 아닙니다.",
+                                                                  preferredStyle: .alert)
+                                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                                    self.present(alert, animated: true, completion: nil)
+                                }
+                            }
+                        }
                     }
                 }
-            } else {
-                LoginManager.updateLoginStatus(isLoggedIn: true, userType: .admin)
-                let vc = AdminRootViewController()
-                self.navigationController?.pushViewController(vc, animated: true)
-                return
             }
         }
     }

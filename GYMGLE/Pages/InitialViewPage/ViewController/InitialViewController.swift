@@ -1,19 +1,27 @@
 import UIKit
+import FirebaseAuth
+import FirebaseCore
+import FirebaseDatabase
 
 class InitialViewController: UIViewController {
     
     private let initialView = InitialView()
     
+    // MARK: - Life Cycles
+    
     override func loadView() {
         view = initialView
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checkLogin()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         addButtonMethod()
         configureNav()
     }
-    
 }
 
 // MARK: - Configure
@@ -43,7 +51,6 @@ private extension InitialViewController {
         for gymInfo in datatest.gymList {
             for user in gymInfo.gymUserList {
                 if user.account.id == initialView.idTextField.text && user.account.password == initialView.passwordTextField.text {
-                    LoginManager.updateLoginStatus(isLoggedIn: true, userType: .user)
                     let vc = TabbarViewController()
                     vc.user = user
                     vc.gymInfo = gymInfo
@@ -58,5 +65,26 @@ private extension InitialViewController {
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
+    }
+}
+
+// MARK: - Login Check
+
+private extension InitialViewController {
+    func checkLogin() {
+        if let currentUser = Auth.auth().currentUser {
+            let userRef = Database.database().reference().child("users").child(currentUser.uid)
+            
+            userRef.observeSingleEvent(of: .value) { (snapshot) in
+                if let userData = snapshot.value as? [String: Any],
+                   let role = userData["role"] as? String {
+                    if role == "admin" {
+                        self.navigationController?.pushViewController(AdminRootViewController(), animated: true)
+                    } else if role == "user" {
+                        self.navigationController?.pushViewController(TabbarViewController(), animated: true)
+                    }
+                }
+            }
+        }
     }
 }
