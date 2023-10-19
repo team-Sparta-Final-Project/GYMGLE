@@ -57,11 +57,24 @@ private extension AdminLoginViewController {
     @objc func loginButtonTapped() {
         
         for gymInfo in dataTest.gymList {
-            if gymInfo.gymAccount.id == adminLoginView.idTextField.text && gymInfo.gymAccount.password == adminLoginView.passwordTextField.text {
-                let vc = AdminRootViewController()
-                vc.gymInfo = gymInfo
-                navigationController?.pushViewController(vc, animated: true)
-                return
+            for user in gymInfo.gymUserList {
+                if user.account.accountType == 1 {
+                    if user.account.id == adminLoginView.idTextField.text && user.account.password == adminLoginView.passwordTextField.text {
+                        let vc = AdminRootViewController()
+                        vc.gymInfo = gymInfo
+                        vc.isAdmin = false
+                        navigationController?.pushViewController(vc, animated: true)
+                        return
+                    }
+                }
+                
+                if gymInfo.gymAccount.id == adminLoginView.idTextField.text && gymInfo.gymAccount.password == adminLoginView.passwordTextField.text {
+                    let vc = AdminRootViewController()
+                    vc.gymInfo = gymInfo
+                    vc.isAdmin = true
+                    navigationController?.pushViewController(vc, animated: true)
+                    return
+                }
             }
         }
         

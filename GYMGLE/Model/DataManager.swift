@@ -13,9 +13,9 @@ class DataManager {
                        gymnumber: "0123456789",
                        
                        gymUserList: [
-                        User(account: Account(id: "",
-                                              password: "",
-                                              accountType: 2),
+                        User(account: Account(id: "1",
+                                              password: "1",
+                                              accountType: 1), //트레이너
                                               name: "asd",
                                               number: "01031023",
                                               startSubscriptionDate: Date(),
@@ -23,8 +23,8 @@ class DataManager {
                                               userInfo: "addwd",
                                               isInGym: true),
                         
-                        User(account: Account(id: "asdf",
-                                              password: "asdf",
+                        User(account: Account(id: "2",
+                                              password: "2",
                                               accountType: 2),
                                               name: "asdf",
                                               number: "01031024",
