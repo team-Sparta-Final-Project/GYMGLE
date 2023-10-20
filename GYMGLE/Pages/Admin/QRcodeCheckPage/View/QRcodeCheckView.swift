@@ -6,13 +6,15 @@
 //
 
 import UIKit
+import AVFoundation
 
 final class QRcodeCheckView: UIView {
     
- 
+
+
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
     }
     
     required init?(coder: NSCoder) {
@@ -20,3 +22,7 @@ final class QRcodeCheckView: UIView {
     }
 }
 
+extension QRcodeCheckView {
+    
+
+}

@@ -21,7 +21,7 @@ class DataManager {
                                               startSubscriptionDate: Date(),
                                               endSubscriptionDate: Date(),
                                               userInfo: "addwd",
-                                              isInGym: true),
+                                              isInGym: false),
                         
                         User(account: Account(id: "2",
                                               password: "2",
@@ -63,6 +63,14 @@ class DataManager {
         for (index, existednotice) in gymInfo.noticeList.enumerated() {
             if existednotice.date == notice.date {
                 gymInfo.noticeList[index] = notice
+            }
+        }
+    }
+    
+    func updateIsInGym(id: String) { //큐알코드를 찍었을 때
+        for (index, gymUserList) in gymInfo.gymUserList.enumerated() {
+            if gymUserList.account.id == id {
+                gymInfo.gymUserList[index].isInGym = true
             }
         }
     }
