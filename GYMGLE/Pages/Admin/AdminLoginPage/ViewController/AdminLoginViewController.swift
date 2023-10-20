@@ -72,6 +72,7 @@ extension AdminLoginViewController {
         guard let id = adminLoginView.idTextField.text else { return }
         guard let pw = adminLoginView.passwordTextField.text else { return }
         
+
         Auth.auth().signIn(withEmail: id, password: pw) { result, error in
             if let error = error {
                 print(error)
@@ -86,6 +87,7 @@ extension AdminLoginViewController {
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
                     DataManager.shared.gymUid = user.uid
+
                 }
             }
         }

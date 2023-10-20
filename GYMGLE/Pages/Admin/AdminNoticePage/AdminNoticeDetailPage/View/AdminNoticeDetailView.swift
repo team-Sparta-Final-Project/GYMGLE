@@ -27,6 +27,7 @@ final class AdminNoticeDetailView: UIView {
         let textView = UITextView()
         textView.text = "공지사항을 입력하세요."
         textView.font = FontGuide.size16
+        textView.backgroundColor = .white
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
@@ -70,7 +71,8 @@ private extension AdminNoticeDetailView {
         }
         NSLayoutConstraint.activate([
             pageTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            pageTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 88),
+            pageTitleLabel.bottomAnchor.constraint(equalTo: self.topDivider.topAnchor, constant: -10),
+            pageTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 140),
             
             topDivider.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             topDivider.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),

@@ -11,15 +11,15 @@ import FirebaseCore
 import FirebaseDatabase
 
 final class AdminRootViewController: UIViewController {
-
+    
     private let adminRootView = AdminRootView()
     private let dataManager = DataManager.shared
     var gymInfo: GymInfo?
+    var isAdmin: Bool?
     // MARK: - life cycle
-
+    
     override func loadView() {
         view = adminRootView
-        
     }
     
     override func viewDidLoad() {
@@ -28,14 +28,18 @@ final class AdminRootViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.isHidden = true
-        adminRootView.dataSetting(gymInfo?.gymName ?? "", gymInfo?.gymPhoneNumber ?? "")
+        configuredView()
     }
-
+    
 }
 
 // MARK: - extension
 private extension AdminRootViewController {
+    func configuredView() {
+        navigationController?.navigationBar.isHidden = true
+        deletedButtonHidden()
+        adminRootView.dataSetting(dataManager.gymInfo.gymName, dataManager.gymInfo.gymnumber)
+    }
     
     func allButtonTapped() {
         adminRootView.gymSettingButton.addTarget(self, action: #selector(gymSettingButtonTapped), for: .touchUpInside)
@@ -44,6 +48,15 @@ private extension AdminRootViewController {
         adminRootView.gymQRCodeButton.addTarget(self, action: #selector(gymQRCodeButtonTapped), for: .touchUpInside)
         adminRootView.gymNoticeButton.addTarget(self, action: #selector(gymNoticeButtonTapped), for: .touchUpInside)
         adminRootView.logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
+    }
+    
+    func deletedButtonHidden() {
+        switch isAdmin {
+        case false: //트레이너 일 때
+            adminRootView.logOutButton.isHidden = true
+        default:
+            adminRootView.logOutButton.isHidden = false
+        }
     }
 }
 
@@ -70,8 +83,8 @@ extension AdminRootViewController {
     }
     //큐알코드 버튼
     @objc private func gymQRCodeButtonTapped() {
-        let adminNoticeVC = AdminNoticeViewController()
-        self.navigationController?.pushViewController(adminNoticeVC, animated: true)
+        let qrcodeCheckVC = QRcodeCheckViewController()
+        self.navigationController?.pushViewController(qrcodeCheckVC, animated: true)
     }
     //공지사항 버튼
     @objc private func gymNoticeButtonTapped() {

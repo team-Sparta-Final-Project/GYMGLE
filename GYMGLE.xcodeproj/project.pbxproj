@@ -47,6 +47,8 @@
 		630CE1552ADD5CD0001EC547 /* InAndOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE1542ADD5CD0001EC547 /* InAndOut.swift */; };
 		630CE1622ADD62AD001EC547 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE1612ADD62AD001EC547 /* DataManager.swift */; };
 		630EDE172ADFBC8300B37982 /* Extension_ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */; };
+		63163E6D2AE11EF200186315 /* QRcodeCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */; };
+		63163E6F2AE11F0700186315 /* QRcodeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
@@ -110,6 +112,8 @@
 		630CE1542ADD5CD0001EC547 /* InAndOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InAndOut.swift; path = GYMGLE/InAndOut.swift; sourceTree = SOURCE_ROOT; };
 		630CE1612ADD62AD001EC547 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_ToastView.swift; sourceTree = "<group>"; };
+		63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckViewController.swift; sourceTree = "<group>"; };
+		63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckView.swift; sourceTree = "<group>"; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
@@ -320,6 +324,8 @@
 		2730BC3E2AD8103100BFA23C /* QRcodeCheckPage */ = {
 			isa = PBXGroup;
 			children = (
+				63163E6B2AE11ED300186315 /* ViewController */,
+				63163E6A2AE11ECA00186315 /* View */,
 			);
 			path = QRcodeCheckPage;
 			sourceTree = "<group>";
@@ -456,6 +462,22 @@
 				D1E018662ADCEC0C00D1C53D /* AdminRootView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		63163E6A2AE11ECA00186315 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		63163E6B2AE11ED300186315 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		63879E442ADA7A6700FA23BD /* View */ = {
@@ -661,10 +683,12 @@
 				D1E018712ADCEC5C00D1C53D /* AdminLoginViewController.swift in Sources */,
 				D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */,
 				63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */,
+				63163E6F2AE11F0700186315 /* QRcodeCheckView.swift in Sources */,
 				630CE1552ADD5CD0001EC547 /* InAndOut.swift in Sources */,
 				D1E0186B2ADCEC2C00D1C53D /* AdminRegisterView.swift in Sources */,
 				2730BC8A2ADC1E1700BFA23C /* UserManageView.swift in Sources */,
 				07997FF52AD84390002ACFCB /* UserRootView.swift in Sources */,
+				63163E6D2AE11EF200186315 /* QRcodeCheckViewController.swift in Sources */,
 				630CE14B2ADD1B5E001EC547 /* TabbarViewController.swift in Sources */,
 				D1E0186D2ADCEC3800D1C53D /* AdminRegisterViewController.swift in Sources */,
 				2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */,
@@ -851,7 +875,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3L52QK9JPU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GYMGLE/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -878,7 +902,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3L52QK9JPU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GYMGLE/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

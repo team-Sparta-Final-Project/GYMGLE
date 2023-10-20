@@ -36,7 +36,7 @@ class UserRootViewController: UIViewController {
     
     @objc func inButtonClick() {
         let QrCodeViewController = QrCodeViewController()
-        
+        QrCodeViewController.user = self.user // ❗️수정
         self.present(QrCodeViewController, animated: true)
     }
     
@@ -61,27 +61,6 @@ class UserRootViewController: UIViewController {
         }
     }
 }
-
-
-
-//시간 차이나오게 하는 코드
-//let timeDifference = endSubscriptionDate.timeIntervalSince(startSubscriptionDate)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //#if DEBUG
 //
