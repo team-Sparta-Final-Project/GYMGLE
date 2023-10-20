@@ -47,11 +47,14 @@
 		630CE1552ADD5CD0001EC547 /* InAndOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE1542ADD5CD0001EC547 /* InAndOut.swift */; };
 		630CE1622ADD62AD001EC547 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE1612ADD62AD001EC547 /* DataManager.swift */; };
 		630EDE172ADFBC8300B37982 /* Extension_ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */; };
+		63163E6D2AE11EF200186315 /* QRcodeCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */; };
+		63163E6F2AE11F0700186315 /* QRcodeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
 		D14ECB442AD917D600FF7853 /* Extension_UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB432AD917D600FF7853 /* Extension_UIView.swift */; };
 		D14ECB482AD928FF00FF7853 /* Extension_CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */; };
+		D1635A462AE0F9CD00CDEF11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D1635A452AE0F9CD00CDEF11 /* FirebaseAuth */; };
 		D16920A72ADFBB9F00BE1A2B /* UserMyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */; };
 		D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */; };
 		D1E0185F2ADCEB6700D1C53D /* AdminNoticeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E0185E2ADCEB6700D1C53D /* AdminNoticeDetailView.swift */; };
@@ -109,6 +112,8 @@
 		630CE1542ADD5CD0001EC547 /* InAndOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InAndOut.swift; path = GYMGLE/InAndOut.swift; sourceTree = SOURCE_ROOT; };
 		630CE1612ADD62AD001EC547 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_ToastView.swift; sourceTree = "<group>"; };
+		63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckViewController.swift; sourceTree = "<group>"; };
+		63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckView.swift; sourceTree = "<group>"; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
@@ -149,6 +154,7 @@
 				2730BBFA2AD6BA1600BFA23C /* Then in Frameworks */,
 				2730BBF72AD6BA0200BFA23C /* QRCodeReader in Frameworks */,
 				2730BC132AD77C7F00BFA23C /* FirebaseAnalytics in Frameworks */,
+				D1635A462AE0F9CD00CDEF11 /* FirebaseAuth in Frameworks */,
 				0761A5222AD93D47002EECED /* Charts.framework in Frameworks */,
 				2730BC172AD77C7F00BFA23C /* FirebaseDatabase in Frameworks */,
 				2730BBE82AD66F0000BFA23C /* SnapKit in Frameworks */,
@@ -318,6 +324,8 @@
 		2730BC3E2AD8103100BFA23C /* QRcodeCheckPage */ = {
 			isa = PBXGroup;
 			children = (
+				63163E6B2AE11ED300186315 /* ViewController */,
+				63163E6A2AE11ECA00186315 /* View */,
 			);
 			path = QRcodeCheckPage;
 			sourceTree = "<group>";
@@ -456,6 +464,22 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		63163E6A2AE11ECA00186315 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		63163E6B2AE11ED300186315 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		63879E442ADA7A6700FA23BD /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -586,6 +610,7 @@
 				2730BC162AD77C7F00BFA23C /* FirebaseDatabase */,
 				2730BC182AD77C7F00BFA23C /* FirebaseDatabaseSwift */,
 				2730BC1A2AD77C7F00BFA23C /* FirebaseMessaging */,
+				D1635A452AE0F9CD00CDEF11 /* FirebaseAuth */,
 			);
 			productName = GYMGLE;
 			productReference = 2730BBB42AD6668200BFA23C /* GYMGLE.app */;
@@ -658,10 +683,12 @@
 				D1E018712ADCEC5C00D1C53D /* AdminLoginViewController.swift in Sources */,
 				D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */,
 				63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */,
+				63163E6F2AE11F0700186315 /* QRcodeCheckView.swift in Sources */,
 				630CE1552ADD5CD0001EC547 /* InAndOut.swift in Sources */,
 				D1E0186B2ADCEC2C00D1C53D /* AdminRegisterView.swift in Sources */,
 				2730BC8A2ADC1E1700BFA23C /* UserManageView.swift in Sources */,
 				07997FF52AD84390002ACFCB /* UserRootView.swift in Sources */,
+				63163E6D2AE11EF200186315 /* QRcodeCheckViewController.swift in Sources */,
 				630CE14B2ADD1B5E001EC547 /* TabbarViewController.swift in Sources */,
 				D1E0186D2ADCEC3800D1C53D /* AdminRegisterViewController.swift in Sources */,
 				2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */,
@@ -848,7 +875,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3L52QK9JPU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GYMGLE/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -875,7 +902,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3L52QK9JPU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GYMGLE/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1006,6 +1033,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		D1635A452AE0F9CD00CDEF11 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

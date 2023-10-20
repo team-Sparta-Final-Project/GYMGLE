@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct User { //일반 유저
+struct User: Codable { //일반 유저
     
     var account: Account
     let name: String
@@ -16,4 +16,5 @@ struct User { //일반 유저
     var endSubscriptionDate: Date
     var userInfo: String
     var isInGym: Bool
+    var adminUid: String
 }

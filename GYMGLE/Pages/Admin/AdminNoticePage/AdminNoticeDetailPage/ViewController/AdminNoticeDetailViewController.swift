@@ -13,7 +13,7 @@ final class AdminNoticeDetailViewController: UIViewController {
     let dataTest = DataManager.shared
     var noticeInfo: Notice? {
         didSet {
-            adminNoticeDetailView.contentTextView.text = noticeInfo?.content
+            
         }
     }
     // MARK: - life cycle
@@ -23,7 +23,7 @@ final class AdminNoticeDetailViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewSetting()
+        viewConfigure()
     }
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
@@ -40,10 +40,12 @@ final class AdminNoticeDetailViewController: UIViewController {
 }
 // MARK: - extension (custom func)
 private extension AdminNoticeDetailViewController {
-    func viewSetting() {
+    
+    func viewConfigure() {
         adminNoticeDetailView.contentTextView.delegate = self
         registerForKeyboardNotifications()
-        allButtonTapped()
+        viewSetting()
+        buttonTapped()
     }
     
     func registerForKeyboardNotifications() {
@@ -51,10 +53,17 @@ private extension AdminNoticeDetailViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    func allButtonTapped() {
+    func viewSetting() {
+        if let noticeInfo = noticeInfo {
+            adminNoticeDetailView.contentTextView.text = noticeInfo.content
+            adminNoticeDetailView.createButton.setTitle("수정하기", for: .normal)
+        } else {
+            adminNoticeDetailView.createButton.setTitle("등록하기", for: .normal)
+        }
+    }
+    func buttonTapped() {
         adminNoticeDetailView.createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
     }
-    
     func showToast(message: String) {
         let toastView = ToastView()
         toastView.configure()
@@ -103,12 +112,11 @@ extension AdminNoticeDetailViewController {
                 var newNotice = Notice(date: date, content: content ?? "")
                 print(newNotice)
                 dataTest.makeNoticeList(newNotice)
-
-                
-                
             } else {
-                noticeInfo?.content = adminNoticeDetailView.contentTextView.text
-                noticeInfo?.date = Date()
+                if var notice = noticeInfo {
+                    notice.content = adminNoticeDetailView.contentTextView.text
+                    dataTest.updateNotice(notice)
+                }
             }
             self.navigationController?.popViewController(animated: true)
         }

@@ -6,17 +6,20 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseCore
+import FirebaseDatabase
 
 final class AdminRootViewController: UIViewController {
-
+    
     private let adminRootView = AdminRootView()
     private let dataManager = DataManager.shared
     var gymInfo: GymInfo?
+    var isAdmin: Bool?
     // MARK: - life cycle
-
+    
     override func loadView() {
         view = adminRootView
-        
     }
     
     override func viewDidLoad() {
@@ -25,14 +28,18 @@ final class AdminRootViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.isHidden = true
-        adminRootView.dataSetting(gymInfo?.gymName ?? "", gymInfo?.gymPhoneNumber ?? "")
+        configuredView()
     }
-
+    
 }
 
 // MARK: - extension
 private extension AdminRootViewController {
+    func configuredView() {
+        navigationController?.navigationBar.isHidden = true
+        deletedButtonHidden()
+        adminRootView.dataSetting(dataManager.gymInfo.gymName, dataManager.gymInfo.gymnumber)
+    }
     
     func allButtonTapped() {
         adminRootView.gymSettingButton.addTarget(self, action: #selector(gymSettingButtonTapped), for: .touchUpInside)
@@ -42,14 +49,26 @@ private extension AdminRootViewController {
         adminRootView.gymNoticeButton.addTarget(self, action: #selector(gymNoticeButtonTapped), for: .touchUpInside)
         adminRootView.logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
     }
+    
+    func deletedButtonHidden() {
+        switch isAdmin {
+        case false: //트레이너 일 때
+            adminRootView.logOutButton.isHidden = true
+        default:
+            adminRootView.logOutButton.isHidden = false
+        }
+    }
 }
 
 // MARK: - @objc func
 extension AdminRootViewController {
     //로그아웃 버튼
     @objc private func gymSettingButtonTapped() {
-        if let adminLoginVC = self.navigationController?.viewControllers[1] {
-            self.navigationController?.popToViewController(adminLoginVC, animated: true)
+        signOut()
+        dismiss(animated: true) {
+            let vc = AdminLoginViewController()
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true)
         }
     }
     //회원등록 버튼
@@ -64,8 +83,8 @@ extension AdminRootViewController {
     }
     //큐알코드 버튼
     @objc private func gymQRCodeButtonTapped() {
-        let adminNoticeVC = AdminNoticeViewController()
-        self.navigationController?.pushViewController(adminNoticeVC, animated: true)
+        let qrcodeCheckVC = QRcodeCheckViewController()
+        self.navigationController?.pushViewController(qrcodeCheckVC, animated: true)
     }
     //공지사항 버튼
     @objc private func gymNoticeButtonTapped() {
@@ -75,10 +94,50 @@ extension AdminRootViewController {
     }
     //탈퇴 버튼
     @objc private func logOutButtonTapped() {
-        dataManager.gymList.removeAll(where: {$0.gymAccount.id == gymInfo?.gymAccount.id})
-        print(dataManager.gymList)
-        if let adminLoginVC = self.navigationController?.viewControllers[1] {
-            self.navigationController?.popToViewController(adminLoginVC, animated: true)
+//        dataManager.gymList.removeAll(where: {$0.gymAccount.id == gymInfo?.gymAccount.id})
+        deleteAccount()
+        dismiss(animated: true) {
+            let vc = AdminLoginViewController()
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true)
+        }
+    }
+}
+
+// MARK: - Firebase Auth
+
+extension AdminRootViewController {
+    
+    // MARK: - 로그아웃
+    
+    func signOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+    }
+    
+    // MARK: - 회원탈퇴
+    
+    func deleteAccount() {
+        // 계정 삭제
+        if let user = Auth.auth().currentUser {
+            user.delete { error in
+                if let error = error {
+                    print("delete Error : ", error)
+                } else {
+                    let adminLoginVC = AdminLoginViewController()
+                    self.navigationController?.pushViewController(adminLoginVC, animated: true)
+                }
+            }
+            // 데이터베이스에서 삭제
+            let userRef = Database.database().reference().child("users").child(user.uid)
+            userRef.removeValue()
+            signOut()
+        } else {
+            print("로그인 정보가 존재하지 않습니다.")
         }
     }
 }
