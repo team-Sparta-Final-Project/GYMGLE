@@ -28,9 +28,8 @@ class UserManageView: UIView {
     }
     //MARK: - 테이블뷰 configure
     
-    func dataSourceConfigure(cells:[String],phones:[String]){
+    func dataSourceConfigure(cells:[User]){
         tableView.cellData = cells
-        tableView.phoneData = phones
     }
     //MARK: - 탑레이블
     private func topLabel(){

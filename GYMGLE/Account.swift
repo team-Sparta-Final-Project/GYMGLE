@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct Account { // 계정
+struct Account: Codable { // 계정
     
     var id: String
     var password: String

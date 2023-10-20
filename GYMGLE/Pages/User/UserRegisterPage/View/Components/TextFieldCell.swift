@@ -22,6 +22,7 @@ class TextFieldCell:UITableViewCell {
         textField.delegate = self
         
         self.layer.frame.size.width = 344.5
+        self.backgroundColor = .clear
         self.contentView.clipsToBounds = true
         
         makeUI()

@@ -1,4 +1,7 @@
 import UIKit
+import FirebaseAuth
+import FirebaseCore
+import FirebaseDatabase
 
 class UserRegisterViewIDPWController: UIViewController {
     
@@ -21,6 +24,9 @@ class UserRegisterViewIDPWController: UIViewController {
     
     var name:String = ""
     var phone:String = ""
+    var startDate = Date()
+    var endDate = Date()
+    var userInfo = ""
     
     override func loadView() {
         viewConfigure.textView.isHidden = true
@@ -69,6 +75,24 @@ class UserRegisterViewIDPWController: UIViewController {
         }
     }
     
+    func showToast(message: String) {
+        let toastView = ToastView()
+        toastView.configure()
+        toastView.text = message
+        view.addSubview(toastView)
+        toastView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
+            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
+        ])
+        UIView.animate(withDuration: 2.5, delay: 0.2) { //2.5초
+            toastView.alpha = 0
+        } completion: { _ in
+            toastView.removeFromSuperview()
+        }
+    }
     
     @objc func idVerification(){
         let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
@@ -119,22 +143,21 @@ class UserRegisterViewIDPWController: UIViewController {
     }
     
     @objc func buttonClicked(){
-        print("테스트 - 셀엠티\(isCellEmpty)")
-        print("테스트 - 버리파이\(isNotVerified)")
         if isCellEmpty || isNotVerified {
-            print("테스트 - 안돼 돌아가")
+            showToast(message: "빈칸이 있거나 중복 확인이 안되었습니다.")
         }else{
-            let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
-            let idTextField = idCell?.contentView.subviews[1] as? UITextField
-            guard let idText = idTextField?.text else { return }
-            let pwCell = self.viewConfigure.tableView.subviews[0] as? UITableViewCell
-            let pwField = pwCell?.contentView.subviews[1] as? UITextField
-            guard let pwText = pwField?.text else { return }
+//            let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
+//            let idTextField = idCell?.contentView.subviews[1] as? UITextField
+//            guard let idText = idTextField?.text else { return }
+//            let pwCell = self.viewConfigure.tableView.subviews[0] as? UITableViewCell
+//            let pwField = pwCell?.contentView.subviews[1] as? UITextField
+//            guard let pwText = pwField?.text else { return }
             
-            DataManager.shared.addGymUser(id: idText, password: pwText, name: name, type: 2, number: phone)
-            
-            let adminRootVC = navigationController!.viewControllers[2]
-            navigationController?.popToViewController(adminRootVC, animated: true)
+//            DataManager.shared.addFullGymUser(id: idText, password: pwText, type: 2, name: name, number: phone, startDate: startDate, endDate: endDate, userInfo: userInfo)
+//            
+//            let adminRootVC = navigationController!.viewControllers[2]
+//            navigationController?.popToViewController(adminRootVC, animated: true)
+            createUser()
         }
 
 //        DataManager.addGymUser(name: nameText, number: phoneText)
@@ -143,4 +166,49 @@ class UserRegisterViewIDPWController: UIViewController {
     }
     
     
+}
+
+extension UserRegisterViewIDPWController {
+    // MARK: - 회원가입
+    
+    // 일단 유저만 가입 (accountType: 2)
+    // 트레이너는 따로 버튼을 만드는 것도 고려해볼만?
+    func createUser() {
+        let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
+        let idTextField = idCell?.contentView.subviews[1] as? UITextField
+        guard let id = idTextField?.text else { return }
+        let pwCell = self.viewConfigure.tableView.subviews[0] as? UITableViewCell
+        let pwField = pwCell?.contentView.subviews[1] as? UITextField
+        guard let pw = pwField?.text else { return }
+        
+        let user = User(account: Account(id: id, password: pw, accountType: 2),
+                        name: name,
+                        number: phone,
+                        startSubscriptionDate: startDate,
+                        endSubscriptionDate: endDate,
+                        userInfo: userInfo,
+                        isInGym: false,
+                        adminUid: DataManager.shared.gymUid!)
+        
+        Auth.auth().createUser(withEmail: id, password: pw) { result, error in
+            if let error = error {
+                print(error)
+            } else {
+                do {
+                    let userData = try JSONEncoder().encode(user)
+                    let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
+                    
+                    if let user = result?.user {
+                        let userRef = Database.database().reference().child("accounts").child(user.uid)
+                        userRef.child("userData").setValue(userJSON)
+                    }
+                    
+                    let vc = AdminRootViewController()
+                    self.navigationController?.pushViewController(vc, animated: true)
+                } catch {
+                    print("JSON 인코딩 에러")
+                }
+            }
+        }
+    }
 }
