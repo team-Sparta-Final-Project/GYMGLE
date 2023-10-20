@@ -312,9 +312,18 @@ extension AdminRegisterViewController {
                               gymName: gymName,
                               gymPhoneNumber: gymPhoneNumber,
                               gymnumber: gymNumber,
-                              gymUserList: [],
-                              noticeList: [],
-                              gymInAndOutLog: [])
+                              gymUserList: [User(account: Account(id: "default",
+                                                                  password: "default",
+                                                                  accountType: 2),
+                                                 name: "default",
+                                                 number: "default",
+                                                 startSubscriptionDate: Date(),
+                                                 endSubscriptionDate: Date(),
+                                                 userInfo: "default",
+                                                 isInGym: false,
+                                                 adminUid: "default")],
+                              noticeList: [Notice(date: Date(), content: "default")],
+                              gymInAndOutLog: [InAndOut(id: "default", inTime: Date(), outTime: Date(), sinceInAndOutTime: 0)])
         
         Auth.auth().createUser(withEmail: id, password: pw) { result, error in
             if let error = error {
