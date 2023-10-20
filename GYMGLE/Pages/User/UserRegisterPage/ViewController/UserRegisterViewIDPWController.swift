@@ -21,6 +21,9 @@ class UserRegisterViewIDPWController: UIViewController {
     
     var name:String = ""
     var phone:String = ""
+    var startDate = Date()
+    var endDate = Date()
+    var userInfo = ""
     
     override func loadView() {
         viewConfigure.textView.isHidden = true
@@ -147,7 +150,7 @@ class UserRegisterViewIDPWController: UIViewController {
             let pwField = pwCell?.contentView.subviews[1] as? UITextField
             guard let pwText = pwField?.text else { return }
             
-            DataManager.shared.addGymUser(id: idText, password: pwText, name: name, type: 2, number: phone)
+            DataManager.shared.addFullGymUser(id: idText, password: pwText, type: 2, name: name, number: phone, startDate: startDate, endDate: endDate, userInfo: userInfo)
             
             let adminRootVC = navigationController!.viewControllers[2]
             navigationController?.popToViewController(adminRootVC, animated: true)
