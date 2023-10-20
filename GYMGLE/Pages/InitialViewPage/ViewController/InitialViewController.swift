@@ -54,7 +54,8 @@ private extension InitialViewController {
                     let vc = TabbarViewController()
                     vc.user = user
                     vc.gymInfo = gymInfo
-                    navigationController?.pushViewController(vc, animated: true)
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
                     return
                 }
             }
@@ -81,12 +82,10 @@ private extension InitialViewController {
                    let gymAccount = gymInfo["gymAccount"] as? [String: Any],
                    let accountType = gymAccount["accountType"] as? Int {
                     if accountType == 0 {
-                        self.navigationController?.pushViewController(AdminRootViewController(), animated: true)
-                    } 
-//                    User.account.acccountType 으로 해야함
-//                    else if accountType == 2 {
-//                        self.navigationController?.pushViewController(TabbarViewController(), animated: true)
-//                    }
+                        let vc = AdminRootViewController()
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                    }
                 }
             }
         }

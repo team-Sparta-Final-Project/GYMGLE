@@ -21,7 +21,7 @@ class DataManager {
                                               startSubscriptionDate: Date(),
                                               endSubscriptionDate: Date(),
                                               userInfo: "addwd",
-                                              isInGym: true),
+                             isInGym: true, adminUid: "1"),
                         
                         User(account: Account(id: "asdf",
                                               password: "asdf",
@@ -31,7 +31,7 @@ class DataManager {
                                               startSubscriptionDate: Date(),
                                               endSubscriptionDate: Date(),
                                               userInfo: "addwdf",
-                                              isInGym: true)
+                             isInGym: true, adminUid: "2")
                        ],
                        
                             noticeList: [Notice(date: Date(),
@@ -74,7 +74,7 @@ class DataManager {
                               startSubscriptionDate: Date(),
                               endSubscriptionDate: Date(),
                               userInfo: "추가정보",
-                              isInGym: true)
+             isInGym: true, adminUid: "1")
         )
     }
     

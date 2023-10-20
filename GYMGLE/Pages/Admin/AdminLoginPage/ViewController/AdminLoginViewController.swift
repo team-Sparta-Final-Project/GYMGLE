@@ -89,7 +89,8 @@ extension AdminLoginViewController {
                             // 트레이너는 User.account.acccountType 으로 해야함
                             if accountType == 0 {
                                 let vc = AdminRootViewController()
-                                self.navigationController?.pushViewController(vc, animated: true)
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
                             } else {
                                 DispatchQueue.main.async {
                                     let alert = UIAlertController(title: "로그인 실패",

@@ -16,4 +16,5 @@ struct User: Codable { //일반 유저
     var endSubscriptionDate: Date
     var userInfo: String
     var isInGym: Bool
+    var adminUid: String
 }
