@@ -6,7 +6,7 @@ class UserRegisterView: UIView {
     lazy var tableView = UserTableView()
     lazy var button:UIButton = UIButton.GYMGLEButtonPreset("버튼 타이틀")
     lazy var textView = UITextView()
-    
+        
     //MARK: - View 자체 라이프사이클
     override init(frame: CGRect) {
         super .init(frame: frame)
@@ -61,7 +61,7 @@ class UserRegisterView: UIView {
         tableView.snp.makeConstraints{
             $0.top.equalTo(label.snp.bottom).offset(35)
             $0.left.right.equalToSuperview().inset(24)
-            $0.bottom.equalTo(button.snp.top).inset(-350)
+            $0.bottom.equalTo(button.snp.top).inset(-280)
         }
     }
     //MARK: - 텍스트 뷰
@@ -77,7 +77,7 @@ class UserRegisterView: UIView {
         textView.snp.makeConstraints{
             $0.left.right.equalToSuperview().inset(24)
             $0.top.equalTo(tableView.snp.bottom).inset(10)
-            $0.bottom.equalTo(button.snp.top).offset(-264)
+            $0.bottom.equalTo(button.snp.top).offset(-150)
         }
     }
     

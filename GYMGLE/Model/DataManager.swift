@@ -63,7 +63,22 @@ class DataManager {
     //MARK: - 싱글톤 메서드
     
     //회원 추가
-    func addGymUser(id:String, password:String, name:String, type:Int, number:String){
+    func addGymUser(id:String, password:String, type:Int, name:String, number:String){
+        
+        self.gymInfo.gymUserList.append(
+        User(account: Account(id: id,
+                              password: password,
+                              accountType: type),
+                              name: name,
+                              number: number,
+                              startSubscriptionDate: Date(),
+                              endSubscriptionDate: Date(),
+                              userInfo: "추가정보",
+                              isInGym: true)
+        )
+    }
+    
+    func addFullGymUser(id:String, password:String, type:Int, name:String, number:String, startDate:Date, endDate:Date, userInfo:String){
         
         self.gymInfo.gymUserList.append(
         User(account: Account(id: id,

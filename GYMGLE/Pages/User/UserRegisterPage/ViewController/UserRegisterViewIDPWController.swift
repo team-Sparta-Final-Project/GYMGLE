@@ -21,6 +21,9 @@ class UserRegisterViewIDPWController: UIViewController {
     
     var name:String = ""
     var phone:String = ""
+    var startDate = Date()
+    var endDate = Date()
+    var userInfo = ""
     
     override func loadView() {
         viewConfigure.textView.isHidden = true
@@ -69,6 +72,24 @@ class UserRegisterViewIDPWController: UIViewController {
         }
     }
     
+    func showToast(message: String) {
+        let toastView = ToastView()
+        toastView.configure()
+        toastView.text = message
+        view.addSubview(toastView)
+        toastView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
+            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
+        ])
+        UIView.animate(withDuration: 2.5, delay: 0.2) { //2.5초
+            toastView.alpha = 0
+        } completion: { _ in
+            toastView.removeFromSuperview()
+        }
+    }
     
     @objc func idVerification(){
         let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
@@ -119,10 +140,8 @@ class UserRegisterViewIDPWController: UIViewController {
     }
     
     @objc func buttonClicked(){
-        print("테스트 - 셀엠티\(isCellEmpty)")
-        print("테스트 - 버리파이\(isNotVerified)")
         if isCellEmpty || isNotVerified {
-            print("테스트 - 안돼 돌아가")
+            showToast(message: "빈칸이 있거나 중복 확인이 안되었습니다.")
         }else{
             let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
             let idTextField = idCell?.contentView.subviews[1] as? UITextField
@@ -131,7 +150,7 @@ class UserRegisterViewIDPWController: UIViewController {
             let pwField = pwCell?.contentView.subviews[1] as? UITextField
             guard let pwText = pwField?.text else { return }
             
-            DataManager.shared.addGymUser(id: idText, password: pwText, name: name, type: 2, number: phone)
+            DataManager.shared.addFullGymUser(id: idText, password: pwText, type: 2, name: name, number: phone, startDate: startDate, endDate: endDate, userInfo: userInfo)
             
             let adminRootVC = navigationController!.viewControllers[2]
             navigationController?.popToViewController(adminRootVC, animated: true)
