@@ -6,7 +6,10 @@ class UserRegisterView: UIView {
     lazy var tableView = UserTableView()
     lazy var button:UIButton = UIButton.GYMGLEButtonPreset("버튼 타이틀")
     lazy var textView = UITextView()
-        
+    
+    let items = ["회원", "트레이너"]
+    lazy var segmented = UISegmentedControl(items: items)
+
     //MARK: - View 자체 라이프사이클
     override init(frame: CGRect) {
         super .init(frame: frame)
@@ -16,13 +19,17 @@ class UserRegisterView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    //MARK: - 설정 함수
+    //MARK: - 뷰에 요소 배치 함수 (순서 조심)
     private func configure(){
         
         topLabel()
         bottomButton()
         centerTableView()
         addTextView()
+        
+        segmentedConfigure()
+        
+        
     }
     //MARK: - 테이블뷰 configure
     func heightConfigure(cellHeight:Int, emptyCellHeight:Int){
@@ -40,6 +47,25 @@ class UserRegisterView: UIView {
         tableView.buttonCellData = buttons
         tableView.buttonText = buttonText
     }
+    
+    //MARK: - 세그먼티드 컨트롤
+    
+    private func segmentedConfigure(){
+        
+        segmented.selectedSegmentIndex = 0
+        
+        
+        self.addSubviews(segmented)
+        
+        segmented.snp.makeConstraints{
+            $0.centerY.equalTo(label)
+            $0.right.equalToSuperview().inset(22)
+        }
+        
+    }
+    
+    
+    
     //MARK: - 탑레이블
     private func topLabel(){
         

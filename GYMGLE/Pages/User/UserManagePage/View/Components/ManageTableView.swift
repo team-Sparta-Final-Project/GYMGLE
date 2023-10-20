@@ -12,7 +12,6 @@ class ManageTableView: UITableView {
         
         self.backgroundColor = .clear
     
-        self.delegate = self
         self.dataSource = self
         self.allowsSelection = true
 
@@ -30,9 +29,6 @@ class ManageTableView: UITableView {
     
 }
 
-extension ManageTableView: UITableViewDelegate {
-    
-}
 
 extension ManageTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -46,6 +42,10 @@ extension ManageTableView: UITableViewDataSource {
         cell.phone.text = cellData[indexPath.row].number
         cell.gender.text = "남"
         
+        if cellData.count == (indexPath.row + 1) {
+            cell.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
+        }
+        
         return cell
     }
     
@@ -54,8 +54,10 @@ extension ManageTableView: UITableViewDataSource {
         
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("테스트 - \(cellData[indexPath.row])")
+        print("테스트 - \(indexPath)")
     }
+    
+    
     
 }
 //

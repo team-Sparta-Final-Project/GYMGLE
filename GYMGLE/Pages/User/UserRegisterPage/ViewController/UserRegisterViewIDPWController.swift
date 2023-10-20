@@ -2,7 +2,7 @@ import UIKit
 
 class UserRegisterViewIDPWController: UIViewController {
     
-    let pageTitle = "회원 등록"
+    var pageTitle = "회원 등록"
     let buttonTitle = "등록하기"
     
     let cells = ["회원 아이디","회원 비밀번호"]
@@ -24,6 +24,7 @@ class UserRegisterViewIDPWController: UIViewController {
     var startDate = Date()
     var endDate = Date()
     var userInfo = ""
+    var userType = 2
     
     override func loadView() {
         viewConfigure.textView.isHidden = true
@@ -150,13 +151,17 @@ class UserRegisterViewIDPWController: UIViewController {
             let pwField = pwCell?.contentView.subviews[1] as? UITextField
             guard let pwText = pwField?.text else { return }
             
-            DataManager.shared.addFullGymUser(id: idText, password: pwText, type: 2, name: name, number: phone, startDate: startDate, endDate: endDate, userInfo: userInfo)
+            if userType == 2 {
+                DataManager.shared.addFullGymUser(id: idText, password: pwText, type: 2, name: name, number: phone, startDate: startDate, endDate: endDate, userInfo: userInfo)
+            } else {
+                DataManager.shared.addFullGymUser(id: idText, password: pwText, type: 1, name: name, number: phone, startDate: startDate, endDate: endDate, userInfo: userInfo)
+
+            }
+            
             
             let adminRootVC = navigationController!.viewControllers[2]
             navigationController?.popToViewController(adminRootVC, animated: true)
         }
-
-//        DataManager.addGymUser(name: nameText, number: phoneText)
         
         
     }
