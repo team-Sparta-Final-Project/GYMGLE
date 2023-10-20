@@ -17,6 +17,7 @@ final class QRcodeCheckViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         basicSetting()
     }
     
@@ -67,7 +68,6 @@ extension QRcodeCheckViewController {
             // ✅ rectOfInterest 를 설정(=제한영역 설정 완료)
             output.rectOfInterest = rectConverted
 
-            // ✅ 정사각형 가이드 라인 추가
             setGuideCrossLineView()
             
             // 4️⃣ startRunning() 과 stopRunning() 로 흐름 통제
@@ -80,7 +80,7 @@ extension QRcodeCheckViewController {
     }
     
     // ✅ 카메라 영상이 나오는 layer 를 뷰에 추가
-    private func setVideoLayer(rectOfInterest: CGRect) -> CGRect {
+    private func setVideoLayer(rectOfInterest: CGRect) -> CGRect{
         // 영상을 담을 공간.
         let videoLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         //카메라의 크기 지정
@@ -147,13 +147,15 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject, let stringValue = readableObject.stringValue else {
                 return
             }
+            
+            // ✅ qr코드가 가진 문자열이 URL 형태를 띈다면 출력.(아무런 qr코드나 찍는다고 출력시키면 안되니까 여기서 분기처리 가능. )
+            
             print(stringValue)
             
             // ✅ input 에서 output 으로의 흐름 중지
             self.captureSession.stopRunning()
             
-            // "확인됐습니다" 메시지를 띄우는 작업
-            self.showToast(message: "확인됐습니다")
+            self.showToast(message: "확인했습니다")
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 self.captureSession.startRunning()

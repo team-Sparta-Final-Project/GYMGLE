@@ -32,9 +32,9 @@ private extension QrCodeViewController {
     func configuredView() {
 //        let qrCodeImage = generateQRCode(data: "\(dataTest.gymInfo.gymUserList[0].name)")
 //        print("name: \(dataTest.gymInfo.gymUserList[0].name)")
-        let name = user?.name
-        let qrCodeImage = generateQRCode(data: "\(name ?? "")")
-        let welcomeName = "\(name ?? "")님\n 오늘도 즐거운 운동 하세요!"
+        let userId = user?.account.id
+        let qrCodeImage = generateQRCode(data: "\(userId ?? "")")
+        let welcomeName = "\(userId ?? "")님\n 오늘도 즐거운 운동 하세요!"
         qrcodeView.dataSetting(image: qrCodeImage, text: welcomeName)
         
         qrcodeView.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
