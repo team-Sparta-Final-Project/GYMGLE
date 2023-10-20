@@ -34,7 +34,10 @@ private extension UserMyPageViewController {
     }
     
     @objc func logOutButtonTapped() {
-        let vc = InitialViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        dismiss(animated: true) {
+            let vc = InitialViewController()
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true)
+        }
     }
 }

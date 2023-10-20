@@ -75,7 +75,11 @@ extension AdminLoginViewController {
         Auth.auth().signIn(withEmail: id, password: pw) { result, error in
             if let error = error {
                 print(error)
-                
+                let alert = UIAlertController(title: "로그인 실패",
+                                              message: "유효한 계정이 아닙니다.",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             } else {
                 if let user = result?.user {
                     let userRef = Database.database().reference().child("users").child(user.uid)

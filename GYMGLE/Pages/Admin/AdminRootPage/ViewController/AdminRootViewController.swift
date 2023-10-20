@@ -52,8 +52,11 @@ extension AdminRootViewController {
     //로그아웃 버튼
     @objc private func gymSettingButtonTapped() {
         signOut()
-        let adminLoginVC = AdminLoginViewController()
-        self.navigationController?.pushViewController(adminLoginVC, animated: true)
+        dismiss(animated: true) {
+            let vc = AdminLoginViewController()
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true)
+        }
     }
     //회원등록 버튼
     @objc private func gymUserRegisterButtonTapped() {
@@ -80,6 +83,11 @@ extension AdminRootViewController {
     @objc private func logOutButtonTapped() {
 //        dataManager.gymList.removeAll(where: {$0.gymAccount.id == gymInfo?.gymAccount.id})
         deleteAccount()
+        dismiss(animated: true) {
+            let vc = AdminLoginViewController()
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true)
+        }
     }
 }
 
