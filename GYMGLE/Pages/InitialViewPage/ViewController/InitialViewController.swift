@@ -82,7 +82,7 @@ private extension InitialViewController {
                    let gymAccount = gymInfo["gymAccount"] as? [String: Any],
                    let accountType = gymAccount["accountType"] as? Int {
                     if accountType == 0 {
-                        let vc = AdminRootViewController()
+                        let vc = UINavigationController(rootViewController: AdminRootViewController())
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true)
                     }
