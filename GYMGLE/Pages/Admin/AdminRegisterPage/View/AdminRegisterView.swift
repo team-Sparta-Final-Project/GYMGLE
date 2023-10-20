@@ -20,6 +20,9 @@ class AdminRegisterView: UIView {
     lazy var adminNameTextField = UITextField().then {
         $0.borderStyle = .none
         $0.placeholder = "사업장 이름"
+        $0.autocapitalizationType = .none // 자동으로 맨 앞을 대문자로 할건지
+        $0.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
+        $0.spellCheckingType = .no
         $0.font = FontGuide.size14
         
         let placeholderPadding = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: $0.frame.height))
@@ -33,6 +36,7 @@ class AdminRegisterView: UIView {
     lazy var adminNumberTextField = UITextField().then {
         $0.borderStyle = .none
         $0.placeholder = "사업자 전화 번호"
+        $0.keyboardType = .numbersAndPunctuation
         $0.font = FontGuide.size14
         
         let placeholderPadding = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: $0.frame.height))
@@ -46,6 +50,7 @@ class AdminRegisterView: UIView {
     lazy var phoneTextField = UITextField().then {
         $0.borderStyle = .none
         $0.placeholder = "핸드폰 번호 (ex. 010-xxxx-xxxx)"
+        $0.keyboardType = .numbersAndPunctuation
         $0.font = FontGuide.size14
         
         let placeholderPadding = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: $0.frame.height))
@@ -76,6 +81,9 @@ class AdminRegisterView: UIView {
     lazy var idTextField = UITextField().then {
         $0.borderStyle = .none
         $0.placeholder = "아이디 (example@example.com)"
+        $0.autocapitalizationType = .none // 자동으로 맨 앞을 대문자로 할건지
+        $0.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
+        $0.spellCheckingType = .no
         $0.font = FontGuide.size14
         
         let placeholderPadding = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: $0.frame.height))
@@ -93,6 +101,9 @@ class AdminRegisterView: UIView {
     lazy var passwordTextField = UITextField().then {
         $0.borderStyle = .none
         $0.placeholder = "비밀번호 (8~16자리 영문, 숫자, 특수문자 모두 포함)"
+        $0.autocapitalizationType = .none // 자동으로 맨 앞을 대문자로 할건지
+        $0.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
+        $0.spellCheckingType = .no
         $0.font = FontGuide.size14
         
         let placeholderPadding = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: $0.frame.height))
