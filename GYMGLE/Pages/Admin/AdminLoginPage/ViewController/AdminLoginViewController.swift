@@ -82,30 +82,10 @@ extension AdminLoginViewController {
                 self.present(alert, animated: true, completion: nil)
             } else {
                 if let user = result?.user {
-                    let userRef = Database.database().reference().child("users").child(user.uid)
-                    
-                    userRef.observeSingleEvent(of: .value) { (snapshot)  in
-                        if let userData = snapshot.value as? [String: Any],
-                           let gymInfo = userData["gymInfo"] as? [String: Any],
-                           let gymAccount = gymInfo["gymAccount"] as? [String: Any],
-                           let accountType = gymAccount["accountType"] as? Int {
-                            // 헬스장 사장님
-                            // 트레이너는 User.account.acccountType 으로 해야함
-                            if accountType == 0 {
-                                let vc = AdminRootViewController()
-                                vc.modalPresentationStyle = .fullScreen
-                                self.present(vc, animated: true)
-                            } else {
-                                DispatchQueue.main.async {
-                                    let alert = UIAlertController(title: "로그인 실패",
-                                                                  message: "유효한 계정이 아닙니다.",
-                                                                  preferredStyle: .alert)
-                                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                                    self.present(alert, animated: true, completion: nil)
-                                }
-                            }
-                        }
-                    }
+                    let vc = UINavigationController(rootViewController: AdminRootViewController())
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                    DataManager.shared.gymUid = user.uid
                 }
             }
         }

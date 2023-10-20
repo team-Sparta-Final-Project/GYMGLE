@@ -5,6 +5,7 @@ class DataManager {
     static let shared = DataManager()
     private init(){}
     
+    var gymUid: String?
     lazy var gymInfo = GymInfo(gymAccount: Account(id: "",
                                            password: "",
                                            accountType: 0),
@@ -74,7 +75,7 @@ class DataManager {
                               startSubscriptionDate: Date(),
                               endSubscriptionDate: Date(),
                               userInfo: "추가정보",
-                              isInGym: true)
+             isInGym: true, adminUid: "1")
         )
     }
     
