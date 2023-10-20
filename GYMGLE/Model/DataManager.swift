@@ -5,6 +5,7 @@ class DataManager {
     static let shared = DataManager()
     private init(){}
     
+    var gymUid: String?
     lazy var gymInfo = GymInfo(gymAccount: Account(id: "",
                                            password: "",
                                            accountType: 0),
@@ -21,7 +22,7 @@ class DataManager {
                                               startSubscriptionDate: Date(),
                                               endSubscriptionDate: Date(),
                                               userInfo: "addwd",
-                                              isInGym: false),
+                             isInGym: true, adminUid: "1"),
                         
                         User(account: Account(id: "2",
                                               password: "2",
@@ -31,7 +32,7 @@ class DataManager {
                                               startSubscriptionDate: Date(),
                                               endSubscriptionDate: Date(),
                                               userInfo: "addwdf",
-                                              isInGym: true)
+                             isInGym: true, adminUid: "2")
                        ],
                        
                             noticeList: [Notice(date: Date(),
@@ -78,7 +79,7 @@ class DataManager {
     //MARK: - 싱글톤 메서드
     
     //회원 추가
-    func addGymUser(id:String, password:String, name:String, type:Int, number:String){
+    func addGymUser(id:String, password:String, type:Int, name:String, number:String){
         
         self.gymInfo.gymUserList.append(
         User(account: Account(id: id,
@@ -89,7 +90,22 @@ class DataManager {
                               startSubscriptionDate: Date(),
                               endSubscriptionDate: Date(),
                               userInfo: "추가정보",
-                              isInGym: true)
+             isInGym: true, adminUid: "1")
+        )
+    }
+    
+    func addFullGymUser(id:String, password:String, type:Int, name:String, number:String, startDate:Date, endDate:Date, userInfo:String){
+        
+        self.gymInfo.gymUserList.append(
+        User(account: Account(id: id,
+                              password: password,
+                              accountType: type),
+                              name: name,
+                              number: number,
+                              startSubscriptionDate: Date(),
+                              endSubscriptionDate: Date(),
+                              userInfo: "추가정보",
+             isInGym: true, adminUid: "1")
         )
     }
     

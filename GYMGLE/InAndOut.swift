@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct InAndOut {
+struct InAndOut: Codable {
     
     var id: String
     var inTime: Date

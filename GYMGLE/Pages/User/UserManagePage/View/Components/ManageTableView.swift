@@ -3,8 +3,7 @@ import UIKit
 class ManageTableView: UITableView {
     
     //MARK: - 셀 설정
-    var cellData:[String] = ["회원 이름","","회원 전화번호","","회원 아이디","","회원 비밀번호","","등록 기간","","추가 정보"]
-    var phoneData:[String] = []
+    var cellData:[User] = []
     var cellHeight:Int = 40
     
     //MARK: - 라이프사이클
@@ -43,8 +42,8 @@ extension ManageTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = ManageLabelCell()
-        cell.name.text = cellData[indexPath.row]
-        cell.phone.text = phoneData[indexPath.row]
+        cell.name.text = cellData[indexPath.row].name
+        cell.phone.text = cellData[indexPath.row].number
         cell.gender.text = "남"
         
         return cell
@@ -53,6 +52,9 @@ extension ManageTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(cellHeight)
         
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("테스트 - \(cellData[indexPath.row])")
     }
     
 }

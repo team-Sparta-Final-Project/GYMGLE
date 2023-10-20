@@ -5,7 +5,7 @@ class UserManageViewController: UIViewController {
     let pageTitle = "회원 관리"
     let buttonTitle = "등록하기"
     
-    var cells = ["김기호","공성표","박성원","조규연"]
+    var cells:[User] = []
     var phones = ["","","",""]
     
     let cellHeight = 45
@@ -14,9 +14,9 @@ class UserManageViewController: UIViewController {
         
         let viewConfigure = UserManageView()
         
-        userConfigure()
+        cells = DataManager.shared.gymInfo.gymUserList
         
-        viewConfigure.dataSourceConfigure(cells: cells, phones:phones)
+        viewConfigure.dataSourceConfigure(cells: cells)
         viewConfigure.label.text = pageTitle
 //        viewConfigure.button.setTitle(buttonTitle, for: .normal)
         
@@ -33,11 +33,4 @@ class UserManageViewController: UIViewController {
         navigationController?.navigationBar.isHidden = false
     }
 
-    private func userConfigure(){
-        
-        cells = DataManager.shared.gymInfo.gymUserList.map { $0.name }
-        phones = DataManager.shared.gymInfo.gymUserList.map { $0.number }
-        
-        
-    }
 }
