@@ -41,10 +41,14 @@ class AdminRegisterViewController: UIViewController {
         configureNav()
         setRegisterButton()
         setTextField()
-        
+        registerForKeyboardNotifications()
     }
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         navigationController?.navigationBar.isHidden = false
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        adminRegisterView.endEditing(true)
     }
 }
 
@@ -79,7 +83,7 @@ private extension AdminRegisterViewController {
         adminRegisterView.duplicationCheckButton.addTarget(self, action: #selector(duplicationCheckButtonTapped), for: .touchUpInside)
         adminRegisterView.registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
     }
-    
+
     @objc func validCheckButtonTapped() {
         numberDuplicateCheck()
         voidCheck(textField: adminRegisterView.registerNumberTextField)
@@ -122,7 +126,28 @@ private extension AdminRegisterViewController {
             present(alert, animated: true, completion: nil)
         }
     }
+    //키보드 올라오면 화면 올리기
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
     
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let keyboardHeight = keyboardFrame.height
+            let textFieldFrameInWindow = adminRegisterView.passwordTextField.convert(adminRegisterView.passwordTextField.bounds, to: nil)
+            let maxY = textFieldFrameInWindow.maxY
+            if maxY > (adminRegisterView.frame.size.height - keyboardHeight) {
+                let scrollOffset = maxY - (adminRegisterView.frame.size.height - keyboardHeight)
+                adminRegisterView.frame.origin.y = -scrollOffset - 20
+            }
+        }
+    }
+    
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        adminRegisterView.frame.origin.y = 0
+    }
     func idDuplicationCheck() {
         for gymInfo in dataTest.gymList {
             if gymInfo.gymAccount.id == adminRegisterView.idTextField.text {

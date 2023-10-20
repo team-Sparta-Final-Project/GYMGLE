@@ -29,6 +29,10 @@ class AdminLoginViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        adminLoginView.endEditing(true)
+    }
+    
 }
 
 // MARK: - Configure
