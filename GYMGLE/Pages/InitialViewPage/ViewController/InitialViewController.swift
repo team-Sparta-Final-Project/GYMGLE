@@ -64,15 +64,26 @@ private extension InitialViewController {
             
             userRef.observeSingleEvent(of: .value) { (snapshot) in
                 if let userData = snapshot.value as? [String: Any],
-                   let gymInfo = userData["gymInfo"] as? [String: Any],
-                   let gymAccount = gymInfo["gymAccount"] as? [String: Any],
-                   let accountType = gymAccount["accountType"] as? Int {
-                    if accountType == 0 {
-                        DataManager.shared.gymUid = currentUser.uid
-                        let vc = UINavigationController(rootViewController: AdminRootViewController())
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true)
+                   let gymInfoJSON = userData["gymInfo"] as? [String: Any] {
+                    do {
+                        let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
+                        let gymInfo = try JSONDecoder().decode(GymInfo.self, from: gymInfoData)
+                        DataManager.shared.realGymInfo = gymInfo
+                    } catch DecodingError.dataCorrupted(let context) {
+                        print("Data corrupted: \(context.debugDescription)")
+                    } catch DecodingError.keyNotFound(let key, let context) {
+                        print("Key '\(key.stringValue)' not found: \(context.debugDescription)")
+                    } catch DecodingError.valueNotFound(let type, let context) {
+                        print("Value of type '\(type)' not found: \(context.debugDescription)")
+                    } catch DecodingError.typeMismatch(let type, let context) {
+                        print("Type mismatch for type '\(type)' : \(context.debugDescription)")
+                    } catch {
+                        print("Decoding error: \(error.localizedDescription)")
                     }
+                    DataManager.shared.gymUid = currentUser.uid
+                    let vc = UINavigationController(rootViewController: AdminRootViewController())
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
                 }
             }
             
