@@ -16,13 +16,13 @@ final class AdminRootView: UIView {
     }()
     private lazy var gymNameLabel: UILabel = {
         let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size14, textAligment: .left)
+        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size19, textAligment: .left)
         label.text = "JP 헬스장"
         return label
     }()
     private lazy var gymNumberLabel: UILabel = {
         let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size14, textAligment: .left)
+        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .left)
         label.text = "010-0000-0000"
         return label
     }()
@@ -37,31 +37,31 @@ final class AdminRootView: UIView {
     }()
     lazy var gymSettingButton: UIButton = {
         let button = UIButton()
-        button.buttonMakeUI(backgroundColor: .white, cornerRadius: 16, borderWidth: 1.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "로그아웃", font: FontGuide.size16Bold, setTitleColor: ColorGuide.main)
+        button.buttonMakeUI(backgroundColor: .white, cornerRadius: 16, borderWidth: 2.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "로그아웃", font: FontGuide.size16Bold, setTitleColor: ColorGuide.main)
         return button
     }()
     // 회원등록 버튼
     lazy var gymUserRegisterButton: UIButton = {
         let button = UIButton()
-        button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 10.0, borderWidth: 1.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "회원등록", font: FontGuide.size19Bold, setTitleColor: ColorGuide.black)
+        button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 12.0, borderWidth: 2.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "회원등록", font: FontGuide.size24Bold, setTitleColor: ColorGuide.black)
         return button
     }()
     //회원관리 버튼
     lazy var gymUserManageButton: UIButton = {
         let button = UIButton()
-        button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 10.0, borderWidth: 1.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "회원관리", font: FontGuide.size19Bold, setTitleColor: ColorGuide.black)
+        button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 12.0, borderWidth: 2.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "회원관리", font: FontGuide.size24Bold, setTitleColor: ColorGuide.black)
         return button
     }()
     //QR 스캐너 버튼
     lazy var gymQRCodeButton: UIButton = {
         let button = UIButton()
-        button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 10.0, borderWidth: 1.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "QR스캐너", font: FontGuide.size19Bold, setTitleColor: ColorGuide.black)
+        button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 12.0, borderWidth: 2.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "QR스캐너", font: FontGuide.size24Bold, setTitleColor: ColorGuide.black)
         return button
     }()
     //공지사항 버튼
     lazy var gymNoticeButton: UIButton = {
         let button = UIButton()
-        button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 10.0, borderWidth: 1.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "공지사항", font: FontGuide.size19Bold, setTitleColor: ColorGuide.black)
+        button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 12.0, borderWidth: 2.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "공지사항", font: FontGuide.size24Bold, setTitleColor: ColorGuide.black)
         return button
     }()
     //로그아웃 버튼
@@ -124,23 +124,23 @@ private extension AdminRootView {
         NSLayoutConstraint.activate([
             gymUserRegisterButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             gymUserRegisterButton.topAnchor.constraint(equalTo: self.gymLabelStackView.bottomAnchor, constant: 45),
-            gymUserRegisterButton.widthAnchor.constraint(equalToConstant: 161),
-            gymUserRegisterButton.heightAnchor.constraint(equalToConstant: 161),
+            gymUserRegisterButton.widthAnchor.constraint(equalToConstant: 160),
+            gymUserRegisterButton.heightAnchor.constraint(equalToConstant: 160),
             
             gymUserManageButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
             gymUserManageButton.topAnchor.constraint(equalTo: self.gymLabelStackView.bottomAnchor, constant: 45),
-            gymUserManageButton.widthAnchor.constraint(equalToConstant: 161),
-            gymUserManageButton.heightAnchor.constraint(equalToConstant: 161),
+            gymUserManageButton.widthAnchor.constraint(equalToConstant: 160),
+            gymUserManageButton.heightAnchor.constraint(equalToConstant: 160),
             
             gymQRCodeButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            gymQRCodeButton.topAnchor.constraint(equalTo: self.gymUserRegisterButton.bottomAnchor, constant: 20),
-            gymQRCodeButton.widthAnchor.constraint(equalToConstant: 161),
-            gymQRCodeButton.heightAnchor.constraint(equalToConstant: 161),
+            gymQRCodeButton.topAnchor.constraint(equalTo: self.gymUserRegisterButton.bottomAnchor, constant: 14),
+            gymQRCodeButton.widthAnchor.constraint(equalToConstant: 160),
+            gymQRCodeButton.heightAnchor.constraint(equalToConstant: 160),
             
             gymNoticeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            gymNoticeButton.topAnchor.constraint(equalTo: self.gymUserManageButton.bottomAnchor, constant: 20),
-            gymNoticeButton.widthAnchor.constraint(equalToConstant: 161),
-            gymNoticeButton.heightAnchor.constraint(equalToConstant: 161),
+            gymNoticeButton.topAnchor.constraint(equalTo: self.gymUserManageButton.bottomAnchor, constant: 14),
+            gymNoticeButton.widthAnchor.constraint(equalToConstant: 160),
+            gymNoticeButton.heightAnchor.constraint(equalToConstant: 160),
         ])
     }
     func bottomMakeUI() {

@@ -22,6 +22,10 @@ class InitialViewController: UIViewController {
         addButtonMethod()
         configureNav()
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        initialView.endEditing(true)
+    }
 }
 
 // MARK: - Configure

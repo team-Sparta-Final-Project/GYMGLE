@@ -10,11 +10,11 @@ import UIKit
 final class AdminNoticeViewController: UIViewController {
 
     // MARK: - dummyData
-    private let dummyDataManager = DataManager.shared
+    private let dataTest = DataManager.shared
     var gymInfo: GymInfo?
 
     private let adminNoticeView = AdminNoticeView()
-    
+    var isAdmin: Bool?
     override func loadView() {
         view = adminNoticeView
     }
@@ -42,6 +42,12 @@ private extension AdminNoticeViewController {
     }
     func buttonTappedSetting() {
         adminNoticeView.noticeCreateButton.addTarget(self, action: #selector(noticeCreateButtonTapped), for: .touchUpInside)
+//        switch isAdmin {
+//        case false: //트레이너 일 때
+//            adminNoticeView.noticeCreateButton.isHidden = true
+//        default:
+//            adminNoticeView.noticeCreateButton.isHidden = false
+//        }
     }
     func tableSetting() {
         adminNoticeView.noticeTableView.dataSource = self
@@ -74,14 +80,14 @@ extension AdminNoticeViewController {
 
 extension AdminNoticeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummyDataManager.gymInfo.noticeList.count
+        return dataTest.gymInfo.noticeList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AdminNoticeTableViewCell.identifier, for: indexPath) as! AdminNoticeTableViewCell
-        var date = dateToString(date: dummyDataManager.gymInfo.noticeList[indexPath.row].date)
+        var date = dateToString(date: dataTest.gymInfo.noticeList[indexPath.row].date)
         cell.nameLabel.text = gymInfo?.gymName
-        cell.contentLabel.text = dummyDataManager.gymInfo.noticeList[indexPath.row].content
+        cell.contentLabel.text = dataTest.gymInfo.noticeList[indexPath.row].content
         cell.dateLabel.text = date
         
         cell.selectionStyle = .none
@@ -94,7 +100,7 @@ extension AdminNoticeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        
         let adminNoticeDetailVC = AdminNoticeDetailViewController()
-        adminNoticeDetailVC.noticeInfo = dummyDataManager.gymInfo.noticeList[indexPath.row]
+        adminNoticeDetailVC.noticeInfo = dataTest.gymInfo.noticeList[indexPath.row]
         navigationController?.pushViewController(adminNoticeDetailVC, animated: true)
     }
 }

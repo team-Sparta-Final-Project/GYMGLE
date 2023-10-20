@@ -29,6 +29,10 @@ class AdminLoginViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        adminLoginView.endEditing(true)
+    }
+    
 }
 
 // MARK: - Configure
@@ -72,6 +76,7 @@ extension AdminLoginViewController {
         guard let id = adminLoginView.idTextField.text else { return }
         guard let pw = adminLoginView.passwordTextField.text else { return }
         
+
         Auth.auth().signIn(withEmail: id, password: pw) { result, error in
             if let error = error {
                 print(error)
@@ -87,13 +92,6 @@ extension AdminLoginViewController {
                     userRef.observeSingleEvent(of: .value) { (snapshot)  in
                         if let userData = snapshot.value as? [String: Any],
                            let gymInfoJSON = userData["gymInfo"] as? [String: Any] {
-//                            do {
-//                                let jsonData = try JSONSerialization.data(withJSONObject: gymInfoJson, options: [])
-//                                let gymInfo = try JSONDecoder().decode(GymInfo.self, from: jsonData)
-//                                DataManager.shared.realGymInfo = gymInfo
-//                            } catch {
-//                                print("JSON 디코딩 에러")
-//                            }
                             do {
                                 let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
                                 let gymInfo = try JSONDecoder().decode(GymInfo.self, from: gymInfoData)

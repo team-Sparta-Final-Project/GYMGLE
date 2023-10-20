@@ -15,9 +15,9 @@ class DataManager {
                        gymnumber: "0123456789",
                        
                        gymUserList: [
-                        User(account: Account(id: "",
-                                              password: "",
-                                              accountType: 2),
+                        User(account: Account(id: "1",
+                                              password: "1",
+                                              accountType: 1), //트레이너
                                               name: "asd",
                                               number: "01031023",
                                               startSubscriptionDate: Date(),
@@ -25,8 +25,8 @@ class DataManager {
                                               userInfo: "addwd",
                              isInGym: true, adminUid: "1"),
                         
-                        User(account: Account(id: "asdf",
-                                              password: "asdf",
+                        User(account: Account(id: "2",
+                                              password: "2",
                                               accountType: 2),
                                               name: "asdf",
                                               number: "01031024",
@@ -61,6 +61,21 @@ class DataManager {
         self.gymInfo.noticeList.append(notice)
     }
     
+    func updateNotice(_ notice: Notice) {
+        for (index, existednotice) in gymInfo.noticeList.enumerated() {
+            if existednotice.date == notice.date {
+                gymInfo.noticeList[index] = notice
+            }
+        }
+    }
+    
+    func updateIsInGym(id: String) { //큐알코드를 찍었을 때
+        for (index, gymUserList) in gymInfo.gymUserList.enumerated() {
+            if gymUserList.account.id == id {
+                gymInfo.gymUserList[index].isInGym = true
+            }
+        }
+    }
     
     //MARK: - 싱글톤 메서드
     

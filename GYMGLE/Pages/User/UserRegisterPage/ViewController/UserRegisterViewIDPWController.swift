@@ -5,7 +5,7 @@ import FirebaseDatabase
 
 class UserRegisterViewIDPWController: UIViewController {
     
-    let pageTitle = "회원 등록"
+    var pageTitle = "회원 등록"
     let buttonTitle = "등록하기"
     
     let cells = ["회원 아이디","회원 비밀번호"]
@@ -27,6 +27,7 @@ class UserRegisterViewIDPWController: UIViewController {
     var startDate = Date()
     var endDate = Date()
     var userInfo = ""
+    var userType = 2
     
     override func loadView() {
         viewConfigure.textView.isHidden = true
@@ -146,21 +147,8 @@ class UserRegisterViewIDPWController: UIViewController {
         if isCellEmpty || isNotVerified {
             showToast(message: "빈칸이 있거나 중복 확인이 안되었습니다.")
         }else{
-//            let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
-//            let idTextField = idCell?.contentView.subviews[1] as? UITextField
-//            guard let idText = idTextField?.text else { return }
-//            let pwCell = self.viewConfigure.tableView.subviews[0] as? UITableViewCell
-//            let pwField = pwCell?.contentView.subviews[1] as? UITextField
-//            guard let pwText = pwField?.text else { return }
-            
-//            DataManager.shared.addFullGymUser(id: idText, password: pwText, type: 2, name: name, number: phone, startDate: startDate, endDate: endDate, userInfo: userInfo)
-//            
-//            let adminRootVC = navigationController!.viewControllers[2]
-//            navigationController?.popToViewController(adminRootVC, animated: true)
             createUser()
         }
-
-//        DataManager.addGymUser(name: nameText, number: phoneText)
         
         
     }
@@ -181,7 +169,7 @@ extension UserRegisterViewIDPWController {
         let pwField = pwCell?.contentView.subviews[1] as? UITextField
         guard let pw = pwField?.text else { return }
         
-        let user = User(account: Account(id: id, password: pw, accountType: 2),
+        let user = User(account: Account(id: id, password: pw, accountType: userType),
                         name: name,
                         number: phone,
                         startSubscriptionDate: startDate,
