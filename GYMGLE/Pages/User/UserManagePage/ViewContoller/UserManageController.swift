@@ -32,14 +32,13 @@ final class UserManageViewController: UIViewController {
         viewConfigure.customSearchBar.delegate = self
         viewConfigure.customSearchBar.showsCancelButton = false
         viewConfigure.customSearchBar.setValue("취소", forKey: "cancelButtonText")
-        viewConfigure.customSearchBar.setShowsCancelButton(true, animated: true)
         viewConfigure.tableView.dataSource = self
     }
-    
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         navigationController?.navigationBar.isHidden = false
     }
+    
     func searchBarIsEmpty() -> Bool {
         return viewConfigure.customSearchBar.text?.isEmpty ?? true
     }
@@ -83,38 +82,43 @@ extension UserManageViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("테스트 - \(indexPath)")
     }
+    
+    
 }
 
 // MARK: - searchbar Delegate
 
 extension UserManageViewController: UISearchBarDelegate {
-    // 서치바에서 검색을 시작할 때 호출
+
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        viewConfigure.customSearchBar.showsCancelButton = true
+        viewConfigure.customSearchBar.setShowsCancelButton(true, animated: true)
         viewConfigure.tableView.reloadData()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print(searchText)
         guard let text = searchBar.searchTextField.text?.lowercased() else { return }
-        filteredUserList = self.cells.filter {$0.name == text}.sorted {$0.startSubscriptionDate > $1.startSubscriptionDate}
+        filteredUserList = self.cells.filter { $0.name.lowercased().contains(text)}.sorted {$0.startSubscriptionDate > $1.startSubscriptionDate}
         viewConfigure.tableView.reloadData()
     }
     
-    // 서치바에서 취소 버튼을 눌렀을 때 호출
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        viewConfigure.customSearchBar.text = ""
+        viewConfigure.customSearchBar.searchTextField.text = ""
         viewConfigure.customSearchBar.resignFirstResponder()
-        self.viewConfigure.customSearchBar.showsCancelButton = false
-        self.viewConfigure.tableView.reloadData()
-    }
-    
-    // 서치바 검색이 끝났을 때 호출
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        viewConfigure.customSearchBar.showsCancelButton = false
         viewConfigure.tableView.reloadData()
     }
     
-    // 서치바 키보드 내리기
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        viewConfigure.customSearchBar.setShowsCancelButton(false, animated: true)
+        return true
+    }
+
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        viewConfigure.customSearchBar.showsCancelButton = false
+        viewConfigure.tableView.reloadData()
+    }
+    
     func dismissKeyboard() {
         viewConfigure.customSearchBar.resignFirstResponder()
     }
