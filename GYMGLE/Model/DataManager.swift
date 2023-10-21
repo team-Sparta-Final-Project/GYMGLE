@@ -33,6 +33,26 @@ class DataManager {
                                               startSubscriptionDate: Date(),
                                               endSubscriptionDate: Date(),
                                               userInfo: "addwdf",
+                             isInGym: true, adminUid: "2"),
+                        
+                        User(account: Account(id: "2",
+                                              password: "2",
+                                              accountType: 2),
+                                              name: "박성원",
+                                              number: "01031024",
+                                              startSubscriptionDate: Date(),
+                                              endSubscriptionDate: Date(),
+                                              userInfo: "addwdf",
+                             isInGym: true, adminUid: "2"),
+                        
+                        User(account: Account(id: "2",
+                                              password: "2",
+                                              accountType: 2),
+                                              name: "박성원",
+                                              number: "01031024",
+                                              startSubscriptionDate: Date(),
+                                              endSubscriptionDate: Date(),
+                                              userInfo: "addwdf",
                              isInGym: true, adminUid: "2")
                        ],
                        
@@ -75,6 +95,11 @@ class DataManager {
                 gymInfo.gymUserList[index].isInGym = true
             }
         }
+    }
+    
+    func getUserList() -> [User] {
+        var userList = self.gymInfo.gymUserList
+        return userList
     }
     
     //MARK: - 싱글톤 메서드
