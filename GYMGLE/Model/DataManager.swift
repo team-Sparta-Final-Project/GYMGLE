@@ -7,6 +7,8 @@ class DataManager {
     
     var gymUid: String?
     var realGymInfo: GymInfo?
+    var userInfo: User?
+    
     lazy var gymInfo = GymInfo(gymAccount: Account(id: "",
                                            password: "",
                                            accountType: 0),

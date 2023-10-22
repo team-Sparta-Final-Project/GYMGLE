@@ -47,7 +47,7 @@ class UserRootView: UIView {
     private lazy var healthName = UILabel().then {
         $0.textColor = ColorGuide.black
         $0.font = FontGuide.size26Bold
-        $0.text = "김기호"
+        $0.text = DataManager.shared.userInfo?.name
     }
     private lazy var healthNameSub = UILabel().then {
         $0.textColor = ColorGuide.black
@@ -127,7 +127,7 @@ class UserRootView: UIView {
     private lazy var nowUserNumber = UILabel().then {
         $0.textColor = ColorGuide.white
         $0.font = FontGuide.size50Bold
-        $0.text = "12"
+        $0.text = String(DataManager.shared.realGymInfo?.gymUserList.filter { $0.isInGym == true }.count ?? 0)
     }
     private lazy var nowUserMyung = UILabel().then {
         $0.textColor = ColorGuide.white
