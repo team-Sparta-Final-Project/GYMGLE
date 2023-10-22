@@ -6,15 +6,21 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseCore
+import FirebaseDatabase
 
 final class AdminNoticeViewController: UIViewController {
 
     // MARK: - dummyData
-    private let dataTest = DataManager.shared
-    var gymInfo: GymInfo?
-
+    var ref = Database.database().reference()
     private let adminNoticeView = AdminNoticeView()
     var isAdmin: Bool?
+    
+    //❗️삭제 예정
+    private let dataTest = DataManager.shared
+    var gymInfo: GymInfo?
+    
     override func loadView() {
         view = adminNoticeView
     }
@@ -22,6 +28,16 @@ final class AdminNoticeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
+        func fireBaseRead() {
+            let userID = Auth.auth().currentUser?.uid
+            ref.child("users").child(userID!).child("gymInfo").observeSingleEvent(of: .value, with: { snapshot in
+                let value = snapshot.value as? NSDictionary
+                let noticeList = value?["noticeList"] as? String ?? ""
+               print(noticeList)
+            }) { error in
+                print(error.localizedDescription)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기

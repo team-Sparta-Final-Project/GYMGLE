@@ -13,9 +13,9 @@ import FirebaseDatabase
 final class AdminRootViewController: UIViewController {
     
     private let adminRootView = AdminRootView()
-    private let dataManager = DataManager.shared
-    var gymInfo: GymInfo?
+    
     var isAdmin: Bool?
+    var ref = Database.database().reference()
     // MARK: - life cycle
     
     override func loadView() {
@@ -38,7 +38,19 @@ private extension AdminRootViewController {
     func configuredView() {
         navigationController?.navigationBar.isHidden = true
         deletedButtonHidden()
-        adminRootView.dataSetting(dataManager.gymInfo.gymName, dataManager.gymInfo.gymnumber)
+        fireBaseRead()
+    }
+    
+    func fireBaseRead() {
+        let userID = Auth.auth().currentUser?.uid
+        ref.child("users").child(userID!).child("gymInfo").observeSingleEvent(of: .value, with: { snapshot in
+            let value = snapshot.value as? NSDictionary
+            let gymName = value?["gymName"] as? String ?? ""
+            let gymPhoneNumber = value?["gymPhoneNumber"] as? String ?? ""
+            self.adminRootView.dataSetting("\(gymName)", "\(gymPhoneNumber)")
+        }) { error in
+            print(error.localizedDescription)
+        }
     }
     
     func allButtonTapped() {
@@ -89,12 +101,10 @@ extension AdminRootViewController {
     //공지사항 버튼
     @objc private func gymNoticeButtonTapped() {
         let adminNoticeVC = AdminNoticeViewController()
-        adminNoticeVC.gymInfo = gymInfo
         self.navigationController?.pushViewController(adminNoticeVC, animated: true)
     }
     //탈퇴 버튼
     @objc private func logOutButtonTapped() {
-//        dataManager.gymList.removeAll(where: {$0.gymAccount.id == gymInfo?.gymAccount.id})
         deleteAccount()
         dismiss(animated: true) {
             let vc = AdminLoginViewController()
