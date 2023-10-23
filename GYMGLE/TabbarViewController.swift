@@ -31,8 +31,8 @@ final class TabbarViewController: UITabBarController {
     
     func setTabControllers() {
         let userRootVC = UserRootViewController()
-        userRootVC.user = user
-        userRootVC.gymInfo = gymInfo
+//        userRootVC.user = user
+//        userRootVC.gymInfo = gymInfo
         
         let communnityVC = UserCommunityViewController()
         
