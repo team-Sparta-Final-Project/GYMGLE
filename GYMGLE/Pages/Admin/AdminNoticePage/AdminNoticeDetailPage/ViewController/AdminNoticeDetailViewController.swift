@@ -113,12 +113,11 @@ extension AdminNoticeDetailViewController {
                     
                     let noticeData = try JSONEncoder().encode(newNotice)
                     let noticeJSON = try JSONSerialization.jsonObject(with: noticeData, options: [])
-                    if let newIndex = DataManager.shared.realGymInfo?.noticeList.count {
-                        ref.child(String(newIndex)).setValue(noticeJSON)
-                    }
+//                    if let newIndex = DataManager.shared.realGymInfo?.noticeList.count {
+//                        ref.child(String(newIndex)).setValue(noticeJSON)
+//                    }
                 } catch {
                 }
-                DataManager.shared.realGymInfo?.noticeList.append(newNotice)
             } else {
                 if var notice = noticeInfo {
                     notice.content = adminNoticeDetailView.contentTextView.text
@@ -127,7 +126,7 @@ extension AdminNoticeDetailViewController {
                     do {
                         let updatedNotice = ["content": notice.content] as [String: Any]
                         ref.child(String(index)).updateChildValues(updatedNotice)
-                        DataManager.shared.updateNotice(notice)
+//                        DataManager.shared.updateNotice(notice)
                     }
                 }
             }

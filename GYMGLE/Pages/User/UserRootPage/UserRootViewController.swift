@@ -31,7 +31,7 @@ class UserRootViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getLastWeek()
+//        getLastWeek()
         
     }
     
@@ -41,26 +41,26 @@ class UserRootViewController: UIViewController {
         self.present(QrCodeViewController, animated: true)
     }
     
-    func getLastWeek() {
-        let log = DataManager.shared.realGymInfo?.gymInAndOutLog
-        
-        let currentDate = Date()
-        
-        let calendar = Calendar.current
-        let lastWeek = calendar.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
-        
-        let filteredUsers = log?.filter { user in
-            let inTime = user.inTime
-            let outTime = user.outTime
-            if inTime <= lastWeek && outTime >= lastWeek {
-                return true
-            }
-            return false
-        }
-        if let userCount = filteredUsers?.count {
-            first.yesterUserNumber.text = String(userCount)
-        }
-    }
+//    func getLastWeek() {
+//        let log = DataManager.shared.realGymInfo?.gymInAndOutLog
+//
+//        let currentDate = Date()
+//
+//        let calendar = Calendar.current
+//        let lastWeek = calendar.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
+//
+//        let filteredUsers = log?.filter { user in
+//            let inTime = user.inTime
+//            let outTime = user.outTime
+//            if inTime <= lastWeek && outTime >= lastWeek {
+//                return true
+//            }
+//            return false
+//        }
+//        if let userCount = filteredUsers?.count {
+//            first.yesterUserNumber.text = String(userCount)
+//        }
+//    }
 }
 
 //#if DEBUG

@@ -11,125 +11,35 @@ class DataManager {
     var id: String?
     var pw: String?
     
-    lazy var gymInfo = GymInfo(gymAccount: Account(id: "",
-                                           password: "",
-                                           accountType: 0),
-                       gymName: "aksd",
-                       gymPhoneNumber: "010-0313-2222",
-                       gymnumber: "0123456789",
-                       
-                       gymUserList: [
-                        User(account: Account(id: "wladbwj1",
-                                              password: "asd123",
-                                              accountType: 1), //트레이너
-                                              name: "첫번째 유저",
-                                              number: "전화번호전화번호전화번호",
-                                              startSubscriptionDate: Date(timeIntervalSinceNow: -60*60*24*30*3),
-                                              endSubscriptionDate: Date(timeIntervalSinceNow: 60*60*24*30*3),
-                                              userInfo: "추가정보란임 더미데이터임",
-                             isInGym: true, adminUid: "1"),
-                        
-                        User(account: Account(id: "wladbwj2",
-                                              password: "kkkk1234",
-                                              accountType: 2),
-                                              name: "두번째 유저",
-                                              number: "010101010101010101010",
-                                              startSubscriptionDate: Date(),
-                                              endSubscriptionDate: Date(timeIntervalSinceNow: 60*60*24*30*10),
-                                              userInfo: "ㅋㅋㅋ더미데이터라고",
-                             isInGym: true, adminUid: "2")
-                       ],
-                       
-                            noticeList: [Notice(date: Date(),
-                                           content: "추석에 맛있는거 많이드시면안됩니다~\n회원여러분 친정 가셔서 스퀃100개씩 하십쇼\n 추석에 맛있는거 많이드시면안됩니다~\n회원여러분 친정 가셔서 스퀃100개씩 하십쇼\n 추석에 맛있는거 많이드시면안됩니다~\n회원여러분 친정 가셔서 스퀃100개씩 하십쇼\n 추석에 맛있는거 많이드시면안됩니다~\n회원여러분 친정 가셔서 스퀃100개씩 하십쇼"),
-                                    Notice(date: datecomponent(month: 1, day: 8, hour: 12),
-                                                        content: "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼 추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼"),
-                                    Notice(date: datecomponent(month: 1, day: 1, hour: 12),
-                                                        content: "추석에 맛있는거 많이드시면안됩니다~회원여러분 친정 가셔서 스퀃100개씩 하십쇼")
-                       ],
-                   
-
-                       gymInAndOutLog: [InAndOut(id: "sdasd",
-                                                 inTime: Date(timeIntervalSinceNow: -604800),
-                                                 outTime: Date(timeIntervalSinceNow: -601200), sinceInAndOutTime: 12),
-                                        
-                                        InAndOut(id: "sdas",
-                                                 inTime: Date(timeIntervalSinceNow: -604800),
-                                                 outTime: Date(timeIntervalSinceNow: -601200), sinceInAndOutTime: 12)
-                       ]
-    )
-    
-    lazy var gymList: [GymInfo] = [gymInfo] // 나중에 수정할것?..
+    var userList:[User] = []
+    var noticeList:[Notice] = []
+    var log:[InAndOut] = []
   
-    func makeNoticeList(_ notice: Notice) {
-        self.gymInfo.noticeList.append(notice)
-    }
+    // TODO: 임시로 주석처리 해 놓았습니다 - 데이터모델 공사중
     
-    func updateNotice(_ notice: Notice) {
-        for (index, existednotice) in realGymInfo!.noticeList.enumerated() {
-            if existednotice.date == notice.date {
-                realGymInfo?.noticeList[index] = notice
-            }
-        }
-    }
-    
-    func updateIsInGym(id: String) { //큐알코드를 찍었을 때
-        for (index, gymUserList) in gymInfo.gymUserList.enumerated() {
-            if gymUserList.account.id == id {
-                gymInfo.gymUserList[index].isInGym = true
-            }
-        }
-    }
+//    func makeNoticeList(_ notice: Notice) {
+//        self.gymInfo.noticeList.append(notice)
+//    }
+//
+//    func updateNotice(_ notice: Notice) {
+//        for (index, existednotice) in realGymInfo!.noticeList.enumerated() {
+//            if existednotice.date == notice.date {
+//                realGymInfo?.noticeList[index] = notice
+//            }
+//        }
+//    }
+//
+//    func updateIsInGym(id: String) { //큐알코드를 찍었을 때
+//        for (index, gymUserList) in gymInfo.gymUserList.enumerated() {
+//            if gymUserList.account.id == id {
+//                gymInfo.gymUserList[index].isInGym = true
+//            }
+//        }
+//    }
     
 
     
     //MARK: - 싱글톤 메서드
-    
-    //회원 추가
-    func addGymUser(id:String, password:String, type:Int, name:String, number:String){
-        
-        self.gymInfo.gymUserList.append(
-        User(account: Account(id: id,
-                              password: password,
-                              accountType: type),
-                              name: name,
-                              number: number,
-                              startSubscriptionDate: Date(),
-                              endSubscriptionDate: Date(),
-                              userInfo: "추가정보",
-             isInGym: true, adminUid: "1")
-        )
-    }
-    
-    func addFullGymUser(id:String, password:String, type:Int, name:String, number:String, startDate:Date, endDate:Date, userInfo:String){
-        
-        self.gymInfo.gymUserList.append(
-        User(account: Account(id: id,
-                              password: password,
-                              accountType: type),
-                              name: name,
-                              number: number,
-                              startSubscriptionDate: Date(),
-                              endSubscriptionDate: Date(),
-                              userInfo: "추가정보",
-             isInGym: true, adminUid: "1")
-        )
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     func datecomponent(month: Int, day: Int, hour: Int) -> Date {
         var components = DateComponents()

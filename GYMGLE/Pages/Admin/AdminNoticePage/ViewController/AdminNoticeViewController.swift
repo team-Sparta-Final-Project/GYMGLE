@@ -93,29 +93,20 @@ extension AdminNoticeViewController {
 
 extension AdminNoticeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let noticeList = DataManager.shared.realGymInfo?.noticeList else {return 1 }
-        return noticeList.count
+//        guard let noticeList = DataManager.shared.realGymInfo?.noticeList else {return 1 }
+        return 0
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AdminNoticeTableViewCell.identifier, for: indexPath) as! AdminNoticeTableViewCell
-//        if let gymInfo = DataManager.shared.realGymInfo {
-//            cell.nameLabel.text = gymInfo.gymName
+
+        if let gymInfo = DataManager.shared.realGymInfo {
+            cell.nameLabel.text = gymInfo.gymName
 //            cell.contentLabel.text = gymInfo.noticeList[indexPath.row].content
 //            cell.dateLabel.text = dateToString(date: gymInfo.noticeList[indexPath.row].date)
-//        }
-//        let userID = Auth.auth().currentUser?.uid
-//        let ref = Database.database().reference().child("users").child(userID!).child("gymInfo").child("noticeList")
-//        ref.observeSingleEvent(of: .value, with: { snapshot in
-//            let value = snapshot.value as? NSArray
-//            //let content = value?["content"] as? [String: Any]
-//            print(value)
-//            print(content)
-//            cell.nameLabel.text = DataManager.shared.realGymInfo?.gymName
-//            cell.contentLabel.text = content["content"]
-//            cell.dateLabel.text = content["date"]
-//        }) { error in }
+        }
+
         cell.selectionStyle = .none
         tableView.separatorStyle = .none
         return cell
@@ -127,7 +118,7 @@ extension AdminNoticeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let adminNoticeDetailVC = AdminNoticeDetailViewController()
-        adminNoticeDetailVC.noticeInfo = DataManager.shared.realGymInfo?.noticeList[indexPath.row]
+//        adminNoticeDetailVC.noticeInfo = DataManager.shared.realGymInfo?.noticeList[indexPath.row]
         adminNoticeDetailVC.index = indexPath.row
         navigationController?.pushViewController(adminNoticeDetailVC, animated: true)
     }
