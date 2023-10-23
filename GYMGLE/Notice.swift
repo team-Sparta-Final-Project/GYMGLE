@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Notice { //공지사항
+struct Notice: Codable { //공지사항
     
     var date: Date
     var content: String

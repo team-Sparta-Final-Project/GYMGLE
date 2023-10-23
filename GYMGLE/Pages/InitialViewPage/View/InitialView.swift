@@ -19,12 +19,18 @@ class InitialView: UIView {
     lazy var idTextField = UITextField().then {
         $0.borderStyle = .roundedRect
         $0.placeholder = "아이디"
+        $0.autocapitalizationType = .none // 자동으로 맨 앞을 대문자로 할건지
+        $0.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
+        $0.spellCheckingType = .no
         $0.font = FontGuide.size14
     }
     
     lazy var passwordTextField = UITextField().then {
         $0.borderStyle = .roundedRect
         $0.placeholder = "비밀번호"
+        $0.autocapitalizationType = .none // 자동으로 맨 앞을 대문자로 할건지
+        $0.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
+        $0.spellCheckingType = .no
         $0.font = FontGuide.size14
     }
     

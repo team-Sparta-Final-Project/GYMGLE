@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct GymInfo { //관리자
+struct GymInfo: Codable { //관리자
     
     var gymAccount: Account
     var gymName: String
