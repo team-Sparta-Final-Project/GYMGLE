@@ -83,22 +83,28 @@ private extension AdminRegisterViewController {
         adminRegisterView.duplicationCheckButton.addTarget(self, action: #selector(duplicationCheckButtonTapped), for: .touchUpInside)
         adminRegisterView.registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
     }
-
+    
     @objc func validCheckButtonTapped() {
-        numberDuplicateCheck()
-        voidCheck(textField: adminRegisterView.registerNumberTextField)
-        parameters = ["b_no":[adminRegisterView.registerNumberTextField.text!]]
-        loadAPI(parameters: parameters) { [weak self] in
+        numberDuplicateCheck() { [weak self] isDuplicated in
             guard let self else { return }
-            DispatchQueue.main.async {
-                self.validCheck()
-                let alert = UIAlertController(title: "사업자 등록 번호 중복확인",
-                                              message: "중복되지 않는 사업자 등록 번호입니다.",
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-                
-                self.isNumberDuplicated = false
+            
+            if isDuplicated {
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "사업자 등록 번호 중복확인",
+                                                  message: "중복된 사업자 등록 번호입니다. 다시 입력해주세요.",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            } else {
+                voidCheck(textField: adminRegisterView.registerNumberTextField)
+                parameters = ["b_no":[adminRegisterView.registerNumberTextField.text!]]
+                loadAPI(parameters: parameters) { [weak self] in
+                    guard let self else { return }
+                    DispatchQueue.main.async {
+                        self.validCheck()
+                    }
+                }
             }
         }
     }
@@ -164,19 +170,26 @@ private extension AdminRegisterViewController {
         }
     }
     
-    func numberDuplicateCheck() {
-        for gymInfo in dataTest.gymList {
-            if gymInfo.gymnumber == adminRegisterView.registerNumberTextField.text {
-                let alert = UIAlertController(title: "사업자 등록 번호 중복",
-                                              message: "사업자 등록 번호 중복입니다. 다시 입력해주세요.",
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                present(alert, animated: true, completion: nil)
-                
-                isNumberDuplicated = true
-                
-                return
+    func numberDuplicateCheck(completion: @escaping (Bool) -> Void) {
+        
+        let ref = Database.database().reference().child("users")
+        let target = adminRegisterView.registerNumberTextField.text
+        
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            if let data = snapshot.value as? [String: Any] {
+                for (_, userData) in data {
+                    if let userDic = userData as? [String: Any],
+                       let gymInfo = userDic["gymInfo"] as? [String: Any],
+                       let gymNumber = gymInfo["gymnumber"] as? String {
+                        if gymNumber == target {
+                            completion(true)
+                            return
+                        }
+                    }
+                }
+                completion(false)
             }
+            
         }
     }
     
@@ -205,10 +218,25 @@ private extension AdminRegisterViewController {
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         }
-        return
     }
     
-    
+//    func duplicateCheck() {
+//        if isNumberDuplicated {
+//            let alert = UIAlertController(title: "사업자 등록 번호 중복확인",
+//                                          message: "중복된 사업자 등록 번호입니다. 다시 입력해주세요.",
+//                                          preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+//            self.present(alert, animated: true, completion: nil)
+////            return
+//        }
+////        else {
+////            let alert = UIAlertController(title: "사업자 등록 번호 중복확인",
+////                                          message: "중복되지 않는 사업자 등록 번호입니다.",
+////                                          preferredStyle: .alert)
+////            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+////            self.present(alert, animated: true, completion: nil)
+////        }
+//    }
     
     func registerGym() {
         if let id = adminRegisterView.idTextField.text,
