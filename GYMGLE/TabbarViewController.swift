@@ -34,7 +34,7 @@ final class TabbarViewController: UITabBarController {
         userRootVC.user = user
         userRootVC.gymInfo = gymInfo
         
-        let initialVC = InitialViewController()
+        let communnityVC = UserCommunityViewController()
         
         let qrCodeVC = QrCodeViewController()
         
@@ -58,7 +58,7 @@ final class TabbarViewController: UITabBarController {
         self.tabBar.items![1].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         self.tabBar.items![1].image = UIImage(systemName: "doc")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.textHint)
         self.tabBar.items![1].selectedImage = UIImage(systemName: "doc.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.main)
-        self.tabBar.items![1].title = "공지사항"
+        self.tabBar.items![1].title = "커뮤니티"
         
        
         self.tabBar.items![2].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
