@@ -8,12 +8,13 @@
 import SnapKit
 import UIKit
 import SwiftUI
+import FirebaseDatabase
 
 class UserRootViewController: UIViewController {
     
     let first = UserRootView()
-    var user: User?
-    var gymInfo: GymInfo?
+//    var user: User?
+//    var gymInfo: GymInfo?
     
     
     override func loadView() {
@@ -36,12 +37,12 @@ class UserRootViewController: UIViewController {
     
     @objc func inButtonClick() {
         let QrCodeViewController = QrCodeViewController()
-        QrCodeViewController.user = self.user // ❗️수정
+        QrCodeViewController.user = DataManager.shared.userInfo// ❗️수정
         self.present(QrCodeViewController, animated: true)
     }
     
     func getLastWeek() {
-        let log = gymInfo?.gymInAndOutLog
+        let log = DataManager.shared.realGymInfo?.gymInAndOutLog
         
         let currentDate = Date()
         

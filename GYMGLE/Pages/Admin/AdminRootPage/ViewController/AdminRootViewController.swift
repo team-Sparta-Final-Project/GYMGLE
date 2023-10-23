@@ -13,9 +13,8 @@ import FirebaseDatabase
 final class AdminRootViewController: UIViewController {
     
     private let adminRootView = AdminRootView()
-    private let dataManager = DataManager.shared
-    var gymInfo: GymInfo?
     var isAdmin: Bool?
+    var ref = Database.database().reference()
     // MARK: - life cycle
     
     override func loadView() {
@@ -38,7 +37,17 @@ private extension AdminRootViewController {
     func configuredView() {
         navigationController?.navigationBar.isHidden = true
         deletedButtonHidden()
-        adminRootView.dataSetting(dataManager.gymInfo.gymName, dataManager.gymInfo.gymnumber)
+        fireBaseRead()
+    }
+    
+    func fireBaseRead() {
+        let userID = Auth.auth().currentUser?.uid
+        ref.child("users").child(userID!).child("gymInfo").observeSingleEvent(of: .value, with: { snapshot in
+            let value = snapshot.value as? NSDictionary
+            let gymName = value?["gymName"] as? String ?? ""
+            let gymPhoneNumber = value?["gymPhoneNumber"] as? String ?? ""
+            self.adminRootView.dataSetting("\(gymName)", "\(gymPhoneNumber)")
+        }) { error in }
     }
     
     func allButtonTapped() {
@@ -89,12 +98,10 @@ extension AdminRootViewController {
     //공지사항 버튼
     @objc private func gymNoticeButtonTapped() {
         let adminNoticeVC = AdminNoticeViewController()
-        adminNoticeVC.gymInfo = gymInfo
         self.navigationController?.pushViewController(adminNoticeVC, animated: true)
     }
     //탈퇴 버튼
     @objc private func logOutButtonTapped() {
-//        dataManager.gymList.removeAll(where: {$0.gymAccount.id == gymInfo?.gymAccount.id})
         deleteAccount()
         dismiss(animated: true) {
             let vc = AdminLoginViewController()
@@ -114,9 +121,7 @@ extension AdminRootViewController {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
-        }
+        } catch _ as NSError { }
     }
     
     // MARK: - 회원탈퇴
@@ -125,8 +130,7 @@ extension AdminRootViewController {
         // 계정 삭제
         if let user = Auth.auth().currentUser {
             user.delete { error in
-                if let error = error {
-                    print("delete Error : ", error)
+                if error != nil {
                 } else {
                     let adminLoginVC = AdminLoginViewController()
                     self.navigationController?.pushViewController(adminLoginVC, animated: true)
@@ -136,8 +140,6 @@ extension AdminRootViewController {
             let userRef = Database.database().reference().child("users").child(user.uid)
             userRef.removeValue()
             signOut()
-        } else {
-            print("로그인 정보가 존재하지 않습니다.")
-        }
+        } else {}
     }
 }

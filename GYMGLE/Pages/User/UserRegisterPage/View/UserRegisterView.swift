@@ -54,6 +54,9 @@ class UserRegisterView: UIView {
         
         segmented.selectedSegmentIndex = 0
         
+        segmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : ColorGuide.white], for: .selected)
+        segmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor(red: 0, green: 0, blue: 0, alpha: 0.61)], for: .normal)
+        segmented.selectedSegmentTintColor = ColorGuide.main
         
         self.addSubviews(segmented)
         

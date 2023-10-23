@@ -6,16 +6,15 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseCore
+import FirebaseDatabase
 
 final class AdminNoticeDetailViewController: UIViewController {
     
     private let adminNoticeDetailView = AdminNoticeDetailView()
-    let dataTest = DataManager.shared
-    var noticeInfo: Notice? {
-        didSet {
-            
-        }
-    }
+    var index = 0
+    var noticeInfo: Notice?
     // MARK: - life cycle
     
     override func loadView() {
@@ -26,7 +25,7 @@ final class AdminNoticeDetailViewController: UIViewController {
         viewConfigure()
     }
     
-    override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
+    override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = false
     }
 
@@ -100,22 +99,36 @@ extension AdminNoticeDetailViewController {
     @objc private func keyboardWillHide(_ notification: Notification) {
         adminNoticeDetailView.frame.origin.y = 0
     }
-    @objc private func createButtonTapped() {
-        if adminNoticeDetailView.contentTextView.text.isEmpty || adminNoticeDetailView.contentTextView.text == "공지사항을 입력하세요." {
+    @objc private func createButtonTapped()  {
+        if adminNoticeDetailView.contentTextView.text.isEmpty || adminNoticeDetailView.contentTextView.text == "400자 이내로 공지사항을 적어주세요!" {
             showToast(message: "내용물이 비었습니다.")
         } else {
-            // 여기에 등록 및 수정 코드 작성❗️
             if noticeInfo == nil {
                 let date = Date()
                 let content = adminNoticeDetailView.contentTextView.text
-                
-                var newNotice = Notice(date: date, content: content ?? "")
-                print(newNotice)
-                dataTest.makeNoticeList(newNotice)
+                let newNotice = Notice(date: date, content: content ?? "")
+                do {
+                    let userID = Auth.auth().currentUser?.uid
+                    let ref = Database.database().reference().child("users").child(userID!).child("gymInfo").child("noticeList")
+                    
+                    let noticeData = try JSONEncoder().encode(newNotice)
+                    let noticeJSON = try JSONSerialization.jsonObject(with: noticeData, options: [])
+                    if let newIndex = DataManager.shared.realGymInfo?.noticeList.count {
+                        ref.child(String(newIndex)).setValue(noticeJSON)
+                    }
+                } catch {
+                }
+                DataManager.shared.realGymInfo?.noticeList.append(newNotice)
             } else {
                 if var notice = noticeInfo {
                     notice.content = adminNoticeDetailView.contentTextView.text
-                    dataTest.updateNotice(notice)
+                    let userID = Auth.auth().currentUser?.uid
+                    let ref = Database.database().reference().child("users").child(userID!).child("gymInfo").child("noticeList")
+                    do {
+                        let updatedNotice = ["content": notice.content] as [String: Any]
+                        ref.child(String(index)).updateChildValues(updatedNotice)
+                        DataManager.shared.updateNotice(notice)
+                    }
                 }
             }
             self.navigationController?.popViewController(animated: true)
@@ -127,14 +140,14 @@ extension AdminNoticeDetailViewController {
 extension AdminNoticeDetailViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == "공지사항을 입력하세요." {
+        if textView.text == "400자 이내로 공지사항을 적어주세요!" {
             textView.text = nil
             textView.textColor = ColorGuide.black
         }
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = "공지사항을 입력하세요."
+            textView.text = "400자 이내로 공지사항을 적어주세요!"
             textView.textColor = .lightGray
         }
     }

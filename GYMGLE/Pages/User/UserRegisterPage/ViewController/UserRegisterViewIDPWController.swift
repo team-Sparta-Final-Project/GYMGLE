@@ -13,6 +13,7 @@ class UserRegisterViewIDPWController: UIViewController {
     let buttonCells = ["회원 아이디"]
     let buttonText = ["중복 확인"]
     
+    var needIdPwUser:User?
     
     let cellHeight = 45
     let emptyCellHeight = 24
@@ -21,13 +22,6 @@ class UserRegisterViewIDPWController: UIViewController {
     
     private var isCellEmpty = true
     private var isNotVerified = true
-    
-    var name:String = ""
-    var phone:String = ""
-    var startDate = Date()
-    var endDate = Date()
-    var userInfo = ""
-    var userType = 2
     
     override func loadView() {
         viewConfigure.textView.isHidden = true
@@ -55,17 +49,19 @@ class UserRegisterViewIDPWController: UIViewController {
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         navigationController?.navigationBar.isHidden = false
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
-        let idTextField = idCell?.contentView.subviews[1] as? UITextField
+        let idField = idCell?.contentView.subviews[1] as? UITextField
         let pwCell = self.viewConfigure.tableView.subviews[0] as? UITableViewCell
         let pwField = pwCell?.contentView.subviews[1] as? UITextField
         
-        idTextField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
+        idField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
         pwField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
         
         let verifyButton = idCell?.contentView.subviews[2] as? UIButton
         verifyButton?.addTarget(self, action: #selector(idVerification), for: .touchUpInside)
+        
     }
 
     private func buttonOnCheck(){
@@ -146,7 +142,8 @@ class UserRegisterViewIDPWController: UIViewController {
     @objc func buttonClicked(){
         if isCellEmpty || isNotVerified {
             showToast(message: "빈칸이 있거나 중복 확인이 안되었습니다.")
-        }else{
+        }
+        else {
             createUser()
         }
         
@@ -158,7 +155,6 @@ class UserRegisterViewIDPWController: UIViewController {
 
 extension UserRegisterViewIDPWController {
     // MARK: - 회원가입
-    
     // 일단 유저만 가입 (accountType: 2)
     // 트레이너는 따로 버튼을 만드는 것도 고려해볼만?
     func createUser() {
@@ -169,15 +165,11 @@ extension UserRegisterViewIDPWController {
         let pwField = pwCell?.contentView.subviews[1] as? UITextField
         guard let pw = pwField?.text else { return }
         
-        let user = User(account: Account(id: id, password: pw, accountType: userType),
-                        name: name,
-                        number: phone,
-                        startSubscriptionDate: startDate,
-                        endSubscriptionDate: endDate,
-                        userInfo: userInfo,
-                        isInGym: false,
-                        adminUid: DataManager.shared.gymUid!)
-        
+        var user = needIdPwUser
+        user?.account.id = id
+        user?.account.password = pw
+        user?.adminUid = DataManager.shared.gymUid!
+                
         Auth.auth().createUser(withEmail: id, password: pw) { result, error in
             if let error = error {
                 print(error)
@@ -189,14 +181,29 @@ extension UserRegisterViewIDPWController {
                     if let user = result?.user {
                         let userRef = Database.database().reference().child("accounts").child(user.uid)
                         userRef.child("userData").setValue(userJSON)
+                        
+                        let adminRef = Database.database().reference().child("users").child(DataManager.shared.gymUid!)
+                        adminRef.child("gymInfo").child("gymUserList").childByAutoId().setValue(userJSON)
+                        
                     }
-                    
+                    Auth.auth().signIn(withEmail: DataManager.shared.id!, password: DataManager.shared.pw!)
                     let vc = AdminRootViewController()
                     self.navigationController?.pushViewController(vc, animated: true)
                 } catch {
                     print("JSON 인코딩 에러")
                 }
             }
+        }
+    }
+    
+    // MARK: - 로그아웃
+    
+    func signOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
         }
     }
 }

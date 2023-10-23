@@ -24,27 +24,43 @@ class UserMyPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addButton()
+        userMyPageView.tableView.myPageDelegate = self
     }
 }
 
 // MARK: - Actions
 
-private extension UserMyPageViewController {
+extension UserMyPageViewController: MyPageTableViewDelegate {
     
-    func addButton() {
-        userMyPageView.logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
-    }
-    
-    @objc func logOutButtonTapped() {
-        signOut()
-        dismiss(animated: true) {
-            let vc = InitialViewController()
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true)
+    func didSelectCell(at indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            // 이름을 선택한 경우
+            break
+        case 1:
+            // 공지사항을 선택한 경우
+            let vc = AdminNoticeViewController()
+            present(vc, animated: true)
+            break
+        case 2:
+            // 로그아웃을 선택한 경우
+            signOut()
+            dismiss(animated: true) {
+                let vc = InitialViewController()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }
+            break
+        case 3:
+            // 탈퇴하기를 선택한 경우
+            deleteAccount()
+            break
+        default:
+            break
         }
     }
 }
+
 
 // MARK: - Firebase Auth
 
