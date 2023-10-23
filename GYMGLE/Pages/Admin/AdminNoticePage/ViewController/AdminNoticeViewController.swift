@@ -20,9 +20,22 @@ final class AdminNoticeViewController: UIViewController {
         view = adminNoticeView
     }
 
+//    userRef.observeSingleEvent(of: .value) { (snapshot)  in
+//        if let userData = snapshot.value as? [String: Any],
+//           let gymInfoJSON = userData["gymInfo"] as? [String: Any],
+//            let gymAccount = gymInfoJSON["gymAccount"] as? [String: Any],
+//            let accountType = gymAccount["accountType"] as? Int {
+//            if accountType == 0 {
+//                do {
+//                    let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
+//                    let gymInfo = try JSONDecoder().decode(GymInfo.self, from: gymInfoData)
+//                    DataManager.shared.realGymInfo = gymInfo
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,11 +100,22 @@ extension AdminNoticeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AdminNoticeTableViewCell.identifier, for: indexPath) as! AdminNoticeTableViewCell
-        if let gymInfo = DataManager.shared.realGymInfo {
-            cell.nameLabel.text = gymInfo.gymName
-            cell.contentLabel.text = gymInfo.noticeList[indexPath.row].content
-            cell.dateLabel.text = dateToString(date: gymInfo.noticeList[indexPath.row].date)
-        }
+//        if let gymInfo = DataManager.shared.realGymInfo {
+//            cell.nameLabel.text = gymInfo.gymName
+//            cell.contentLabel.text = gymInfo.noticeList[indexPath.row].content
+//            cell.dateLabel.text = dateToString(date: gymInfo.noticeList[indexPath.row].date)
+//        }
+//        let userID = Auth.auth().currentUser?.uid
+//        let ref = Database.database().reference().child("users").child(userID!).child("gymInfo").child("noticeList")
+//        ref.observeSingleEvent(of: .value, with: { snapshot in
+//            let value = snapshot.value as? NSArray
+//            //let content = value?["content"] as? [String: Any]
+//            print(value)
+//            print(content)
+//            cell.nameLabel.text = DataManager.shared.realGymInfo?.gymName
+//            cell.contentLabel.text = content["content"]
+//            cell.dateLabel.text = content["date"]
+//        }) { error in }
         cell.selectionStyle = .none
         tableView.separatorStyle = .none
         return cell
