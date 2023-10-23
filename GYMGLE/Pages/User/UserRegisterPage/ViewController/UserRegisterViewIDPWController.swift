@@ -190,13 +190,24 @@ extension UserRegisterViewIDPWController {
                         let userRef = Database.database().reference().child("accounts").child(user.uid)
                         userRef.child("userData").setValue(userJSON)
                     }
-                    
+                    Auth.auth().signIn(withEmail: DataManager.shared.id!, password: DataManager.shared.pw!)
                     let vc = AdminRootViewController()
                     self.navigationController?.pushViewController(vc, animated: true)
                 } catch {
                     print("JSON 인코딩 에러")
                 }
             }
+        }
+    }
+    
+    // MARK: - 로그아웃
+    
+    func signOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
         }
     }
 }

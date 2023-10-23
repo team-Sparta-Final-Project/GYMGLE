@@ -40,7 +40,7 @@ final class TabbarViewController: UITabBarController {
         
         let myVC = UserMyPageViewController()
         
-        let controllers = [userRootVC, initialVC, qrCodeVC, myVC]
+        let controllers = [userRootVC, communnityVC, qrCodeVC, myVC]
         self.viewControllers = controllers
         
         self.tabBar.layer.borderWidth = 1

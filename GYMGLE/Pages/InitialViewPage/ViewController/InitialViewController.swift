@@ -64,7 +64,10 @@ private extension InitialViewController {
             
             userRef.observeSingleEvent(of: .value) { (snapshot) in
                 if let userData = snapshot.value as? [String: Any],
-                   let gymInfoJSON = userData["gymInfo"] as? [String: Any] {
+                   let gymInfoJSON = userData["gymInfo"] as? [String: Any],
+                   let gymAcoount = gymInfoJSON["gymAccount"] as? [String: Any],
+                   let id = gymAcoount["id"] as? String,
+                   let pw = gymAcoount["password"] as? String {
                     do {
                         let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
                         let gymInfo = try JSONDecoder().decode(GymInfo.self, from: gymInfoData)
@@ -81,6 +84,8 @@ private extension InitialViewController {
                         print("Decoding error: \(error.localizedDescription)")
                     }
                     DataManager.shared.gymUid = currentUser.uid
+                    DataManager.shared.id = id
+                    DataManager.shared.pw = pw
                     let vc = UINavigationController(rootViewController: AdminRootViewController())
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
@@ -166,6 +171,7 @@ extension InitialViewController {
             } else {
                 if let user = result?.user {
                     let userRef = Database.database().reference().child("accounts").child(user.uid)
+                    let userRef2 = Database.database().reference().child("users").child(user.uid)
                     
                     userRef.observeSingleEvent(of: .value) { (snapshot, _)  in
                         if let userData = snapshot.value as? [String: Any],
@@ -206,8 +212,35 @@ extension InitialViewController {
                             }
                         }
                     }
+                    
+                    userRef2.observeSingleEvent(of: .value) { (snapshot) in
+                        if let userData = snapshot.value as? [String: Any],
+                           let gymInfo = userData["gymInfo"] as? [String: Any],
+                           let gymAccount = gymInfo["gymAccount"] as? [String: Any],
+                           let accountType = gymAccount["accountType"] as? Int {
+                            if accountType == 0 {
+                                self.signOut()
+                                let alert = UIAlertController(title: "로그인 실패",
+                                                              message: "유효한 계정이 아닙니다.",
+                                                              preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                                self.present(alert, animated: true, completion: nil)
+                            }
+                        }
+                    }
                 }
             }
+        }
+    }
+    
+    // MARK: - 로그아웃
+    
+    func signOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
         }
     }
 }
