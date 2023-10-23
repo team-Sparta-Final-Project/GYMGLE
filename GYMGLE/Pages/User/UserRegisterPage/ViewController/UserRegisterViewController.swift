@@ -202,7 +202,7 @@ class UserRegisterViewController: UIViewController {
                 }
                 
                 
-                DataManager.shared.realGymInfo!.gymUserList[editIndex] = emptyUser
+//                DataManager.shared.realGymInfo!.gymUserList[editIndex] = emptyUser
                 
                 self.navigationController?.popViewController(animated: true)
 
