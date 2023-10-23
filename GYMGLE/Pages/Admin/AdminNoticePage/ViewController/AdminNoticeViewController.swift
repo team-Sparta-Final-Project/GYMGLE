@@ -16,7 +16,7 @@ final class AdminNoticeViewController: UIViewController {
     var ref = Database.database().reference()
     private let adminNoticeView = AdminNoticeView()
     var isAdmin: Bool?
-    
+    var noticeListArray: [[String: Any]] = [[:]]
     //❗️삭제 예정
     private let dataTest = DataManager.shared
     var gymInfo: GymInfo?
@@ -28,16 +28,19 @@ final class AdminNoticeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
-        func fireBaseRead() {
             let userID = Auth.auth().currentUser?.uid
-            ref.child("users").child(userID!).child("gymInfo").observeSingleEvent(of: .value, with: { snapshot in
-                let value = snapshot.value as? NSDictionary
-                let noticeList = value?["noticeList"] as? String ?? ""
-               print(noticeList)
-            }) { error in
-                print(error.localizedDescription)
+        ref.child("users").child(userID!).child("gymInfo").child("noticeList").observeSingleEvent(of: .value) { (snapshot) in
+            if let value = snapshot.value as? [[String: Any]]  {
+               print(value)
+                self.noticeListArray = value
+                print(self.noticeListArray)
+            } else {
+                print("No valid data found")
             }
+        } withCancel: { (error) in
+            print("Firebase error: \(error.localizedDescription)")
         }
+
     }
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
@@ -96,14 +99,16 @@ extension AdminNoticeViewController {
 
 extension AdminNoticeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataTest.gymInfo.noticeList.count
+        print(noticeListArray.count)
+        return noticeListArray.count
+        
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AdminNoticeTableViewCell.identifier, for: indexPath) as! AdminNoticeTableViewCell
-        var date = dateToString(date: dataTest.gymInfo.noticeList[indexPath.row].date)
-        cell.nameLabel.text = gymInfo?.gymName
-        cell.contentLabel.text = dataTest.gymInfo.noticeList[indexPath.row].content
+        //var date = dateToString(date: dataTest.gymInfo.noticeList[indexPath.row].date)
+        cell.nameLabel.text = noticeListArray[indexPath.row].content
+        //cell.contentLabel.text = self.noticeListArray
         cell.dateLabel.text = date
         
         cell.selectionStyle = .none
