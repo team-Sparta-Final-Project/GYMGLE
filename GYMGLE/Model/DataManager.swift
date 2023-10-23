@@ -82,9 +82,9 @@ class DataManager {
     }
     
     func updateNotice(_ notice: Notice) {
-        for (index, existednotice) in gymInfo.noticeList.enumerated() {
+        for (index, existednotice) in realGymInfo!.noticeList.enumerated() {
             if existednotice.date == notice.date {
-                gymInfo.noticeList[index] = notice
+                realGymInfo?.noticeList[index] = notice
             }
         }
     }
@@ -95,11 +95,6 @@ class DataManager {
                 gymInfo.gymUserList[index].isInGym = true
             }
         }
-    }
-    
-    func getUserList() -> [User] {
-        var userList = self.gymInfo.gymUserList
-        return userList
     }
     
     //MARK: - 싱글톤 메서드

@@ -48,9 +48,7 @@ private extension AdminRootViewController {
             let gymName = value?["gymName"] as? String ?? ""
             let gymPhoneNumber = value?["gymPhoneNumber"] as? String ?? ""
             self.adminRootView.dataSetting("\(gymName)", "\(gymPhoneNumber)")
-        }) { error in
-            print(error.localizedDescription)
-        }
+        }) { error in }
     }
     
     func allButtonTapped() {
@@ -124,9 +122,7 @@ extension AdminRootViewController {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
-        }
+        } catch _ as NSError { }
     }
     
     // MARK: - 회원탈퇴
@@ -135,8 +131,7 @@ extension AdminRootViewController {
         // 계정 삭제
         if let user = Auth.auth().currentUser {
             user.delete { error in
-                if let error = error {
-                    print("delete Error : ", error)
+                if error != nil {
                 } else {
                     let adminLoginVC = AdminLoginViewController()
                     self.navigationController?.pushViewController(adminLoginVC, animated: true)
@@ -146,8 +141,6 @@ extension AdminRootViewController {
             let userRef = Database.database().reference().child("users").child(user.uid)
             userRef.removeValue()
             signOut()
-        } else {
-            print("로그인 정보가 존재하지 않습니다.")
-        }
+        } else {}
     }
 }
