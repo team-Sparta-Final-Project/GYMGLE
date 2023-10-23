@@ -19,12 +19,13 @@ final class AdminNoticeView: UIView {
     
     lazy var noticeCreateButton: UIButton = {
         let button = UIButton()
-        button.buttonImageMakeUI(backgroundColor: .white, image: "pencil", color: ColorGuide.black, cornerRadius: 10, borderWidth: 1.5, borderColor: ColorGuide.shadowBorder.cgColor)
+        button.buttonImageMakeUI(backgroundColor: .white, image: "pencil", color: ColorGuide.black, cornerRadius: 10, borderWidth: 2.0, borderColor: ColorGuide.shadowBorder.cgColor)
         return button
     }()
     
     lazy var noticeTableView: UITableView = {
         let table = UITableView()
+        table.backgroundColor = .white
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
