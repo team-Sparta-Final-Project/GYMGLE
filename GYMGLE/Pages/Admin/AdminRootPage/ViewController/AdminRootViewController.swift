@@ -13,7 +13,6 @@ import FirebaseDatabase
 final class AdminRootViewController: UIViewController {
     
     private let adminRootView = AdminRootView()
-    
     var isAdmin: Bool?
     var ref = Database.database().reference()
     // MARK: - life cycle

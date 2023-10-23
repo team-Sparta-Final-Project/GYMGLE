@@ -12,7 +12,7 @@ import FirebaseDatabase
 
 final class AdminNoticeViewController: UIViewController {
     
-    // MARK: - dummyData
+
     private let adminNoticeView = AdminNoticeView()
     var isAdmin: Bool?
     
@@ -25,17 +25,15 @@ final class AdminNoticeViewController: UIViewController {
         allSetting()
     }
     
-    override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         adminNoticeView.noticeTableView.reloadData()
      
     }
-    
 }
 
 // MARK: - extension
-
 private extension AdminNoticeViewController {
     func allSetting() {
         adminNoticeView.backgroundColor = UIColor.white
@@ -109,4 +107,5 @@ extension AdminNoticeViewController: UITableViewDelegate {
         adminNoticeDetailVC.index = indexPath.row
         navigationController?.pushViewController(adminNoticeDetailVC, animated: true)
     }
+    
 }

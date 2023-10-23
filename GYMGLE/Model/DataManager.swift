@@ -97,6 +97,8 @@ class DataManager {
         }
     }
     
+
+    
     //MARK: - 싱글톤 메서드
     
     //회원 추가
