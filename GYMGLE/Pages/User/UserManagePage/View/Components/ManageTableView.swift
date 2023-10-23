@@ -12,9 +12,8 @@ class ManageTableView: UITableView {
         
         self.backgroundColor = .clear
     
-        self.dataSource = self
         self.allowsSelection = true
-
+        
         self.separatorStyle = .none
         self.clipsToBounds = true
     }
@@ -28,36 +27,3 @@ class ManageTableView: UITableView {
     
     
 }
-
-
-extension ManageTableView: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cellData.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = ManageLabelCell()
-        cell.name.text = cellData[indexPath.row].name
-        cell.phone.text = cellData[indexPath.row].number
-        cell.gender.text = "남"
-        
-        if cellData.count == (indexPath.row + 1) {
-            cell.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(cellHeight)
-        
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("테스트 - \(indexPath)")
-    }
-    
-    
-    
-}
-//
