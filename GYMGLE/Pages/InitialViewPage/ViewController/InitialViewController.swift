@@ -64,7 +64,10 @@ private extension InitialViewController {
             
             userRef.observeSingleEvent(of: .value) { (snapshot) in
                 if let userData = snapshot.value as? [String: Any],
-                   let gymInfoJSON = userData["gymInfo"] as? [String: Any] {
+                   let gymInfoJSON = userData["gymInfo"] as? [String: Any],
+                   let gymAcoount = gymInfoJSON["gymAccount"] as? [String: Any],
+                   let id = gymAcoount["id"] as? String,
+                   let pw = gymAcoount["password"] as? String {
                     do {
                         let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
                         let gymInfo = try JSONDecoder().decode(GymInfo.self, from: gymInfoData)
@@ -81,6 +84,8 @@ private extension InitialViewController {
                         print("Decoding error: \(error.localizedDescription)")
                     }
                     DataManager.shared.gymUid = currentUser.uid
+                    DataManager.shared.id = id
+                    DataManager.shared.pw = pw
                     let vc = UINavigationController(rootViewController: AdminRootViewController())
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
@@ -167,7 +172,7 @@ extension InitialViewController {
                 if let user = result?.user {
                     let userRef = Database.database().reference().child("accounts").child(user.uid)
                     let userRef2 = Database.database().reference().child("users").child(user.uid)
-
+                    
                     userRef.observeSingleEvent(of: .value) { (snapshot, _)  in
                         if let userData = snapshot.value as? [String: Any],
                            let data = userData["userData"] as? [String: Any],

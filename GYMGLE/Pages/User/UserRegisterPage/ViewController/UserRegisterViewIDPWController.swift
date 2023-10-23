@@ -190,7 +190,7 @@ extension UserRegisterViewIDPWController {
                         let userRef = Database.database().reference().child("accounts").child(user.uid)
                         userRef.child("userData").setValue(userJSON)
                     }
-                    self.signOut()
+                    Auth.auth().signIn(withEmail: DataManager.shared.id!, password: DataManager.shared.pw!)
                     let vc = AdminRootViewController()
                     self.navigationController?.pushViewController(vc, animated: true)
                 } catch {

@@ -111,7 +111,8 @@ extension AdminLoginViewController {
                                 } catch {
                                     print("Decoding error: \(error.localizedDescription)")
                                 }
-                                
+                                DataManager.shared.id = id
+                                DataManager.shared.pw = pw
                                 let vc = UINavigationController(rootViewController: AdminRootViewController())
                                 vc.modalPresentationStyle = .fullScreen
                                 self.present(vc, animated: true)
