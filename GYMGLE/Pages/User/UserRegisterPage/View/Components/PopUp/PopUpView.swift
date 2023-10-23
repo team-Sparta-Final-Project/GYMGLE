@@ -78,6 +78,16 @@ class PopUpView: UIView {
 
         configure()
         
+        // 데이트픽커 컴팩트 텍스트를 바꾸기 위한 노력의 흔적
+        let conversionHandler : ([NSAttributedString.Key : Any]) -> [NSAttributedString.Key: Any] = {_ in
+            let attributes: [NSAttributedString.Key: Any] = [
+                
+                .backgroundColor: UIColor.green,
+                .font: FontGuide.size50Bold,
+                .foregroundColor: UIColor.blue]
+            return attributes
+        }
+        datePicker.updateTextAttributes(conversionHandler: conversionHandler)
         
                 
     }
