@@ -30,7 +30,7 @@ class UserCommunityWriteView: UIView {
         $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .center)
         $0.text = "\(writePlace.text.count)/400"
     }
-    private lazy var addButton = UIButton().then {
+    private(set) lazy var addButton = UIButton().then {
         $0.backgroundColor = ColorGuide.main
         $0.setTitleColor(ColorGuide.white, for: .normal)
         $0.setTitle("등록하기", for: .normal)
@@ -49,7 +49,7 @@ class UserCommunityWriteView: UIView {
     }
     
     func setupUI(){
-        self.backgroundColor = .lightGray
+        self.backgroundColor = ColorGuide.userBackGround
         addSubview(GymgleName)
         addSubview(writePlace)
         addSubview(mirrorPlace)

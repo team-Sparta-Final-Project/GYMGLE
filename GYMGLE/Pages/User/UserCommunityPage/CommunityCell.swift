@@ -196,7 +196,7 @@ class CommunityCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        contentView.backgroundColor = .lightGray
+        contentView.backgroundColor = ColorGuide.userBackGround
         
         
         

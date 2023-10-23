@@ -58,16 +58,16 @@ class UserRootView: UIView {
         $0.backgroundColor = ColorGuide.white
         $0.layer.cornerRadius = 20
         $0.tintColor = .white
-        $0.layer.shadowColor = ColorGuide.main.cgColor
-        $0.layer.shadowOpacity = 1
-        $0.layer.shadowRadius = 2
-        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(noticePlaceTapped)))
 
     }
     private lazy var noticeBell = UIImageView().then {
-        $0.image = UIImage(systemName: "bell.fill")
-        $0.tintColor = ColorGuide.main
+        $0.image = UIImage(systemName: "bell")
+        $0.tintColor = ColorGuide.black
+        $0.layer.shadowColor = ColorGuide.black.cgColor
+        $0.layer.shadowOpacity = 1
+        $0.layer.shadowRadius = 1
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
     private lazy var noticeText = UILabel().then {
         $0.textColor = ColorGuide.black
@@ -270,7 +270,7 @@ class UserRootView: UIView {
     
     //❗️
     func setupUI(){
-        self.backgroundColor = ColorGuide.white
+        self.backgroundColor = ColorGuide.userBackGround
         addSubview(healthName)
         addSubview(healthNameSub)
         addSubview(noticePlace)

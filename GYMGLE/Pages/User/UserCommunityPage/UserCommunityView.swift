@@ -124,7 +124,7 @@ class UserCommunityView: UIView,UITableViewDelegate {
     }
 
     func setupUI(){
-        self.backgroundColor = .lightGray
+        self.backgroundColor = ColorGuide.userBackGround
         addSubview(GymgleName)
         addSubview(healthName)
         addSubview(writePlace)
