@@ -25,7 +25,7 @@ final class AdminNoticeDetailView: UIView {
     
     lazy var contentTextView: UITextView = {
         let textView = UITextView()
-        textView.text = "공지사항을 입력하세요."
+        textView.text = "400자 이내로 공지사항을 적어주세요!"
         textView.font = FontGuide.size16
         textView.backgroundColor = .white
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -77,7 +77,6 @@ private extension AdminNoticeDetailView {
             topDivider.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             topDivider.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
             topDivider.heightAnchor.constraint(equalToConstant: 2),
-            topDivider.topAnchor.constraint(equalTo: self.pageTitleLabel.bottomAnchor, constant: 60),
             
             contentTextView.topAnchor.constraint(equalTo: self.topDivider.bottomAnchor, constant: 8),
             contentTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),

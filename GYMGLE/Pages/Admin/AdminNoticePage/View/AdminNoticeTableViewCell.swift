@@ -45,6 +45,12 @@ final class AdminNoticeTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        nameLabel.text = nil
+//        contentLabel.text = nil
+//        dateLabel.text = nil
+//    }
 }
 // MARK: - extension
 private extension AdminNoticeTableViewCell {

@@ -11,7 +11,7 @@ import QRCodeReader
 
 final class QRcodeCheckViewController: UIViewController {
     
-    // 실시간 캡처를 수행하기 선언
+    // 실시간 캡처를 수행하기 선언(AVCaptureSession: 오디오 및 비디오 데이터 스트림을 캡처하고 처리하기 위한 핵심 구성 요소)
     private let captureSession = AVCaptureSession()
     
     private let dataTest = DataManager.shared
@@ -49,7 +49,7 @@ private extension QRcodeCheckViewController {
             let input = try AVCaptureDeviceInput(device: captureDevice)
             captureSession.addInput(input)
             
-            // 카메라 촬영하면서 생성되는 metadata를 처리하는 output
+            // 카메라 촬영하면서 생성되는 metadata를 처리하는 output(캡처한 미디어 데이터를 처리하거나 저장)
             let output = AVCaptureMetadataOutput()
             captureSession.addOutput(output)
             

@@ -6,34 +6,34 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseCore
+import FirebaseDatabase
 
 final class AdminNoticeViewController: UIViewController {
-
-    // MARK: - dummyData
-    private let dataTest = DataManager.shared
-    var gymInfo: GymInfo?
+    
 
     private let adminNoticeView = AdminNoticeView()
     var isAdmin: Bool?
+    
     override func loadView() {
         view = adminNoticeView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
     }
     
-    override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         adminNoticeView.noticeTableView.reloadData()
+     
     }
-
 }
 
 // MARK: - extension
-
 private extension AdminNoticeViewController {
     func allSetting() {
         adminNoticeView.backgroundColor = UIColor.white
@@ -42,12 +42,12 @@ private extension AdminNoticeViewController {
     }
     func buttonTappedSetting() {
         adminNoticeView.noticeCreateButton.addTarget(self, action: #selector(noticeCreateButtonTapped), for: .touchUpInside)
-//        switch isAdmin {
-//        case false: //트레이너 일 때
-//            adminNoticeView.noticeCreateButton.isHidden = true
-//        default:
-//            adminNoticeView.noticeCreateButton.isHidden = false
-//        }
+        //        switch isAdmin {
+        //        case false: //트레이너 일 때
+        //            adminNoticeView.noticeCreateButton.isHidden = true
+        //        default:
+        //            adminNoticeView.noticeCreateButton.isHidden = false
+        //        }
     }
     func tableSetting() {
         adminNoticeView.noticeTableView.dataSource = self
@@ -59,14 +59,14 @@ private extension AdminNoticeViewController {
     func dateToString(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
-    
+        
         formatter.dateStyle = .medium
         formatter.timeStyle = .full
         formatter.dateFormat = "MM/dd"
-
+        
         return formatter.string(from: date)
     }
-   
+    
 }
 
 // MARK: -  @objc func
@@ -80,27 +80,32 @@ extension AdminNoticeViewController {
 
 extension AdminNoticeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataTest.gymInfo.noticeList.count
+        guard let noticeList = DataManager.shared.realGymInfo?.noticeList else {return 1 }
+        return noticeList.count
+        
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AdminNoticeTableViewCell.identifier, for: indexPath) as! AdminNoticeTableViewCell
-        var date = dateToString(date: dataTest.gymInfo.noticeList[indexPath.row].date)
-        cell.nameLabel.text = gymInfo?.gymName
-        cell.contentLabel.text = dataTest.gymInfo.noticeList[indexPath.row].content
-        cell.dateLabel.text = date
-        
+        if let gymInfo = DataManager.shared.realGymInfo {
+            cell.nameLabel.text = gymInfo.gymName
+            cell.contentLabel.text = gymInfo.noticeList[indexPath.row].content
+            cell.dateLabel.text = dateToString(date: gymInfo.noticeList[indexPath.row].date)
+        }
         cell.selectionStyle = .none
         tableView.separatorStyle = .none
         return cell
     }
+    
 }
 
 extension AdminNoticeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
+        
         let adminNoticeDetailVC = AdminNoticeDetailViewController()
-        adminNoticeDetailVC.noticeInfo = dataTest.gymInfo.noticeList[indexPath.row]
+        adminNoticeDetailVC.noticeInfo = DataManager.shared.realGymInfo?.noticeList[indexPath.row]
+        adminNoticeDetailVC.index = indexPath.row
         navigationController?.pushViewController(adminNoticeDetailVC, animated: true)
     }
+    
 }

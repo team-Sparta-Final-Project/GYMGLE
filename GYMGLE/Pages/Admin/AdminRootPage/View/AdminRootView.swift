@@ -83,8 +83,8 @@ final class AdminRootView: UIView {
     }
     
     func dataSetting(_ gymName: String,_ gymNumber: String) {
-        gymNameLabel.text = DataManager.shared.realGymInfo?.gymName
-        gymNumberLabel.text = DataManager.shared.realGymInfo?.gymPhoneNumber
+        gymNameLabel.text = gymName
+        gymNumberLabel.text = gymNumber
     }
 }
 

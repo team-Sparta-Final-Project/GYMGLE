@@ -5,7 +5,7 @@ class UserManageView: UIView {
     //MARK: - UI 컴포넌트 선언부
     lazy var label = UILabel()
     lazy var tableView = ManageTableView()
-    lazy var CustomSearchBar = UISearchBar()
+    lazy var customSearchBar = UISearchBar()
     
     
     //MARK: - View 자체 라이프사이클
@@ -43,10 +43,10 @@ class UserManageView: UIView {
     //MARK: - 서치 바 커스텀
     
     private func CenterSearchBar(){
-        CustomSearchBar.searchBarStyle = .minimal
-        CustomSearchBar.placeholder = "검색"
+        customSearchBar.searchBarStyle = .minimal
+        customSearchBar.placeholder = "검색"
         
-        if let textfield = CustomSearchBar.value(forKey: "searchField") as? UITextField {
+        if let textfield = CustomSearchBar.self as? UITextField {
             textfield.backgroundColor = UIColor(red: 0.887, green: 0.887, blue: 0.887, alpha: 1)
             textfield.attributedPlaceholder = NSAttributedString(string: textfield.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor(named: "gr-d") ?? .white, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12)])
             textfield.textColor = .white
@@ -61,8 +61,8 @@ class UserManageView: UIView {
             }
         }
             
-        self.addSubviews(CustomSearchBar)
-        CustomSearchBar.snp.makeConstraints{
+        self.addSubviews(customSearchBar)
+        customSearchBar.snp.makeConstraints{
             $0.top.equalTo(label.snp.bottom).offset(12)
             $0.left.right.equalToSuperview().inset(20)
             $0.height.equalTo(30)
@@ -74,7 +74,7 @@ class UserManageView: UIView {
         
         self.addSubview(tableView)
         tableView.snp.makeConstraints{
-            $0.top.equalTo(CustomSearchBar.snp.bottom).offset(24)
+            $0.top.equalTo(customSearchBar.snp.bottom).offset(24)
             $0.left.right.equalToSuperview().inset(24)
             $0.bottom.equalToSuperview().inset(-18)
         }
