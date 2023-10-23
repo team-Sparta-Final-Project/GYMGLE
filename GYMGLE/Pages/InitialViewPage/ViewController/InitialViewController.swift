@@ -166,7 +166,8 @@ extension InitialViewController {
             } else {
                 if let user = result?.user {
                     let userRef = Database.database().reference().child("accounts").child(user.uid)
-                    
+                    let userRef2 = Database.database().reference().child("users").child(user.uid)
+
                     userRef.observeSingleEvent(of: .value) { (snapshot, _)  in
                         if let userData = snapshot.value as? [String: Any],
                            let data = userData["userData"] as? [String: Any],
@@ -203,13 +204,22 @@ extension InitialViewController {
                                     vc.modalPresentationStyle = .fullScreen
                                     self.present(vc, animated: true)
                                 }
-                            } else {
+                            }
+                        }
+                    }
+                    
+                    userRef2.observeSingleEvent(of: .value) { (snapshot) in
+                        if let userData = snapshot.value as? [String: Any],
+                           let gymInfo = userData["gymInfo"] as? [String: Any],
+                           let gymAccount = gymInfo["gymAccount"] as? [String: Any],
+                           let accountType = gymAccount["accountType"] as? Int {
+                            if accountType == 0 {
+                                self.signOut()
                                 let alert = UIAlertController(title: "로그인 실패",
                                                               message: "유효한 계정이 아닙니다.",
                                                               preferredStyle: .alert)
                                 alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
                                 self.present(alert, animated: true, completion: nil)
-                                self.signOut()
                             }
                         }
                     }
