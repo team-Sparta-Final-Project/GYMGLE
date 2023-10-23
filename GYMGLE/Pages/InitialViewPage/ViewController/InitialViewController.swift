@@ -203,11 +203,29 @@ extension InitialViewController {
                                     vc.modalPresentationStyle = .fullScreen
                                     self.present(vc, animated: true)
                                 }
+                            } else {
+                                let alert = UIAlertController(title: "로그인 실패",
+                                                              message: "유효한 계정이 아닙니다.",
+                                                              preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                                self.present(alert, animated: true, completion: nil)
+                                self.signOut()
                             }
                         }
                     }
                 }
             }
+        }
+    }
+    
+    // MARK: - 로그아웃
+    
+    func signOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
         }
     }
 }

@@ -91,31 +91,53 @@ extension AdminLoginViewController {
                     
                     userRef.observeSingleEvent(of: .value) { (snapshot)  in
                         if let userData = snapshot.value as? [String: Any],
-                           let gymInfoJSON = userData["gymInfo"] as? [String: Any] {
-                            do {
-                                let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
-                                let gymInfo = try JSONDecoder().decode(GymInfo.self, from: gymInfoData)
-                                DataManager.shared.realGymInfo = gymInfo
-                            } catch DecodingError.dataCorrupted(let context) {
-                                print("Data corrupted: \(context.debugDescription)")
-                            } catch DecodingError.keyNotFound(let key, let context) {
-                                print("Key '\(key.stringValue)' not found: \(context.debugDescription)")
-                            } catch DecodingError.valueNotFound(let type, let context) {
-                                print("Value of type '\(type)' not found: \(context.debugDescription)")
-                            } catch DecodingError.typeMismatch(let type, let context) {
-                                print("Type mismatch for type '\(type)' : \(context.debugDescription)")
-                            } catch {
-                                print("Decoding error: \(error.localizedDescription)")
+                           let gymInfoJSON = userData["gymInfo"] as? [String: Any],
+                            let gymAccount = gymInfoJSON["gymAccount"] as? [String: Any],
+                            let accountType = gymAccount["accountType"] as? Int {
+                            if accountType == 0 {
+                                do {
+                                    let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
+                                    let gymInfo = try JSONDecoder().decode(GymInfo.self, from: gymInfoData)
+                                    DataManager.shared.realGymInfo = gymInfo
+                                } catch DecodingError.dataCorrupted(let context) {
+                                    print("Data corrupted: \(context.debugDescription)")
+                                } catch DecodingError.keyNotFound(let key, let context) {
+                                    print("Key '\(key.stringValue)' not found: \(context.debugDescription)")
+                                } catch DecodingError.valueNotFound(let type, let context) {
+                                    print("Value of type '\(type)' not found: \(context.debugDescription)")
+                                } catch DecodingError.typeMismatch(let type, let context) {
+                                    print("Type mismatch for type '\(type)' : \(context.debugDescription)")
+                                } catch {
+                                    print("Decoding error: \(error.localizedDescription)")
+                                }
+                                
+                                let vc = UINavigationController(rootViewController: AdminRootViewController())
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                                DataManager.shared.gymUid = user.uid
+                            } else {
+                                let alert = UIAlertController(title: "로그인 실패",
+                                                              message: "유효한 계정이 아닙니다.",
+                                                              preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                                self.present(alert, animated: true, completion: nil)
+                                self.signOut()
                             }
                         }
-                        
-                        let vc = UINavigationController(rootViewController: AdminRootViewController())
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true)
-                        DataManager.shared.gymUid = user.uid
                     }
                 }
             }
+        }
+    }
+    
+    // MARK: - 로그아웃
+    
+    func signOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
         }
     }
 }
