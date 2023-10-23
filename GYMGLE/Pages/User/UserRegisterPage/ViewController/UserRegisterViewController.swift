@@ -1,4 +1,6 @@
 import UIKit
+import FirebaseDatabase
+
 
 class UserRegisterViewController: UIViewController {
     
@@ -10,6 +12,10 @@ class UserRegisterViewController: UIViewController {
     let buttonCells = ["등록일","등록 기간","추가 정보"]
     let buttonText = ["날짜","날짜","성별"]
     
+    var emptyUser = User(account: Account(id: "", password: "", accountType: 2), name: "", number: "", startSubscriptionDate: Date(), endSubscriptionDate: Date(), userInfo: "", isInGym: false, adminUid: DataManager.shared.gymUid!)
+    
+    var nowEdit = false
+    var editIndex = 0
     
     let cellHeight = 45
     let emptyCellHeight = 24
@@ -70,6 +76,8 @@ class UserRegisterViewController: UIViewController {
         
         nameTextField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
         phoneTextField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
+        
+        editingOn()
     }
     
     func showToast(message: String) {
@@ -147,6 +155,7 @@ class UserRegisterViewController: UIViewController {
         }
         
         
+        
         viewConfigure.textView.isHidden.toggle()
         
         let startDateCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
@@ -170,24 +179,84 @@ class UserRegisterViewController: UIViewController {
             let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
             guard let phoneText = phoneTextField?.text else { return }
             
-            let IdPwVC = UserRegisterViewIDPWController()
-            IdPwVC.name = nameText
-            IdPwVC.phone = phoneText
-            IdPwVC.startDate = startDate
-            IdPwVC.endDate = endDate
-            IdPwVC.userInfo = "정보없음"
+            let info = self.viewConfigure.textView.text
             
             
-            if viewConfigure.textView.isHidden {
-                IdPwVC.userType = 1
-                IdPwVC.pageTitle = "트레이너 등록"
+            
+            if nowEdit {
+                            
+                emptyUser.name = nameText
+                emptyUser.number = phoneText
+                emptyUser.startSubscriptionDate = startDate
+                emptyUser.endSubscriptionDate = endDate
+                emptyUser.userInfo = info ?? "정보없음"
+                
+                do {
+                    let userData = try JSONEncoder().encode(emptyUser)
+                    let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
+                    
+                    let ref = Database.database().reference()
+                    ref.child("users/\(emptyUser.adminUid)/gymInfo/gymUserList/\(editIndex)").setValue(userJSON)
+                }catch{
+                    print("JSON 인코딩 에러")
+                }
+                
+                
+                DataManager.shared.realGymInfo!.gymUserList[editIndex] = emptyUser
+                
+                self.navigationController?.popViewController(animated: true)
+
+            }else{
+                
+                let IdPwVC = UserRegisterViewIDPWController()
                 IdPwVC.viewConfigure.segmented.isHidden = true
+                
+                emptyUser.name = nameText
+                emptyUser.number = phoneText
+                emptyUser.startSubscriptionDate = startDate
+                emptyUser.endSubscriptionDate = endDate
+                emptyUser.userInfo = info ?? "정보없음"
+                
+                if viewConfigure.textView.isHidden {
+                    emptyUser.account.accountType = 1
+                    IdPwVC.pageTitle = "트레이너 등록"
+                    
+                }
+                IdPwVC.needIdPwUser = emptyUser
+                
+                navigationController?.pushViewController(IdPwVC, animated: true)
             }
             
-            navigationController?.pushViewController(IdPwVC, animated: true)
             
         }
     }
     
 }
 
+extension UserRegisterViewController {
+    
+    func editingOn(){
+        if self.nowEdit {
+            let nameCell = self.viewConfigure.tableView.subviews[8] as? UITableViewCell
+            let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
+            nameTextField?.text = emptyUser.name
+            let phoneCell = self.viewConfigure.tableView.subviews[6] as? UITableViewCell
+            let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
+            phoneTextField?.text = emptyUser.number
+            
+            (nameCell?.contentView.subviews[0] as? UILabel)?.isHidden = true
+            (phoneCell?.contentView.subviews[0] as? UILabel)?.isHidden = true
+                        
+            let startDateCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
+            let startDateLabel = startDateCell?.contentView.subviews[0] as? UILabel
+            startDateLabel?.text = "등록일 : " + emptyUser.startSubscriptionDate.formatted(date:.complete, time: .omitted)
+
+            let endDateCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
+            let endDateLabel = endDateCell?.contentView.subviews[0] as? UILabel
+            endDateLabel?.text = "등록마감일 : " + emptyUser.endSubscriptionDate.formatted(date:.complete, time: .omitted)
+
+            self.viewConfigure.textView.text = emptyUser.userInfo
+        }
+    }
+    
+}

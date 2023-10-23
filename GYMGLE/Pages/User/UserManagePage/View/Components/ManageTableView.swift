@@ -13,7 +13,7 @@ class ManageTableView: UITableView {
         self.backgroundColor = .clear
     
         self.allowsSelection = true
-
+        
         self.separatorStyle = .none
         self.clipsToBounds = true
     }
@@ -28,6 +28,3 @@ class ManageTableView: UITableView {
     
 }
 
-
-
-//

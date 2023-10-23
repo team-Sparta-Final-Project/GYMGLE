@@ -59,6 +59,9 @@
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
 		D14ECB442AD917D600FF7853 /* Extension_UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB432AD917D600FF7853 /* Extension_UIView.swift */; };
 		D14ECB482AD928FF00FF7853 /* Extension_CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */; };
+		D15C22292AE4FE25002C4213 /* MyPageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C22282AE4FE25002C4213 /* MyPageTableView.swift */; };
+		D15C222C2AE50349002C4213 /* MyPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C222B2AE50349002C4213 /* MyPageTableViewCell.swift */; };
+		D15C22302AE50F7D002C4213 /* Protocol_Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C222F2AE50F7D002C4213 /* Protocol_Delegate.swift */; };
 		D1635A462AE0F9CD00CDEF11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D1635A452AE0F9CD00CDEF11 /* FirebaseAuth */; };
 		D16920A72ADFBB9F00BE1A2B /* UserMyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */; };
 		D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */; };
@@ -129,6 +132,9 @@
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
 		D14ECB432AD917D600FF7853 /* Extension_UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIView.swift; sourceTree = "<group>"; };
 		D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_CALayer.swift; sourceTree = "<group>"; };
+		D15C22282AE4FE25002C4213 /* MyPageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableView.swift; sourceTree = "<group>"; };
+		D15C222B2AE50349002C4213 /* MyPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableViewCell.swift; sourceTree = "<group>"; };
+		D15C222F2AE50F7D002C4213 /* Protocol_Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol_Delegate.swift; sourceTree = "<group>"; };
 		D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageView.swift; sourceTree = "<group>"; };
 		D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageViewController.swift; sourceTree = "<group>"; };
 		D1E0185E2ADCEB6700D1C53D /* AdminNoticeDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdminNoticeDetailView.swift; path = GYMGLE/Pages/Admin/AdminNoticePage/AdminNoticeDetailPage/View/AdminNoticeDetailView.swift; sourceTree = SOURCE_ROOT; };
@@ -562,6 +568,7 @@
 			children = (
 				63D855F12AD812A0008429BC /* ColorGuide.swift */,
 				63D855F32AD812C3008429BC /* FontGuide.swift */,
+				D15C222F2AE50F7D002C4213 /* Protocol_Delegate.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -580,6 +587,14 @@
 				D1E0186E2ADCEC4B00D1C53D /* AdminLoginView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		D15C222A2AE50329002C4213 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D15C222B2AE50349002C4213 /* MyPageTableViewCell.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		D16920A32ADFBB7A00BE1A2B /* UserMyPage */ = {
@@ -602,7 +617,9 @@
 		D16920A52ADFBB8C00BE1A2B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D15C222A2AE50329002C4213 /* Components */,
 				D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */,
+				D15C22282AE4FE25002C4213 /* MyPageTableView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -705,6 +722,7 @@
 				074428792AE0E2BA00EB7D05 /* UserCommunityWriteView.swift in Sources */,
 				63D855F42AD812C3008429BC /* FontGuide.swift in Sources */,
 				D1E018712ADCEC5C00D1C53D /* AdminLoginViewController.swift in Sources */,
+				D15C222C2AE50349002C4213 /* MyPageTableViewCell.swift in Sources */,
 				D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */,
 				63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */,
 				63163E6F2AE11F0700186315 /* QRcodeCheckView.swift in Sources */,
@@ -712,6 +730,7 @@
 				D1E0186B2ADCEC2C00D1C53D /* AdminRegisterView.swift in Sources */,
 				2730BC8A2ADC1E1700BFA23C /* UserManageView.swift in Sources */,
 				07997FF52AD84390002ACFCB /* UserRootView.swift in Sources */,
+				D15C22292AE4FE25002C4213 /* MyPageTableView.swift in Sources */,
 				63163E6D2AE11EF200186315 /* QRcodeCheckViewController.swift in Sources */,
 				630CE14B2ADD1B5E001EC547 /* TabbarViewController.swift in Sources */,
 				D1E0186D2ADCEC3800D1C53D /* AdminRegisterViewController.swift in Sources */,
@@ -762,6 +781,7 @@
 				D1E0187C2ADCEE0000D1C53D /* LabelCell.swift in Sources */,
 				07997FF92AD843BD002ACFCB /* UserRootModel.swift in Sources */,
 				27E24B802ADF8A790031122F /* UserRegisterViewIDPWController.swift in Sources */,
+				D15C22302AE50F7D002C4213 /* Protocol_Delegate.swift in Sources */,
 				D1E018832ADCEEED00D1C53D /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -903,7 +923,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3L52QK9JPU;
+				DEVELOPMENT_TEAM = Q67N748692;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GYMGLE/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -930,7 +950,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3L52QK9JPU;
+				DEVELOPMENT_TEAM = Q67N748692;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GYMGLE/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

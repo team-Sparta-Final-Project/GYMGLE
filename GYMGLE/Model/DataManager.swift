@@ -7,6 +7,10 @@ class DataManager {
     
     var gymUid: String?
     var realGymInfo: GymInfo?
+    var userInfo: User?
+    var id: String?
+    var pw: String?
+    
     lazy var gymInfo = GymInfo(gymAccount: Account(id: "",
                                            password: "",
                                            accountType: 0),
@@ -15,44 +19,24 @@ class DataManager {
                        gymnumber: "0123456789",
                        
                        gymUserList: [
-                        User(account: Account(id: "1",
-                                              password: "1",
+                        User(account: Account(id: "wladbwj1",
+                                              password: "asd123",
                                               accountType: 1), //트레이너
-                                              name: "asd",
-                                              number: "01031023",
-                                              startSubscriptionDate: Date(),
-                                              endSubscriptionDate: Date(),
-                                              userInfo: "addwd",
+                                              name: "첫번째 유저",
+                                              number: "전화번호전화번호전화번호",
+                                              startSubscriptionDate: Date(timeIntervalSinceNow: -60*60*24*30*3),
+                                              endSubscriptionDate: Date(timeIntervalSinceNow: 60*60*24*30*3),
+                                              userInfo: "추가정보란임 더미데이터임",
                              isInGym: true, adminUid: "1"),
                         
-                        User(account: Account(id: "2",
-                                              password: "2",
+                        User(account: Account(id: "wladbwj2",
+                                              password: "kkkk1234",
                                               accountType: 2),
-                                              name: "asdf",
-                                              number: "01031024",
+                                              name: "두번째 유저",
+                                              number: "010101010101010101010",
                                               startSubscriptionDate: Date(),
-                                              endSubscriptionDate: Date(),
-                                              userInfo: "addwdf",
-                             isInGym: true, adminUid: "2"),
-                        
-                        User(account: Account(id: "2",
-                                              password: "2",
-                                              accountType: 2),
-                                              name: "박성원",
-                                              number: "01031024",
-                                              startSubscriptionDate: Date(),
-                                              endSubscriptionDate: Date(),
-                                              userInfo: "addwdf",
-                             isInGym: true, adminUid: "2"),
-                        
-                        User(account: Account(id: "2",
-                                              password: "2",
-                                              accountType: 2),
-                                              name: "박성원",
-                                              number: "01031024",
-                                              startSubscriptionDate: Date(),
-                                              endSubscriptionDate: Date(),
-                                              userInfo: "addwdf",
+                                              endSubscriptionDate: Date(timeIntervalSinceNow: 60*60*24*30*10),
+                                              userInfo: "ㅋㅋㅋ더미데이터라고",
                              isInGym: true, adminUid: "2")
                        ],
                        
