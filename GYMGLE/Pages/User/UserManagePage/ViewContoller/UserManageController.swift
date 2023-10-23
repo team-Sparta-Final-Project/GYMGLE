@@ -16,14 +16,10 @@ final class UserManageViewController: UIViewController {
 
     
     let cellHeight = 56
-    
-            
+
     override func loadView() {
 
-        cells = DataManager.shared.realGymInfo!.gymUserList
-        
         viewConfigure.label.text = pageTitle
-        //        viewConfigure.button.setTitle(buttonTitle, for: .normal)
 
         
         view = viewConfigure
@@ -123,7 +119,7 @@ extension UserManageViewController: UITableViewDataSource {
         return CGFloat(cellHeight)
         
     }
- 
+
 }
 
 
