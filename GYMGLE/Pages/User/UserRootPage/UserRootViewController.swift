@@ -32,6 +32,7 @@ class UserRootViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        getLastWeek()
+        setNowUserNumber()
         
     }
     
@@ -61,6 +62,16 @@ class UserRootViewController: UIViewController {
 //            first.yesterUserNumber.text = String(userCount)
 //        }
 //    }
+    
+    func setNowUserNumber() {
+        let ref = Database.database().reference().child("users").child(DataManager.shared.gymUid!).child("gymUserList")
+        let query = ref.queryOrdered(byChild: "isInGym").queryEqual(toValue: true)
+        
+        query.observeSingleEvent(of: .value) { (snapshot) in
+            let count = snapshot.childrenCount
+            self.first.nowUserNumber.text = String(count)
+        }
+    }
 }
 
 //#if DEBUG
