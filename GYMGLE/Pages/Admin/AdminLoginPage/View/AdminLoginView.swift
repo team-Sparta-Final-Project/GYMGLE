@@ -46,7 +46,7 @@ class AdminLoginView: UIView {
     }
     
     lazy var registerButton = UIButton().then {
-        $0.buttonMakeUI(backgroundColor: .white, cornerRadius: 10, borderWidth: 0, borderColor: UIColor.clear.cgColor, setTitle: "새로운 헬스장 등록", font: FontGuide.size14Bold, setTitleColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.61))
+        $0.buttonMakeUI(backgroundColor: .clear, cornerRadius: 10, borderWidth: 0, borderColor: UIColor.clear.cgColor, setTitle: "새로운 헬스장 등록", font: FontGuide.size14Bold, setTitleColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.61))
     }
     
     lazy var userButton = UIButton().then {
@@ -57,7 +57,7 @@ class AdminLoginView: UIView {
     
     override init(frame: CGRect) {
         super .init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = ColorGuide.background
         
         addSubviews(imageView, loginLabel, idTextField, passwordTextField, loginButton, divider, registerButton, userButton)
         

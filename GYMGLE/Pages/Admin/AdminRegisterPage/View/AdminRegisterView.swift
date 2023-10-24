@@ -120,7 +120,7 @@ class AdminRegisterView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = ColorGuide.background
         
         addSubviews(titleLabel, adminNameTextField, adminNumberTextField, phoneTextField, registerNumberTextField, validCheckButton, idTextField, duplicationCheckButton, passwordTextField, registerButton)
         

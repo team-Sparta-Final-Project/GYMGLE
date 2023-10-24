@@ -75,7 +75,7 @@ final class AdminRootView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = ColorGuide.background
         viewMakeUI()
     }
     required init?(coder: NSCoder) {
