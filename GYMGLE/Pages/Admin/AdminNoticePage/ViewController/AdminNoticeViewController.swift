@@ -32,6 +32,7 @@ final class AdminNoticeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
+        print("테스트 - ss")
         dataReadSetting() {
             self.adminNoticeView.noticeTableView.reloadData()
         }
@@ -65,12 +66,12 @@ private extension AdminNoticeViewController {
     }
     func buttonTappedSetting() {
         adminNoticeView.noticeCreateButton.addTarget(self, action: #selector(noticeCreateButtonTapped), for: .touchUpInside)
-        //        switch isAdmin {
-        //        case false: //트레이너 일 때
-        //            adminNoticeView.noticeCreateButton.isHidden = true
-        //        default:
-        //            adminNoticeView.noticeCreateButton.isHidden = false
-        //        }
+                switch isAdmin {
+                case false: //트레이너 일 때
+                    adminNoticeView.noticeCreateButton.isHidden = true
+                default:
+                    adminNoticeView.noticeCreateButton.isHidden = false
+                }
     }
     func tableSetting() {
         adminNoticeView.noticeTableView.dataSource = self
