@@ -25,32 +25,41 @@ final class AdminNoticeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
-        ref.child("users/\(userID!)/noticeList").observeSingleEvent(of: .value) { DataSnapshot in
-            guard let value = DataSnapshot.value as? [String:[String:Any]] else { return }
-            do {
-                let jsonArray = value.values.compactMap { $0 as? [String: Any] }
-                let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
-                let notices = try JSONDecoder().decode([Notice].self, from: jsonData)
-                DataManager.shared.noticeList = notices
-                
-            } catch let error {
-                print("테스트 - \(error)")
-            }
-        }
-        
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
-        adminNoticeView.noticeTableView.reloadData()
+        fireBaseSetting {
+            print("테스트 - dd")
+            self.adminNoticeView.noticeTableView.reloadData()
+        }
     }
 }
 
-// MARK: - extension
+// MARK: - extension custom func
 private extension AdminNoticeViewController {
+    
+    func fireBaseSetting( completion: @escaping () -> Void) {
+        ref.child("users/\(userID!)/noticeList").observeSingleEvent(of: .value) { DataSnapshot in
+            guard let value = DataSnapshot.value as? [String:[String:Any]] else { return
+                completion()
+            }
+            do {
+                let jsonArray = value.values.compactMap { $0 as? [String: Any] }
+                let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
+                let notices = try JSONDecoder().decode([Notice].self, from: jsonData)
+                DataManager.shared.noticeList = notices
+                completion()
+            } catch let error {
+                print("테스트 - \(error)")
+                completion()
+            }
+        }
+    }
     func allSetting() {
-        adminNoticeView.backgroundColor = UIColor.white
+        adminNoticeView.backgroundColor = ColorGuide.background
         buttonTappedSetting()
         tableSetting()
     }

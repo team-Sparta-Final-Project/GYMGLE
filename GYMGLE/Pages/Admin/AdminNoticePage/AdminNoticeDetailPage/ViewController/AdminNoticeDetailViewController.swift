@@ -3,8 +3,7 @@
 //  GYMGLE
 //
 //  Created by 박성원 on 2023/10/14.
-//
-//3060349969
+// 3060349969 -> 사업자 등록 번호 (임시 사용)
 import UIKit
 import FirebaseAuth
 import FirebaseCore
@@ -12,11 +11,11 @@ import FirebaseDatabase
 
 final class AdminNoticeDetailViewController: UIViewController {
     
+    // MARK: - properties
     private let adminNoticeDetailView = AdminNoticeDetailView()
-    var index = 0
     var noticeInfo: Notice?
-    // MARK: - life cycle
     
+    // MARK: - life cycle
     override func loadView() {
         view = adminNoticeDetailView
     }
@@ -28,8 +27,6 @@ final class AdminNoticeDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = false
     }
-    
-    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -37,21 +34,18 @@ final class AdminNoticeDetailViewController: UIViewController {
         adminNoticeDetailView.endEditing(true)
     }
 }
-// MARK: - extension (custom func)
+// MARK: - extension custom func
 private extension AdminNoticeDetailViewController {
-    
     func viewConfigure() {
         adminNoticeDetailView.contentTextView.delegate = self
         registerForKeyboardNotifications()
         viewSetting()
         buttonTapped()
     }
-    
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
     func viewSetting() {
         if let noticeInfo = noticeInfo {
             adminNoticeDetailView.contentTextView.text = noticeInfo.content
@@ -75,13 +69,83 @@ private extension AdminNoticeDetailViewController {
         NSLayoutConstraint.activate([
             toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
-            toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
-            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
+            toastView.widthAnchor.constraint(equalToConstant: (view.frame.size.width / 2) - 20),
+            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 20),
         ])
         UIView.animate(withDuration: 2.5, delay: 0.2) { //2.5초
             toastView.alpha = 0
         } completion: { _ in
             toastView.removeFromSuperview()
+        }
+    }
+    // 추가 및 수정 로직
+    func createdAndUpatedContent(completion: @escaping () -> Void) {
+        if adminNoticeDetailView.contentTextView.text.isEmpty || adminNoticeDetailView.contentTextView.text == "400자 이내로 공지사항을 적어주세요!" {
+            showToast(message: "내용물이 비었습니다.")
+        } else {
+            if noticeInfo == nil {
+                let date = Date()
+                let content = adminNoticeDetailView.contentTextView.text
+                let newNotice = Notice(date: date, content: content ?? "")
+                do {
+                    let userID = Auth.auth().currentUser?.uid
+                    let ref = Database.database().reference().child("users").child(userID!).child("noticeList")
+                    
+                    let noticeData = try JSONEncoder().encode(newNotice)
+                    let noticeJSON = try JSONSerialization.jsonObject(with: noticeData, options: [])
+                    
+                    ref.childByAutoId().setValue(noticeJSON)
+                    completion()
+                } catch {
+                    completion()
+                }
+            } else {
+                if var notice = noticeInfo {
+                    let oldContent = notice.content
+                    notice.content = adminNoticeDetailView.contentTextView.text
+                    let userID = Auth.auth().currentUser?.uid
+                    let ref = Database.database().reference().child("users").child(userID!).child("noticeList")
+                    do {
+                        let noticeData = try JSONEncoder().encode(notice)
+                        let noticeJSON = try JSONSerialization.jsonObject(with: noticeData, options: [])
+                        ref.queryOrdered(byChild: "content").queryEqual(toValue: oldContent).observeSingleEvent(of: .value) { snapshot in
+                            guard let value = snapshot.value as? [String: Any] else { return }
+                            var key = ""
+                            for i in value.keys {
+                                key = i
+                            }
+                            ref.child("\(key)").setValue(noticeJSON)
+                            completion()
+                        }
+                    } catch let Error {
+                        print(Error)
+                        completion()
+                    }
+                }
+            }
+        }
+    }
+    //삭제 기능
+    func deletedNotice(completion: @escaping () -> Void) {
+        if let notice = noticeInfo {
+            let userID = Auth.auth().currentUser?.uid
+            let ref = Database.database().reference().child("users").child(userID!).child("noticeList")
+            do {
+                let noticeData = try JSONEncoder().encode(notice)
+                let noticeJSON = try JSONSerialization.jsonObject(with: noticeData, options: [])
+                ref.queryOrdered(byChild: "content").queryEqual(toValue: notice.content).observeSingleEvent(of: .value) { snapshot in
+                    guard let value = snapshot.value as? [String: Any] else { return }
+                    var key = ""
+                    for i in value.keys {
+                        key = i
+                    }
+                    ref.child("\(key)").setValue(nil)
+                    completion()
+                }
+            } catch let Error {
+                completion()
+                print(Error)
+            }
         }
     }
 }
@@ -102,74 +166,16 @@ extension AdminNoticeDetailViewController {
     @objc private func keyboardWillHide(_ notification: Notification) {
         adminNoticeDetailView.frame.origin.y = 0
     }
-    @objc private func createButtonTapped()  {
-        if adminNoticeDetailView.contentTextView.text.isEmpty || adminNoticeDetailView.contentTextView.text == "400자 이내로 공지사항을 적어주세요!" {
-            showToast(message: "내용물이 비었습니다.")
-        } else {
-            if noticeInfo == nil {
-                let date = Date()
-                let content = adminNoticeDetailView.contentTextView.text
-                let newNotice = Notice(date: date, content: content ?? "")
-                do {
-                    let userID = Auth.auth().currentUser?.uid
-                    let ref = Database.database().reference().child("users").child(userID!).child("noticeList")
-                    
-                    let noticeData = try JSONEncoder().encode(newNotice)
-                    let noticeJSON = try JSONSerialization.jsonObject(with: noticeData, options: [])
-                    
-                    ref.childByAutoId().setValue(noticeJSON)
-                    
-                } catch {
-                }
-            } else {
-                if var notice = noticeInfo {
-                    let oldContent = notice.content
-                    notice.content = adminNoticeDetailView.contentTextView.text
-                    let userID = Auth.auth().currentUser?.uid
-                    let noticeDate = notice.date
-                    let ref = Database.database().reference().child("users").child(userID!).child("noticeList")
-                    do {
-                        let noticeData = try JSONEncoder().encode(notice)
-                        let noticeJSON = try JSONSerialization.jsonObject(with: noticeData, options: [])
-                        ref.queryOrdered(byChild: "content").queryEqual(toValue: oldContent).observeSingleEvent(of: .value) { snapshot in
-                            guard let value = snapshot.value as? [String: Any] else { return }
-                            var key = ""
-                            for i in value.keys {
-                                key = i
-                            }
-                            ref.child("\(key)").setValue(noticeJSON)
-                        }
-                    } catch let Error {
-                        print(Error)
-                    }
-                    
-                }
-            }
+    @objc private func createButtonTapped() {
+        createdAndUpatedContent {
             self.navigationController?.popViewController(animated: true)
         }
     }
     @objc private func deletedButtonTapped() {
-        if let notice = noticeInfo {
-            let userID = Auth.auth().currentUser?.uid
-            let noticeDate = notice.date
-            let ref = Database.database().reference().child("users").child(userID!).child("noticeList")
-            do {
-                let noticeData = try JSONEncoder().encode(notice)
-                let noticeJSON = try JSONSerialization.jsonObject(with: noticeData, options: [])
-                ref.queryOrdered(byChild: "content").queryEqual(toValue: notice.content).observeSingleEvent(of: .value) { snapshot in
-                    guard let value = snapshot.value as? [String: Any] else { return }
-                    var key = ""
-                    for i in value.keys {
-                        key = i
-                    }
-                    ref.child("\(key)").setValue(nil)
-                }
-            } catch let Error {
-                print(Error)
-            }
+        deletedNotice {
+            self.navigationController?.popViewController(animated: true)
         }
-        let adminRootVC = AdminRootViewController()
-        self.navigationController?.popViewController(animated: true)
+        
     }
 }
 

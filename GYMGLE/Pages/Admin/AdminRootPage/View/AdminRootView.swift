@@ -75,7 +75,7 @@ final class AdminRootView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = ColorGuide.background
         viewMakeUI()
     }
     required init?(coder: NSCoder) {
@@ -103,11 +103,11 @@ private extension AdminRootView {
         }
         NSLayoutConstraint.activate([
             pageTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            pageTitleLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 88),
+            pageTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 108),
             pageTitleLabel.widthAnchor.constraint(equalToConstant: 149),
             
             gymLabelStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            gymLabelStackView.topAnchor.constraint(equalTo: self.pageTitleLabel.bottomAnchor, constant: 26),
+            gymLabelStackView.topAnchor.constraint(equalTo: self.pageTitleLabel.bottomAnchor, constant: 46),
             gymLabelStackView.trailingAnchor.constraint(equalTo: self.gymSettingButton.leadingAnchor, constant: 0),
             
             gymSettingButton.centerYAnchor.constraint(equalTo: self.gymLabelStackView.centerYAnchor),
@@ -123,12 +123,12 @@ private extension AdminRootView {
         }
         NSLayoutConstraint.activate([
             gymUserRegisterButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            gymUserRegisterButton.topAnchor.constraint(equalTo: self.gymLabelStackView.bottomAnchor, constant: 45),
+            gymUserRegisterButton.topAnchor.constraint(equalTo: self.gymLabelStackView.bottomAnchor, constant: 64),
             gymUserRegisterButton.widthAnchor.constraint(equalToConstant: 160),
             gymUserRegisterButton.heightAnchor.constraint(equalToConstant: 160),
             
             gymUserManageButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            gymUserManageButton.topAnchor.constraint(equalTo: self.gymLabelStackView.bottomAnchor, constant: 45),
+            gymUserManageButton.topAnchor.constraint(equalTo: self.gymLabelStackView.bottomAnchor, constant: 64),
             gymUserManageButton.widthAnchor.constraint(equalToConstant: 160),
             gymUserManageButton.heightAnchor.constraint(equalToConstant: 160),
             
@@ -148,7 +148,7 @@ private extension AdminRootView {
         NSLayoutConstraint.activate([
             logOutButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             logOutButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            logOutButton.topAnchor.constraint(equalTo: self.gymQRCodeButton.bottomAnchor, constant: 76),
+            logOutButton.topAnchor.constraint(equalTo: self.gymQRCodeButton.bottomAnchor, constant: 96),
             logOutButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }

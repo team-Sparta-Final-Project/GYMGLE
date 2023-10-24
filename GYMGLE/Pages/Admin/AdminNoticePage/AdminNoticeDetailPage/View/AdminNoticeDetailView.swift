@@ -60,7 +60,7 @@ final class AdminNoticeDetailView: UIView {
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = ColorGuide.background
         viewMakeUI()
     }
     required init?(coder: NSCoder) {
@@ -87,7 +87,7 @@ private extension AdminNoticeDetailView {
             topDivider.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
             topDivider.heightAnchor.constraint(equalToConstant: 2),
             
-            contentTextView.topAnchor.constraint(equalTo: self.topDivider.bottomAnchor, constant: 8),
+            contentTextView.topAnchor.constraint(equalTo: self.topDivider.bottomAnchor, constant: 0),
             contentTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             contentTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
             contentTextView.bottomAnchor.constraint(equalTo: self.bottomDivider.topAnchor, constant: 0),

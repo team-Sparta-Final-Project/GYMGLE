@@ -17,17 +17,17 @@ final class AdminNoticeTableViewCell: UITableViewCell {
     }()
     lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size14, textAligment: .left)
+        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .left)
         return label
     }()
     lazy var contentLabel: UILabel = {
         let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size14, textAligment: .center)
+        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .center)
         return label
     }()
     lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size14, textAligment: .right)
+        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .right)
         return label
     }()
     private lazy var bottomDivider: UIView = {
@@ -40,7 +40,7 @@ final class AdminNoticeTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         cellMakeUI()
-        self.contentView.backgroundColor = .white
+        self.contentView.backgroundColor = ColorGuide.background
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
