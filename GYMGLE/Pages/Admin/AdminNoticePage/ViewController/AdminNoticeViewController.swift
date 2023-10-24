@@ -32,7 +32,6 @@ final class AdminNoticeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
-        print("테스트 - ss")
         dataReadSetting() {
             self.adminNoticeView.noticeTableView.reloadData()
         }
@@ -66,12 +65,12 @@ private extension AdminNoticeViewController {
     }
     func buttonTappedSetting() {
         adminNoticeView.noticeCreateButton.addTarget(self, action: #selector(noticeCreateButtonTapped), for: .touchUpInside)
-                switch isAdmin {
-                case false: //트레이너 일 때
-                    adminNoticeView.noticeCreateButton.isHidden = true
-                default:
-                    adminNoticeView.noticeCreateButton.isHidden = false
-                }
+        switch isAdmin {
+        case false: //트레이너 일 때
+            adminNoticeView.noticeCreateButton.isHidden = true
+        default:
+            adminNoticeView.noticeCreateButton.isHidden = false
+        }
     }
     func tableSetting() {
         adminNoticeView.noticeTableView.dataSource = self
@@ -108,10 +107,7 @@ extension AdminNoticeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AdminNoticeTableViewCell.identifier, for: indexPath) as! AdminNoticeTableViewCell
-        ref.child("users/\(userID!)/gymInfo").observeSingleEvent(of: .value) { DataSnapshot in
-            guard let value = DataSnapshot.value as? [String:Any] else { return }
-            guard value["gymName"] is String else {return}
-        }
+
         cell.nameLabel.text = DataManager.shared.realGymInfo?.gymName
         cell.contentLabel.text = DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.row].content
         cell.dateLabel.text = self.dateToString(date: DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.row].date)
@@ -128,6 +124,7 @@ extension AdminNoticeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let adminNoticeDetailVC = AdminNoticeDetailViewController()
+        adminNoticeDetailVC.isUser = isAdmin
         adminNoticeDetailVC.noticeInfo = DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.row]
         navigationController?.pushViewController(adminNoticeDetailVC, animated: true)
     }

@@ -14,7 +14,7 @@ final class AdminNoticeDetailViewController: UIViewController {
     // MARK: - properties
     private let adminNoticeDetailView = AdminNoticeDetailView()
     var noticeInfo: Notice?
-    
+    var isUser: Bool?
     // MARK: - life cycle
     override func loadView() {
         view = adminNoticeDetailView
@@ -59,6 +59,14 @@ private extension AdminNoticeDetailViewController {
     func buttonTapped() {
         adminNoticeDetailView.createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
         adminNoticeDetailView.deletedButton.addTarget(self, action:  #selector(deletedButtonTapped), for: .touchUpInside)
+        switch isUser {
+        case false: //트레이너 일 때
+            adminNoticeDetailView.createButton.isHidden = true
+            adminNoticeDetailView.deletedButton.isHidden = true
+        default:
+            adminNoticeDetailView.createButton.isHidden = false
+            adminNoticeDetailView.deletedButton.isHidden = false
+        }
     }
     func showToast(message: String) {
         let toastView = ToastView()
