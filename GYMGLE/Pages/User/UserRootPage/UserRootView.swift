@@ -124,7 +124,7 @@ class UserRootView: UIView {
         $0.clipsToBounds = true
         $0.addSubview(nowUserNumber)
     }
-    private lazy var nowUserNumber = UILabel().then {
+    lazy var nowUserNumber = UILabel().then {
         $0.textColor = ColorGuide.white
         $0.font = FontGuide.size50Bold
 //        $0.text = String(DataManager.shared.realGymInfo?.gymUserList.filter { $0.isInGym == true }.count ?? 0) 데이터모델 공사중입니다
@@ -174,7 +174,7 @@ class UserRootView: UIView {
         $0.layer.cornerRadius = 20
         $0.clipsToBounds = true
     }
-    private lazy var outBtn = UIButton().then {
+    lazy var outBtn = UIButton().then {
         $0.backgroundColor = ColorGuide.main
         $0.setBackgroundColor(ColorGuide.black, for: .highlighted)
         $0.setTitleColor(ColorGuide.white, for: .normal)
