@@ -124,7 +124,7 @@ class UserRootView: UIView {
         $0.clipsToBounds = true
         $0.addSubview(nowUserNumber)
     }
-    private lazy var nowUserNumber = UILabel().then {
+    private(set) lazy var nowUserNumber = UILabel().then {
         $0.textColor = ColorGuide.white
         $0.font = FontGuide.size50Bold
         $0.text = String(DataManager.shared.realGymInfo?.gymUserList.filter { $0.isInGym == true }.count ?? 0)
