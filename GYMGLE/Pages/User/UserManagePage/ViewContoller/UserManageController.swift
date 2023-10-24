@@ -53,12 +53,15 @@ final class UserManageViewController: UIViewController {
                     print("테스트 - \(error)")
                 }
             }
-            print("테스트 - 수정되었냐?>????")
             DataManager.shared.userList = temp
         }
         
-        self.cells = DataManager.shared.userList
+        self.cells = DataManager.shared.userList.sorted(by: { $0.startSubscriptionDate < $1.startSubscriptionDate })
         self.viewConfigure.tableView.reloadData()
+        
+
+
+
 
     }
 
@@ -119,19 +122,20 @@ extension UserManageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
         if editingStyle == .delete {
             
-            let ref = Database.database().reference()
-            ref.child("users/\(cells[indexPath.row].adminUid)/gymInfo/gymUserList/\(indexPath.row)").removeValue()
+            let id = self.cells[indexPath.row].account.id
 
             
-//            do {
-//                let userData = try JSONEncoder().encode(cells[indexPath.row])
-//                let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
-//
-//                let ref = Database.database().reference()
-//                ref.child("users/\(emptyUser.adminUid)/gymInfo/gymUserList/\(editIndex)").setValue(userJSON)
-//            }catch{
-//                print("JSON 인코딩 에러")
-//            }
+            let ref = Database.database().reference()
+            ref.child("users/\(DataManager.shared.gymUid!)/gymUserList").queryOrdered(byChild: "account/id").queryEqual(toValue: "\(id)").observeSingleEvent(of: .value) { DataSnapshot in
+                guard let value = DataSnapshot.value as? [String:Any] else { return }
+                var key = ""
+                for i in value.keys {
+                    key = i
+                }
+                ref.child("users/\(self.cells[indexPath.row].adminUid)/gymUserList/\(key)").removeValue()
+                ref.child("accounts/\(key)").removeValue()
+                
+            }
             
             cells.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)

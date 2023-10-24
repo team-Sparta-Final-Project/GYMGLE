@@ -193,7 +193,7 @@ extension UserRegisterViewIDPWController {
                         userRef.child("userData").setValue(userJSON)
                         
                         let adminRef = Database.database().reference().child("users").child(DataManager.shared.gymUid!)
-                        adminRef.child("gymUserList").childByAutoId().setValue(userJSON)
+                        adminRef.child("gymUserList").child(user.uid).setValue(userJSON)
                         
                     }
                     Auth.auth().signIn(withEmail: DataManager.shared.id!, password: DataManager.shared.pw!)
