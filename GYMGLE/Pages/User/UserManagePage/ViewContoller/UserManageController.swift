@@ -71,15 +71,28 @@ private extension UserManageViewController {
     }
     func userDeleted(completion: @escaping () -> Void, id: String) {
         // 회원삭제 - 서버
-        let ref = Database.database().reference()
-        ref.child("accounts").queryOrdered(byChild: "account/id").queryEqual(toValue: "\(id)").observeSingleEvent(of: .value) { DataSnapshot in
-            guard let value = DataSnapshot.value as? [String:Any] else { return }
-            var uid = ""
-            for i in value.keys {
-                uid = i
+        if isFiltering() {
+            let ref = Database.database().reference()
+            ref.child("accounts").queryOrdered(byChild: "account/id").queryEqual(toValue: "\(id)").observeSingleEvent(of: .value) { DataSnapshot in
+                guard let value = DataSnapshot.value as? [String:Any] else { return }
+                var uid = ""
+                for i in value.keys {
+                    uid = i
+                }
+                ref.child("accounts/\(uid)").removeValue()
+                completion()
             }
-            ref.child("accounts/\(uid)").removeValue()
-            completion()
+        } else {
+            let ref = Database.database().reference()
+            ref.child("accounts").queryOrdered(byChild: "account/id").queryEqual(toValue: "\(id)").observeSingleEvent(of: .value) { DataSnapshot in
+                guard let value = DataSnapshot.value as? [String:Any] else { return }
+                var uid = ""
+                for i in value.keys {
+                    uid = i
+                }
+                ref.child("accounts/\(uid)").removeValue()
+                completion()
+            }
         }
     }
 }
@@ -128,24 +141,41 @@ extension UserManageViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
         if editingStyle == .delete {
-            DispatchQueue.main.async {
-                self.userDeleted(completion: {
-                    self.cells.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .automatic)
-                }, id: self.cells[indexPath.row].account.id)
+            if isFiltering() {
+                DispatchQueue.main.async {
+                    self.userDeleted(completion: {
+                        self.filteredUserList.remove(at: indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .automatic)
+                        
+                    }, id: self.filteredUserList[indexPath.row].account.id)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.userDeleted(completion: {
+                        self.cells.remove(at: indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .automatic)
+                    }, id: self.cells[indexPath.row].account.id)
+                }
             }
+            self.viewConfigure.tableView.reloadData()
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cellInfo = cells[indexPath.row]
-        
         let userRegisterVC = UserRegisterViewController()
         
-        userRegisterVC.emptyUser = cellInfo
-        userRegisterVC.nowEdit = true
-        userRegisterVC.editIndex = indexPath.row
-
+        if isFiltering() {
+            let filterCellInfo = filteredUserList[indexPath.row]
+            userRegisterVC.emptyUser = filterCellInfo
+            userRegisterVC.nowEdit = true
+            userRegisterVC.editIndex = indexPath.row
+        } else {
+            let cellInfo = cells[indexPath.row]
+            userRegisterVC.emptyUser = cellInfo
+            userRegisterVC.nowEdit = true
+            userRegisterVC.editIndex = indexPath.row
+        }
+        
         self.navigationController?.pushViewController(userRegisterVC, animated: true)
     }
 }
