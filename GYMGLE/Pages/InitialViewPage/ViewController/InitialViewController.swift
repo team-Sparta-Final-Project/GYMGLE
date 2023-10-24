@@ -94,14 +94,13 @@ private extension InitialViewController {
             
             userRef2.observeSingleEvent(of: .value) { (snapshot, _) in
                 if let userData = snapshot.value as? [String: Any],
-                   let data = userData["userData"] as? [String: Any],
-                   let adminUid = data["adminUid"] as? String,
-                   let account = data["account"] as? [String: Any],
+                   let adminUid = userData["adminUid"] as? String,
+                   let account = userData["account"] as? [String: Any],
                    let accountType = account["accountType"] as? Int {
                     // 트레이너 일때
                     if accountType == 1 {
                         do {
-                            let userInfoData = try JSONSerialization.data(withJSONObject: data, options: [])
+                            let userInfoData = try JSONSerialization.data(withJSONObject: userData, options: [])
                             let userInfo = try JSONDecoder().decode(User.self, from: userInfoData)
                             DataManager.shared.userInfo = userInfo
                         } catch DecodingError.dataCorrupted(let context) {
@@ -124,7 +123,7 @@ private extension InitialViewController {
                         // 회원 일때
                     } else if accountType == 2 {
                         do {
-                            let userInfoData = try JSONSerialization.data(withJSONObject: data, options: [])
+                            let userInfoData = try JSONSerialization.data(withJSONObject: userData, options: [])
                             let userInfo = try JSONDecoder().decode(User.self, from: userInfoData)
                             DataManager.shared.userInfo = userInfo
                         } catch DecodingError.dataCorrupted(let context) {
@@ -175,14 +174,13 @@ extension InitialViewController {
                     
                     userRef.observeSingleEvent(of: .value) { (snapshot, _)  in
                         if let userData = snapshot.value as? [String: Any],
-                           let data = userData["userData"] as? [String: Any],
-                           let adminUid = data["adminUid"] as? String,
-                           let account = data["account"] as? [String: Any],
+                           let adminUid = userData["adminUid"] as? String,
+                           let account = userData["account"] as? [String: Any],
                            let accountType = account["accountType"] as? Int {
                             // 트레이너 일때
                             if accountType == 1 {
                                 do {
-                                    let userInfoData = try JSONSerialization.data(withJSONObject: data, options: [])
+                                    let userInfoData = try JSONSerialization.data(withJSONObject: userData, options: [])
                                     let userInfo = try JSONDecoder().decode(User.self, from: userInfoData)
                                     DataManager.shared.userInfo = userInfo
                                 } catch {
@@ -197,7 +195,7 @@ extension InitialViewController {
                                 // 회원 일때
                             } else if accountType == 2 {
                                 do {
-                                    let userInfoData = try JSONSerialization.data(withJSONObject: data, options: [])
+                                    let userInfoData = try JSONSerialization.data(withJSONObject: userData, options: [])
                                     let userInfo = try JSONDecoder().decode(User.self, from: userInfoData)
                                     DataManager.shared.userInfo = userInfo
                                 } catch {
