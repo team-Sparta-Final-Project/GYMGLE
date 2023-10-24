@@ -350,9 +350,6 @@ extension AdminRegisterViewController {
                     let gymInfoData = try JSONEncoder().encode(gymInfo)
                     let gymInfoJSON = try JSONSerialization.jsonObject(with: gymInfoData, options: [])
                     
-                    let gymUserListData = try JSONEncoder().encode(gymUserList)
-                    let gymUserListJSON = try JSONSerialization.jsonObject(with: gymUserListData, options: [])
-
                     let noticeListData = try JSONEncoder().encode(noticeList)
                     let noticeListJSON = try JSONSerialization.jsonObject(with: noticeListData, options: [])
 
@@ -363,7 +360,6 @@ extension AdminRegisterViewController {
                     if let user = result?.user {
                         let userRef = Database.database().reference().child("users").child(user.uid)
                         userRef.child("gymInfo").setValue(gymInfoJSON)
-                        userRef.child("gymUserList").childByAutoId().setValue(gymUserListJSON)
                         userRef.child("noticeList").childByAutoId().setValue(noticeListJSON)
                         userRef.child("gymInAndOutLog").childByAutoId().setValue(gymInAndOutLogJSON)
                     }
