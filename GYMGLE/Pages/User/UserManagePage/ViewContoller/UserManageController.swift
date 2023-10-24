@@ -40,8 +40,9 @@ final class UserManageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         navigationController?.navigationBar.isHidden = false
         
+        // 테이블뷰 데이터 서버에서 받아오기
         let ref = Database.database().reference()
-        ref.child("users/\(DataManager.shared.gymUid!)/gymUserList").observeSingleEvent(of: .value) { DataSnapshot in
+        ref.child("accounts").queryOrdered(byChild: "adminUid").queryEqual(toValue: DataManager.shared.gymUid!).observeSingleEvent(of: .value) { DataSnapshot in
             guard let value = DataSnapshot.value as? [String:Any] else { return }
             var temp:[User] = []
             for i in value.values {
@@ -123,16 +124,15 @@ extension UserManageViewController: UITableViewDelegate {
             
             let id = self.cells[indexPath.row].account.id
 
-            
+            // 회원삭제 - 서버
             let ref = Database.database().reference()
-            ref.child("users/\(DataManager.shared.gymUid!)/gymUserList").queryOrdered(byChild: "account/id").queryEqual(toValue: "\(id)").observeSingleEvent(of: .value) { DataSnapshot in
+            ref.child("accounts").queryOrdered(byChild: "account/id").queryEqual(toValue: "\(id)").observeSingleEvent(of: .value) { DataSnapshot in
                 guard let value = DataSnapshot.value as? [String:Any] else { return }
-                var key = ""
+                var uid = ""
                 for i in value.keys {
-                    key = i
+                    uid = i
                 }
-                ref.child("users/\(self.cells[indexPath.row].adminUid)/gymUserList/\(key)").removeValue()
-                ref.child("accounts/\(key)").removeValue()
+                ref.child("accounts/\(uid)").removeValue()
                 
             }
             
