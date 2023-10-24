@@ -184,19 +184,31 @@ class UserRegisterViewController: UIViewController {
             
             
             if nowEdit {
-                            
+                
+                let oldPhone = emptyUser.number
                 emptyUser.name = nameText
                 emptyUser.number = phoneText
                 emptyUser.startSubscriptionDate = startDate
                 emptyUser.endSubscriptionDate = endDate
                 emptyUser.userInfo = info ?? "정보없음"
                 
+                
                 do {
                     let userData = try JSONEncoder().encode(emptyUser)
                     let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
                     
                     let ref = Database.database().reference()
-                    ref.child("users/\(emptyUser.adminUid)/gymInfo/gymUserList/\(editIndex)").setValue(userJSON)
+                    ref.child("users/\(DataManager.shared.gymUid!)/gymUserList").queryOrdered(byChild: "number").queryEqual(toValue: "\(oldPhone)").observeSingleEvent(of: .value) { DataSnapshot in
+                        guard let value = DataSnapshot.value as? [String:Any] else { return }
+                        var key = ""
+                        for i in value.keys {
+                            key = i
+                        }
+                        ref.child("users/\(DataManager.shared.gymUid!)/gymUserList/\(key)").setValue(userJSON)
+                        
+                    }
+                    
+//                        .setValue(userJSON)
                 }catch{
                     print("JSON 인코딩 에러")
                 }

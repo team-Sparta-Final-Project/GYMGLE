@@ -34,24 +34,14 @@ final class UserManageViewController: UIViewController {
         viewConfigure.customSearchBar.showsCancelButton = false
         viewConfigure.customSearchBar.setValue("취소", forKey: "cancelButtonText")
         viewConfigure.tableView.dataSource = self
+        viewConfigure.tableView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         navigationController?.navigationBar.isHidden = false
         
-        
-//        var ref = Database.database().reference()
-//        ref.child("users/\(DataManager.shared.gymUid!)/noticeList").observeSingleEvent(of: .value) { DataSnapshot in
-//            guard let value = DataSnapshot.value as? [String:Any] else { return }
-//            print("테스트 - 스냅샷 밸류. \(DataSnapshot.value)")
-//            print("테스트 밸류 - \(value)")
-//            print("테스트 밸류.밸류스 - \(value.values)")
-//
-//        }
-        
-        
-        var ref = Database.database().reference()
-        ref.child("users/\(DataManager.shared.gymUid!)/gymInfo/gymUserList").queryOrdered(byChild: "name").observeSingleEvent(of: .value) { DataSnapshot in
+        let ref = Database.database().reference()
+        ref.child("users/\(DataManager.shared.gymUid!)/gymUserList").observeSingleEvent(of: .value) { DataSnapshot in
             guard let value = DataSnapshot.value as? [String:Any] else { return }
             var temp:[User] = []
             for i in value.values {
@@ -63,30 +53,13 @@ final class UserManageViewController: UIViewController {
                     print("테스트 - \(error)")
                 }
             }
-//            DataManager.shared.realGymInfo?.gymUserList = temp
-//            self.cells = DataManager.shared.realGymInfo?.gymUserList ?? []
-            self.viewConfigure.tableView.reloadData()
+            print("테스트 - 수정되었냐?>????")
+            DataManager.shared.userList = temp
         }
         
-        
-//        ref.child("users/\(DataManager.shared.gymUid!)/gymInfo/gymUserList").queryOrdered(byChild: "name").observeSingleEvent(of: .value) { snapshot in
-//            guard let value = snapshot.value as? [String:Any] else {
-//                print("테스트 - 응 에러야")
-//                return
-//            }
-//            do {
-//                let JSONdata = try JSONSerialization.data(withJSONObject: value)
-//                let List = try JSONDecoder().decode([User].self, from: JSONdata)
-//                DataManager.shared.realGymInfo?.gymUserList = List
-//            } catch let error {
-//                print("테스트 - \(error)")
-//            }
-//            self.cells = DataManager.shared.realGymInfo?.gymUserList ?? []
-//            self.viewConfigure.tableView.reloadData()
-//
-//        }
+        self.cells = DataManager.shared.userList
+        self.viewConfigure.tableView.reloadData()
 
-        
     }
 
     
