@@ -150,7 +150,7 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
     }
     
     func updateIsInGym(id: String) { //큐알코드를 찍었을 때
-        let ref = Database.database().reference().child("users/\(DataManager.shared.gymUid!)/gymUserList")
+        let ref = Database.database().reference().child("accounts")
         let query = ref.queryOrdered(byChild: "account/id").queryEqual(toValue: id)
         
         query.observeSingleEvent(of: .value) { (snapshot) in
