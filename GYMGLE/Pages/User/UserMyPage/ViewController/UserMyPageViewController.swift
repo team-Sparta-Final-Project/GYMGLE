@@ -39,7 +39,7 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
             break
         case 1:
             // 공지사항을 선택한 경우
-            let vc = AdminNoticeViewController()
+            let vc = UINavigationController(rootViewController: AdminNoticeViewController())
             present(vc, animated: true)
             break
         case 2:
