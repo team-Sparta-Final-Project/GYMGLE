@@ -101,7 +101,7 @@ extension AdminNoticeViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: AdminNoticeTableViewCell.identifier, for: indexPath) as! AdminNoticeTableViewCell
         ref.child("users/\(userID!)/gymInfo").observeSingleEvent(of: .value) { DataSnapshot in
             guard let value = DataSnapshot.value as? [String:Any] else { return }
-            guard let gymName = value["gymName"] as? String else {return}
+            guard value["gymName"] is String else {return}
         }
         cell.nameLabel.text = DataManager.shared.realGymInfo?.gymName
         cell.contentLabel.text = DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.row].content
