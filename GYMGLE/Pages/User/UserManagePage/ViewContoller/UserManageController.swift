@@ -34,24 +34,14 @@ final class UserManageViewController: UIViewController {
         viewConfigure.customSearchBar.showsCancelButton = false
         viewConfigure.customSearchBar.setValue("취소", forKey: "cancelButtonText")
         viewConfigure.tableView.dataSource = self
+        viewConfigure.tableView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         navigationController?.navigationBar.isHidden = false
         
-        
-//        var ref = Database.database().reference()
-//        ref.child("users/\(DataManager.shared.gymUid!)/noticeList").observeSingleEvent(of: .value) { DataSnapshot in
-//            guard let value = DataSnapshot.value as? [String:Any] else { return }
-//            print("테스트 - 스냅샷 밸류. \(DataSnapshot.value)")
-//            print("테스트 밸류 - \(value)")
-//            print("테스트 밸류.밸류스 - \(value.values)")
-//
-//        }
-        
-        
-        var ref = Database.database().reference()
-        ref.child("users/\(DataManager.shared.gymUid!)/gymInfo/gymUserList").queryOrdered(byChild: "name").observeSingleEvent(of: .value) { DataSnapshot in
+        let ref = Database.database().reference()
+        ref.child("users/\(DataManager.shared.gymUid!)/gymUserList").observeSingleEvent(of: .value) { DataSnapshot in
             guard let value = DataSnapshot.value as? [String:Any] else { return }
             var temp:[User] = []
             for i in value.values {
@@ -63,30 +53,16 @@ final class UserManageViewController: UIViewController {
                     print("테스트 - \(error)")
                 }
             }
-//            DataManager.shared.realGymInfo?.gymUserList = temp
-//            self.cells = DataManager.shared.realGymInfo?.gymUserList ?? []
-            self.viewConfigure.tableView.reloadData()
+            DataManager.shared.userList = temp
         }
         
+        self.cells = DataManager.shared.userList.sorted(by: { $0.startSubscriptionDate < $1.startSubscriptionDate })
+        self.viewConfigure.tableView.reloadData()
         
-//        ref.child("users/\(DataManager.shared.gymUid!)/gymInfo/gymUserList").queryOrdered(byChild: "name").observeSingleEvent(of: .value) { snapshot in
-//            guard let value = snapshot.value as? [String:Any] else {
-//                print("테스트 - 응 에러야")
-//                return
-//            }
-//            do {
-//                let JSONdata = try JSONSerialization.data(withJSONObject: value)
-//                let List = try JSONDecoder().decode([User].self, from: JSONdata)
-//                DataManager.shared.realGymInfo?.gymUserList = List
-//            } catch let error {
-//                print("테스트 - \(error)")
-//            }
-//            self.cells = DataManager.shared.realGymInfo?.gymUserList ?? []
-//            self.viewConfigure.tableView.reloadData()
-//
-//        }
 
-        
+
+
+
     }
 
     
@@ -146,19 +122,20 @@ extension UserManageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
         if editingStyle == .delete {
             
-            let ref = Database.database().reference()
-            ref.child("users/\(cells[indexPath.row].adminUid)/gymInfo/gymUserList/\(indexPath.row)").removeValue()
+            let id = self.cells[indexPath.row].account.id
 
             
-//            do {
-//                let userData = try JSONEncoder().encode(cells[indexPath.row])
-//                let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
-//
-//                let ref = Database.database().reference()
-//                ref.child("users/\(emptyUser.adminUid)/gymInfo/gymUserList/\(editIndex)").setValue(userJSON)
-//            }catch{
-//                print("JSON 인코딩 에러")
-//            }
+            let ref = Database.database().reference()
+            ref.child("users/\(DataManager.shared.gymUid!)/gymUserList").queryOrdered(byChild: "account/id").queryEqual(toValue: "\(id)").observeSingleEvent(of: .value) { DataSnapshot in
+                guard let value = DataSnapshot.value as? [String:Any] else { return }
+                var key = ""
+                for i in value.keys {
+                    key = i
+                }
+                ref.child("users/\(self.cells[indexPath.row].adminUid)/gymUserList/\(key)").removeValue()
+                ref.child("accounts/\(key)").removeValue()
+                
+            }
             
             cells.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
