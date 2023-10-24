@@ -174,7 +174,7 @@ class UserRootView: UIView {
         $0.layer.cornerRadius = 20
         $0.clipsToBounds = true
     }
-    private lazy var outBtn = UIButton().then {
+    lazy var outBtn = UIButton().then {
         $0.backgroundColor = ColorGuide.main
         $0.setBackgroundColor(ColorGuide.black, for: .highlighted)
         $0.setTitleColor(ColorGuide.white, for: .normal)
