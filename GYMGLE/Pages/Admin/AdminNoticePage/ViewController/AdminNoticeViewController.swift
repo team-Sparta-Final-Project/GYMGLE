@@ -12,24 +12,38 @@ import FirebaseDatabase
 
 final class AdminNoticeViewController: UIViewController {
     
-
+    
     private let adminNoticeView = AdminNoticeView()
     var isAdmin: Bool?
+    private let ref = Database.database().reference()
+    private let userID = Auth.auth().currentUser?.uid
     
     override func loadView() {
         view = adminNoticeView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
+        ref.child("users/\(userID!)/noticeList").observeSingleEvent(of: .value) { DataSnapshot in
+            guard let value = DataSnapshot.value as? [String:[String:Any]] else { return }
+            do {
+                let jsonArray = value.values.compactMap { $0 as? [String: Any] }
+                let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
+                let notices = try JSONDecoder().decode([Notice].self, from: jsonData)
+                DataManager.shared.noticeList = notices
+                
+            } catch let error {
+                print("테스트 - \(error)")
+            }
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         adminNoticeView.noticeTableView.reloadData()
-     
     }
 }
 
@@ -80,18 +94,20 @@ extension AdminNoticeViewController {
 
 extension AdminNoticeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        guard let noticeList = DataManager.shared.realGymInfo?.noticeList else {return 1 }
-        return 0
-        
+        return DataManager.shared.noticeList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AdminNoticeTableViewCell.identifier, for: indexPath) as! AdminNoticeTableViewCell
-        if let gymInfo = DataManager.shared.realGymInfo {
-            cell.nameLabel.text = gymInfo.gymName
-//            cell.contentLabel.text = gymInfo.noticeList[indexPath.row].content
-//            cell.dateLabel.text = dateToString(date: gymInfo.noticeList[indexPath.row].date)
+        ref.child("users/\(userID!)/gymInfo").observeSingleEvent(of: .value) { DataSnapshot in
+            guard let value = DataSnapshot.value as? [String:Any] else { return }
+            guard let gymName = value["gymName"] as? String else {return}
         }
+        cell.nameLabel.text = DataManager.shared.realGymInfo?.gymName
+        cell.contentLabel.text = DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.row].content
+        cell.dateLabel.text = self.dateToString(date: DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.row].date)
+        
+        
         cell.selectionStyle = .none
         tableView.separatorStyle = .none
         return cell
@@ -103,9 +119,8 @@ extension AdminNoticeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let adminNoticeDetailVC = AdminNoticeDetailViewController()
-//        adminNoticeDetailVC.noticeInfo = DataManager.shared.realGymInfo?.noticeList[indexPath.row]
-        adminNoticeDetailVC.index = indexPath.row
+        adminNoticeDetailVC.noticeInfo = DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.row]
         navigationController?.pushViewController(adminNoticeDetailVC, animated: true)
     }
-    
+
 }

@@ -65,7 +65,7 @@ class UserRegisterViewIDPWController: UIViewController {
     }
 
     private func buttonOnCheck(){
-        if isCellEmpty || isNotVerified {
+        if isCellEmpty{
             self.viewConfigure.button.backgroundColor = .lightGray
         }else{
             self.viewConfigure.button.backgroundColor = ColorGuide.main
@@ -131,7 +131,6 @@ class UserRegisterViewIDPWController: UIViewController {
         
         // TODO: 중복확인하고 비밀번호가 달라지면 다시 버튼이 비활성화 됨 : 아이디 중복확인하고 비밀번호 바꿔도 버튼 활성화되게 고칠것
         if idText != "" && pwText != ""{
-            isNotVerified = true
             isCellEmpty = false
         }else{
             isCellEmpty = true
@@ -140,7 +139,7 @@ class UserRegisterViewIDPWController: UIViewController {
     }
     
     @objc func buttonClicked(){
-        if isCellEmpty || isNotVerified {
+        if isCellEmpty{
             showToast(message: "빈칸이 있거나 중복 확인이 안되었습니다.")
         }
         else {
@@ -172,7 +171,18 @@ extension UserRegisterViewIDPWController {
                 
         Auth.auth().createUser(withEmail: id, password: pw) { result, error in
             if let error = error {
-                print(error)
+                print(error.localizedDescription)
+                switch error.localizedDescription {
+                case "The email address is badly formatted.":
+                    print("이메일 잘못됨")
+                    self.showToast(message: "이메일 형식이 잘못되었습니다.")
+                case "The email address is already in use by another account.":
+                    self.showToast(message: "중복된 이메일 주소입니다.")
+                case "The password must be 6 characters long or more.":
+                    self.showToast(message: "비밀번호는 6자 이상이어야 합니다.")
+                default:
+                    print("테스트 - 알수없는오류")
+                }
             } else {
                 do {
                     let userData = try JSONEncoder().encode(user)
@@ -183,7 +193,7 @@ extension UserRegisterViewIDPWController {
                         userRef.child("userData").setValue(userJSON)
                         
                         let adminRef = Database.database().reference().child("users").child(DataManager.shared.gymUid!)
-                        adminRef.child("gymInfo").child("gymUserList").childByAutoId().setValue(userJSON)
+                        adminRef.child("gymUserList").child(user.uid).setValue(userJSON)
                         
                     }
                     Auth.auth().signIn(withEmail: DataManager.shared.id!, password: DataManager.shared.pw!)
