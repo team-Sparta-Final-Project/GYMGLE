@@ -190,7 +190,7 @@ extension UserRegisterViewIDPWController {
                     
                     if let user = result?.user {
                         let userRef = Database.database().reference().child("accounts").child(user.uid)
-                        userRef.child("userData").setValue(userJSON)
+                        userRef.setValue(userJSON)
                         
                         let adminRef = Database.database().reference().child("users").child(DataManager.shared.gymUid!)
                         adminRef.child("gymUserList").child(user.uid).setValue(userJSON)
