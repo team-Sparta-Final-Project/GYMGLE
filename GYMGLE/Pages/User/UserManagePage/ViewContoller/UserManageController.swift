@@ -39,6 +39,17 @@ final class UserManageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         navigationController?.navigationBar.isHidden = false
         
+        
+//        var ref = Database.database().reference()
+//        ref.child("users/\(DataManager.shared.gymUid!)/noticeList").observeSingleEvent(of: .value) { DataSnapshot in
+//            guard let value = DataSnapshot.value as? [String:Any] else { return }
+//            print("테스트 - 스냅샷 밸류. \(DataSnapshot.value)")
+//            print("테스트 밸류 - \(value)")
+//            print("테스트 밸류.밸류스 - \(value.values)")
+//
+//        }
+        
+        
         var ref = Database.database().reference()
         ref.child("users/\(DataManager.shared.gymUid!)/gymInfo/gymUserList").queryOrdered(byChild: "name").observeSingleEvent(of: .value) { DataSnapshot in
             guard let value = DataSnapshot.value as? [String:Any] else { return }
@@ -52,8 +63,8 @@ final class UserManageViewController: UIViewController {
                     print("테스트 - \(error)")
                 }
             }
-            DataManager.shared.realGymInfo?.gymUserList = temp
-            self.cells = DataManager.shared.realGymInfo?.gymUserList ?? []
+//            DataManager.shared.realGymInfo?.gymUserList = temp
+//            self.cells = DataManager.shared.realGymInfo?.gymUserList ?? []
             self.viewConfigure.tableView.reloadData()
         }
         
@@ -148,7 +159,7 @@ extension UserManageViewController: UITableViewDelegate {
 //            }catch{
 //                print("JSON 인코딩 에러")
 //            }
-            DataManager.shared.realGymInfo?.gymUserList.remove(at: indexPath.row)
+            
             cells.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
 
