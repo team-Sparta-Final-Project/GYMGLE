@@ -33,7 +33,6 @@ class UserRootViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getLastWeek()
-        getThisWeek()
     }
     
     @objc func inButtonClick() {
@@ -49,49 +48,46 @@ class UserRootViewController: UIViewController {
                }
     }
     
-    func getLastWeek() {
-        let log = DataManager.shared.realGymInfo?.gymInAndOutLog
-        
-        let currentDate = Date()
-        
-        let calendar = Calendar.current
-        let lastWeek = calendar.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
-        
-        let filteredUsers = log?.filter { user in
-            let inTime = user.inTime
-            let outTime = user.outTime
-            if inTime <= lastWeek && outTime >= lastWeek {
-                return true
-            }
-            return false
-        }
-        if let userCount = filteredUsers?.count {
-            first.yesterUserNumber.text = String(userCount)
-        }
-    }
+//    func getLastWeek() {
+//        let log = DataManager.shared.realGymInfo?.gymInAndOutLog
+//
+//        let currentDate = Date()
+//
+//        let calendar = Calendar.current
+//        let lastWeek = calendar.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
+//
+//        let filteredUsers = log?.filter { user in
+//            let inTime = user.inTime
+//            let outTime = user.outTime
+//            if inTime <= lastWeek && outTime >= lastWeek {
+//                return true
+//            }
+//            return false
+//        }
+//        if let userCount = filteredUsers?.count {
+//            first.yesterUserNumber.text = String(userCount)
+//        }
+//    }
     
-    func getThisWeek() {
+    func getLastWeek() {
 
         // 데이터베이스 참조에서 'isInGym' 값을 모니터링
         databaseRef.child("userData").child("isInGym").observe(.value) { (snapshot) in
-            if let isInGym = snapshot.value as? Bool, isInGym == true {
-                // 'isInGym' 값이 true인 경우에만 실행
-                // 'nowUserNumber' 값을 가져와 1을 추가하고 다시 데이터베이스에 업데이트
-                self.databaseRef.child("userData").child("nowUserNumber").observeSingleEvent(of: .value) { (numberSnapshot) in
-                    if var nowUserNumber = numberSnapshot.value as? Int {
-                        nowUserNumber += 1
-                        self.databaseRef.child("userData").child("nowUserNumber").setValue(nowUserNumber)
-                        // 'first.nowUserNumber.text' 업데이트 (메인 스레드에서 실행)
+            if let isInGym = snapshot.value as? Bool, isInGym == false {
+                // 'isInGym' 값이 false인 경우에만 실행
+                // 'yesterUserNumber' 값을 가져와 1을 추가하고 다시 데이터베이스에 업데이트
+                self.databaseRef.child("userData").child("yesterUserNumber").observeSingleEvent(of: .value) { (numberSnapshot) in
+                    if var yesterUserNumber = numberSnapshot.value as? Int {
+                        yesterUserNumber += 1
+                        self.databaseRef.child("userData").child("yesterUserNumber").setValue(yesterUserNumber)
+                        // 'first.yesterUserNumber.text' 업데이트 (메인 스레드에서 실행)
                         DispatchQueue.main.async {
-                            self.first.nowUserNumber.text = "\(nowUserNumber)"
-//                            퇴실시 -1 되는거랑 , 입실하기 버튼눌렀을때 이 메서드 실행되게 하기.
+                            self.first.yesterUserNumber.text = "\(yesterUserNumber)"
                         }
                     }
                 }
             }
         }
-//        위 코드에서 'yourDataNode'을 실제 데이터베이스 경로로 변경해야 합니다. 또한 이 코드에서는 데이터베이스를 모니터링하고, 'isInGym' 값이 true로 변경될 때 'nowUserNumber'를 증가시킵니다. 마지막으로 first.nowUserNumber.text를 업데이트하려면 메인 스레드에서 수행해야 하므로 DispatchQueue.main.async를 사용하여 업데이트 코드를 메인 스레드에서 실행합니다.
-
         }
 }
 

@@ -84,10 +84,6 @@ class UserRootView: UIView {
     private lazy var yesterUserPlace = UIView().then {
         $0.backgroundColor = ColorGuide.white
         $0.layer.cornerRadius = 20
-//        $0.layer.shadowColor = ColorGuide.main.cgColor
-//        $0.layer.shadowOpacity = 1
-//        $0.layer.shadowRadius = 2
-//        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(startNumberAnimation)))
     }
     private lazy var yesterUserNumberPlace = UIView().then {
@@ -98,7 +94,7 @@ class UserRootView: UIView {
     lazy var yesterUserNumber = UILabel().then {
         $0.textColor = ColorGuide.main
         $0.font = FontGuide.size50Bold
-        $0.text = "66"
+        $0.text = "0"
     }
     private lazy var yesterUserMyung = UILabel().then {
         $0.textColor = ColorGuide.main
@@ -113,10 +109,6 @@ class UserRootView: UIView {
     private lazy var nowUserPlace = UIView().then {
         $0.backgroundColor = ColorGuide.main
         $0.layer.cornerRadius = 20
-//        $0.layer.shadowColor = ColorGuide.black.cgColor
-//        $0.layer.shadowOpacity = 1
-//        $0.layer.shadowRadius = 2
-//        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(startNumberAnimation2)))
     }
     private lazy var nowUserNumberPlace = UIView().then {
