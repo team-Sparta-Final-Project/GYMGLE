@@ -16,6 +16,11 @@ final class AdminNoticeDetailView: UIView {
         return label
     }()
     
+    lazy var deletedButton: UIButton = {
+        let button = UIButton()
+        button.buttonMakeUI(backgroundColor: ColorGuide.main, cornerRadius: 10, borderWidth: 0.0, borderColor: UIColor.clear.cgColor, setTitle: "삭제", font: FontGuide.size19, setTitleColor: .white)
+        return button
+    }()
     private let topDivider: UIView = {
         let divider = UIView()
         divider.backgroundColor = ColorGuide.textHint.withAlphaComponent(0.4)
@@ -65,7 +70,7 @@ final class AdminNoticeDetailView: UIView {
 // MARK: - extension
 private extension AdminNoticeDetailView {
     func viewMakeUI() {
-        let views = [pageTitleLabel, topDivider, contentTextView, bottomDivider, contentNumberLabel, createButton]
+        let views = [pageTitleLabel, deletedButton, topDivider, contentTextView, bottomDivider, contentNumberLabel, createButton]
         for view in views {
             self.addSubview(view)
         }
@@ -73,6 +78,10 @@ private extension AdminNoticeDetailView {
             pageTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             pageTitleLabel.bottomAnchor.constraint(equalTo: self.topDivider.topAnchor, constant: -10),
             pageTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 140),
+            
+            deletedButton.centerYAnchor.constraint(equalTo: self.pageTitleLabel.centerYAnchor, constant: 0),
+            deletedButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
+            deletedButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 300),
             
             topDivider.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             topDivider.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),

@@ -16,7 +16,7 @@ final class UserManageViewController: UIViewController {
 
     
     let cellHeight = 56
-            
+
     override func loadView() {
 
         viewConfigure.label.text = pageTitle
@@ -106,8 +106,7 @@ extension UserManageViewController: UITableViewDataSource {
         return CGFloat(cellHeight)
         
     }
-    
-    
+
 }
 
 

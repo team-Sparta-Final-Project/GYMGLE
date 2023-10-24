@@ -21,13 +21,13 @@ class DataManager {
 //        self.gymInfo.noticeList.append(notice)
 //    }
 //
-//    func updateNotice(_ notice: Notice) {
-//        for (index, existednotice) in realGymInfo!.noticeList.enumerated() {
-//            if existednotice.date == notice.date {
-//                realGymInfo?.noticeList[index] = notice
-//            }
-//        }
-//    }
+    func updateNotice(_ notice: Notice) {
+        for (index, existednotice) in noticeList.enumerated() {
+            if existednotice.date == notice.date {
+                noticeList[index] = notice
+            }
+        }
+    }
 //
 //    func updateIsInGym(id: String) { //큐알코드를 찍었을 때
 //        for (index, gymUserList) in gymInfo.gymUserList.enumerated() {

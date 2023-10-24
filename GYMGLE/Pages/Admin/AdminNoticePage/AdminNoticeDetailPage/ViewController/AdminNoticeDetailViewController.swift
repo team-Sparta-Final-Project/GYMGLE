@@ -4,7 +4,7 @@
 //
 //  Created by 박성원 on 2023/10/14.
 //
-
+//3060349969
 import UIKit
 import FirebaseAuth
 import FirebaseCore
@@ -28,7 +28,7 @@ final class AdminNoticeDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = false
     }
-
+    
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -62,6 +62,7 @@ private extension AdminNoticeDetailViewController {
     }
     func buttonTapped() {
         adminNoticeDetailView.createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
+        adminNoticeDetailView.deletedButton.addTarget(self, action:  #selector(deletedButtonTapped), for: .touchUpInside)
     }
     func showToast(message: String) {
         let toastView = ToastView()
@@ -109,29 +110,63 @@ extension AdminNoticeDetailViewController {
                 let newNotice = Notice(date: date, content: content ?? "")
                 do {
                     let userID = Auth.auth().currentUser?.uid
-                    let ref = Database.database().reference().child("users").child(userID!).child("gymInfo").child("noticeList")
+                    let ref = Database.database().reference().child("users").child(userID!).child("noticeList")
                     
                     let noticeData = try JSONEncoder().encode(newNotice)
                     let noticeJSON = try JSONSerialization.jsonObject(with: noticeData, options: [])
-//                    if let newIndex = DataManager.shared.realGymInfo?.noticeList.count {
-//                        ref.child(String(newIndex)).setValue(noticeJSON)
-//                    }
+                    
+                    ref.childByAutoId().setValue(noticeJSON)
+                    
                 } catch {
                 }
             } else {
                 if var notice = noticeInfo {
+                    let oldContent = notice.content
                     notice.content = adminNoticeDetailView.contentTextView.text
                     let userID = Auth.auth().currentUser?.uid
-                    let ref = Database.database().reference().child("users").child(userID!).child("gymInfo").child("noticeList")
+                    let noticeDate = notice.date
+                    let ref = Database.database().reference().child("users").child(userID!).child("noticeList")
                     do {
-                        let updatedNotice = ["content": notice.content] as [String: Any]
-                        ref.child(String(index)).updateChildValues(updatedNotice)
-//                        DataManager.shared.updateNotice(notice)
+                        let noticeData = try JSONEncoder().encode(notice)
+                        let noticeJSON = try JSONSerialization.jsonObject(with: noticeData, options: [])
+                        ref.queryOrdered(byChild: "content").queryEqual(toValue: oldContent).observeSingleEvent(of: .value) { snapshot in
+                            guard let value = snapshot.value as? [String: Any] else { return }
+                            var key = ""
+                            for i in value.keys {
+                                key = i
+                            }
+                            ref.child("\(key)").setValue(noticeJSON)
+                        }
+                    } catch let Error {
+                        print(Error)
                     }
+                    
                 }
             }
             self.navigationController?.popViewController(animated: true)
         }
+    }
+    @objc private func deletedButtonTapped() {
+        if let notice = noticeInfo {
+            let userID = Auth.auth().currentUser?.uid
+            let noticeDate = notice.date
+            let ref = Database.database().reference().child("users").child(userID!).child("noticeList")
+            do {
+                let noticeData = try JSONEncoder().encode(notice)
+                let noticeJSON = try JSONSerialization.jsonObject(with: noticeData, options: [])
+                ref.queryOrdered(byChild: "content").queryEqual(toValue: notice.content).observeSingleEvent(of: .value) { snapshot in
+                    guard let value = snapshot.value as? [String: Any] else { return }
+                    var key = ""
+                    for i in value.keys {
+                        key = i
+                    }
+                    ref.child("\(key)").setValue(nil)
+                }
+            } catch let Error {
+                print(Error)
+            }
+        }
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
