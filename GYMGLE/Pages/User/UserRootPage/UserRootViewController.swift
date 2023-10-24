@@ -60,7 +60,7 @@ class UserRootViewController: UIViewController {
     }
     
     func updateIsInGym(id: String) {
-        let ref = Database.database().reference().child("users/\(DataManager.shared.gymUid!)/gymUserList")
+        let ref = Database.database().reference().child("accounts")
         let query = ref.queryOrdered(byChild: "account/id").queryEqual(toValue: id)
         
         query.observeSingleEvent(of: .value) { (snapshot) in
