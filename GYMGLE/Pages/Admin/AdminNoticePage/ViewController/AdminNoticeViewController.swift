@@ -12,16 +12,17 @@ import FirebaseDatabase
 
 final class AdminNoticeViewController: UIViewController {
     
-    
+    // MARK: - properties
     private let adminNoticeView = AdminNoticeView()
     var isAdmin: Bool?
     private let ref = Database.database().reference()
     private let userID = Auth.auth().currentUser?.uid
     
+    // MARK: - life cycle
     override func loadView() {
         view = adminNoticeView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
@@ -46,7 +47,7 @@ private extension AdminNoticeViewController {
                 completion()
             }
             do {
-                let jsonArray = value.values.compactMap { $0 as? [String: Any] }
+                let jsonArray = value.values.compactMap { $0 as [String: Any] }
                 let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
                 let notices = try JSONDecoder().decode([Notice].self, from: jsonData)
                 DataManager.shared.noticeList = notices
@@ -88,11 +89,9 @@ private extension AdminNoticeViewController {
         
         return formatter.string(from: date)
     }
-    
 }
 
 // MARK: -  @objc func
-
 extension AdminNoticeViewController {
     @objc private func noticeCreateButtonTapped() {
         let adminNoticeDetailVC = AdminNoticeDetailViewController()
@@ -100,6 +99,7 @@ extension AdminNoticeViewController {
     }
 }
 
+// MARK: - UITableViewDataSource
 extension AdminNoticeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return DataManager.shared.noticeList.count
@@ -122,7 +122,7 @@ extension AdminNoticeViewController: UITableViewDataSource {
     }
     
 }
-
+// MARK: - UITableViewDelegate
 extension AdminNoticeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         

@@ -132,7 +132,7 @@ private extension AdminNoticeDetailViewController {
             let ref = Database.database().reference().child("users").child(userID!).child("noticeList")
             do {
                 let noticeData = try JSONEncoder().encode(notice)
-                let noticeJSON = try JSONSerialization.jsonObject(with: noticeData, options: [])
+                _ = try JSONSerialization.jsonObject(with: noticeData, options: [])
                 ref.queryOrdered(byChild: "content").queryEqual(toValue: notice.content).observeSingleEvent(of: .value) { snapshot in
                     guard let value = snapshot.value as? [String: Any] else { return }
                     var key = ""

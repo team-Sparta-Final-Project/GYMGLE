@@ -4,9 +4,10 @@
 //
 //  Created by 조규연 on 10/16/23.
 //
-
 import UIKit
+
 final class AdminNoticeTableViewCell: UITableViewCell {
+    
     static let identifier = "AdminNoticeTableViewCell"
     // MARK: - CellUIProperties
     private lazy var topDivider: UIView = {

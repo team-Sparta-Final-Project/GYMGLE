@@ -72,7 +72,6 @@ final class AdminRootView: UIView {
         return button
     }()
     // MARK: - init
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = ColorGuide.background
@@ -81,7 +80,7 @@ final class AdminRootView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    // MARK: - custom func
     func dataSetting(_ gymName: String,_ gymNumber: String) {
         gymNameLabel.text = gymName
         gymNumberLabel.text = gymNumber

@@ -21,6 +21,7 @@ final class AdminNoticeDetailView: UIView {
         button.buttonMakeUI(backgroundColor: ColorGuide.main, cornerRadius: 10, borderWidth: 0.0, borderColor: UIColor.clear.cgColor, setTitle: "삭제", font: FontGuide.size19, setTitleColor: .white)
         return button
     }()
+    
     private let topDivider: UIView = {
         let divider = UIView()
         divider.backgroundColor = ColorGuide.textHint.withAlphaComponent(0.4)
@@ -57,6 +58,7 @@ final class AdminNoticeDetailView: UIView {
             .clear.cgColor, setTitle: "등록하기", font: FontGuide.size19Bold, setTitleColor: UIColor.white)
         return button
     }()
+    
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
