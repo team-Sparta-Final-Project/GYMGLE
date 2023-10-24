@@ -55,6 +55,7 @@ class UserRegisterViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
+        
         navigationController?.navigationBar.isHidden = false
     }
     
@@ -184,23 +185,44 @@ class UserRegisterViewController: UIViewController {
             
             
             if nowEdit {
-                            
+                
                 emptyUser.name = nameText
                 emptyUser.number = phoneText
                 emptyUser.startSubscriptionDate = startDate
                 emptyUser.endSubscriptionDate = endDate
                 emptyUser.userInfo = info ?? "정보없음"
+
+                        
                 
                 do {
                     let userData = try JSONEncoder().encode(emptyUser)
                     let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
                     
                     let ref = Database.database().reference()
-                    ref.child("users/\(emptyUser.adminUid)/gymInfo/gymUserList/\(editIndex)").setValue(userJSON)
+                    ref.child("users/\(DataManager.shared.gymUid!)/gymUserList").queryOrdered(byChild: "account/id").queryEqual(toValue: "\(emptyUser.account.id)").observeSingleEvent(of: .value) { DataSnapshot in
+                        guard let value = DataSnapshot.value as? [String:Any] else { return }
+                        var key = ""
+                        for i in value.keys {
+                            key = i
+                        }
+                        ref.child("users/\(DataManager.shared.gymUid!)/gymUserList/\(key)").setValue(userJSON)
+                    }
+                    ref.child("accounts").queryOrdered(byChild: "userData/account/id").queryEqual(toValue: "\(emptyUser.account.id)").observeSingleEvent(of: .value) { DataSnapshot in
+                        guard let value = DataSnapshot.value as? [String:Any] else { return }
+                        print("테스트 - \(value)")
+                        var key = ""
+                        for i in value.keys {
+                            key = i
+                        }
+                        ref.child("accounts/\(key)/userData").setValue(userJSON)
+                    }
+
+                    
+                    
                 }catch{
                     print("JSON 인코딩 에러")
                 }
-                
+                        let ref = Database.database().reference()
                 
 //                DataManager.shared.realGymInfo!.gymUserList[editIndex] = emptyUser
                 
