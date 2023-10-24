@@ -14,22 +14,16 @@ final class UserManageViewController: UIViewController {
 
     var filteredUserList: [User] = []
 
-    
     let cellHeight = 56
 
     override func loadView() {
-
         viewConfigure.label.text = pageTitle
-
-        
         view = viewConfigure
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        
-        //❗️ 서치델리게이트와 테이블뷰델리게이트 대리자 선언
         viewConfigure.customSearchBar.delegate = self
         viewConfigure.customSearchBar.showsCancelButton = false
         viewConfigure.customSearchBar.setValue("취소", forKey: "cancelButtonText")
@@ -37,12 +31,23 @@ final class UserManageViewController: UIViewController {
         viewConfigure.tableView.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
+    override func viewWillAppear(_ animated: Bool) { 
         navigationController?.navigationBar.isHidden = false
-        
-        // 테이블뷰 데이터 서버에서 받아오기
+        userDataRead {
+            self.cells = DataManager.shared.userList.sorted(by: { $0.startSubscriptionDate < $1.startSubscriptionDate })
+            self.viewConfigure.tableView.reloadData()
+        }
+    }
+
+    func searchBarIsEmpty() -> Bool {
+        return viewConfigure.customSearchBar.text?.isEmpty ?? true
+    }
+    func isFiltering() -> Bool {
+        return viewConfigure.customSearchBar.isFirstResponder && !searchBarIsEmpty()
+    }
+    func userDataRead(completion: @escaping () -> Void) {
         let ref = Database.database().reference()
-        ref.child("accounts").queryOrdered(byChild: "adminUid").queryEqual(toValue: DataManager.shared.gymUid!).observeSingleEvent(of: .value) { DataSnapshot in
+        ref.child("accounts").queryOrdered(byChild: "adminUid").queryEqual(toValue: DataManager.shared.gymUid!).observeSingleEvent(of: .value) { DataSnapshot  in
             guard let value = DataSnapshot.value as? [String:Any] else { return }
             var temp:[User] = []
             for i in value.values {
@@ -52,26 +57,12 @@ final class UserManageViewController: UIViewController {
                     temp.append(user)
                 } catch let error {
                     print("테스트 - \(error)")
+                    completion()
                 }
             }
             DataManager.shared.userList = temp
+            completion()
         }
-        
-        self.cells = DataManager.shared.userList.sorted(by: { $0.startSubscriptionDate < $1.startSubscriptionDate })
-        self.viewConfigure.tableView.reloadData()
-        
-
-
-
-
-    }
-
-    
-    func searchBarIsEmpty() -> Bool {
-        return viewConfigure.customSearchBar.text?.isEmpty ?? true
-    }
-    func isFiltering() -> Bool {
-        return viewConfigure.customSearchBar.isFirstResponder && !searchBarIsEmpty()
     }
 }
 

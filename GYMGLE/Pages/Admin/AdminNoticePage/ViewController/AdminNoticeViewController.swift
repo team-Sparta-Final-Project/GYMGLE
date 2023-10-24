@@ -31,8 +31,7 @@ final class AdminNoticeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
-        fireBaseSetting {
-            print("테스트 - dd")
+        dataReadSetting() {
             self.adminNoticeView.noticeTableView.reloadData()
         }
     }
@@ -41,7 +40,7 @@ final class AdminNoticeViewController: UIViewController {
 // MARK: - extension custom func
 private extension AdminNoticeViewController {
     
-    func fireBaseSetting( completion: @escaping () -> Void) {
+    func dataReadSetting( completion: @escaping () -> Void) {
         ref.child("users/\(userID!)/noticeList").observeSingleEvent(of: .value) { DataSnapshot in
             guard let value = DataSnapshot.value as? [String:[String:Any]] else { return
                 completion()
