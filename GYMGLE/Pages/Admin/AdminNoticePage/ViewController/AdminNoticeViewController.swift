@@ -25,7 +25,6 @@ final class AdminNoticeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
-        print("ddd")
         ref.child("users/\(userID!)/noticeList").observeSingleEvent(of: .value) { DataSnapshot in
             guard let value = DataSnapshot.value as? [String:[String:Any]] else { return }
             do {
@@ -38,13 +37,13 @@ final class AdminNoticeViewController: UIViewController {
                 print("테스트 - \(error)")
             }
         }
-        adminNoticeView.noticeTableView.reloadData()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
-       
+        adminNoticeView.noticeTableView.reloadData()
     }
 }
 
@@ -108,7 +107,7 @@ extension AdminNoticeViewController: UITableViewDataSource {
         cell.contentLabel.text = DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.row].content
         cell.dateLabel.text = self.dateToString(date: DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.row].date)
         
-       
+        
         cell.selectionStyle = .none
         tableView.separatorStyle = .none
         return cell
@@ -123,5 +122,5 @@ extension AdminNoticeViewController: UITableViewDelegate {
         adminNoticeDetailVC.noticeInfo = DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.row]
         navigationController?.pushViewController(adminNoticeDetailVC, animated: true)
     }
-    
+
 }
