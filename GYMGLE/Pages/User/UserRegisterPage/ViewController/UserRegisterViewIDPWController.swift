@@ -191,10 +191,7 @@ extension UserRegisterViewIDPWController {
                     if let user = result?.user {
                         let userRef = Database.database().reference().child("accounts").child(user.uid)
                         userRef.setValue(userJSON)
-                        
-                        let adminRef = Database.database().reference().child("users").child(DataManager.shared.gymUid!)
-                        adminRef.child("gymUserList").child(user.uid).setValue(userJSON)
-                        
+                                                
                     }
                     Auth.auth().signIn(withEmail: DataManager.shared.id!, password: DataManager.shared.pw!)
                     let vc = AdminRootViewController()

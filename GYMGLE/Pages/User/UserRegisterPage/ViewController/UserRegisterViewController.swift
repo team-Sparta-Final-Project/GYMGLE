@@ -199,22 +199,14 @@ class UserRegisterViewController: UIViewController {
                     let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
                     
                     let ref = Database.database().reference()
-                    ref.child("users/\(DataManager.shared.gymUid!)/gymUserList").queryOrdered(byChild: "account/id").queryEqual(toValue: "\(emptyUser.account.id)").observeSingleEvent(of: .value) { DataSnapshot in
+                    // 어카운트 접근해서 id값이 편집하려는 유저 id와 동일한 것 받아와서 uid값 찾아내기
+                    ref.child("accounts").queryOrdered(byChild: "account/id").queryEqual(toValue: "\(emptyUser.account.id)").observeSingleEvent(of: .value) { DataSnapshot in
                         guard let value = DataSnapshot.value as? [String:Any] else { return }
-                        var key = ""
+                        var uid = ""
                         for i in value.keys {
-                            key = i
+                            uid = i
                         }
-                        ref.child("users/\(DataManager.shared.gymUid!)/gymUserList/\(key)").setValue(userJSON)
-                    }
-                    ref.child("accounts").queryOrdered(byChild: "userData/account/id").queryEqual(toValue: "\(emptyUser.account.id)").observeSingleEvent(of: .value) { DataSnapshot in
-                        guard let value = DataSnapshot.value as? [String:Any] else { return }
-                        print("테스트 - \(value)")
-                        var key = ""
-                        for i in value.keys {
-                            key = i
-                        }
-                        ref.child("accounts/\(key)/userData").setValue(userJSON)
+                        ref.child("accounts/\(uid)").setValue(userJSON)
                     }
 
                     
