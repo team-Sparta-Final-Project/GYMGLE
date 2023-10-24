@@ -56,8 +56,10 @@ private extension AdminNoticeDetailViewController {
         if let noticeInfo = noticeInfo {
             adminNoticeDetailView.contentTextView.text = noticeInfo.content
             adminNoticeDetailView.createButton.setTitle("수정하기", for: .normal)
+            adminNoticeDetailView.deletedButton.isHidden = false
         } else {
             adminNoticeDetailView.createButton.setTitle("등록하기", for: .normal)
+            adminNoticeDetailView.deletedButton.isHidden = true
         }
     }
     func buttonTapped() {
@@ -166,6 +168,7 @@ extension AdminNoticeDetailViewController {
                 print(Error)
             }
         }
+        let adminRootVC = AdminRootViewController()
         self.navigationController?.popViewController(animated: true)
     }
 }
