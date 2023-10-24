@@ -8,6 +8,7 @@
 import UIKit
 import AVFoundation
 import QRCodeReader
+import FirebaseDatabase
 
 final class QRcodeCheckViewController: UIViewController {
     
@@ -44,7 +45,7 @@ private extension QRcodeCheckViewController {
         do {
             // 제한하고 싶은 영역
             let rectOfInterest = CGRect(x: (UIScreen.main.bounds.width - 200) / 2 , y: (UIScreen.main.bounds.height - 200) / 2, width: 200, height: 200)
-
+            
             //AVCaptureDeviceInput : capture device 에서 capture session 으로 media 를 제공하는 capture input.
             let input = try AVCaptureDeviceInput(device: captureDevice)
             captureSession.addInput(input)
@@ -58,7 +59,7 @@ private extension QRcodeCheckViewController {
             output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
             output.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
             let rectConverted = setVideoLayer(rectOfInterest: rectOfInterest)
-
+            
             // QR 코드 제한영역 설정
             output.rectOfInterest = rectConverted
             
@@ -70,7 +71,7 @@ private extension QRcodeCheckViewController {
             print("error")
         }
     }
-
+    
     func setVideoLayer(rectOfInterest: CGRect) -> CGRect{
         let videoLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         videoLayer.frame = view.layer.bounds
@@ -132,18 +133,42 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
                 return
             }
             print(stringValue)
-           
-//                dataTest.updateIsInGym(id: stringValue )
-//                dataTest.gymInfo.gymInAndOutLog.append(InAndOut(id: stringValue, inTime: Date(), outTime: Date(), sinceInAndOutTime: 1.0))
             
+            //                dataTest.updateIsInGym(id: stringValue )
+            //                dataTest.gymInfo.gymInAndOutLog.append(InAndOut(id: stringValue, inTime: Date(), outTime: Date(), sinceInAndOutTime: 1.0))
             
+            updateIsInGym(id: stringValue)
             self.captureSession.stopRunning()
             self.showToast(message: "확인했습니다")
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 self.captureSession.startRunning()
-//                print( "list: \(self.dataTest.gymInfo.gymUserList)")
-//                print( "list: \(self.dataTest.gymInfo.gymInAndOutLog)")
+                //                print( "list: \(self.dataTest.gymInfo.gymUserList)")
+                //                print( "list: \(self.dataTest.gymInfo.gymInAndOutLog)")
+            }
+        }
+    }
+    
+    func updateIsInGym(id: String) { //큐알코드를 찍었을 때
+        let ref = Database.database().reference().child("users/\(DataManager.shared.gymUid!)/gymUserList")
+        let query = ref.queryOrdered(byChild: "account/id").queryEqual(toValue: id)
+        
+        query.observeSingleEvent(of: .value) { (snapshot) in
+            guard let userSnapshot = snapshot.children.allObjects.first as? DataSnapshot else {
+                self.dismiss(animated: true)
+                return
+            }
+            
+            if var userData = userSnapshot.value as? [String: Any] {
+                userData["isInGym"] = true
+                // 해당 유저 정보 업데이트
+                userSnapshot.ref.updateChildValues(userData) { (error, _) in
+                    if let error = error {
+                        print("isInGym 업데이트 오류: \(error.localizedDescription)")
+                    } else {
+                        print("isInGym이 업데이트되었습니다.")
+                    }
+                }
             }
         }
     }
