@@ -189,7 +189,7 @@ class UserCommunityView: UIView,UITableViewDelegate {
 extension UserCommunityView:UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummyDataManager.gymInfo.noticeList.count
+        return 0 // TODO: 데이터모델 공사중입니다
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -197,8 +197,8 @@ extension UserCommunityView:UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CommunityCell
         cell.selectionStyle = .none
 //        var date = dateToString(date: dummyDataManager.gymInfo.noticeList[indexPath.row].date)
-        cell.nameLabel.text = dummyDataManager.gymInfo.gymName
-        cell.ctextLabel.text = dummyDataManager.gymInfo.noticeList[indexPath.row].content
+//        cell.nameLabel.text = dummyDataManager.gymInfo.gymName
+//        cell.ctextLabel.text = dummyDataManager.gymInfo.noticeList[indexPath.row].content
 //        cell.dateLabel.text = date
         return cell
     }
@@ -210,7 +210,7 @@ extension UserCommunityView:UITableViewDataSource{
             let pp = UserCommunityViewController()
         
          let adminNoticeDetailVC = AdminNoticeDetailViewController()
-         adminNoticeDetailVC.noticeInfo = dummyDataManager.gymInfo.noticeList[indexPath.row]
+//         adminNoticeDetailVC.noticeInfo = dummyDataManager.gymInfo.noticeList[indexPath.row] 데이터모델 공사중입니다
             // 새로운 뷰를 모달로 표시합니다.
 //            self.present(pp, animated: true, completion: nil)
         }

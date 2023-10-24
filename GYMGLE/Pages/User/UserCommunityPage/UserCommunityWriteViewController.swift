@@ -60,7 +60,7 @@ extension UserCommunityWriteViewController {
                 
                 var newNotice = Notice(date: date, content: content ?? "")
                 print(newNotice)
-                dataTest.makeNoticeList(newNotice)
+//                dataTest.makeNoticeList(newNotice)
                 
             } else {
                 noticeInfo?.content = userCommunityWriteView.writePlace.text

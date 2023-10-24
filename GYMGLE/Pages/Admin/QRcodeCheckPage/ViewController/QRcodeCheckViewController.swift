@@ -133,8 +133,8 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
             }
             print(stringValue)
            
-                dataTest.updateIsInGym(id: stringValue )
-                dataTest.gymInfo.gymInAndOutLog.append(InAndOut(id: stringValue, inTime: Date(), outTime: Date(), sinceInAndOutTime: 1.0))
+//                dataTest.updateIsInGym(id: stringValue )
+//                dataTest.gymInfo.gymInAndOutLog.append(InAndOut(id: stringValue, inTime: Date(), outTime: Date(), sinceInAndOutTime: 1.0))
             
             
             self.captureSession.stopRunning()
@@ -142,8 +142,8 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 self.captureSession.startRunning()
-                print( "list: \(self.dataTest.gymInfo.gymUserList)")
-                print( "list: \(self.dataTest.gymInfo.gymInAndOutLog)")
+//                print( "list: \(self.dataTest.gymInfo.gymUserList)")
+//                print( "list: \(self.dataTest.gymInfo.gymInAndOutLog)")
             }
         }
     }

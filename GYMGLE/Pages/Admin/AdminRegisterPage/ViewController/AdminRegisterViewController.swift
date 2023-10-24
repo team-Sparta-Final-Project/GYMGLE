@@ -110,7 +110,7 @@ private extension AdminRegisterViewController {
     }
     
     @objc func duplicationCheckButtonTapped() {
-        idDuplicationCheck()
+//        idDuplicationCheck()
         voidCheck(textField: adminRegisterView.idTextField)
         let alert = UIAlertController(title: "아이디 중복확인",
                                       message: "사용할 수 있는 아이디입니다.",
@@ -118,7 +118,7 @@ private extension AdminRegisterViewController {
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
         
-        isIdDuplicated = false
+//        isIdDuplicated = false
     }
     
     @objc func registerButtonTapped() {
@@ -153,21 +153,6 @@ private extension AdminRegisterViewController {
     
     @objc private func keyboardWillHide(_ notification: Notification) {
         adminRegisterView.frame.origin.y = 0
-    }
-    func idDuplicationCheck() {
-        for gymInfo in dataTest.gymList {
-            if gymInfo.gymAccount.id == adminRegisterView.idTextField.text {
-                let alert = UIAlertController(title: "중복된 아이디",
-                                              message: "중복된 아이디입니다. 다른 아이디를 입력해주세요.",
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                present(alert, animated: true, completion: nil)
-                
-                isIdDuplicated = true
-                
-                return
-            }
-        }
     }
     
     func numberDuplicateCheck(completion: @escaping (Bool) -> Void) {
@@ -220,24 +205,6 @@ private extension AdminRegisterViewController {
         }
     }
     
-//    func duplicateCheck() {
-//        if isNumberDuplicated {
-//            let alert = UIAlertController(title: "사업자 등록 번호 중복확인",
-//                                          message: "중복된 사업자 등록 번호입니다. 다시 입력해주세요.",
-//                                          preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-//            self.present(alert, animated: true, completion: nil)
-////            return
-//        }
-////        else {
-////            let alert = UIAlertController(title: "사업자 등록 번호 중복확인",
-////                                          message: "중복되지 않는 사업자 등록 번호입니다.",
-////                                          preferredStyle: .alert)
-////            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-////            self.present(alert, animated: true, completion: nil)
-////        }
-//    }
-    
     func registerGym() {
         if let id = adminRegisterView.idTextField.text,
            let password = adminRegisterView.passwordTextField.text,
@@ -245,10 +212,8 @@ private extension AdminRegisterViewController {
            let gymPhoneNumber = adminRegisterView.phoneTextField.text,
            let gymNumber = adminRegisterView.registerNumberTextField.text {
             let account = Account(id: id, password: password, accountType: 0)
-            let gymInfo = GymInfo(gymAccount: account, gymName: gymName, gymPhoneNumber: gymPhoneNumber, gymnumber: gymNumber, gymUserList: [], noticeList: [], gymInAndOutLog: [])
+            let gymInfo = GymInfo(gymAccount: account, gymName: gymName, gymPhoneNumber: gymPhoneNumber, gymnumber: gymNumber)
             
-            // 헬스장 추가
-            dataTest.gymList.append(gymInfo)
             // 회원가입
             createUser()
         }
@@ -364,20 +329,19 @@ extension AdminRegisterViewController {
         let gymInfo = GymInfo(gymAccount: Account(id: id, password: pw, accountType: 0),
                               gymName: gymName,
                               gymPhoneNumber: gymPhoneNumber,
-                              gymnumber: gymNumber,
-                              gymUserList: [User(account: Account(id: "default",
-                                                                  password: "default",
-                                                                  accountType: 2),
-                                                 name: "default",
-                                                 number: "default",
-                                                 startSubscriptionDate: Date(),
-                                                 endSubscriptionDate: Date(),
-                                                 userInfo: "default",
-                                                 isInGym: false,
-                                                 adminUid: "default")],
-                              noticeList: [Notice(date: Date(), content: "default")],
-                              gymInAndOutLog: [InAndOut(id: "default", inTime: Date(), outTime: Date(), sinceInAndOutTime: 0)])
-        
+                              gymnumber: gymNumber)
+        let gymUserList = User(account: Account(id: "default",
+                                                 password: "default",
+                                                 accountType: 2),
+                                name: "default",
+                                number: "default",
+                                startSubscriptionDate: Date(),
+                                endSubscriptionDate: Date(),
+                                userInfo: "default",
+                                isInGym: false,
+                                adminUid: "default")
+        let noticeList = Notice(date: Date(), content: "default")
+        let gymInAndOutLog = InAndOut(id: "default", inTime: Date(), outTime: Date(), sinceInAndOutTime: 0)
         Auth.auth().createUser(withEmail: id, password: pw) { result, error in
             if let error = error {
                 print(error)
@@ -386,9 +350,22 @@ extension AdminRegisterViewController {
                     let gymInfoData = try JSONEncoder().encode(gymInfo)
                     let gymInfoJSON = try JSONSerialization.jsonObject(with: gymInfoData, options: [])
                     
+                    let gymUserListData = try JSONEncoder().encode(gymUserList)
+                    let gymUserListJSON = try JSONSerialization.jsonObject(with: gymUserListData, options: [])
+
+                    let noticeListData = try JSONEncoder().encode(noticeList)
+                    let noticeListJSON = try JSONSerialization.jsonObject(with: noticeListData, options: [])
+
+                    let gymInAndOutLogData = try JSONEncoder().encode(gymInAndOutLog)
+                    let gymInAndOutLogJSON = try JSONSerialization.jsonObject(with: gymInAndOutLogData, options: [])
+
+                    
                     if let user = result?.user {
                         let userRef = Database.database().reference().child("users").child(user.uid)
                         userRef.child("gymInfo").setValue(gymInfoJSON)
+                        userRef.child("gymUserList").childByAutoId().setValue(gymUserListJSON)
+                        userRef.child("noticeList").childByAutoId().setValue(noticeListJSON)
+                        userRef.child("gymInAndOutLog").childByAutoId().setValue(gymInAndOutLogJSON)
                     }
                     
                     let vc = AdminLoginViewController()
@@ -399,4 +376,5 @@ extension AdminRegisterViewController {
             }
         }
     }
+    
 }

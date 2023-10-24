@@ -60,7 +60,7 @@ class UserRegisterViewIDPWController: UIViewController {
         pwField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
         
         let verifyButton = idCell?.contentView.subviews[2] as? UIButton
-        verifyButton?.addTarget(self, action: #selector(idVerification), for: .touchUpInside)
+//        verifyButton?.addTarget(self, action: #selector(idVerification), for: .touchUpInside)
         
     }
 
@@ -91,35 +91,35 @@ class UserRegisterViewIDPWController: UIViewController {
         }
     }
     
-    @objc func idVerification(){
-        let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
-        let idTextField = idCell?.contentView.subviews[1] as? UITextField
-        guard let idText = idTextField?.text else { return }
-        
-        let idList = DataManager.shared.gymInfo.gymUserList.map{
-            $0.account.id
-        }
-        if idList.contains(idText) {
-            isNotVerified = true
-            let alert = UIAlertController(title: "중복된 아이디입니다.",
-                                          message: "다른 아이디를 입력하여 주시옵소서",
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
-        }else{
-            isNotVerified = false
-            let alert = UIAlertController(title: "사용가능한 아이디 입니다.",
-                                          message: "확인 버튼을 눌러주세요.",
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
-            idTextField?.allowsEditingTextAttributes = false
-        }
-        buttonOnCheck()
-
-        
-        print("테스트 - 버리피케이션")
-    }
+//    @objc func idVerification(){
+//        let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
+//        let idTextField = idCell?.contentView.subviews[1] as? UITextField
+//        guard let idText = idTextField?.text else { return }
+//
+//        let idList = DataManager.shared.gymInfo.gymUserList.map{
+//            $0.account.id
+//        }
+//        if idList.contains(idText) {
+//            isNotVerified = true
+//            let alert = UIAlertController(title: "중복된 아이디입니다.",
+//                                          message: "다른 아이디를 입력하여 주시옵소서",
+//                                          preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+//            present(alert, animated: true, completion: nil)
+//        }else{
+//            isNotVerified = false
+//            let alert = UIAlertController(title: "사용가능한 아이디 입니다.",
+//                                          message: "확인 버튼을 눌러주세요.",
+//                                          preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+//            present(alert, animated: true, completion: nil)
+//            idTextField?.allowsEditingTextAttributes = false
+//        }
+//        buttonOnCheck()
+//
+//
+//        print("테스트 - 버리피케이션")
+//    }
     
     @objc private func didChangeText(){
         let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell

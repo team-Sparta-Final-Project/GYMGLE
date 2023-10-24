@@ -14,8 +14,7 @@ struct GymInfo: Codable { //관리자
     var gymName: String
     var gymPhoneNumber: String
     let gymnumber: String
-    var gymUserList: [User]
-    var noticeList: [Notice]
-    var gymInAndOutLog: [InAndOut]
-    
+//    var gymUserList: [User]
+//    var noticeList: [Notice]
+//    var gymInAndOutLog: [InAndOut]
 }
