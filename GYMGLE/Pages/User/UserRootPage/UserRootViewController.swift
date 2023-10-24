@@ -12,10 +12,10 @@ import FirebaseDatabase
 
 class UserRootViewController: UIViewController {
     let databaseRef = Database.database().reference()
-
+    
     let first = UserRootView()
-//    var user: User?
-//    var gymInfo: GymInfo?
+    //    var user: User?
+    //    var gymInfo: GymInfo?
     
     
     override func loadView() {
@@ -33,7 +33,7 @@ class UserRootViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        getLastWeek()
+        //        getLastWeek()
         setNowUserNumber()
     }
     
@@ -42,12 +42,12 @@ class UserRootViewController: UIViewController {
         QrCodeViewController.user = DataManager.shared.userInfo// ❗️수정
         self.present(QrCodeViewController, animated: true)
         databaseRef.child("yourDataNode").child("isInGym").setValue(true) { (error, ref) in
-                   if let error = error {
-                       print("Firebase 업데이트 오류: \(error.localizedDescription)")
-                   } else {
-                       print("Firebase 데이터 업데이트 완료: isInGym을 true로 설정")
-                   }
-               }
+            if let error = error {
+                print("Firebase 업데이트 오류: \(error.localizedDescription)")
+            } else {
+                print("Firebase 데이터 업데이트 완료: isInGym을 true로 설정")
+            }
+        }
     }
     
     @objc func outButtonClick() {
@@ -60,7 +60,7 @@ class UserRootViewController: UIViewController {
     }
     
     func updateIsInGym(id: String) {
-        let ref = Database.database().reference().child("users/\(DataManager.shared.gymUid!)/gymUserList")
+        let ref = Database.database().reference().child("accounts")
         let query = ref.queryOrdered(byChild: "account/id").queryEqual(toValue: id)
         
         query.observeSingleEvent(of: .value) { (snapshot) in
@@ -83,29 +83,29 @@ class UserRootViewController: UIViewController {
         }
     }
     
-//    func getLastWeek() {
-//        let log = DataManager.shared.realGymInfo?.gymInAndOutLog
-//
-//        let currentDate = Date()
-//
-//        let calendar = Calendar.current
-//        let lastWeek = calendar.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
-//
-//        let filteredUsers = log?.filter { user in
-//            let inTime = user.inTime
-//            let outTime = user.outTime
-//            if inTime <= lastWeek && outTime >= lastWeek {
-//                return true
-//            }
-//            return false
-//        }
-//        if let userCount = filteredUsers?.count {
-//            first.yesterUserNumber.text = String(userCount)
-//        }
-//    }
+    //    func getLastWeek() {
+    //        let log = DataManager.shared.realGymInfo?.gymInAndOutLog
+    //
+    //        let currentDate = Date()
+    //
+    //        let calendar = Calendar.current
+    //        let lastWeek = calendar.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
+    //
+    //        let filteredUsers = log?.filter { user in
+    //            let inTime = user.inTime
+    //            let outTime = user.outTime
+    //            if inTime <= lastWeek && outTime >= lastWeek {
+    //                return true
+    //            }
+    //            return false
+    //        }
+    //        if let userCount = filteredUsers?.count {
+    //            first.yesterUserNumber.text = String(userCount)
+    //        }
+    //    }
     
     func getLastWeek() {
-
+        
         // 데이터베이스 참조에서 'isInGym' 값을 모니터링
         databaseRef.child("userData").child("isInGym").observe(.value) { (snapshot) in
             if let isInGym = snapshot.value as? Bool, isInGym == false {
@@ -123,14 +123,26 @@ class UserRootViewController: UIViewController {
                 }
             }
         }
-        }
+    }
+    
     func setNowUserNumber() {
-        let ref = Database.database().reference().child("users").child(DataManager.shared.gymUid!).child("gymUserList")
-        let query = ref.queryOrdered(byChild: "isInGym").queryEqual(toValue: true)
+        let ref = Database.database().reference().child("accounts")
+        let query = ref.queryOrdered(byChild: "adminUid").queryEqual(toValue: DataManager.shared.gymUid)
         
         query.observeSingleEvent(of: .value) { (snapshot) in
-            let count = snapshot.childrenCount
-            self.first.nowUserNumber.text = String(count)
+            guard let data = snapshot.children.allObjects as? [DataSnapshot] else {
+                return
+            }
+            
+            let numberOfUser = data.filter { userSnapshot in
+                if let userData = userSnapshot.value as? [String: Any],
+                   let isInGym = userData["isInGym"] as? Bool {
+                    return isInGym
+                }
+                return false
+            }.count
+            
+            self.first.nowUserNumber.text = String(numberOfUser)
         }
     }
 }
