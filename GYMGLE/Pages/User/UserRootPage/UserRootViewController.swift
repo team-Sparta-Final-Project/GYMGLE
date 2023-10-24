@@ -11,7 +11,8 @@ import SwiftUI
 import FirebaseDatabase
 
 class UserRootViewController: UIViewController {
-    
+    let databaseRef = Database.database().reference()
+
     let first = UserRootView()
 //    var user: User?
 //    var gymInfo: GymInfo?
@@ -34,13 +35,19 @@ class UserRootViewController: UIViewController {
         super.viewWillAppear(animated)
 //        getLastWeek()
         setNowUserNumber()
-        
     }
     
     @objc func inButtonClick() {
         let QrCodeViewController = QrCodeViewController()
         QrCodeViewController.user = DataManager.shared.userInfo// ❗️수정
         self.present(QrCodeViewController, animated: true)
+        databaseRef.child("yourDataNode").child("isInGym").setValue(true) { (error, ref) in
+                   if let error = error {
+                       print("Firebase 업데이트 오류: \(error.localizedDescription)")
+                   } else {
+                       print("Firebase 데이터 업데이트 완료: isInGym을 true로 설정")
+                   }
+               }
     }
     
     @objc func outButtonClick() {
@@ -97,6 +104,26 @@ class UserRootViewController: UIViewController {
 //        }
 //    }
     
+    func getLastWeek() {
+
+        // 데이터베이스 참조에서 'isInGym' 값을 모니터링
+        databaseRef.child("userData").child("isInGym").observe(.value) { (snapshot) in
+            if let isInGym = snapshot.value as? Bool, isInGym == false {
+                // 'isInGym' 값이 false인 경우에만 실행
+                // 'yesterUserNumber' 값을 가져와 1을 추가하고 다시 데이터베이스에 업데이트
+                self.databaseRef.child("userData").child("yesterUserNumber").observeSingleEvent(of: .value) { (numberSnapshot) in
+                    if var yesterUserNumber = numberSnapshot.value as? Int {
+                        yesterUserNumber += 1
+                        self.databaseRef.child("userData").child("yesterUserNumber").setValue(yesterUserNumber)
+                        // 'first.yesterUserNumber.text' 업데이트 (메인 스레드에서 실행)
+                        DispatchQueue.main.async {
+                            self.first.yesterUserNumber.text = "\(yesterUserNumber)"
+                        }
+                    }
+                }
+            }
+        }
+        }
     func setNowUserNumber() {
         let ref = Database.database().reference().child("users").child(DataManager.shared.gymUid!).child("gymUserList")
         let query = ref.queryOrdered(byChild: "isInGym").queryEqual(toValue: true)
