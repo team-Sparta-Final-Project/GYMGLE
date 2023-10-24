@@ -4,7 +4,7 @@
 //
 //  Created by 박성원 on 2023/10/14.
 //
-
+//3060349969
 import UIKit
 import FirebaseAuth
 import FirebaseCore
@@ -109,20 +109,20 @@ extension AdminNoticeDetailViewController {
                 let newNotice = Notice(date: date, content: content ?? "")
                 do {
                     let userID = Auth.auth().currentUser?.uid
-                    let ref = Database.database().reference().child("users").child(userID!).child("gymInfo").child("noticeList")
+                    let ref = Database.database().reference().child("users").child(userID!).child("noticeList")
                     
                     let noticeData = try JSONEncoder().encode(newNotice)
                     let noticeJSON = try JSONSerialization.jsonObject(with: noticeData, options: [])
-//                    if let newIndex = DataManager.shared.realGymInfo?.noticeList.count {
-//                        ref.child(String(newIndex)).setValue(noticeJSON)
-//                    }
+                    
+                    ref.childByAutoId().setValue(noticeJSON)
+                    
                 } catch {
                 }
             } else {
                 if var notice = noticeInfo {
                     notice.content = adminNoticeDetailView.contentTextView.text
                     let userID = Auth.auth().currentUser?.uid
-                    let ref = Database.database().reference().child("users").child(userID!).child("gymInfo").child("noticeList")
+                    let ref = Database.database().reference().child("users").child(userID!).child("noticeList")
                     do {
                         let updatedNotice = ["content": notice.content] as [String: Any]
                         ref.child(String(index)).updateChildValues(updatedNotice)
