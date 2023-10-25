@@ -25,7 +25,7 @@ final class AdminNoticeView: UIView {
     
     lazy var noticeTableView: UITableView = {
         let table = UITableView()
-        table.backgroundColor = .white
+        table.backgroundColor = ColorGuide.background
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()

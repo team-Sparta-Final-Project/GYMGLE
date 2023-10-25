@@ -110,15 +110,25 @@ private extension AdminRegisterViewController {
     }
     
     @objc func duplicationCheckButtonTapped() {
-//        idDuplicationCheck()
-        voidCheck(textField: adminRegisterView.idTextField)
-        let alert = UIAlertController(title: "아이디 중복확인",
-                                      message: "사용할 수 있는 아이디입니다.",
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-        
-//        isIdDuplicated = false
+        emailDuplicateCheck(email: adminRegisterView.idTextField.text!) { [weak self] isDuplicated in
+            guard let self else { return }
+            if isDuplicated {
+                isIdDuplicated = true
+                let alert = UIAlertController(title: "아이디 중복확인",
+                                              message: "중복된 아이디입니다. 다시 입력해주세요.",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                present(alert, animated: true, completion: nil)
+            } else {
+                isIdDuplicated = false
+                voidCheck(textField: adminRegisterView.idTextField)
+                let alert = UIAlertController(title: "아이디 중복확인",
+                                              message: "사용할 수 있는 아이디입니다.",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     @objc func registerButtonTapped() {
@@ -175,6 +185,21 @@ private extension AdminRegisterViewController {
                 completion(false)
             }
             
+        }
+    }
+    
+    func emailDuplicateCheck(email: String, completion: @escaping (Bool) -> Void) {
+        let ref = Database.database().reference().child("accounts")
+
+        // 해당 이메일 주소를 사용하는 사용자가 있는지 확인
+        ref.queryOrdered(byChild: "account/id").queryEqual(toValue: email).observeSingleEvent(of: .value) { (snapshot) in
+            if snapshot.exists() {
+                // 이미 사용 중인 이메일 주소가 존재
+                completion(true)
+            } else {
+                // 사용 가능한 이메일 주소
+                completion(false)
+            }
         }
     }
     
