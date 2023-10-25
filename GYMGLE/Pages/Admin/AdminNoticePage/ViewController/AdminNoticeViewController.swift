@@ -33,6 +33,7 @@ final class AdminNoticeViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         dataReadSetting() {
+            print("테스트 - \(DataManager.shared.gymUid)")
             self.adminNoticeView.noticeTableView.reloadData()
         }
     }
@@ -42,7 +43,7 @@ final class AdminNoticeViewController: UIViewController {
 private extension AdminNoticeViewController {
     
     func dataReadSetting( completion: @escaping () -> Void) {
-        ref.child("users/\(userID!)/noticeList").observeSingleEvent(of: .value) { DataSnapshot in
+        ref.child("users/\(DataManager.shared.gymUid!)/noticeList").observeSingleEvent(of: .value) { DataSnapshot in
             guard let value = DataSnapshot.value as? [String:[String:Any]] else { return
                 completion()
             }

@@ -29,7 +29,6 @@ class UserRootViewController: UIViewController {
         super.viewDidLoad()
         first.inBtn.addTarget(self, action: #selector(inButtonClick), for: .touchUpInside)
         first.outBtn.addTarget(self, action: #selector(outButtonClick), for: .touchUpInside)
-        
         // 테스트데이터생성기
         decoyLogMaker()
         getLastWeekUserNumber()
@@ -41,7 +40,10 @@ class UserRootViewController: UIViewController {
         super.viewWillAppear(animated)
         //        getLastWeek()
         let timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(gogogo), userInfo: nil, repeats: true)
-        setNowUserNumber()
+        //공지사항 읽어옴
+        noticeRead {
+            self.first.noticeText.text = DataManager.shared.noticeList[0].content
+        }
     }
     
     
@@ -170,7 +172,22 @@ class UserRootViewController: UIViewController {
             self.first.nowUserNumber.text = String(numberOfUser)
         }
     }
-    
+
+    func noticeRead(completion: @escaping() -> Void) {
+        databaseRef.child("users/\(DataManager.shared.gymUid!)/noticeList").observeSingleEvent(of: .value) { DataSnapshot in
+            guard let value = DataSnapshot.value as? [String:[String:Any]] else { return }
+                      do {
+                let jsonArray = value.values.compactMap { $0 as [String: Any] }
+                let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
+                let notices = try JSONDecoder().decode([Notice].self, from: jsonData)
+                DataManager.shared.noticeList = notices
+                completion()
+            } catch {
+                completion()
+            }
+        }
+    }
+
 //    Date().timeIntervalSinceReferenceDate > 파이어 베이스에 저장되는 타입
 //    Date().timeIntervalSinceNow > 현재시간
     
@@ -239,26 +256,24 @@ class UserRootViewController: UIViewController {
     //    }
     
     func decoyLogMaker(){
-
-        let user = Auth.auth().currentUser
-        let userUid = user?.uid ?? ""
-        
-        let oneDay:Double = 60*60*24
-        let oneWeek:Double = oneDay*7
-        let oneWeekAgo = Date().addingTimeInterval(-7*24*60*60).timeIntervalSinceReferenceDate
-
-        for i in 1...10 {
-            let userLog = InAndOut(id: "1분후 테스트", inTime: Date(), outTime: Date(timeIntervalSinceNow: Double(5*i)), sinceInAndOutTime: 0.0)
-            do {
-                let userData = try JSONEncoder().encode(userLog)
-                let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
-                databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").childByAutoId().setValue(userJSON)
-
-                
-            }catch{
-                print("테스트 - 캐치됨")
-            }
-        }
+//        
+//        let user = Auth.auth().currentUser
+//        let userUid = user?.uid ?? ""
+//        
+//        let oneDay:Double = 60*60*24
+//        let oneWeek:Double = oneDay*7
+//        for i in 1...10 {
+//            let userLog = InAndOut(id: "1분후 테스트", inTime: Date(), outTime: Date(timeIntervalSinceNow: Double(5*i)), sinceInAndOutTime: 0.0)
+//            do {
+//                let userData = try JSONEncoder().encode(userLog)
+//                let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
+//                databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").childByAutoId().setValue(userJSON)
+//
+//                
+//            }catch{
+//                print("테스트 - 캐치됨")
+//            }
+//        }
         
         
         
@@ -271,14 +286,14 @@ class UserRootViewController: UIViewController {
     
     
     func getWorkingUser( completion: @escaping () -> () ){
-        let refDateNow = Date().timeIntervalSinceReferenceDate
-        
-        databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").queryOrdered(byChild: "outTime").queryStarting(afterValue: refDateNow ).observeSingleEvent(of: .value) { DataSnapshot in
-            guard let value = DataSnapshot.value as? [String:Any] else { return }
-            print("테스트 - \(value)")
-            self.num = value.values.count
-            completion()
-        }
+//        let refDateNow = Date().timeIntervalSinceReferenceDate
+//        
+//        databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").queryOrdered(byChild: "outTime").queryStarting(afterValue: refDateNow ).observeSingleEvent(of: .value) { DataSnapshot in
+//            guard let value = DataSnapshot.value as? [String:Any] else { return }
+//            //print("테스트 - \(value)")
+//            self.num = value.values.count
+//            completion()
+//        }
     }
     
     

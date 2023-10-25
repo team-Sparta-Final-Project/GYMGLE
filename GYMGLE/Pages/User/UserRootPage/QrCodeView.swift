@@ -26,6 +26,7 @@ class QrCodeView: UIView {
     
     private lazy var qrLabel: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size19Bold, textAligment: .center)
         return label
     }()
@@ -71,8 +72,8 @@ private extension QrCodeView {
             $0.top.equalToSuperview().offset(100)
         }
         qrLabel.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-80)
-            $0.leading.equalToSuperview().offset(80)
+            $0.trailing.equalToSuperview().offset(-72)
+            $0.leading.equalToSuperview().offset(72)
             $0.top.equalTo(qrViewImage.snp.bottom).offset(60)
         }
         backButton.snp.makeConstraints {

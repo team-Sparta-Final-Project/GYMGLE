@@ -9,7 +9,7 @@ import UIKit
 
 final class AdminNoticeDetailView: UIView {
     // MARK: - UI Properties
-    private lazy var pageTitleLabel: UILabel = {
+    lazy var pageTitleLabel: UILabel = {
         let label = UILabel()
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size32Bold, textAligment: .center)
         label.text = "내용"
@@ -22,33 +22,22 @@ final class AdminNoticeDetailView: UIView {
         return button
     }()
     
-    private let topDivider: UIView = {
-        let divider = UIView()
-        divider.backgroundColor = ColorGuide.textHint.withAlphaComponent(0.4)
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        return divider
-    }()
-    
     lazy var contentTextView: UITextView = {
         let textView = UITextView()
-        textView.text = "400자 이내로 공지사항을 적어주세요!"
+        textView.text = "500자 이내로 공지사항을 적어주세요!"
         textView.font = FontGuide.size16
         textView.backgroundColor = .white
+        textView.clipsToBounds = true
+        textView.layer.cornerRadius = 30
+        textView.textContainerInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
-    }()
-    
-    private let bottomDivider: UIView = {
-        let divider = UIView()
-        divider.backgroundColor = ColorGuide.textHint.withAlphaComponent(0.4)
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        return divider
     }()
     
     lazy var contentNumberLabel: UILabel = {
         let label = UILabel()
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .center)
-        label.text = "\(contentTextView.text.count)/400"
+        label.text = "\(contentTextView.text.count)/500"
         return label
     }()
     
@@ -72,39 +61,29 @@ final class AdminNoticeDetailView: UIView {
 // MARK: - extension
 private extension AdminNoticeDetailView {
     func viewMakeUI() {
-        let views = [pageTitleLabel, deletedButton, topDivider, contentTextView, bottomDivider, contentNumberLabel, createButton]
+        let views = [pageTitleLabel, deletedButton, contentTextView, contentNumberLabel, createButton]
         for view in views {
             self.addSubview(view)
         }
         NSLayoutConstraint.activate([
             pageTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            pageTitleLabel.bottomAnchor.constraint(equalTo: self.topDivider.topAnchor, constant: -10),
-            pageTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 140),
+            pageTitleLabel.bottomAnchor.constraint(equalTo: self.contentTextView.topAnchor, constant: -30),
+            pageTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 100),
             
             deletedButton.centerYAnchor.constraint(equalTo: self.pageTitleLabel.centerYAnchor, constant: 0),
             deletedButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
             deletedButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 300),
             
-            topDivider.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            topDivider.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            topDivider.heightAnchor.constraint(equalToConstant: 2),
-            
-            contentTextView.topAnchor.constraint(equalTo: self.topDivider.bottomAnchor, constant: 0),
             contentTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             contentTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            contentTextView.bottomAnchor.constraint(equalTo: self.bottomDivider.topAnchor, constant: 0),
             
-            bottomDivider.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            bottomDivider.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            bottomDivider.bottomAnchor.constraint(equalTo: self.createButton.topAnchor, constant: -104),
-            bottomDivider.heightAnchor.constraint(equalToConstant: 2),
-            
-            contentNumberLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -26),
-            contentNumberLabel.topAnchor.constraint(equalTo: self.bottomDivider.bottomAnchor, constant: 10),
+            contentNumberLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -36),
+            contentNumberLabel.topAnchor.constraint(equalTo: self.contentTextView.bottomAnchor, constant: 10),
+            contentNumberLabel.bottomAnchor.constraint(equalTo: self.createButton.topAnchor, constant: -132),
             
             createButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             createButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -124),
+            createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -68),
             createButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
