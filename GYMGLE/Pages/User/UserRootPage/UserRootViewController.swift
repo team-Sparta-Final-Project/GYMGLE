@@ -40,7 +40,8 @@ class UserRootViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //        getLastWeek()
-//        setNowUserNumber()
+        //        setNowUserNumber()
+        checkEndSub()
         
         let timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(gogogo), userInfo: nil, repeats: true)
         
@@ -53,8 +54,6 @@ class UserRootViewController: UIViewController {
         }
     }
     
-        checkEndSub()
-    }
     
     @objc func inButtonClick() {
         let QrCodeViewController = QrCodeViewController()
