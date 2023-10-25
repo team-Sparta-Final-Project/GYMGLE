@@ -81,13 +81,6 @@ class UserRootViewController: UIViewController {
         let QrCodeViewController = QrCodeViewController()
         QrCodeViewController.user = DataManager.shared.userInfo// ❗️수정
         self.present(QrCodeViewController, animated: true)
-        databaseRef.child("yourDataNode").child("isInGym").setValue(true) { (error, ref) in
-            if let error = error {
-                print("Firebase 업데이트 오류: \(error.localizedDescription)")
-            } else {
-                print("Firebase 데이터 업데이트 완료: isInGym을 true로 설정")
-            }
-        }
     }
     
     @objc func outButtonClick() {
@@ -104,23 +97,24 @@ class UserRootViewController: UIViewController {
         let query = ref.queryOrdered(byChild: "id").queryEqual(toValue: id)
         
         query.observeSingleEvent(of: .value) { (snapshot) in
-            guard let userSnapshot = snapshot.children.allObjects.first as? DataSnapshot else {
-                self.dismiss(animated: true)
-                return
-            }
-            
-            if var userData = userSnapshot.value as? [String: Any],
-            let outTime = userData["outTime"] as? TimeInterval {
+            for childSnapshot in snapshot.children {
+                guard let snapshot = childSnapshot as? DataSnapshot,
+                      var logData = snapshot.value as? [String: Any],
+                      let outTime = logData["outTime"] as? TimeInterval else {
+                    continue
+                }
+                
                 if outTime > Date().timeIntervalSinceReferenceDate {
-                    userData["outTime"] = Date().timeIntervalSinceReferenceDate
-                    // 해당 유저 정보 업데이트
-                    userSnapshot.ref.updateChildValues(userData) { (error, _) in
+                    logData["outTime"] = Date().timeIntervalSinceReferenceDate
+                    
+                    snapshot.ref.updateChildValues(logData) { (error, _) in
                         if let error = error {
                             print("outTime 업데이트 오류: \(error.localizedDescription)")
                         } else {
                             print("outTime이 업데이트되었습니다.")
                         }
                     }
+                    
                 }
             }
         }
