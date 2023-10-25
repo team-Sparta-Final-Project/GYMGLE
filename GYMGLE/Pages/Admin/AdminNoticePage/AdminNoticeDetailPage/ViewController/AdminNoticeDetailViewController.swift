@@ -49,23 +49,30 @@ private extension AdminNoticeDetailViewController {
     func viewSetting() {
         if let noticeInfo = noticeInfo {
             adminNoticeDetailView.contentTextView.text = noticeInfo.content
+            adminNoticeDetailView.contentNumberLabel.text = "\(adminNoticeDetailView.contentTextView.text.count)/500"
             adminNoticeDetailView.createButton.setTitle("수정하기", for: .normal)
             adminNoticeDetailView.deletedButton.isHidden = false
         } else {
             adminNoticeDetailView.createButton.setTitle("등록하기", for: .normal)
-            adminNoticeDetailView.deletedButton.isHidden = true
+            if adminNoticeDetailView.contentTextView.text == "500자 이내로 공지사항을 적어주세요!" {
+                adminNoticeDetailView.deletedButton.isHidden = true
+            }
         }
     }
     func buttonTapped() {
         adminNoticeDetailView.createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
         adminNoticeDetailView.deletedButton.addTarget(self, action:  #selector(deletedButtonTapped), for: .touchUpInside)
         switch isUser {
-        case false: //트레이너 일 때
+        case false: //유저가 들어오면
             adminNoticeDetailView.createButton.isHidden = true
             adminNoticeDetailView.deletedButton.isHidden = true
+            adminNoticeDetailView.contentTextView.isEditable = false
+            adminNoticeDetailView.contentNumberLabel.isHidden = true
         default:
             adminNoticeDetailView.createButton.isHidden = false
             adminNoticeDetailView.deletedButton.isHidden = false
+            adminNoticeDetailView.contentTextView.isEditable = true
+            adminNoticeDetailView.contentNumberLabel.isHidden = false
         }
     }
     func showToast(message: String) {
@@ -88,7 +95,7 @@ private extension AdminNoticeDetailViewController {
     }
     // 추가 및 수정 로직
     func createdAndUpatedContent(completion: @escaping () -> Void) {
-        if adminNoticeDetailView.contentTextView.text.isEmpty || adminNoticeDetailView.contentTextView.text == "400자 이내로 공지사항을 적어주세요!" {
+        if adminNoticeDetailView.contentTextView.text.isEmpty || adminNoticeDetailView.contentTextView.text == "500자 이내로 공지사항을 적어주세요!" {
             showToast(message: "내용물이 비었습니다.")
         } else {
             if noticeInfo == nil {
@@ -163,16 +170,15 @@ extension AdminNoticeDetailViewController {
         if let userInfo = notification.userInfo,
            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
             let keyboardHeight = keyboardFrame.height
-            let textFieldFrameInWindow = adminNoticeDetailView.contentNumberLabel.convert(adminNoticeDetailView.contentNumberLabel.bounds, to: nil)
-            let maxY = textFieldFrameInWindow.maxY
-            if maxY > (adminNoticeDetailView.frame.size.height - keyboardHeight) {
-                let scrollOffset = maxY - (adminNoticeDetailView.frame.size.height - keyboardHeight)
-                adminNoticeDetailView.frame.origin.y = -scrollOffset
-            }
+            
+            var createButtonFrame = adminNoticeDetailView.createButton.frame
+            createButtonFrame.origin.y = view.frame.height - keyboardHeight - createButtonFrame.height - 10
+            self.adminNoticeDetailView.createButton.frame = createButtonFrame
         }
     }
     @objc private func keyboardWillHide(_ notification: Notification) {
-        adminNoticeDetailView.frame.origin.y = 0
+        let realCreateButtonFrame = self.view.frame.size.height - 88 - self.adminNoticeDetailView.createButton.frame.size.height
+        self.adminNoticeDetailView.createButton.frame.origin.y = realCreateButtonFrame
     }
     @objc private func createButtonTapped() {
         createdAndUpatedContent {
@@ -191,26 +197,26 @@ extension AdminNoticeDetailViewController {
 extension AdminNoticeDetailViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == "400자 이내로 공지사항을 적어주세요!" {
+        if textView.text == "500자 이내로 공지사항을 적어주세요!" {
             textView.text = nil
             textView.textColor = ColorGuide.black
         }
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = "400자 이내로 공지사항을 적어주세요!"
+            textView.text = "500자 이내로 공지사항을 적어주세요!"
             textView.textColor = .lightGray
         }
     }
     func textViewDidChange(_ textView: UITextView) {
-        if adminNoticeDetailView.contentTextView.text.count > 400 {
+        if adminNoticeDetailView.contentTextView.text.count > 500 {
             adminNoticeDetailView.contentTextView.deleteBackward()
         }
-        adminNoticeDetailView.contentNumberLabel.text = "\(adminNoticeDetailView.contentTextView.text.count)/400"
+        adminNoticeDetailView.contentNumberLabel.text = "\(adminNoticeDetailView.contentTextView.text.count)/500"
         
-        if adminNoticeDetailView.contentTextView.text.count > 380 {
-            let attributedString = NSMutableAttributedString(string: "\(adminNoticeDetailView.contentTextView.text.count)/400")
-            attributedString.addAttribute(.foregroundColor, value: ColorGuide.main, range: ("\(adminNoticeDetailView.contentTextView.text.count)/400" as NSString).range(of:"\(adminNoticeDetailView.contentTextView.text.count)"))
+        if adminNoticeDetailView.contentTextView.text.count > 480 {
+            let attributedString = NSMutableAttributedString(string: "\(adminNoticeDetailView.contentTextView.text.count)/500")
+            attributedString.addAttribute(.foregroundColor, value: ColorGuide.main, range: ("\(adminNoticeDetailView.contentTextView.text.count)/500" as NSString).range(of:"\(adminNoticeDetailView.contentTextView.text.count)"))
             adminNoticeDetailView.contentNumberLabel.attributedText = attributedString
         }
     }

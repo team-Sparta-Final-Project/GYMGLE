@@ -69,7 +69,7 @@ class UserRootView: UIView {
         $0.layer.shadowRadius = 1
         $0.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
-    private lazy var noticeText = UILabel().then {
+    lazy var noticeText = UILabel().then {
         $0.textColor = ColorGuide.black
         $0.font = FontGuide.size14
         $0.text = """
@@ -249,10 +249,11 @@ class UserRootView: UIView {
     //❗️
     // MARK: - 데이터 전달 및 받기
     
-    func userDataSetting(userName: String, gymInUserCount: String, yesterUserCount: String) {
+    func userDataSetting(userName: String, gymInUserCount: String, yesterUserCount: String, notice: String) {
         healthName.text = userName
         nowUserNumber.text = gymInUserCount
         yesterUserNumber.text = yesterUserCount
+        noticeText.text = notice
     }
 
 

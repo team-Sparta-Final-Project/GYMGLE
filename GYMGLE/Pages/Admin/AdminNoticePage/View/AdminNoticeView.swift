@@ -59,7 +59,7 @@ private extension AdminNoticeView {
             
             noticeTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             noticeTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -0),
-            noticeTableView.topAnchor.constraint(equalTo: pageTitleLabel.bottomAnchor, constant: 56),
+            noticeTableView.topAnchor.constraint(equalTo: pageTitleLabel.bottomAnchor, constant: 40),
             noticeTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -0),
         ])
     }
