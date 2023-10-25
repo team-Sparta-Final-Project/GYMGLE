@@ -19,7 +19,7 @@ class UserManageView: UIView {
     }
     //MARK: - 설정 함수
     private func configure(){
-        
+        self.backgroundColor = ColorGuide.background
         topLabel()
         CenterSearchBar()
         centerTableView()

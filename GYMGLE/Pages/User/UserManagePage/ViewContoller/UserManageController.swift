@@ -1,5 +1,6 @@
 import UIKit
 import FirebaseDatabase
+import FirebaseAuth
 
 final class UserManageViewController: UIViewController {
     
@@ -14,22 +15,18 @@ final class UserManageViewController: UIViewController {
 
     var filteredUserList: [User] = []
 
-    
     let cellHeight = 56
 
     override func loadView() {
-
         viewConfigure.label.text = pageTitle
-
-        
         view = viewConfigure
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
         
         //❗️ 서치델리게이트와 테이블뷰델리게이트 대리자 선언
+
         viewConfigure.customSearchBar.delegate = self
         viewConfigure.customSearchBar.showsCancelButton = false
         viewConfigure.customSearchBar.setValue("취소", forKey: "cancelButtonText")
@@ -37,12 +34,28 @@ final class UserManageViewController: UIViewController {
         viewConfigure.tableView.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
+    override func viewWillAppear(_ animated: Bool) { 
         navigationController?.navigationBar.isHidden = false
-        
-        // 테이블뷰 데이터 서버에서 받아오기
+        userDataRead {
+            self.cells = DataManager.shared.userList.sorted(by: { $0.startSubscriptionDate < $1.startSubscriptionDate })
+            self.viewConfigure.tableView.reloadData()
+        }
+    }
+}
+
+// MARK: - extension custom func
+
+private extension UserManageViewController {
+    
+    func searchBarIsEmpty() -> Bool {
+        return viewConfigure.customSearchBar.text?.isEmpty ?? true
+    }
+    func isFiltering() -> Bool {
+        return viewConfigure.customSearchBar.isFirstResponder && !searchBarIsEmpty()
+    }
+    func userDataRead(completion: @escaping () -> Void) {
         let ref = Database.database().reference()
-        ref.child("accounts").queryOrdered(byChild: "adminUid").queryEqual(toValue: DataManager.shared.gymUid!).observeSingleEvent(of: .value) { DataSnapshot in
+        ref.child("accounts").queryOrdered(byChild: "adminUid").queryEqual(toValue: DataManager.shared.gymUid!).observeSingleEvent(of: .value) { DataSnapshot  in
             guard let value = DataSnapshot.value as? [String:Any] else { return }
             var temp:[User] = []
             for i in value.values {
@@ -52,26 +65,38 @@ final class UserManageViewController: UIViewController {
                     temp.append(user)
                 } catch let error {
                     print("테스트 - \(error)")
+                    completion()
                 }
             }
             DataManager.shared.userList = temp
+            completion()
         }
-        
-        self.cells = DataManager.shared.userList.sorted(by: { $0.startSubscriptionDate < $1.startSubscriptionDate })
-        self.viewConfigure.tableView.reloadData()
-        
-
-
-
-
     }
-
-    
-    func searchBarIsEmpty() -> Bool {
-        return viewConfigure.customSearchBar.text?.isEmpty ?? true
-    }
-    func isFiltering() -> Bool {
-        return viewConfigure.customSearchBar.isFirstResponder && !searchBarIsEmpty()
+    func userDeleted(completion: @escaping () -> Void, id: String) {
+        // 회원삭제 - 서버
+        if isFiltering() {
+            let ref = Database.database().reference()
+            ref.child("accounts").queryOrdered(byChild: "account/id").queryEqual(toValue: "\(id)").observeSingleEvent(of: .value) { DataSnapshot in
+                guard let value = DataSnapshot.value as? [String:Any] else { return }
+                var uid = ""
+                for i in value.keys {
+                    uid = i
+                }
+                ref.child("accounts/\(uid)").removeValue()
+                completion()
+            }
+        } else {
+            let ref = Database.database().reference()
+            ref.child("accounts").queryOrdered(byChild: "account/id").queryEqual(toValue: "\(id)").observeSingleEvent(of: .value) { DataSnapshot in
+                guard let value = DataSnapshot.value as? [String:Any] else { return }
+                var uid = ""
+                for i in value.keys {
+                    uid = i
+                }
+                ref.child("accounts/\(uid)").removeValue()
+                completion()
+            }
+        }
     }
 }
 
@@ -110,9 +135,7 @@ extension UserManageViewController: UITableViewDataSource {
 
 }
 
-
-
-
+// MARK: - UITableViewDelegate
 extension UserManageViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -121,44 +144,47 @@ extension UserManageViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
         if editingStyle == .delete {
-            
-            let id = self.cells[indexPath.row].account.id
-
-            // 회원삭제 - 서버
-            let ref = Database.database().reference()
-            ref.child("accounts").queryOrdered(byChild: "account/id").queryEqual(toValue: "\(id)").observeSingleEvent(of: .value) { DataSnapshot in
-                guard let value = DataSnapshot.value as? [String:Any] else { return }
-                var uid = ""
-                for i in value.keys {
-                    uid = i
+            if isFiltering() {
+                DispatchQueue.main.async {
+                    self.userDeleted(completion: {
+                        self.filteredUserList.remove(at: indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .automatic)
+                        
+                    }, id: self.filteredUserList[indexPath.row].account.id)
                 }
-                ref.child("accounts/\(uid)").removeValue()
-                
-            }
-            
-            cells.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            } else {
+                DispatchQueue.main.async {
+                    self.userDeleted(completion: {
+                        self.cells.remove(at: indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .automatic)
+                    }, id: self.cells[indexPath.row].account.id)
+                }
 
+            }
+            self.viewConfigure.tableView.reloadData()
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cellInfo = cells[indexPath.row]
-        
         let userRegisterVC = UserRegisterViewController()
         
-        userRegisterVC.emptyUser = cellInfo
-        userRegisterVC.nowEdit = true
-        userRegisterVC.editIndex = indexPath.row
+        if isFiltering() {
+            let filterCellInfo = filteredUserList[indexPath.row]
+            userRegisterVC.emptyUser = filterCellInfo
+            userRegisterVC.nowEdit = true
+            userRegisterVC.editIndex = indexPath.row
+        } else {
+            let cellInfo = cells[indexPath.row]
+            userRegisterVC.emptyUser = cellInfo
+            userRegisterVC.nowEdit = true
+            userRegisterVC.editIndex = indexPath.row
+        }
         
         self.navigationController?.pushViewController(userRegisterVC, animated: true)
-
     }
-    
 }
 
 // MARK: - searchbar Delegate
-
 extension UserManageViewController: UISearchBarDelegate {
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
