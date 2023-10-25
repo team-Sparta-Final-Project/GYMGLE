@@ -8,6 +8,8 @@
 import SnapKit
 import UIKit
 import SwiftUI
+import FirebaseAuth
+import FirebaseCore
 import FirebaseDatabase
 
 class UserRootViewController: UIViewController {
@@ -34,6 +36,7 @@ class UserRootViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //        getLastWeek()
+        checkEndSub()
         setNowUserNumber()
     }
     
@@ -80,6 +83,15 @@ class UserRootViewController: UIViewController {
                     }
                 }
             }
+        }
+    }
+    // 등록기간 만료시 accountType 변경
+    func checkEndSub() {
+        if DataManager.shared.userInfo!.endSubscriptionDate < Date() {
+            let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/account")
+            
+            ref.updateChildValues(["accountType": 3])
+            first.inBtn.isEnabled = false
         }
     }
     
