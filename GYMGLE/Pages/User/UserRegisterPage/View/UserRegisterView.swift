@@ -21,6 +21,7 @@ class UserRegisterView: UIView {
     }
     //MARK: - 뷰에 요소 배치 함수 (순서 조심)
     private func configure(){
+        self.backgroundColor = ColorGuide.background
         
         topLabel()
         bottomButton()

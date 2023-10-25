@@ -1,5 +1,6 @@
 import UIKit
 import FirebaseDatabase
+import FirebaseAuth
 
 final class UserManageViewController: UIViewController {
     
@@ -23,7 +24,9 @@ final class UserManageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        
+        //❗️ 서치델리게이트와 테이블뷰델리게이트 대리자 선언
+
         viewConfigure.customSearchBar.delegate = self
         viewConfigure.customSearchBar.showsCancelButton = false
         viewConfigure.customSearchBar.setValue("취소", forKey: "cancelButtonText")
@@ -156,6 +159,7 @@ extension UserManageViewController: UITableViewDelegate {
                         tableView.deleteRows(at: [indexPath], with: .automatic)
                     }, id: self.cells[indexPath.row].account.id)
                 }
+
             }
             self.viewConfigure.tableView.reloadData()
         }

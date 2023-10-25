@@ -40,7 +40,6 @@ class UserRegisterViewIDPWController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
         self.viewConfigure.button.backgroundColor = .lightGray
         viewConfigure.button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         

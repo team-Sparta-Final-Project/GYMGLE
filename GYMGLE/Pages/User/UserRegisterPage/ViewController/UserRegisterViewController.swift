@@ -42,7 +42,6 @@ final class UserRegisterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
         self.viewConfigure.button.backgroundColor = .lightGray
         self.viewConfigure.button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         
