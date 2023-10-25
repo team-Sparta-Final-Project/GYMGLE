@@ -20,6 +20,9 @@ class UserRootViewController: UIViewController {
     //    var user: User?
     //    var gymInfo: GymInfo?
     var num = 0
+    var totalExerciseForUser: Double = 0
+    var totalExercise: Double = 0
+    var totalUserCount: Double = 0
     
     override func loadView() {
         view = first
@@ -42,6 +45,21 @@ class UserRootViewController: UIViewController {
         //        getLastWeek()
         //        setNowUserNumber()
         checkEndSub()
+        calculateTotalExerciseTimeForUser() {
+            self.calculateTotalExerciseTime {
+                self.getTotalUserCount {
+                    let average = self.totalExercise / self.totalUserCount
+                    let times = (self.totalExerciseForUser / average - 1) * 100
+                    let roundedTimes = times.rounded()
+                    if roundedTimes >= 0 {
+                        self.first.chartMidText.text = String("평균보다 \(roundedTimes)% 많습니다!")
+                    } else {
+                        self.first.chartMidText.text = String("평균보다 \(abs(roundedTimes))% 적습니다.")
+                        self.first.chartBottomText.text = "꾸준함이 중요하죠!"
+                    }
+                }
+            }
+        }
         
         let timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(gogogo), userInfo: nil, repeats: true)
         
@@ -177,25 +195,23 @@ class UserRootViewController: UIViewController {
     
     func decoyLogMaker(){
         
-        let user = Auth.auth().currentUser
-        let userUid = user?.uid ?? ""
-        
-        let oneDay:Double = 60*60*24
-        let oneWeek:Double = oneDay*7
-        for i in 1...10 {
-            let userLog = InAndOut(id: "1분후 테스트", inTime: Date(), outTime: Date(timeIntervalSinceNow: Double(5*i)), sinceInAndOutTime: 0.0)
-            do {
-                let userData = try JSONEncoder().encode(userLog)
-                let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
-                databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").childByAutoId().setValue(userJSON)
-
-                
-            }catch{
-                print("테스트 - 캐치됨")
-            }
-        }
-        
-        
+//        let user = Auth.auth().currentUser
+//        let userUid = user?.uid ?? ""
+//        
+//        let oneDay:Double = 60*60*24
+//        let oneWeek:Double = oneDay*7
+//        for i in 1...10 {
+//            let userLog = InAndOut(id: "1분후 테스트", inTime: Date(), outTime: Date(timeIntervalSinceNow: Double(5*i)), sinceInAndOutTime: 0.0)
+//            do {
+//                let userData = try JSONEncoder().encode(userLog)
+//                let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
+//                databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").childByAutoId().setValue(userJSON)
+//
+//                
+//            }catch{
+//                print("테스트 - 캐치됨")
+//            }
+//        }
         
         //서버에 올리기 테스트
         
@@ -216,8 +232,70 @@ class UserRootViewController: UIViewController {
         }
     }
     
+    func calculateTotalExerciseTimeForUser(completion: @escaping () -> Void) {
+        let ref = Database.database().reference().child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog")
+        
+        let oneWeekAgo = Date().addingTimeInterval(-7*24*60*60).timeIntervalSinceReferenceDate
+        
+        let query = ref.queryOrdered(byChild: "id").queryEqual(toValue: DataManager.shared.userInfo?.account.id)
+        
+        query.observeSingleEvent(of: .value) { (snapshot) in
+            var totalExerciseTime: TimeInterval = 0
+            
+            for childSnapshot in snapshot.children {
+                guard let snapshot = childSnapshot as? DataSnapshot,
+                      let logData = snapshot.value as? [String: Any],
+                      let inTime = logData["inTime"] as? TimeInterval,
+                      let outTime = logData["outTime"] as? TimeInterval else {
+                    continue
+                }
+                
+                if outTime > oneWeekAgo {
+                    let exerciseTime = outTime - inTime
+                    totalExerciseTime += exerciseTime
+                }
+            }
+            self.totalExerciseForUser = totalExerciseTime
+            completion()
+        }
+    }
     
+    func calculateTotalExerciseTime(completion: @escaping () -> Void) {
+        let ref = Database.database().reference().child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog")
+        
+        let oneWeekAgo = Date().addingTimeInterval(-7*24*60*60).timeIntervalSinceReferenceDate
+        
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            var totalExerciseTime: TimeInterval = 0
+            
+            for childSnapshot in snapshot.children {
+                guard let snapshot = childSnapshot as? DataSnapshot,
+                      let logData = snapshot.value as? [String: Any],
+                      let inTime = logData["inTime"] as? TimeInterval,
+                      let outTime = logData["outTime"] as? TimeInterval else {
+                    continue
+                }
+                
+                if outTime > oneWeekAgo {
+                    let exerciseTime = outTime - inTime
+                    totalExerciseTime += exerciseTime
+                }
+            }
+            self.totalExercise = totalExerciseTime
+            completion()
+        }
+    }
     
+    func getTotalUserCount(completion: @escaping () -> Void) {
+        let ref = Database.database().reference().child("accounts")
+        let query = ref.queryOrdered(byChild: "adminUid").queryEqual(toValue: DataManager.shared.gymUid)
+        
+        query.observeSingleEvent(of: .value) { (snapshot) in
+            let count = snapshot.childrenCount
+            self.totalUserCount = Double(count)
+            completion()
+        }
+    }
 }
 
 //#if DEBUG
