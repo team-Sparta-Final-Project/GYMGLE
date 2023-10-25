@@ -45,6 +45,7 @@ class AdminRegisterViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         navigationController?.navigationBar.isHidden = false
+        setCustomBackButton()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -72,6 +73,11 @@ private extension AdminRegisterViewController {
         adminRegisterView.adminNumberTextField.delegate = self
         adminRegisterView.phoneTextField.delegate = self
         adminRegisterView.registerNumberTextField.delegate = self
+    }
+    
+    func setCustomBackButton() {
+        navigationController?.navigationBar.topItem?.title = "헬스장 등록"
+        navigationController?.navigationBar.tintColor = .black
     }
 }
 

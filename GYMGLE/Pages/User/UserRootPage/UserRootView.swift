@@ -146,12 +146,12 @@ class UserRootView: UIView {
         $0.text = "저번주 나의 운동량은.."
     }
     
-    private lazy var chartMidText = UILabel().then {
+    lazy var chartMidText = UILabel().then {
         $0.textColor = ColorGuide.goldTier
-        $0.font = FontGuide.size32Bold
+        $0.font = FontGuide.size24Bold
         $0.text = "상위 4% 에요!"
     }
-    private lazy var chartBottomText = UILabel().then {
+    lazy var chartBottomText = UILabel().then {
         $0.textColor = ColorGuide.main
         $0.font = FontGuide.size14Bold
         $0.text = "와우! 운동 러버시군요!"

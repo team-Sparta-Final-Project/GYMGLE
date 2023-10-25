@@ -13,7 +13,7 @@ final class AdminNoticeView: UIView {
     private lazy var pageTitleLabel: UILabel = {
         let label = UILabel()
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size32Bold, textAligment: .center)
-        label.text = "공지사항"
+        label.text = ""
         return label
     }()
     

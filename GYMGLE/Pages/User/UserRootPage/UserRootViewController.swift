@@ -8,6 +8,8 @@
 import SnapKit
 import UIKit
 import SwiftUI
+import FirebaseAuth
+import FirebaseCore
 import FirebaseDatabase
 import FirebaseAuth
 
@@ -18,6 +20,9 @@ class UserRootViewController: UIViewController {
     //    var user: User?
     //    var gymInfo: GymInfo?
     var num = 0
+    var totalExerciseForUser: Double = 0
+    var totalExercise: Double = 0
+    var totalUserCount: Double = 0
     
     override func loadView() {
         view = first
@@ -39,6 +44,24 @@ class UserRootViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //        getLastWeek()
+        //        setNowUserNumber()
+        checkEndSub()
+        calculateTotalExerciseTimeForUser() {
+            self.calculateTotalExerciseTime {
+                self.getTotalUserCount {
+                    let average = self.totalExercise / self.totalUserCount
+                    let times = (self.totalExerciseForUser / average - 1) * 100
+                    let roundedTimes = times.rounded()
+                    if roundedTimes >= 0 {
+                        self.first.chartMidText.text = String("평균보다 \(roundedTimes)% 많습니다!")
+                    } else {
+                        self.first.chartMidText.text = String("평균보다 \(abs(roundedTimes))% 적습니다.")
+                        self.first.chartBottomText.text = "꾸준함이 중요하죠!"
+                    }
+                }
+            }
+        }
+        
         let timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(gogogo), userInfo: nil, repeats: true)
         //공지사항 읽어옴
         noticeRead {
@@ -99,56 +122,15 @@ class UserRootViewController: UIViewController {
             }
         }
     }
-
-
-//    func updateYesterUserNumber(completion: @escaping (Int) -> Void) {
-//        //        파이어 베이스의 경로 찾기 / child 를 통해서 하위폴더 조회 가능
-//        let gymLogRef = databaseRef.child("gymInAndOutLog")
-//        //        날짜 데이터를 받기위한 Calendar 변수선언
-//        let calendar = Calendar.current
-//        // 현재 날짜 및 시간 가져오기
-//        let currentDate = Date()
-//        // 이전 주의 시작 날짜 가져오기 (현재 날짜로부터 -7일)
-//        let lastWeek = calendar.date(byAdding: .day, value: -7, to: currentDate)!
-//        // 요일과 시간대 가져오기 (예: 월요일, 8AM)
-//        let day = calendar.component(.weekday, from: lastWeek)
-//        let hour = calendar.component(.hour, from: lastWeek)
-//        let minute = calendar.component(.minute, from: lastWeek)
-//        // 'isInGym'이 True이고 'sinceInAndOutTime'가 0보다 큰 사용자 수 확인
-//        gymLogRef.observeSingleEvent(of: .value) { (snapshot) in
-//            if snapshot.exists() {
-////                user 인원 0 명으로 시작해서 추가되는 형식
-//                var userCount = 0
-//                for child in snapshot.children {
-//                    if let childSnapshot = child as? DataSnapshot, let userData = childSnapshot.value as? [String: Any] {
-//                        if let isInGym = userData["isInGym"] as? Bool {
-//                            // 현재 요일 및 시간대와 일치하며 'isInGym'이 True이고 'sinceInAndOutTime'이 0보다 큰 경우
-////                       calendar.component(.weekday, from: lastWeek) > 날짜의 요일을 가져오는 부분 /                        day는 lastWeek에서 가져온 요일 / hour는 저번주 시간 / minute은 저번주 분
-//                            if calendar.component(.weekday, from: lastWeek) == day &&
-//                               calendar.component(.hour, from: lastWeek) == hour &&
-//                               calendar.component(.minute, from: lastWeek) == minute &&
-////        저번주 같은요일 시간 분에 isInGym이 true 였고 , sinceInAndOutTime값이 0보다 컸으면 userCount를 +1
-//                               isInGym == true {
-////                                userCount를 +1 시키는것을 viewDidLoad에서 비동기작업 실행코드로써 사용
-//                                userCount += 1
-////                                self.first.yesterUserNumber.text = String(userCount)
-//                            }
-//                        }
-//                    }
-//                }
-//                // userCount를 이용하여 first.yesterUserNumber.text 값을 업데이트
-//                completion(userCount)
-//            } else {
-//                completion(0) // 일치하는 데이터가 없는 경우 0을 반환
-//            }
-//        }
-//        // 사용 예시
-//        updateYesterUserNumber { count in
-//            print("저번주 같은 요일과 시간에 'isInGym'이 True인 사용자 수: \(count)")
-//            // first.yesterUserNumber.text 업데이트 코드를 여기에 추가
-//            // count 값을 사용하여 텍스트 업데이트
-//        }
-
+    // 등록기간 만료시 accountType 변경
+    func checkEndSub() {
+        if DataManager.shared.userInfo!.endSubscriptionDate < Date() {
+            let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/account")
+            
+            ref.updateChildValues(["accountType": 3])
+            first.inBtn.isEnabled = false
+        }
+    }
     
 
     
@@ -256,7 +238,6 @@ class UserRootViewController: UIViewController {
     //    }
     
     func decoyLogMaker(){
-//        
 //        let user = Auth.auth().currentUser
 //        let userUid = user?.uid ?? ""
 //        
@@ -274,8 +255,6 @@ class UserRootViewController: UIViewController {
 //                print("테스트 - 캐치됨")
 //            }
 //        }
-        
-        
         
         //서버에 올리기 테스트
         
@@ -296,8 +275,70 @@ class UserRootViewController: UIViewController {
 //        }
     }
     
+    func calculateTotalExerciseTimeForUser(completion: @escaping () -> Void) {
+        let ref = Database.database().reference().child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog")
+        
+        let oneWeekAgo = Date().addingTimeInterval(-7*24*60*60).timeIntervalSinceReferenceDate
+        
+        let query = ref.queryOrdered(byChild: "id").queryEqual(toValue: DataManager.shared.userInfo?.account.id)
+        
+        query.observeSingleEvent(of: .value) { (snapshot) in
+            var totalExerciseTime: TimeInterval = 0
+            
+            for childSnapshot in snapshot.children {
+                guard let snapshot = childSnapshot as? DataSnapshot,
+                      let logData = snapshot.value as? [String: Any],
+                      let inTime = logData["inTime"] as? TimeInterval,
+                      let outTime = logData["outTime"] as? TimeInterval else {
+                    continue
+                }
+                
+                if outTime > oneWeekAgo {
+                    let exerciseTime = outTime - inTime
+                    totalExerciseTime += exerciseTime
+                }
+            }
+            self.totalExerciseForUser = totalExerciseTime
+            completion()
+        }
+    }
     
+    func calculateTotalExerciseTime(completion: @escaping () -> Void) {
+        let ref = Database.database().reference().child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog")
+        
+        let oneWeekAgo = Date().addingTimeInterval(-7*24*60*60).timeIntervalSinceReferenceDate
+        
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            var totalExerciseTime: TimeInterval = 0
+            
+            for childSnapshot in snapshot.children {
+                guard let snapshot = childSnapshot as? DataSnapshot,
+                      let logData = snapshot.value as? [String: Any],
+                      let inTime = logData["inTime"] as? TimeInterval,
+                      let outTime = logData["outTime"] as? TimeInterval else {
+                    continue
+                }
+                
+                if outTime > oneWeekAgo {
+                    let exerciseTime = outTime - inTime
+                    totalExerciseTime += exerciseTime
+                }
+            }
+            self.totalExercise = totalExerciseTime
+            completion()
+        }
+    }
     
+    func getTotalUserCount(completion: @escaping () -> Void) {
+        let ref = Database.database().reference().child("accounts")
+        let query = ref.queryOrdered(byChild: "adminUid").queryEqual(toValue: DataManager.shared.gymUid)
+        
+        query.observeSingleEvent(of: .value) { (snapshot) in
+            let count = snapshot.childrenCount
+            self.totalUserCount = Double(count)
+            completion()
+        }
+    }
 }
 
 //#if DEBUG

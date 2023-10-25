@@ -5,7 +5,7 @@ import FirebaseAuth
 final class UserManageViewController: UIViewController {
     
     let viewConfigure = UserManageView()
-    let pageTitle = "회원 관리"
+    let pageTitle = ""
     let buttonTitle = "등록하기"
     
     let shared = DataManager.shared
@@ -36,6 +36,7 @@ final class UserManageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) { 
         navigationController?.navigationBar.isHidden = false
+        setCustomBackButton()
         userDataRead {
             self.cells = DataManager.shared.userList.sorted(by: { $0.startSubscriptionDate < $1.startSubscriptionDate })
             self.viewConfigure.tableView.reloadData()
@@ -97,6 +98,11 @@ private extension UserManageViewController {
                 completion()
             }
         }
+    }
+    
+    func setCustomBackButton() {
+        navigationController?.navigationBar.topItem?.title = "회원관리"
+        navigationController?.navigationBar.tintColor = .black
     }
 }
 
