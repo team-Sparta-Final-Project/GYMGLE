@@ -15,7 +15,7 @@ import FirebaseAuth
 
 class UserRootViewController: UIViewController {
     let databaseRef = Database.database().reference()
-
+    
     let first = UserRootView()
     //    var user: User?
     //    var gymInfo: GymInfo?
@@ -37,7 +37,7 @@ class UserRootViewController: UIViewController {
         // 테스트데이터생성기
         decoyLogMaker()
         getLastWeekUserNumber()
-
+        
     }
     
     
@@ -73,7 +73,7 @@ class UserRootViewController: UIViewController {
     @objc func gogogo(){
         getWorkingUser {
             self.first.nowUserNumber.text = "\(self.num)"
-
+            
         }
     }
     
@@ -132,7 +132,7 @@ class UserRootViewController: UIViewController {
         }
     }
     
-
+    
     
     func setNowUserNumber() {
         let ref = Database.database().reference().child("accounts")
@@ -154,11 +154,11 @@ class UserRootViewController: UIViewController {
             self.first.nowUserNumber.text = String(numberOfUser)
         }
     }
-
+    
     func noticeRead(completion: @escaping() -> Void) {
         databaseRef.child("users/\(DataManager.shared.gymUid!)/noticeList").observeSingleEvent(of: .value) { DataSnapshot in
             guard let value = DataSnapshot.value as? [String:[String:Any]] else { return }
-                      do {
+            do {
                 let jsonArray = value.values.compactMap { $0 as [String: Any] }
                 let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
                 let notices = try JSONDecoder().decode([Notice].self, from: jsonData)
@@ -169,48 +169,36 @@ class UserRootViewController: UIViewController {
             }
         }
     }
-
-//    Date().timeIntervalSinceReferenceDate > 파이어 베이스에 저장되는 타입
-//    Date().timeIntervalSinceNow > 현재시간
+    
+    //    Date().timeIntervalSinceReferenceDate > 파이어 베이스에 저장되는 타입
+    //    Date().timeIntervalSinceNow > 현재시간
     
     func getLastWeekUserNumber(day: Int? = nil, hour: Int? = nil, minute: Int? = nil) {
         let oneWeekAgo = Date().addingTimeInterval(-7*24*60*60).timeIntervalSinceReferenceDate
         //    파이어베이스 경로에서 하위폴더인 gymInAndOutLog를 조회
         let ref = Database.database().reference().child("users").child(DataManager.shared.gymUid!).child("gymInAndOutLog")
-        let currentDate = Date()
-        // 현재 날짜에서 7일을 뺀 날짜를 계산
-        let calendar = Calendar.current
-//        일주일전 데이터 조회
-        let lastWeekDate = calendar.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
-//        Query를 사용하여 지난주 같은 요일, 같은 시간대에 입장한 사용자를 필터링
-//        adminUid 필드값을 기준으로 데이터를 정렬
-//        adminUid 필드값이 DataManager.shared.gymUid 와 일치하는 데이터만 검색 ( 같은 헬스장인지 확인 절차 )
-//            .queryStarting(atValue: oneWeekAgo, childKey: "inTime" )
-//        Firebase 데이터 베이스에서 데이터를 한번만 읽어오도록 하는 관찰 작업 시작 ( .value 이벤트를 관찰하기때문에 데이터 변경시마다 이 작업 실행 )
+        //        Query를 사용하여 지난주 같은 요일, 같은 시간대에 입장한 사용자를 필터링
+        //        adminUid 필드값을 기준으로 데이터를 정렬
+        //        adminUid 필드값이 DataManager.shared.gymUid 와 일치하는 데이터만 검색 ( 같은 헬스장인지 확인 절차 )
+        //            .queryStarting(atValue: oneWeekAgo, childKey: "inTime" )
+        //        Firebase 데이터 베이스에서 데이터를 한번만 읽어오도록 하는 관찰 작업 시작 ( .value 이벤트를 관찰하기때문에 데이터 변경시마다 이 작업 실행 )
         ref.observeSingleEvent(of: .value) { (snapshot) in
-//        스냅샷에서 데이터를 가져온 후 처리하기전 언래핑과 형변환 해주는 부분
+            //        스냅샷에서 데이터를 가져온 후 처리하기전 언래핑과 형변환 해주는 부분
             guard let data = snapshot.children.allObjects as? [DataSnapshot] else {
                 return
             }
-//          data 배열에 있는 각 데이터 스냅샷 userSnapShot 에 대한 필터링
+            //          data 배열에 있는 각 데이터 스냅샷 userSnapShot 에 대한 필터링
             let numberOfUser = data.filter { userSnapshot in
-//          각 데이터 스냅샷 userSnapShot 의 값에서 필요한 데이터를 추출 ( inTime, outTime ) 추출한 데이터는 userData에 딕셔너리 형태로 저장
+                //          각 데이터 스냅샷 userSnapShot 의 값에서 필요한 데이터를 추출 ( inTime, outTime ) 추출한 데이터는 userData에 딕셔너리 형태로 저장
                 if let userData = userSnapshot.value as? [String: Any],
                    let inTime = userData["inTime"] as? TimeInterval,
                    let outTime = userData["outTime"] as? TimeInterval {
-//                    inTime과 outTime을 이용하여 inDate와 outDate 라는 날짜객체 생성
-                    let inDate = Date(timeIntervalSinceReferenceDate: inTime)
-                    let outDate = Date(timeIntervalSinceReferenceDate: outTime)
-//                    inDate의 요일과 lastWeekDate가 같은요일인지 확인 /
-                    if calendar.component(.weekday, from: inDate) == calendar.component(.weekday, from: lastWeekDate) &&
-//                    inDate가 lastWeekDate보다 크거나 같고 , lastWeekDate가 outDate보다 이전이거나 같은 경우를 확인
-//                    ( lastWeekDate가 입실시간 & 퇴실시간 사이에 있는지 확인 )
-                       inDate >= lastWeekDate && lastWeekDate <= outDate {
+                    if inTime <= oneWeekAgo && outTime >= oneWeekAgo {
                         return true
                     }
                 }
                 return false
-//               count > 필터링된 데이터의 수를 세어서 반환 ( lastWeekDate와 일치하는 조건을 가진 사용자 수를 나타냄 )
+                //               count > 필터링된 데이터의 수를 세어서 반환 ( lastWeekDate와 일치하는 조건을 가진 사용자 수를 나타냄 )
             }.count
             self.first.yesterUserNumber.text = String(numberOfUser)
         }
@@ -238,41 +226,41 @@ class UserRootViewController: UIViewController {
     //    }
     
     func decoyLogMaker(){
-//        let user = Auth.auth().currentUser
-//        let userUid = user?.uid ?? ""
-//        
-//        let oneDay:Double = 60*60*24
-//        let oneWeek:Double = oneDay*7
-//        for i in 1...10 {
-//            let userLog = InAndOut(id: "1분후 테스트", inTime: Date(), outTime: Date(timeIntervalSinceNow: Double(5*i)), sinceInAndOutTime: 0.0)
-//            do {
-//                let userData = try JSONEncoder().encode(userLog)
-//                let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
-//                databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").childByAutoId().setValue(userJSON)
-//
-//                
-//            }catch{
-//                print("테스트 - 캐치됨")
-//            }
-//        }
+        //        let user = Auth.auth().currentUser
+        //        let userUid = user?.uid ?? ""
+        //
+        //        let oneDay:Double = 60*60*24
+        //        let oneWeek:Double = oneDay*7
+        //        for i in 1...10 {
+        //            let userLog = InAndOut(id: "1분후 테스트", inTime: Date(), outTime: Date(timeIntervalSinceNow: Double(5*i)), sinceInAndOutTime: 0.0)
+        //            do {
+        //                let userData = try JSONEncoder().encode(userLog)
+        //                let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
+        //                databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").childByAutoId().setValue(userJSON)
+        //
+        //
+        //            }catch{
+        //                print("테스트 - 캐치됨")
+        //            }
+        //        }
         
         //서버에 올리기 테스트
         
-
+        
         
         
     }
     
     
     func getWorkingUser( completion: @escaping () -> () ){
-//        let refDateNow = Date().timeIntervalSinceReferenceDate
-//        
-//        databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").queryOrdered(byChild: "outTime").queryStarting(afterValue: refDateNow ).observeSingleEvent(of: .value) { DataSnapshot in
-//            guard let value = DataSnapshot.value as? [String:Any] else { return }
-//            //print("테스트 - \(value)")
-//            self.num = value.values.count
-//            completion()
-//        }
+        //        let refDateNow = Date().timeIntervalSinceReferenceDate
+        //
+        //        databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").queryOrdered(byChild: "outTime").queryStarting(afterValue: refDateNow ).observeSingleEvent(of: .value) { DataSnapshot in
+        //            guard let value = DataSnapshot.value as? [String:Any] else { return }
+        //            //print("테스트 - \(value)")
+        //            self.num = value.values.count
+        //            completion()
+        //        }
     }
     
     func calculateTotalExerciseTimeForUser(completion: @escaping () -> Void) {
