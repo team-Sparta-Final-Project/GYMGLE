@@ -1,5 +1,6 @@
 import UIKit
 import FirebaseDatabase
+import FirebaseAuth
 
 final class UserManageViewController: UIViewController {
     
@@ -27,7 +28,6 @@ final class UserManageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
         
         //❗️ 서치델리게이트와 테이블뷰델리게이트 대리자 선언
         viewConfigure.customSearchBar.delegate = self
@@ -133,8 +133,25 @@ extension UserManageViewController: UITableViewDelegate {
                     uid = i
                 }
                 ref.child("accounts/\(uid)").removeValue()
-                
+
             }
+            
+            // 계정 삭제
+//            if let user = Auth.auth().currentUser {
+//                user.delete { error in
+//                    if let error = error {
+//                        print("delete Error : ", error)
+//                    } else {
+//                        let userRef = Database.database().reference().child("accounts").child(user.uid)
+//                        userRef.removeValue()
+//                    }
+//                }
+//            } else {
+//                print("로그인 정보가 존재하지 않습니다.")
+//            }
+            
+            
+            
             
             cells.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)

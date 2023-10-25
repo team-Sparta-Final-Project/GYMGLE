@@ -9,6 +9,7 @@ import SnapKit
 import UIKit
 import SwiftUI
 import FirebaseDatabase
+import FirebaseAuth
 
 class UserRootViewController: UIViewController {
     let databaseRef = Database.database().reference()
@@ -16,7 +17,7 @@ class UserRootViewController: UIViewController {
     let first = UserRootView()
     //    var user: User?
     //    var gymInfo: GymInfo?
-    
+    var num = 0
     
     override func loadView() {
         view = first
@@ -28,14 +29,28 @@ class UserRootViewController: UIViewController {
         super.viewDidLoad()
         first.inBtn.addTarget(self, action: #selector(inButtonClick), for: .touchUpInside)
         first.outBtn.addTarget(self, action: #selector(outButtonClick), for: .touchUpInside)
+        
+        // 테스트데이터생성기
+        decoyLogMaker()
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //        getLastWeek()
-        setNowUserNumber()
+//        setNowUserNumber()
+        
+        let timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(gogogo), userInfo: nil, repeats: true)
+        
     }
+    
+    
+    @objc func gogogo(){
+        getWorkingUser {
+            self.first.nowUserNumber.text = "\(self.num)"
+        }
+    }
+    
     
     @objc func inButtonClick() {
         let QrCodeViewController = QrCodeViewController()
@@ -145,6 +160,52 @@ class UserRootViewController: UIViewController {
             self.first.nowUserNumber.text = String(numberOfUser)
         }
     }
+    
+    
+    
+    func decoyLogMaker(){
+        
+        let user = Auth.auth().currentUser
+        let userUid = user?.uid ?? ""
+        
+        let oneDay:Double = 60*60*24
+        let oneWeek:Double = oneDay*7
+        for i in 1...10 {
+            let userLog = InAndOut(id: "1분후 테스트", inTime: Date(), outTime: Date(timeIntervalSinceNow: Double(5*i)), sinceInAndOutTime: 0.0)
+            do {
+                let userData = try JSONEncoder().encode(userLog)
+                let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
+                databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").childByAutoId().setValue(userJSON)
+
+                
+            }catch{
+                print("테스트 - 캐치됨")
+            }
+        }
+        
+        
+        
+        //서버에 올리기 테스트
+        
+
+        
+        
+    }
+    
+    
+    func getWorkingUser( completion: @escaping () -> () ){
+        let refDateNow = Date().timeIntervalSinceReferenceDate
+        
+        databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").queryOrdered(byChild: "outTime").queryStarting(afterValue: refDateNow ).observeSingleEvent(of: .value) { DataSnapshot in
+            guard let value = DataSnapshot.value as? [String:Any] else { return }
+            print("테스트 - \(value)")
+            self.num = value.values.count
+            completion()
+        }
+    }
+    
+    
+    
 }
 
 //#if DEBUG
