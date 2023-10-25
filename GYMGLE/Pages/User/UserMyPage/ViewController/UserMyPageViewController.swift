@@ -39,8 +39,10 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
             break
         case 1:
             // 공지사항을 선택한 경우
-            let vc = AdminNoticeViewController()
+            let vc = UINavigationController(rootViewController: AdminNoticeViewController())
+            vc.isAdmin = false
             present(vc, animated: true)
+
             break
         case 2:
             // 로그아웃을 선택한 경우
@@ -86,14 +88,15 @@ extension UserMyPageViewController {
                 if let error = error {
                     print("delete Error : ", error)
                 } else {
-                    let adminLoginVC = AdminLoginViewController()
-                    self.navigationController?.pushViewController(adminLoginVC, animated: true)
+                    self.signOut()
+                    let vc = UINavigationController(rootViewController: InitialViewController())
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                    // 데이터베이스에서 삭제
+                    let userRef = Database.database().reference().child("accounts").child(user.uid)
+                    userRef.removeValue()
                 }
             }
-            // 데이터베이스에서 삭제
-            let userRef = Database.database().reference().child("accounts").child(user.uid)
-            userRef.removeValue()
-            signOut()
         } else {
             print("로그인 정보가 존재하지 않습니다.")
         }

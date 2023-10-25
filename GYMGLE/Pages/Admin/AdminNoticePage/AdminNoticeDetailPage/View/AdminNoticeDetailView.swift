@@ -21,6 +21,7 @@ final class AdminNoticeDetailView: UIView {
         button.buttonMakeUI(backgroundColor: ColorGuide.main, cornerRadius: 10, borderWidth: 0.0, borderColor: UIColor.clear.cgColor, setTitle: "삭제", font: FontGuide.size19, setTitleColor: .white)
         return button
     }()
+    
     private let topDivider: UIView = {
         let divider = UIView()
         divider.backgroundColor = ColorGuide.textHint.withAlphaComponent(0.4)
@@ -57,10 +58,11 @@ final class AdminNoticeDetailView: UIView {
             .clear.cgColor, setTitle: "등록하기", font: FontGuide.size19Bold, setTitleColor: UIColor.white)
         return button
     }()
+    
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = ColorGuide.background
         viewMakeUI()
     }
     required init?(coder: NSCoder) {
@@ -87,7 +89,7 @@ private extension AdminNoticeDetailView {
             topDivider.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
             topDivider.heightAnchor.constraint(equalToConstant: 2),
             
-            contentTextView.topAnchor.constraint(equalTo: self.topDivider.bottomAnchor, constant: 8),
+            contentTextView.topAnchor.constraint(equalTo: self.topDivider.bottomAnchor, constant: 0),
             contentTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             contentTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
             contentTextView.bottomAnchor.constraint(equalTo: self.bottomDivider.topAnchor, constant: 0),

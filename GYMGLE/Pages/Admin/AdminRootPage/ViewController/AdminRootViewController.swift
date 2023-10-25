@@ -11,25 +11,24 @@ import FirebaseCore
 import FirebaseDatabase
 
 final class AdminRootViewController: UIViewController {
+    // MARK: - properties
     
     private let adminRootView = AdminRootView()
     var isAdmin: Bool?
     var ref = Database.database().reference()
+    
     // MARK: - life cycle
     
     override func loadView() {
         view = adminRootView
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         allButtonTapped()
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         configuredView()
     }
-    
 }
 
 // MARK: - extension
@@ -112,11 +111,9 @@ extension AdminRootViewController {
 }
 
 // MARK: - Firebase Auth
-
-extension AdminRootViewController {
+private extension AdminRootViewController {
     
     // MARK: - 로그아웃
-    
     func signOut() {
         let firebaseAuth = Auth.auth()
         do {
@@ -125,7 +122,6 @@ extension AdminRootViewController {
     }
     
     // MARK: - 회원탈퇴
-    
     func deleteAccount() {
         // 계정 삭제
         if let user = Auth.auth().currentUser {
