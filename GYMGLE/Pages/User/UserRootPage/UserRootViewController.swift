@@ -13,10 +13,6 @@ import FirebaseAuth
 
 class UserRootViewController: UIViewController {
     let databaseRef = Database.database().reference()
-    
-    let specificDay = "Monday" // 검색할 요일
-    let specificHour = 8 // 검색할 시간 (8시)
-    let specificMinute = 0 // 검색할 분 (0분)
 
     let first = UserRootView()
     //    var user: User?
@@ -36,40 +32,24 @@ class UserRootViewController: UIViewController {
         
         // 테스트데이터생성기
         decoyLogMaker()
-        //        updateYesterUserNumber { userCount in
-        //            DispatchQueue.main.async {
-        //                // 'userCount'를 문자열로 변환하고 'first.yesterUserNumber.text'에 할당
-        //                self.first.yesterUserNumber.text = String(userCount)
-        //            }
-        //        }
-        
-        
-        getUsersCountOnSpecificDayAndTime(day: specificDay, hour: specificHour, minute: specificMinute) { count in
-            DispatchQueue.main.async {
-                self.first.yesterUserNumber.text = String(count)
-            }
-        }
+        getLastWeekUserNumber()
+
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //        getLastWeek()
-//        setNowUserNumber()
-        
         let timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(gogogo), userInfo: nil, repeats: true)
-        
+        setNowUserNumber()
     }
     
     
     @objc func gogogo(){
         getWorkingUser {
             self.first.nowUserNumber.text = "\(self.num)"
+
         }
-    }
-    
-        setNowUserNumber()
-        
     }
     
     @objc func inButtonClick() {
@@ -117,37 +97,7 @@ class UserRootViewController: UIViewController {
             }
         }
     }
-//    func getUsersCountOnSpecificDayAndTime(day: String, hour: Int, minute: Int, completion: @escaping (Int) -> Void) {
-//        let gymLogRef = databaseRef.child(uid).child("gymInAndOutLog") // 해당 헬스장 UID로 경로 설정
-//
-//        // 요일, 시간, 분에 해당하는 시간을 계산
-//        let calendar = Calendar.current
-//        var lastWeek: Date? = calendar.date(byAdding: .day, value: -7, to: Date()) // 현재 날짜로부터 7일 전
-//        if let lastWeekUnwrapped = lastWeek {
-//            lastWeek = calendar.date(bySettingHour: hour, minute: minute, second: 0, of: lastWeekUnwrapped) // 특정 시간으로 설정
-//        }
-//        
-//        // 특정 요일과 시간과 일치하는 사용자 수 확인
-//        gymLogRef.observeSingleEvent(of: .value) { (snapshot) in
-//            if snapshot.exists() {
-//                var userCount = 0
-//                for child in snapshot.children {
-//                    if let childSnapshot = child as? DataSnapshot {
-//                        let inTime = childSnapshot.childSnapshot(forPath: "inTime").value as? TimeInterval ?? 0
-//                        let inDate = Date(timeIntervalSince1970: inTime)
-//                        if calendar.isDate(inDate, inSameDayAs: lastWeek) {
-//                            userCount += 1
-//                        }
-//                    }
-//                }
-//                completion(userCount)
-//            } else {
-//                completion(0) // 일치하는 데이터가 없는 경우 0을 반환
-//            }
-//        }
-//    }
 
-    // 사용 예시
 
 //    func updateYesterUserNumber(completion: @escaping (Int) -> Void) {
 //        //        파이어 베이스의 경로 찾기 / child 를 통해서 하위폴더 조회 가능
@@ -198,106 +148,7 @@ class UserRootViewController: UIViewController {
 //        }
 
     
-    //    func getLastWeek() {
-    //        let log = DataManager.shared.realGymInfo?.gymInAndOutLog
-    //
-    //        let currentDate = Date()
-    //
-    //        let calendar = Calendar.current
-    //        let lastWeek = calendar.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
-    //
-    //        let filteredUsers = log?.filter { user in
-    //            let inTime = user.inTime
-    //            let outTime = user.outTime
-    //            if inTime <= lastWeek && outTime >= lastWeek {
-    //                return true
-    //            }
-    //            return false
-    //        }
-    //        if let userCount = filteredUsers?.count {
-    //            first.yesterUserNumber.text = String(userCount)
-    //        }
-    //    }
-//    func getLastWeek() {
-//        let log = DataManager.shared.realGymInfo?.gymInAndOutLog
-//
-//        let currentDate = Date()
-//
-//        let calendar = Calendar.current
-//        let lastWeek = calendar.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
-//
-//        let filteredUsers = log?.filter { user in
-//            let inTime = user.inTime
-//            let outTime = user.outTime
-//            if inTime <= lastWeek && outTime >= lastWeek {
-//                return true
-//            }
-//            return false
-//        }
-//        if let userCount = filteredUsers?.count {
-//            first.yesterUserNumber.text = String(userCount)
-//        }
-//    }
-//    func getUsersCountOnSpecificDayAndTime(day: String, time: String, completion: @escaping (Int) -> Void) {
-//        let gymLogRef = databaseRef.child("gymInAndOutLog")
-//
-//        // 'inTime', 'outTime', 및 'sinceInAndOutTime' 값을 가져오기
-//        // 'sinceInAndOutTime' 값이 0보다 큰 경우를 'isGymTrue'로 간주하는 방식
-//        gymLogRef.observeSingleEvent(of: .value) { (snapshot) in
-//            if snapshot.exists() {
-//                var userCount = 0
-//
-//                for child in snapshot.children {
-//                    if let childSnapshot = child as? DataSnapshot, let userData = childSnapshot.value as? [String: Any] {
-//                        if let inTime = userData["inTime"] as? TimeInterval,
-//                           let outTime = userData["outTime"] as? TimeInterval,
-//                           let sinceInAndOutTime = userData["sinceInAndOutTime"] as? Int {
-//                            let calendar = Calendar.current
-//                            let inDate = Date(timeIntervalSince1970: inTime)
-//                            let outDate = Date(timeIntervalSince1970: outTime)
-//                            let currentDate = Date()
-//                            let lastWeek = calendar.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
-//                            // 요일 및 시간대에 해당하는 사용자만 필터링
-//                            if calendar.component(.weekday, from: inDate) == inDate.day == && inDate.hour == 8 && inDate.minute == 0{
-//                                // 'sinceInAndOutTime'이 0보다 크면 'isGymTrue'인 사용자로 간주
-//                                if sinceInAndOutTime > 0 {
-//                                    userCount += 1
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//                completion(userCount)
-//            } else {
-//                completion(0) // 일치하는 데이터가 없는 경우 0을 반환
-//            }
-//        }
-//        // 사용 예시
-//        getUsersCountOnSpecificDayAndTime(day: "Monday", time: "8AM") { count in
-//            print("월요일 8AM에 'isGymTrue'인 사용자 수: \(count)")
-//        }
-//    }
-    
-    func getLastWeek() {
-        
-        // 데이터베이스 참조에서 'isInGym' 값을 모니터링
-        databaseRef.child("userData").child("isInGym").observe(.value) { (snapshot) in
-            if let isInGym = snapshot.value as? Bool, isInGym == false {
-                // 'isInGym' 값이 false인 경우에만 실행
-                // 'yesterUserNumber' 값을 가져와 1을 추가하고 다시 데이터베이스에 업데이트
-                self.databaseRef.child("userData").child("yesterUserNumber").observeSingleEvent(of: .value) { (numberSnapshot) in
-                    if var yesterUserNumber = numberSnapshot.value as? Int {
-                        yesterUserNumber += 1
-                        self.databaseRef.child("userData").child("yesterUserNumber").setValue(yesterUserNumber)
-                        // 'first.yesterUserNumber.text' 업데이트 (메인 스레드에서 실행)
-                        DispatchQueue.main.async {
-                            self.first.yesterUserNumber.text = "\(yesterUserNumber)"
-                        }
-                    }
-                }
-            }
-        }
-    }
+
     
     func setNowUserNumber() {
         let ref = Database.database().reference().child("accounts")
@@ -320,15 +171,82 @@ class UserRootViewController: UIViewController {
         }
     }
     
+//    Date().timeIntervalSinceReferenceDate > 파이어 베이스에 저장되는 타입
+//    Date().timeIntervalSinceNow > 현재시간
     
+    func getLastWeekUserNumber(day: Int? = nil, hour: Int? = nil, minute: Int? = nil) {
+        let oneWeekAgo = Date().addingTimeInterval(-7*24*60*60).timeIntervalSinceReferenceDate
+        //    파이어베이스 경로에서 하위폴더인 gymInAndOutLog를 조회
+        let ref = Database.database().reference().child("users").child(DataManager.shared.gymUid!).child("gymInAndOutLog")
+        let currentDate = Date()
+        // 현재 날짜에서 7일을 뺀 날짜를 계산
+        let calendar = Calendar.current
+//        일주일전 데이터 조회
+        let lastWeekDate = calendar.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
+//        Query를 사용하여 지난주 같은 요일, 같은 시간대에 입장한 사용자를 필터링
+//        adminUid 필드값을 기준으로 데이터를 정렬
+//        adminUid 필드값이 DataManager.shared.gymUid 와 일치하는 데이터만 검색 ( 같은 헬스장인지 확인 절차 )
+//            .queryStarting(atValue: oneWeekAgo, childKey: "inTime" )
+//        Firebase 데이터 베이스에서 데이터를 한번만 읽어오도록 하는 관찰 작업 시작 ( .value 이벤트를 관찰하기때문에 데이터 변경시마다 이 작업 실행 )
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+//        스냅샷에서 데이터를 가져온 후 처리하기전 언래핑과 형변환 해주는 부분
+            guard let data = snapshot.children.allObjects as? [DataSnapshot] else {
+                return
+            }
+//          data 배열에 있는 각 데이터 스냅샷 userSnapShot 에 대한 필터링
+            let numberOfUser = data.filter { userSnapshot in
+//          각 데이터 스냅샷 userSnapShot 의 값에서 필요한 데이터를 추출 ( inTime, outTime ) 추출한 데이터는 userData에 딕셔너리 형태로 저장
+                if let userData = userSnapshot.value as? [String: Any],
+                   let inTime = userData["inTime"] as? TimeInterval,
+                   let outTime = userData["outTime"] as? TimeInterval {
+//                    inTime과 outTime을 이용하여 inDate와 outDate 라는 날짜객체 생성
+                    let inDate = Date(timeIntervalSinceReferenceDate: inTime)
+                    let outDate = Date(timeIntervalSinceReferenceDate: outTime)
+//                    inDate의 요일과 lastWeekDate가 같은요일인지 확인 /
+                    if calendar.component(.weekday, from: inDate) == calendar.component(.weekday, from: lastWeekDate) &&
+//                    inDate가 lastWeekDate보다 크거나 같고 , lastWeekDate가 outDate보다 이전이거나 같은 경우를 확인
+//                    ( lastWeekDate가 입실시간 & 퇴실시간 사이에 있는지 확인 )
+                       inDate >= lastWeekDate && lastWeekDate <= outDate {
+                        return true
+                    }
+                }
+                return false
+//               count > 필터링된 데이터의 수를 세어서 반환 ( lastWeekDate와 일치하는 조건을 가진 사용자 수를 나타냄 )
+            }.count
+            self.first.yesterUserNumber.text = String(numberOfUser)
+        }
+    }
+    
+    //    func getLastWeek() {
+    //        let log = DataManager.shared.realGymInfo?.gymInAndOutLog
+    //
+    //        let currentDate = Date()
+    //
+    //        let calendar = Calendar.current
+    //        let lastWeek = calendar.date(byAdding: .weekOfYear, value: -1, to: currentDate)!
+    //
+    //        let filteredUsers = log?.filter { user in
+    //            let inTime = user.inTime
+    //            let outTime = user.outTime
+    //            if inTime <= lastWeek && outTime >= lastWeek {
+    //                return true
+    //            }
+    //            return false
+    //        }
+    //        if let userCount = filteredUsers?.count {
+    //            first.yesterUserNumber.text = String(userCount)
+    //        }
+    //    }
     
     func decoyLogMaker(){
-        
+
         let user = Auth.auth().currentUser
         let userUid = user?.uid ?? ""
         
         let oneDay:Double = 60*60*24
         let oneWeek:Double = oneDay*7
+        let oneWeekAgo = Date().addingTimeInterval(-7*24*60*60).timeIntervalSinceReferenceDate
+
         for i in 1...10 {
             let userLog = InAndOut(id: "1분후 테스트", inTime: Date(), outTime: Date(timeIntervalSinceNow: Double(5*i)), sinceInAndOutTime: 0.0)
             do {
