@@ -64,8 +64,8 @@ private extension AdminNoticeTableViewCell {
             
             //topDivider
             topDivider.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 0),
-            topDivider.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 22),
-            topDivider.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant:-22),
+            topDivider.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 0),
+            topDivider.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant:-0),
             topDivider.heightAnchor.constraint(equalToConstant: 1.0),
             
             //nameLabel
@@ -85,8 +85,8 @@ private extension AdminNoticeTableViewCell {
             dateLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -20),
             
             //bottomDivider
-            bottomDivider.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 22),
-            bottomDivider.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -22),
+            bottomDivider.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 0),
+            bottomDivider.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -0),
             bottomDivider.heightAnchor.constraint(equalToConstant: 0.6),
             bottomDivider.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 0)
         ])

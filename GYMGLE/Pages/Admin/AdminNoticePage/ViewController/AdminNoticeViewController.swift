@@ -34,8 +34,8 @@ final class AdminNoticeViewController: UIViewController {
         navigationController?.navigationBar.isHidden = false
         setCustomBackButton()
         dataReadSetting() {
-            print("테스트 - \(DataManager.shared.gymUid)")
             self.adminNoticeView.noticeTableView.reloadData()
+            self.adminNoticeView.pageTitleLabel.text = "개수: \(DataManager.shared.noticeList.count)"
         }
     }
 }

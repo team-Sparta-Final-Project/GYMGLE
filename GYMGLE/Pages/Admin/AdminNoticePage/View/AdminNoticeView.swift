@@ -10,9 +10,9 @@ import UIKit
 final class AdminNoticeView: UIView {
 
     // MARK: - UI Properties
-    private lazy var pageTitleLabel: UILabel = {
+    lazy var pageTitleLabel: UILabel = {
         let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size32Bold, textAligment: .center)
+        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size36Bold, textAligment: .center)
         label.text = ""
         return label
     }()
@@ -50,16 +50,16 @@ private extension AdminNoticeView {
         
         NSLayoutConstraint.activate([
             pageTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            pageTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 88),
+            pageTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 140),
             
-            noticeCreateButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 88),
+            noticeCreateButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 140),
             noticeCreateButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
             noticeCreateButton.heightAnchor.constraint(equalToConstant: 40),
             noticeCreateButton.widthAnchor.constraint(equalToConstant: 40),
             
             noticeTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             noticeTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -0),
-            noticeTableView.topAnchor.constraint(equalTo: pageTitleLabel.bottomAnchor, constant: 40),
+            noticeTableView.topAnchor.constraint(equalTo: self.pageTitleLabel.bottomAnchor, constant: 48),
             noticeTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -0),
         ])
     }
