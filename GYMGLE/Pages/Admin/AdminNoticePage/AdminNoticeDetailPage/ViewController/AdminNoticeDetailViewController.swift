@@ -49,23 +49,30 @@ private extension AdminNoticeDetailViewController {
     func viewSetting() {
         if let noticeInfo = noticeInfo {
             adminNoticeDetailView.contentTextView.text = noticeInfo.content
+            adminNoticeDetailView.contentNumberLabel.text = "\(adminNoticeDetailView.contentTextView.text.count)/400"
             adminNoticeDetailView.createButton.setTitle("수정하기", for: .normal)
             adminNoticeDetailView.deletedButton.isHidden = false
         } else {
             adminNoticeDetailView.createButton.setTitle("등록하기", for: .normal)
-            adminNoticeDetailView.deletedButton.isHidden = true
+            if adminNoticeDetailView.contentTextView.text == "400자 이내로 공지사항을 적어주세요!" {
+                adminNoticeDetailView.deletedButton.isHidden = true
+            }
         }
     }
     func buttonTapped() {
         adminNoticeDetailView.createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
         adminNoticeDetailView.deletedButton.addTarget(self, action:  #selector(deletedButtonTapped), for: .touchUpInside)
         switch isUser {
-        case false: //트레이너 일 때
+        case false: //유저가 들어오면
             adminNoticeDetailView.createButton.isHidden = true
             adminNoticeDetailView.deletedButton.isHidden = true
+            adminNoticeDetailView.contentTextView.isEditable = false
+            adminNoticeDetailView.contentNumberLabel.isHidden = true
         default:
             adminNoticeDetailView.createButton.isHidden = false
             adminNoticeDetailView.deletedButton.isHidden = false
+            adminNoticeDetailView.contentTextView.isEditable = true
+            adminNoticeDetailView.contentNumberLabel.isHidden = false
         }
     }
     func showToast(message: String) {
@@ -163,16 +170,15 @@ extension AdminNoticeDetailViewController {
         if let userInfo = notification.userInfo,
            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
             let keyboardHeight = keyboardFrame.height
-            let textFieldFrameInWindow = adminNoticeDetailView.contentNumberLabel.convert(adminNoticeDetailView.contentNumberLabel.bounds, to: nil)
-            let maxY = textFieldFrameInWindow.maxY
-            if maxY > (adminNoticeDetailView.frame.size.height - keyboardHeight) {
-                let scrollOffset = maxY - (adminNoticeDetailView.frame.size.height - keyboardHeight)
-                adminNoticeDetailView.frame.origin.y = -scrollOffset
-            }
+            
+            var createButtonFrame = adminNoticeDetailView.createButton.frame
+            createButtonFrame.origin.y = view.frame.height - keyboardHeight - createButtonFrame.height - 10
+            self.adminNoticeDetailView.createButton.frame = createButtonFrame
         }
     }
     @objc private func keyboardWillHide(_ notification: Notification) {
-        adminNoticeDetailView.frame.origin.y = 0
+        let realcreateButtonFrame = self.view.frame.size.height - 88 - self.adminNoticeDetailView.createButton.frame.size.height
+        self.adminNoticeDetailView.createButton.frame.origin.y = realcreateButtonFrame
     }
     @objc private func createButtonTapped() {
         createdAndUpatedContent {
