@@ -154,15 +154,16 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject, let stringValue = readableObject.stringValue else {
                 return
             }
-            print(stringValue)
             if (DataManager.shared.userList.first(where: {$0.account.id == stringValue}) != nil) {
                 createdInAndOutLog(id: stringValue)
                 
                 self.showToast(message: "확인했습니다!")
                 self.captureSession.stopRunning()
+                AudioServicesPlaySystemSound(SystemSoundID(1000))
             } else {
                 self.showToast(message: "회원이 아닙니다!")
                 self.captureSession.stopRunning()
+                AudioServicesPlaySystemSound(SystemSoundID(1006))
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {

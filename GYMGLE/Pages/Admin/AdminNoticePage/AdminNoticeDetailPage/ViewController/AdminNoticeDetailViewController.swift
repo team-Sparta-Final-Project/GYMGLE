@@ -22,6 +22,7 @@ final class AdminNoticeDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewConfigure()
+        self.view.gestureRecognizers?.removeAll()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,6 +45,7 @@ private extension AdminNoticeDetailViewController {
     }
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     func viewSetting() {
@@ -176,9 +178,11 @@ extension AdminNoticeDetailViewController {
             self.adminNoticeDetailView.createButton.frame = createButtonFrame
         }
     }
+    
     @objc private func keyboardWillHide(_ notification: Notification) {
         let realCreateButtonFrame = self.view.frame.size.height - 88 - self.adminNoticeDetailView.createButton.frame.size.height
         self.adminNoticeDetailView.createButton.frame.origin.y = realCreateButtonFrame
+        
     }
     @objc private func createButtonTapped() {
         createdAndUpatedContent {
