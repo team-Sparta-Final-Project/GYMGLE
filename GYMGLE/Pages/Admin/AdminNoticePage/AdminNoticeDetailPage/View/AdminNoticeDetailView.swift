@@ -24,7 +24,7 @@ final class AdminNoticeDetailView: UIView {
     
     lazy var contentTextView: UITextView = {
         let textView = UITextView()
-        textView.text = "400자 이내로 공지사항을 적어주세요!"
+        textView.text = "500자 이내로 공지사항을 적어주세요!"
         textView.font = FontGuide.size16
         textView.backgroundColor = .white
         textView.clipsToBounds = true
@@ -37,7 +37,7 @@ final class AdminNoticeDetailView: UIView {
     lazy var contentNumberLabel: UILabel = {
         let label = UILabel()
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .center)
-        label.text = "\(contentTextView.text.count)/400"
+        label.text = "\(contentTextView.text.count)/500"
         return label
     }()
     
@@ -79,11 +79,11 @@ private extension AdminNoticeDetailView {
             
             contentNumberLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -36),
             contentNumberLabel.topAnchor.constraint(equalTo: self.contentTextView.bottomAnchor, constant: 10),
-            contentNumberLabel.bottomAnchor.constraint(equalTo: self.createButton.topAnchor, constant: -120),
+            contentNumberLabel.bottomAnchor.constraint(equalTo: self.createButton.topAnchor, constant: -132),
             
             createButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             createButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -88),
+            createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -68),
             createButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
