@@ -12,7 +12,7 @@ class AdminRegisterView: UIView {
     // MARK: - Properties
     
     private lazy var titleLabel = UILabel().then {
-        $0.text = "헬스장 등록"
+        $0.text = ""
         $0.font = FontGuide.size32Bold
         $0.textColor = ColorGuide.black
     }

@@ -32,6 +32,7 @@ final class AdminNoticeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
+        setCustomBackButton()
         dataReadSetting() {
             self.adminNoticeView.noticeTableView.reloadData()
         }
@@ -88,6 +89,11 @@ private extension AdminNoticeViewController {
         formatter.dateFormat = "MM/dd"
         
         return formatter.string(from: date)
+    }
+    
+    func setCustomBackButton() {
+        navigationController?.navigationBar.topItem?.title = "공지사항"
+        navigationController?.navigationBar.tintColor = .black
     }
 }
 

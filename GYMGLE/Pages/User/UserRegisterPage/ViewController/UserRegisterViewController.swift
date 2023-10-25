@@ -4,7 +4,7 @@ import FirebaseDatabase
 
 final class UserRegisterViewController: UIViewController {
     
-    var pageTitle = "회원 등록"
+    var pageTitle = ""
     let buttonTitle = "다음"
     
     let cells = ["이름","전화번호","등록일","등록 기간","추가 정보"]
@@ -51,6 +51,7 @@ final class UserRegisterViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = false
+        setCustomBackButton()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -179,6 +180,11 @@ private extension UserRegisterViewController {
                 navigationController?.pushViewController(IdPwVC, animated: true)
             }
         }
+    }
+    
+    func setCustomBackButton() {
+        navigationController?.navigationBar.topItem?.title = "회원등록"
+        navigationController?.navigationBar.tintColor = .black
     }
 }
 

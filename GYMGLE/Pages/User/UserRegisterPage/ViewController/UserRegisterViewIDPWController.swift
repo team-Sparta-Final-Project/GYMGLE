@@ -5,7 +5,7 @@ import FirebaseDatabase
 
 class UserRegisterViewIDPWController: UIViewController {
     
-    var pageTitle = "회원 등록"
+    var pageTitle = ""
     let buttonTitle = "등록하기"
     
     let cells = ["회원 아이디","회원 비밀번호"]
@@ -47,6 +47,7 @@ class UserRegisterViewIDPWController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         navigationController?.navigationBar.isHidden = false
+        setCustomBackButton()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -88,6 +89,11 @@ class UserRegisterViewIDPWController: UIViewController {
         } completion: { _ in
             toastView.removeFromSuperview()
         }
+    }
+    
+    func setCustomBackButton() {
+        navigationController?.navigationBar.topItem?.title = "회원등록"
+        navigationController?.navigationBar.tintColor = .black
     }
     
 //    @objc func idVerification(){
