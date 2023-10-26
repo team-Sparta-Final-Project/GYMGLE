@@ -38,7 +38,11 @@ private extension AdminRootViewController {
         deletedButtonHidden()
     }
     
-
+    func fireBaseRead() {
+        let gymName = DataManager.shared.realGymInfo?.gymName
+        let gymPhoneNumber = DataManager.shared.realGymInfo?.gymPhoneNumber
+        adminRootView.dataSetting("\(gymName!)", "\(gymPhoneNumber!)")
+    }
     
     func allButtonTapped() {
         adminRootView.gymSettingButton.addTarget(self, action: #selector(gymSettingButtonTapped), for: .touchUpInside)

@@ -99,26 +99,28 @@ private extension InitialViewController {
                    let accountType = account["accountType"] as? Int {
                     // 트레이너 일때
                     if accountType == 1 {
-                        do {
-                            let userInfoData = try JSONSerialization.data(withJSONObject: userData, options: [])
-                            let userInfo = try JSONDecoder().decode(User.self, from: userInfoData)
-                            DataManager.shared.userInfo = userInfo
-                        } catch DecodingError.dataCorrupted(let context) {
-                            print("Data corrupted: \(context.debugDescription)")
-                        } catch DecodingError.keyNotFound(let key, let context) {
-                            print("Key '\(key.stringValue)' not found: \(context.debugDescription)")
-                        } catch DecodingError.valueNotFound(let type, let context) {
-                            print("Value of type '\(type)' not found: \(context.debugDescription)")
-                        } catch DecodingError.typeMismatch(let type, let context) {
-                            print("Type mismatch for type '\(type)' : \(context.debugDescription)")
-                        } catch {
-                            print("Decoding error: \(error.localizedDescription)")
-                        }
-                        DataManager.shared.gymUid = adminUid
-                        self.getGymInfo() {
-                            let vc = TabbarViewController()
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
+                        Database.database().reference().child("users").child(adminUid).observeSingleEvent(of: .value) { (snapshot) in
+                            if let userData = snapshot.value as? [String: Any],
+                               let gymInfoJSON = userData["gymInfo"] as? [String: Any],
+                               let gymAcoount = gymInfoJSON["gymAccount"] as? [String: Any],
+                               let id = gymAcoount["id"] as? String,
+                               let pw = gymAcoount["password"] as? String {
+                                do {
+                                    let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
+                                    let gymInfo = try JSONDecoder().decode(GymInfo.self, from: gymInfoData)
+                                    DataManager.shared.realGymInfo = gymInfo
+                                } catch {
+                                    print("Decoding error: \(error.localizedDescription)")
+                                }
+                                DataManager.shared.gymUid = adminUid
+                                DataManager.shared.id = id
+                                DataManager.shared.pw = pw
+                                let adminRootVC = AdminRootViewController()
+                                adminRootVC.isAdmin = false
+                                let vc = UINavigationController(rootViewController: adminRootVC)
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true)
+                            }
                         }
                         // 회원 일때
                     } else if accountType == 2 {

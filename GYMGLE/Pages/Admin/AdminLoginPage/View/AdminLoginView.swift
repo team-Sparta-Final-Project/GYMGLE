@@ -37,6 +37,7 @@ class AdminLoginView: UIView {
         $0.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
         $0.spellCheckingType = .no
         $0.font = FontGuide.size14
+        $0.isSecureTextEntry = true
     }
     
     lazy var loginButton: UIButton = UIButton.GYMGLEButtonPreset("로그인")
