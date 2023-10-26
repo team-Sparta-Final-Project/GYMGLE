@@ -123,17 +123,29 @@ extension AdminLoginViewController {
                     
                     userRef2.observeSingleEvent(of: .value) { (snapshot, _)  in
                         if let userData = snapshot.value as? [String: Any],
-                           let data = userData["userData"] as? [String: Any],
-                           let account = data["account"] as? [String: Any],
+                           let account = userData["account"] as? [String: Any],
+                           let adminUid = userData["adminUid"] as? String,
                            let accountType = account["accountType"] as? Int {
                             // 트레이너 일때
                             if accountType == 1 {
-                                let alert = UIAlertController(title: "로그인 실패",
-                                                              message: "유효한 계정이 아닙니다.",
-                                                              preferredStyle: .alert)
-                                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                                self.present(alert, animated: true, completion: nil)
-                                self.signOut()
+                                Database.database().reference().child("users").child(adminUid).observeSingleEvent(of: .value) { (snapshot)  in
+                                    if let userData = snapshot.value as? [String: Any],
+                                       let gymInfoJSON = userData["gymInfo"] as? [String: Any] {
+                                            do {
+                                                let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
+                                                let gymInfo = try JSONDecoder().decode(GymInfo.self, from: gymInfoData)
+                                                DataManager.shared.realGymInfo = gymInfo
+                                            } catch {
+                                                print("Decoding error: \(error.localizedDescription)")
+                                            }
+                                            DataManager.shared.id = id
+                                            DataManager.shared.pw = pw
+                                            let vc = UINavigationController(rootViewController: AdminRootViewController())
+                                            vc.modalPresentationStyle = .fullScreen
+                                            self.present(vc, animated: true)
+                                            DataManager.shared.gymUid = adminUid
+                                    }
+                                }
                                 // 회원 일때
                             } else if accountType == 2 {
                                 let alert = UIAlertController(title: "로그인 실패",
