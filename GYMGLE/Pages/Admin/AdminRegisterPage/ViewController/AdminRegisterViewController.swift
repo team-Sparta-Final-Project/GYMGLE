@@ -20,6 +20,7 @@ class AdminRegisterViewController: UIViewController {
     private var emailValid: Bool = false
     private var pwValid: Bool = false
     private var allValid: Bool = false
+    var gymInfo: GymInfo?
     
     let dataTest = DataManager.shared
     
@@ -42,6 +43,7 @@ class AdminRegisterViewController: UIViewController {
         setRegisterButton()
         setTextField()
         registerForKeyboardNotifications()
+        
     }
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         navigationController?.navigationBar.isHidden = false
@@ -58,6 +60,10 @@ class AdminRegisterViewController: UIViewController {
 private extension AdminRegisterViewController {
     func configureNav() {
         navigationController?.navigationBar.isHidden = true
+        if DataManager.shared.realGymInfo != nil {
+            updatedPageSetting()
+            updatedAdminInfo()
+        }
     }
     
     func setRegisterButton() {
@@ -404,4 +410,22 @@ extension AdminRegisterViewController {
         }
     }
     
+    func updatedPageSetting() {
+        self.adminRegisterView.adminNameTextField.text = gymInfo?.gymName
+        self.adminRegisterView.phoneTextField.text = gymInfo?.gymPhoneNumber
+        self.adminRegisterView.registerNumberTextField.text = gymInfo?.gymnumber
+        self.adminRegisterView.idTextField.text = gymInfo?.gymAccount.id
+        self.adminRegisterView.passwordTextField.text = gymInfo?.gymAccount.password
+        self.adminRegisterView.adminNumberTextField.text = "031-000-0000" //❗️❗️❗️❗️❗️❗️
+        self.adminRegisterView.idTextField.isEnabled = false
+        self.adminRegisterView.passwordTextField.isEnabled = false
+        self.adminRegisterView.registerNumberTextField.isEnabled = false
+        self.adminRegisterView.validCheckButton.isEnabled = false
+        self.adminRegisterView.duplicationCheckButton.isEnabled = false
+        self.adminRegisterView.registerButton.setTitle("수정", for: .normal)
+    }
+    
+    func updatedAdminInfo() {
+        //로직 구현❗️❗️❗️❗️❗️
+    }
 }
