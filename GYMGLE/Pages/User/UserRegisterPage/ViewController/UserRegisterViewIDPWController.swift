@@ -60,13 +60,13 @@ class UserRegisterViewIDPWController: UIViewController {
         pwField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
         
         let verifyButton = idCell?.contentView.subviews[2] as? UIButton
-//        verifyButton?.addTarget(self, action: #selector(idVerification), for: .touchUpInside)
+        //        verifyButton?.addTarget(self, action: #selector(idVerification), for: .touchUpInside)
         
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         viewConfigure.endEditing(true)
     }
-
+    
     private func buttonOnCheck(){
         if isCellEmpty{
             self.viewConfigure.button.backgroundColor = .lightGray
@@ -99,35 +99,35 @@ class UserRegisterViewIDPWController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
     }
     
-//    @objc func idVerification(){
-//        let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
-//        let idTextField = idCell?.contentView.subviews[1] as? UITextField
-//        guard let idText = idTextField?.text else { return }
-//
-//        let idList = DataManager.shared.gymInfo.gymUserList.map{
-//            $0.account.id
-//        }
-//        if idList.contains(idText) {
-//            isNotVerified = true
-//            let alert = UIAlertController(title: "중복된 아이디입니다.",
-//                                          message: "다른 아이디를 입력하여 주시옵소서",
-//                                          preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-//            present(alert, animated: true, completion: nil)
-//        }else{
-//            isNotVerified = false
-//            let alert = UIAlertController(title: "사용가능한 아이디 입니다.",
-//                                          message: "확인 버튼을 눌러주세요.",
-//                                          preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-//            present(alert, animated: true, completion: nil)
-//            idTextField?.allowsEditingTextAttributes = false
-//        }
-//        buttonOnCheck()
-//
-//
-//        print("테스트 - 버리피케이션")
-//    }
+    //    @objc func idVerification(){
+    //        let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
+    //        let idTextField = idCell?.contentView.subviews[1] as? UITextField
+    //        guard let idText = idTextField?.text else { return }
+    //
+    //        let idList = DataManager.shared.gymInfo.gymUserList.map{
+    //            $0.account.id
+    //        }
+    //        if idList.contains(idText) {
+    //            isNotVerified = true
+    //            let alert = UIAlertController(title: "중복된 아이디입니다.",
+    //                                          message: "다른 아이디를 입력하여 주시옵소서",
+    //                                          preferredStyle: .alert)
+    //            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+    //            present(alert, animated: true, completion: nil)
+    //        }else{
+    //            isNotVerified = false
+    //            let alert = UIAlertController(title: "사용가능한 아이디 입니다.",
+    //                                          message: "확인 버튼을 눌러주세요.",
+    //                                          preferredStyle: .alert)
+    //            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+    //            present(alert, animated: true, completion: nil)
+    //            idTextField?.allowsEditingTextAttributes = false
+    //        }
+    //        buttonOnCheck()
+    //
+    //
+    //        print("테스트 - 버리피케이션")
+    //    }
     
     @objc private func didChangeText(){
         let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
@@ -176,7 +176,7 @@ extension UserRegisterViewIDPWController {
         user?.account.id = id
         user?.account.password = pw
         user?.adminUid = DataManager.shared.gymUid!
-                
+        
         Auth.auth().createUser(withEmail: id, password: pw) { result, error in
             if let error = error {
                 print(error.localizedDescription)
@@ -199,9 +199,27 @@ extension UserRegisterViewIDPWController {
                     if let user = result?.user {
                         let userRef = Database.database().reference().child("accounts").child(user.uid)
                         userRef.setValue(userJSON)
-                                                
+                        
                     }
-                    Auth.auth().signIn(withEmail: DataManager.shared.id!, password: DataManager.shared.pw!)
+                    Auth.auth().signIn(withEmail: DataManager.shared.id!, password: DataManager.shared.pw!) { result, error in
+                        if let error = error {
+                            print("재로그인 에러")
+                        } else {
+                            if let user = result?.user {
+                                let ref = Database.database().reference().child("accounts/\(user.uid)/account/accountType")
+                                ref.observeSingleEvent(of: .value) { (snapshot) in
+                                    if let accountType = snapshot.value as? Int {
+                                        if accountType == 1 {
+                                            let adminRootVC = AdminRootViewController()
+                                            adminRootVC.isAdmin = false
+                                            self.navigationController?.pushViewController(adminRootVC, animated: true)
+                                            return
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     let vc = AdminRootViewController()
                     self.navigationController?.pushViewController(vc, animated: true)
                 } catch {
