@@ -25,6 +25,7 @@ final class AdminRootViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         allButtonTapped()
+        fireBaseRead()
     }
     override func viewWillAppear(_ animated: Bool) {
         configuredView()
