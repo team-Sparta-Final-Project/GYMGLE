@@ -58,7 +58,6 @@ private extension QRcodeCheckViewController {
             captureSession.startRunning()
         }
         catch {
-            print("error")
         }
     }
     
@@ -98,7 +97,7 @@ private extension QRcodeCheckViewController {
             toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
             toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 18),
         ])
-        UIView.animate(withDuration: 2.5, delay: 0.2) { //2.5초
+        UIView.animate(withDuration: 2.5, delay: 0.2) {
             toastView.alpha = 0
         } completion: { _ in
             toastView.removeFromSuperview()
@@ -117,7 +116,6 @@ private extension QRcodeCheckViewController {
                 let user = try JSONDecoder().decode([User].self, from: jsonData)
                 DataManager.shared.userList = user
             } catch let error {
-                print("테스트 - \(error)")
             }
         }
     }
