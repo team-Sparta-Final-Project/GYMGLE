@@ -204,6 +204,21 @@ extension UserRegisterViewIDPWController {
                     Auth.auth().signIn(withEmail: DataManager.shared.id!, password: DataManager.shared.pw!)
                     let vc = AdminRootViewController()
                     self.navigationController?.pushViewController(vc, animated: true)
+//                    let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/account/accountType")
+//                    ref.observeSingleEvent(of: .value) { (snapshot) in
+//                        if let accountType = snapshot.value as? Int {
+//                            if accountType == 1 {
+//                                let adminRootVC = AdminRootViewController()
+//                                adminRootVC.isAdmin = false
+//                                self.navigationController?.pushViewController(adminRootVC, animated: true)
+//                                print("현재유아이디",Auth.auth().currentUser!.uid)
+//                            } else {
+//                                let vc = AdminRootViewController()
+//                                self.navigationController?.pushViewController(vc, animated: true)
+//                                print("현재유아이디",Auth.auth().currentUser!.uid)
+//                            }
+//                        }
+//                    }
                 } catch {
                     print("JSON 인코딩 에러")
                 }

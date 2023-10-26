@@ -76,7 +76,7 @@ extension AdminLoginViewController {
         guard let id = adminLoginView.idTextField.text else { return }
         guard let pw = adminLoginView.passwordTextField.text else { return }
         
-
+        
         Auth.auth().signIn(withEmail: id, password: pw) { result, error in
             if let error = error {
                 print(error)
@@ -93,8 +93,8 @@ extension AdminLoginViewController {
                     userRef.observeSingleEvent(of: .value) { (snapshot)  in
                         if let userData = snapshot.value as? [String: Any],
                            let gymInfoJSON = userData["gymInfo"] as? [String: Any],
-                            let gymAccount = gymInfoJSON["gymAccount"] as? [String: Any],
-                            let accountType = gymAccount["accountType"] as? Int {
+                           let gymAccount = gymInfoJSON["gymAccount"] as? [String: Any],
+                           let accountType = gymAccount["accountType"] as? Int {
                             if accountType == 0 {
                                 do {
                                     let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
@@ -131,19 +131,21 @@ extension AdminLoginViewController {
                                 Database.database().reference().child("users").child(adminUid).observeSingleEvent(of: .value) { (snapshot)  in
                                     if let userData = snapshot.value as? [String: Any],
                                        let gymInfoJSON = userData["gymInfo"] as? [String: Any] {
-                                            do {
-                                                let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
-                                                let gymInfo = try JSONDecoder().decode(GymInfo.self, from: gymInfoData)
-                                                DataManager.shared.realGymInfo = gymInfo
-                                            } catch {
-                                                print("Decoding error: \(error.localizedDescription)")
-                                            }
-                                            DataManager.shared.id = id
-                                            DataManager.shared.pw = pw
-                                            let vc = UINavigationController(rootViewController: AdminRootViewController())
-                                            vc.modalPresentationStyle = .fullScreen
-                                            self.present(vc, animated: true)
-                                            DataManager.shared.gymUid = adminUid
+                                        do {
+                                            let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
+                                            let gymInfo = try JSONDecoder().decode(GymInfo.self, from: gymInfoData)
+                                            DataManager.shared.realGymInfo = gymInfo
+                                        } catch {
+                                            print("Decoding error: \(error.localizedDescription)")
+                                        }
+                                        DataManager.shared.id = id
+                                        DataManager.shared.pw = pw
+                                        let adminRootVC = AdminRootViewController()
+                                        adminRootVC.isAdmin = false
+                                        let vc = UINavigationController(rootViewController: adminRootVC)
+                                        vc.modalPresentationStyle = .fullScreen
+                                        self.present(vc, animated: true)
+                                        DataManager.shared.gymUid = adminUid
                                     }
                                 }
                                 // 회원 일때

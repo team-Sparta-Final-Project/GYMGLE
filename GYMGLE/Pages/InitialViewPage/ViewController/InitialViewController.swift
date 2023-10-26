@@ -112,10 +112,12 @@ private extension InitialViewController {
                                 } catch {
                                     print("Decoding error: \(error.localizedDescription)")
                                 }
-                                DataManager.shared.gymUid = currentUser.uid
+                                DataManager.shared.gymUid = adminUid
                                 DataManager.shared.id = id
                                 DataManager.shared.pw = pw
-                                let vc = UINavigationController(rootViewController: AdminRootViewController())
+                                let adminRootVC = AdminRootViewController()
+                                adminRootVC.isAdmin = false
+                                let vc = UINavigationController(rootViewController: adminRootVC)
                                 vc.modalPresentationStyle = .fullScreen
                                 self.present(vc, animated: true)
                             }
