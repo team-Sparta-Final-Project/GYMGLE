@@ -54,8 +54,8 @@ private extension AdminNoticeView {
             
             noticeCreateButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 140),
             noticeCreateButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            noticeCreateButton.heightAnchor.constraint(equalToConstant: 40),
-            noticeCreateButton.widthAnchor.constraint(equalToConstant: 40),
+            noticeCreateButton.heightAnchor.constraint(equalToConstant: 46),
+            noticeCreateButton.widthAnchor.constraint(equalToConstant: 46),
             
             noticeTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             noticeTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -0),
