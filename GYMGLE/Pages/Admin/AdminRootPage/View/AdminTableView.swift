@@ -54,19 +54,7 @@ extension AdminTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageCell", for: indexPath) as! MyPageTableViewCell
         cell.label.text = cellContents[indexPath.row]
-        
-//        if indexPath.row == 0 {
-//
-//            cell.label.snp.makeConstraints {
-//                $0.left.equalToSuperview().offset(20)
-//                $0.centerY.equalToSuperview()
-//            }
-//        } else {
-//            cell.label.snp.makeConstraints {
-//                $0.left.equalToSuperview().offset(20)
-//                $0.centerY.equalToSuperview()
-//            }
-//        }
+
         cell.label.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20)
             $0.centerY.equalToSuperview()

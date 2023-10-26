@@ -24,9 +24,7 @@ final class AdminRootViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        allButtonTapped()
-        fireBaseRead()
-        adminRootView.tableView.adminRootDelegate = self
+        viewSetting()
     }
     override func viewWillAppear(_ animated: Bool) {
         configuredView()
@@ -37,31 +35,16 @@ final class AdminRootViewController: UIViewController {
 private extension AdminRootViewController {
     func configuredView() {
         navigationController?.navigationBar.isHidden = true
-        deletedButtonHidden()
+        adminRootView.adminTableView.adminRootDelegate = self
     }
-    
-    func fireBaseRead() {
+    func viewSetting() {
+        allButtonTapped()
         let gymName = DataManager.shared.realGymInfo?.gymName
         let gymPhoneNumber = DataManager.shared.realGymInfo?.gymPhoneNumber
         adminRootView.dataSetting("\(gymName!)", "\(gymPhoneNumber!)")
     }
-    
     func allButtonTapped() {
         adminRootView.gymSettingButton.addTarget(self, action: #selector(gymSettingButtonTapped), for: .touchUpInside)
-        adminRootView.gymUserRegisterButton.addTarget(self, action: #selector(gymUserRegisterButtonTapped), for: .touchUpInside)
-        adminRootView.gymUserManageButton.addTarget(self, action: #selector(gymUserManageButtonTapped), for: .touchUpInside)
-        adminRootView.gymQRCodeButton.addTarget(self, action: #selector(gymQRCodeButtonTapped), for: .touchUpInside)
-        adminRootView.gymNoticeButton.addTarget(self, action: #selector(gymNoticeButtonTapped), for: .touchUpInside)
-        adminRootView.logOutButton.addTarget(self, action: #selector(logOutButtonTapped), for: .touchUpInside)
-    }
-    
-    func deletedButtonHidden() {
-        switch isAdmin {
-        case false: //트레이너 일 때
-            adminRootView.logOutButton.isHidden = true
-        default:
-            adminRootView.logOutButton.isHidden = false
-        }
     }
 }
 
@@ -70,35 +53,6 @@ extension AdminRootViewController {
     //로그아웃 버튼
     @objc private func gymSettingButtonTapped() {
         signOut()
-        dismiss(animated: true) {
-            let vc = AdminLoginViewController()
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true)
-        }
-    }
-    //회원등록 버튼
-    @objc private func gymUserRegisterButtonTapped() {
-        let userRegisterVC = UserRegisterViewController()
-        self.navigationController?.pushViewController(userRegisterVC, animated: true)
-    }
-    //회원 관리버튼
-    @objc private func gymUserManageButtonTapped() {
-        let userManageVC = UserManageViewController()
-        self.navigationController?.pushViewController(userManageVC, animated: true)
-    }
-    //큐알코드 버튼
-    @objc private func gymQRCodeButtonTapped() {
-        let qrcodeCheckVC = QRcodeCheckViewController()
-        self.navigationController?.pushViewController(qrcodeCheckVC, animated: true)
-    }
-    //공지사항 버튼
-    @objc private func gymNoticeButtonTapped() {
-        let adminNoticeVC = AdminNoticeViewController()
-        self.navigationController?.pushViewController(adminNoticeVC, animated: true)
-    }
-    //탈퇴 버튼
-    @objc private func logOutButtonTapped() {
-        deleteAccount()
         dismiss(animated: true) {
             let vc = AdminLoginViewController()
             vc.modalPresentationStyle = .fullScreen
@@ -157,7 +111,6 @@ extension AdminRootViewController: AdminTableViewDelegate {
         case 1:
             // 회원등록 선택한 경우
             self.navigationController?.pushViewController(UserRegisterViewController(), animated: true)
-
             break
         case 2:
             // 회원관리를 선택한 경우
@@ -165,11 +118,11 @@ extension AdminRootViewController: AdminTableViewDelegate {
             break
         case 3:
             // QR스캐너를 선택한 경우
-            self.navigationController?.pushViewController(QrCodeViewController(), animated: true)
+            self.navigationController?.pushViewController(QRcodeCheckViewController(), animated: true)
             break
         case 4:
             // 정보변경을 선택한 경우
-            
+            self.navigationController?.pushViewController(AdminRegisterViewController(), animated: true)
             break
         case 5:
             // 탈퇴하기
