@@ -81,43 +81,40 @@ class UserRootViewController: UIViewController {
         let QrCodeViewController = QrCodeViewController()
         QrCodeViewController.user = DataManager.shared.userInfo// ❗️수정
         self.present(QrCodeViewController, animated: true)
-        databaseRef.child("yourDataNode").child("isInGym").setValue(true) { (error, ref) in
-            if let error = error {
-                print("Firebase 업데이트 오류: \(error.localizedDescription)")
-            } else {
-                print("Firebase 데이터 업데이트 완료: isInGym을 true로 설정")
-            }
-        }
     }
     
     @objc func outButtonClick() {
+        updateIsInGym(id: (DataManager.shared.userInfo?.account.id)!)
         let alert = UIAlertController(title: "퇴실하기",
                                       message: "퇴실이 완료되었습니다.",
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
-        updateIsInGym(id: (DataManager.shared.userInfo?.account.id)!)
     }
     
     func updateIsInGym(id: String) {
-        let ref = Database.database().reference().child("accounts")
-        let query = ref.queryOrdered(byChild: "account/id").queryEqual(toValue: id)
+        let ref = Database.database().reference().child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog")
+        let query = ref.queryOrdered(byChild: "id").queryEqual(toValue: id)
         
         query.observeSingleEvent(of: .value) { (snapshot) in
-            guard let userSnapshot = snapshot.children.allObjects.first as? DataSnapshot else {
-                self.dismiss(animated: true)
-                return
-            }
-            
-            if var userData = userSnapshot.value as? [String: Any] {
-                userData["isInGym"] = false
-                // 해당 유저 정보 업데이트
-                userSnapshot.ref.updateChildValues(userData) { (error, _) in
-                    if let error = error {
-                        print("isInGym 업데이트 오류: \(error.localizedDescription)")
-                    } else {
-                        print("isInGym이 업데이트되었습니다.")
+            for childSnapshot in snapshot.children {
+                guard let snapshot = childSnapshot as? DataSnapshot,
+                      var logData = snapshot.value as? [String: Any],
+                      let outTime = logData["outTime"] as? TimeInterval else {
+                    continue
+                }
+                
+                if outTime > Date().timeIntervalSinceReferenceDate {
+                    logData["outTime"] = Date().timeIntervalSinceReferenceDate
+                    
+                    snapshot.ref.updateChildValues(logData) { (error, _) in
+                        if let error = error {
+                            print("outTime 업데이트 오류: \(error.localizedDescription)")
+                        } else {
+                            print("outTime이 업데이트되었습니다.")
+                        }
                     }
+                    
                 }
             }
         }
