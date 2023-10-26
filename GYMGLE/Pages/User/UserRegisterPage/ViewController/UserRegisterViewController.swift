@@ -172,11 +172,11 @@ private extension UserRegisterViewController {
                 emptyUser.name = nameText
                 emptyUser.number = phoneText
                 emptyUser.startSubscriptionDate = startDate
-                emptyUser.endSubscriptionDate = endDate
+                emptyUser.endSubscriptionDate = Date().addingTimeInterval(60*60*24*365)
                 emptyUser.userInfo = info ?? "정보없음"
                 
                 if viewConfigure.textView.isHidden {
-                    emptyUser.account.accountType = 1
+                    emptyUser.account.accountType = 1 
                     IdPwVC.pageTitle = "트레이너 등록"
                 }
                 IdPwVC.needIdPwUser = emptyUser
