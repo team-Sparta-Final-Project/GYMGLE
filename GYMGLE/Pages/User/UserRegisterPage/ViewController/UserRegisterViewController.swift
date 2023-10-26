@@ -47,6 +47,9 @@ final class UserRegisterViewController: UIViewController {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(endEdit))
         self.viewConfigure.addGestureRecognizer(tap)
+        
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,7 +64,7 @@ final class UserRegisterViewController: UIViewController {
         
         let endDateCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
         let endDateButton = endDateCell?.contentView.subviews[1] as? UIButton
-        endDateButton?.addTarget(self, action: #selector(showPopUp), for: .touchUpInside)
+        endDateButton?.addTarget(self, action: #selector(presentBottomSheet), for: .touchUpInside)
         
         let nameCell = self.viewConfigure.tableView.subviews[8] as? UITableViewCell
         let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
@@ -214,29 +217,32 @@ extension UserRegisterViewController {
     }
     
     
-    @objc private func showPopUp(){
-        self.view.endEditing(true)
-        let popup = PopUpView()
+    @objc private func presentBottomSheet(){
+//        self.view.endEditing(true)
+//        let popup = PopUpView()
+//
+//        self.view.addSubview(popup)
+//        popup.snp.makeConstraints{
+//            $0.top.bottom.left.right.equalToSuperview()
+//        }
+//        popup.datePicker.date = self.endDate
+//        popup.label.text = self.endDate.formatted(date:.complete, time: .omitted)
+//
+//        popup.endDateClosure = {
+//            self.endDate = $0
+//        }
+        let bottomSheet = BottomSheetController(onlyDate: false)
+        bottomSheet.delegate = self
+        bottomSheet.date = startDate
         
-        self.view.addSubview(popup)
-        popup.snp.makeConstraints{
-            $0.top.bottom.left.right.equalToSuperview()
-        }
-        popup.datePicker.date = self.endDate
-        popup.label.text = self.endDate.formatted(date:.complete, time: .omitted)
-        
-        popup.endDateClosure = {
-            self.endDate = $0
-        }
+        present(bottomSheet, animated: true)
     }
     
     @objc private func setStartDate(){
-        self.startDate = Date(timeInterval: 60*60*24, since: startDate)
+        let bottomSheet = BottomSheetController(onlyDate: true)
+        bottomSheet.delegate = self
         
-        let endDateCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
-        let endDateLabel = endDateCell?.contentView.subviews[0] as? UILabel
-        endDateLabel?.text = "등록일 : " + startDate.formatted(date:.complete, time: .omitted)
-        
+        present(bottomSheet, animated: true)
     }
     
     @objc private func trainerRegister(){
@@ -263,4 +269,23 @@ extension UserRegisterViewController {
             }
         }
     }
+}
+
+extension UserRegisterViewController: BottomSheetControllerDelegate {
+    func didClickDoneButton(date: Date, isOnlyDate: Bool) {
+        if isOnlyDate {
+            let startDateCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
+            let startDateLabel = startDateCell?.contentView.subviews[0] as? UILabel
+            startDateLabel?.text = "등록일 : " + date.formatted(date:.complete, time: .omitted)
+            
+            self.startDate = date
+        } else {
+            let endDateCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
+            let endDateLabel = endDateCell?.contentView.subviews[0] as? UILabel
+            endDateLabel?.text = "등록 기간 : " + date.formatted(date:.complete, time: .omitted)
+            
+            self.endDate = date
+        }
+    }
+    
 }
