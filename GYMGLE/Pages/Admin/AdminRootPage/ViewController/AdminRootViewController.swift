@@ -26,6 +26,7 @@ final class AdminRootViewController: UIViewController {
         super.viewDidLoad()
         allButtonTapped()
         fireBaseRead()
+        adminRootView.tableView.adminRootDelegate = self
     }
     override func viewWillAppear(_ animated: Bool) {
         configuredView()
@@ -142,5 +143,40 @@ private extension AdminRootViewController {
             userRef.removeValue()
             signOut()
         } else {}
+    }
+}
+
+extension AdminRootViewController: AdminTableViewDelegate {
+    func didSelectCell(at indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            // 공지사항을 선택한 경우
+            let adminNoticeVC = AdminNoticeViewController()
+            self.navigationController?.pushViewController(adminNoticeVC, animated: true)
+            break
+        case 1:
+            // 회원등록 선택한 경우
+            self.navigationController?.pushViewController(UserRegisterViewController(), animated: true)
+
+            break
+        case 2:
+            // 회원관리를 선택한 경우
+            self.navigationController?.pushViewController(UserManageViewController(), animated: true)
+            break
+        case 3:
+            // QR스캐너를 선택한 경우
+            self.navigationController?.pushViewController(QrCodeViewController(), animated: true)
+            break
+        case 4:
+            // 정보변경을 선택한 경우
+            
+            break
+        case 5:
+            // 탈퇴하기
+            deleteAccount()
+            break
+        default:
+            break
+        }
     }
 }
