@@ -83,9 +83,9 @@ final class AdminRootView: UIView {
         addSubviews(tableView)
         
         tableView.snp.makeConstraints {
-            $0.top.equalTo(gymNoticeButton.snp.bottom).offset(20)
+            $0.top.equalTo(gymLabelStackView.snp.bottom).offset(20)
             $0.left.right.equalToSuperview()
-            $0.height.equalTo(60*5)
+            $0.height.equalTo(60*6)
         }
     }
     required init?(coder: NSCoder) {
@@ -102,8 +102,6 @@ final class AdminRootView: UIView {
 private extension AdminRootView {
     func viewMakeUI() {
         topMakeUI()
-        middleMakeUI()
-        bottomMakeUI()
     }
     func topMakeUI() {
 
