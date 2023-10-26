@@ -36,17 +36,9 @@ private extension AdminRootViewController {
     func configuredView() {
         navigationController?.navigationBar.isHidden = true
         deletedButtonHidden()
-        fireBaseRead()
     }
     
     func fireBaseRead() {
-//        let userID = Auth.auth().currentUser?.uid
-//        ref.child("users").child(userID!).child("gymInfo").observeSingleEvent(of: .value, with: { snapshot in
-//            let value = snapshot.value as? NSDictionary
-//            let gymName = value?["gymName"] as? String ?? ""
-//            let gymPhoneNumber = value?["gymPhoneNumber"] as? String ?? ""
-//            self.adminRootView.dataSetting("\(gymName)", "\(gymPhoneNumber)")
-//        }) { error in }
         let gymName = DataManager.shared.realGymInfo?.gymName
         let gymPhoneNumber = DataManager.shared.realGymInfo?.gymPhoneNumber
         adminRootView.dataSetting("\(gymName!)", "\(gymPhoneNumber!)")
