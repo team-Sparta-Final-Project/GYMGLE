@@ -10,3 +10,7 @@ import Foundation
 protocol MyPageTableViewDelegate: AnyObject {
     func didSelectCell(at indexPath: IndexPath)
 }
+
+protocol AdminTableViewDelegate: AnyObject {
+    func didSelectCell(at indexPath: IndexPath)
+}
