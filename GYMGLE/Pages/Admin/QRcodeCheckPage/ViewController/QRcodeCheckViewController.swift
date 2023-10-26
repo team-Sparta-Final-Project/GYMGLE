@@ -9,39 +9,29 @@ import UIKit
 import AVFoundation
 import QRCodeReader
 import FirebaseDatabase
+import FirebaseAuth
 
 final class QRcodeCheckViewController: UIViewController {
     
+    // MARK: - properties
     // 실시간 캡처를 수행하기 선언(AVCaptureSession: 오디오 및 비디오 데이터 스트림을 캡처하고 처리하기 위한 핵심 구성 요소)
     private let captureSession = AVCaptureSession()
     
-    private let dataTest = DataManager.shared
-    
+    // MARK: - lifr cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        naviBarSetting()
         qrCodeSetting()
+        ReadAdminUid()
     }
-    
 }
+
+// MARK: - extension custom func
+
 private extension QRcodeCheckViewController {
     
-    //네비게이션바 세팅
-    func naviBarSetting() {
-        let appearance = UINavigationBarAppearance()
-        appearance.backgroundColor = .white
-        appearance.shadowColor = .none
-        navigationItem.hidesSearchBarWhenScrolling = false
-        navigationController?.navigationBar.tintColor = .blue
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.compactAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        
-    }
     func qrCodeSetting() {
-        
         // 캡처 방식 (video, 전면카메라)
-        guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) else { fatalError("No video device found") }
+        guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else { fatalError("No video device found") }
         do {
             // 제한하고 싶은 영역
             let rectOfInterest = CGRect(x: (UIScreen.main.bounds.width - 200) / 2 , y: (UIScreen.main.bounds.height - 200) / 2, width: 200, height: 200)
@@ -114,7 +104,39 @@ private extension QRcodeCheckViewController {
             toastView.removeFromSuperview()
         }
     }
+    func ReadAdminUid(){
+        let ref = Database.database().reference().child("accounts")
+        let query = ref.queryOrdered(byChild: "adminUid").queryEqual(toValue: DataManager.shared.gymUid)
+        query.observeSingleEvent(of: .value) { snapshot in
+            guard let userSnapshot = snapshot.value as? [String:[String:Any]] else {
+                return
+            }
+            do {
+                let jsonArray = userSnapshot.values.compactMap { $0 as [String: Any] }
+                let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
+                let user = try JSONDecoder().decode([User].self, from: jsonData)
+                DataManager.shared.userList = user
+            } catch let error {
+                print("테스트 - \(error)")
+            }
+        }
+    }
+    func createdInAndOutLog(id: String) { //큐알코드를 찍었을 때
+        let ref = Database.database().reference().child("users").child(DataManager.shared.gymUid!)
+        if let currentedTimePlusOne = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) {
+            let nAndOutLog = InAndOut(id: id, inTime: Date(), outTime: currentedTimePlusOne, sinceInAndOutTime: 0.0)
+            do {
+                let inAndOutLogData = try JSONEncoder().encode(nAndOutLog)
+                let inAndOutLogJSON = try JSONSerialization.jsonObject(with: inAndOutLogData, options: [])
+                ref.child("gymInAndOutLog").childByAutoId().setValue(inAndOutLogJSON)
+            } catch {
+                
+            }
+        }
+    }
+
 }
+// MARK: - AVCaptureMetadataOutputObjectsDelegate
 
 // metadata capture ouput 에서 생성된 metatdata 를 수신
 // capture metadata ouput object 가 connection 을 통해서 관련된 metadata objects 를 수신할 때 응답할 수 있음 (아래 메서드를 사용)
@@ -132,43 +154,20 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject, let stringValue = readableObject.stringValue else {
                 return
             }
-            print(stringValue)
-            
-            //                dataTest.updateIsInGym(id: stringValue )
-            //                dataTest.gymInfo.gymInAndOutLog.append(InAndOut(id: stringValue, inTime: Date(), outTime: Date(), sinceInAndOutTime: 1.0))
-            
-            updateIsInGym(id: stringValue)
-            self.captureSession.stopRunning()
-            self.showToast(message: "확인했습니다")
+            if (DataManager.shared.userList.first(where: {$0.account.id == stringValue}) != nil) {
+                createdInAndOutLog(id: stringValue)
+                
+                self.showToast(message: "확인했습니다!")
+                self.captureSession.stopRunning()
+                AudioServicesPlaySystemSound(SystemSoundID(1000))
+            } else {
+                self.showToast(message: "회원이 아닙니다!")
+                self.captureSession.stopRunning()
+                AudioServicesPlaySystemSound(SystemSoundID(1006))
+            }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 self.captureSession.startRunning()
-                //                print( "list: \(self.dataTest.gymInfo.gymUserList)")
-                //                print( "list: \(self.dataTest.gymInfo.gymInAndOutLog)")
-            }
-        }
-    }
-    
-    func updateIsInGym(id: String) { //큐알코드를 찍었을 때
-        let ref = Database.database().reference().child("accounts")
-        let query = ref.queryOrdered(byChild: "account/id").queryEqual(toValue: id)
-        
-        query.observeSingleEvent(of: .value) { (snapshot) in
-            guard let userSnapshot = snapshot.children.allObjects.first as? DataSnapshot else {
-                self.dismiss(animated: true)
-                return
-            }
-            
-            if var userData = userSnapshot.value as? [String: Any] {
-                userData["isInGym"] = true
-                // 해당 유저 정보 업데이트
-                userSnapshot.ref.updateChildValues(userData) { (error, _) in
-                    if let error = error {
-                        print("isInGym 업데이트 오류: \(error.localizedDescription)")
-                    } else {
-                        print("isInGym이 업데이트되었습니다.")
-                    }
-                }
             }
         }
     }

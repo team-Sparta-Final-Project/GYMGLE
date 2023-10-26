@@ -73,6 +73,9 @@ final class UserRegisterViewController: UIViewController {
         
         editingOn()
     }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        viewConfigure.endEditing(true)
+    }
 }
 
 // MARK: - extension custom func

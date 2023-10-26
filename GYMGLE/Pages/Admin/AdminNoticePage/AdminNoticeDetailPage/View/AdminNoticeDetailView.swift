@@ -11,7 +11,7 @@ final class AdminNoticeDetailView: UIView {
     // MARK: - UI Properties
     lazy var pageTitleLabel: UILabel = {
         let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size32Bold, textAligment: .center)
+        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size36Bold, textAligment: .center)
         label.text = "내용"
         return label
     }()
@@ -29,7 +29,7 @@ final class AdminNoticeDetailView: UIView {
         textView.backgroundColor = .white
         textView.clipsToBounds = true
         textView.layer.cornerRadius = 30
-        textView.textContainerInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+        textView.textContainerInset = UIEdgeInsets(top: 18, left: 18, bottom: 18, right: 18)
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
@@ -66,12 +66,12 @@ private extension AdminNoticeDetailView {
             self.addSubview(view)
         }
         NSLayoutConstraint.activate([
-            pageTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            pageTitleLabel.bottomAnchor.constraint(equalTo: self.contentTextView.topAnchor, constant: -30),
+            pageTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 28),
+            pageTitleLabel.bottomAnchor.constraint(equalTo: self.contentTextView.topAnchor, constant: -20),
             pageTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 100),
             
             deletedButton.centerYAnchor.constraint(equalTo: self.pageTitleLabel.centerYAnchor, constant: 0),
-            deletedButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
+            deletedButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -28),
             deletedButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 300),
             
             contentTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
@@ -83,7 +83,7 @@ private extension AdminNoticeDetailView {
             
             createButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             createButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -68),
+            createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -78),
             createButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }

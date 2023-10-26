@@ -63,6 +63,9 @@ class UserRegisterViewIDPWController: UIViewController {
 //        verifyButton?.addTarget(self, action: #selector(idVerification), for: .touchUpInside)
         
     }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        viewConfigure.endEditing(true)
+    }
 
     private func buttonOnCheck(){
         if isCellEmpty{

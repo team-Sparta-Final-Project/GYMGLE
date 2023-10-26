@@ -13,7 +13,7 @@ class AdminRegisterView: UIView {
     
     private lazy var titleLabel = UILabel().then {
         $0.text = ""
-        $0.font = FontGuide.size32Bold
+        $0.font = FontGuide.size36Bold
         $0.textColor = ColorGuide.black
     }
     

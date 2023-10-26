@@ -22,6 +22,9 @@ final class AdminNoticeDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewConfigure()
+        if adminNoticeDetailView.contentTextView.text == "500자 이내로 공지사항을 적어주세요!" {
+            adminNoticeDetailView.deletedButton.isHidden = true
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,26 +40,25 @@ final class AdminNoticeDetailViewController: UIViewController {
 // MARK: - extension custom func
 private extension AdminNoticeDetailViewController {
     func viewConfigure() {
+
+        viewSetting()
         adminNoticeDetailView.contentTextView.delegate = self
         registerForKeyboardNotifications()
-        viewSetting()
         buttonTapped()
     }
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     func viewSetting() {
-        if let noticeInfo = noticeInfo {
+        if let noticeInfo = self.noticeInfo {
             adminNoticeDetailView.contentTextView.text = noticeInfo.content
             adminNoticeDetailView.contentNumberLabel.text = "\(adminNoticeDetailView.contentTextView.text.count)/500"
             adminNoticeDetailView.createButton.setTitle("수정하기", for: .normal)
             adminNoticeDetailView.deletedButton.isHidden = false
         } else {
             adminNoticeDetailView.createButton.setTitle("등록하기", for: .normal)
-            if adminNoticeDetailView.contentTextView.text == "500자 이내로 공지사항을 적어주세요!" {
-                adminNoticeDetailView.deletedButton.isHidden = true
-            }
         }
     }
     func buttonTapped() {
@@ -176,9 +178,13 @@ extension AdminNoticeDetailViewController {
             self.adminNoticeDetailView.createButton.frame = createButtonFrame
         }
     }
+    
     @objc private func keyboardWillHide(_ notification: Notification) {
         let realCreateButtonFrame = self.view.frame.size.height - 88 - self.adminNoticeDetailView.createButton.frame.size.height
-        self.adminNoticeDetailView.createButton.frame.origin.y = realCreateButtonFrame
+        var createButtonFrame = adminNoticeDetailView.createButton.frame
+            createButtonFrame.origin.y = realCreateButtonFrame
+            self.adminNoticeDetailView.createButton.frame = createButtonFrame
+        
     }
     @objc private func createButtonTapped() {
         createdAndUpatedContent {
