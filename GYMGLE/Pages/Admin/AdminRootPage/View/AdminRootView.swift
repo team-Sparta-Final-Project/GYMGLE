@@ -5,8 +5,12 @@
 //  Created by 박성원 on 2023/10/13.
 //
 import UIKit
+import SnapKit
+import Then
 
 final class AdminRootView: UIView {
+    
+    let tableView = AdminTableView()
     // MARK: - UIProperties
     private lazy var pageTitleLabel: UILabel = {
         let label = UILabel()
@@ -16,13 +20,13 @@ final class AdminRootView: UIView {
     }()
     private lazy var gymNameLabel: UILabel = {
         let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size19, textAligment: .left)
+        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16Bold, textAligment: .left)
         label.text = "JP 헬스장"
         return label
     }()
     private lazy var gymNumberLabel: UILabel = {
         let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .left)
+        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size14, textAligment: .left)
         label.text = "010-0000-0000"
         return label
     }()
@@ -37,7 +41,7 @@ final class AdminRootView: UIView {
     }()
     lazy var gymSettingButton: UIButton = {
         let button = UIButton()
-        button.buttonMakeUI(backgroundColor: .white, cornerRadius: 16, borderWidth: 2.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "로그아웃", font: FontGuide.size16Bold, setTitleColor: ColorGuide.main)
+        button.buttonMakeUI(backgroundColor: .white, cornerRadius: 16, borderWidth: 0, borderColor: ColorGuide.textHint.cgColor, setTitle: "로그아웃", font: FontGuide.size16Bold, setTitleColor: ColorGuide.main)
         return button
     }()
     // 회원등록 버튼
@@ -76,6 +80,13 @@ final class AdminRootView: UIView {
         super.init(frame: frame)
         self.backgroundColor = ColorGuide.background
         viewMakeUI()
+        addSubviews(tableView)
+        
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(gymNoticeButton.snp.bottom).offset(20)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(60*5)
+        }
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -111,7 +122,7 @@ private extension AdminRootView {
             
             gymSettingButton.centerYAnchor.constraint(equalTo: self.gymLabelStackView.centerYAnchor),
             gymSettingButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            gymSettingButton.widthAnchor.constraint(equalToConstant: 75),
+            gymSettingButton.widthAnchor.constraint(equalToConstant: 85),
             gymSettingButton.heightAnchor.constraint(equalToConstant: 34)
         ])
     }
