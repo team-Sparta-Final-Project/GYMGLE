@@ -213,15 +213,15 @@ extension UserRegisterViewIDPWController {
                                             let adminRootVC = AdminRootViewController()
                                             adminRootVC.isAdmin = false
                                             self.navigationController?.pushViewController(adminRootVC, animated: true)
-                                        } else {
-                                            let vc = AdminRootViewController()
-                                            self.navigationController?.pushViewController(vc, animated: true)
+                                            return
                                         }
                                     }
                                 }
                             }
                         }
                     }
+                    let vc = AdminRootViewController()
+                    self.navigationController?.pushViewController(vc, animated: true)
                 } catch {
                     print("JSON 인코딩 에러")
                 }
