@@ -128,7 +128,16 @@ private extension AdminRootViewController {
                     self.navigationController?.pushViewController(adminLoginVC, animated: true)
                 }
             }
-            // 데이터베이스에서 삭제
+            //탈퇴한 헬스장의 유저들 삭제
+            let query = ref.child("accounts").queryOrdered(byChild: "adminUid").queryEqual(toValue: DataManager.shared.gymUid!)
+            query.observeSingleEvent(of: .value) { snapshot in
+                for child in snapshot.children {
+                    if let snapshot = child as? DataSnapshot {
+                        snapshot.ref.removeValue()
+                    }
+                }
+            }
+            // 헬스장 관리자를 데이터베이스에서 삭제
             let userRef = Database.database().reference().child("users").child(user.uid)
             userRef.removeValue()
             signOut()
