@@ -98,6 +98,25 @@ private extension AdminRootViewController {
             signOut()
         } else {}
     }
+    func showToast(message: String) {
+        let toastView = ToastView()
+        toastView.configure()
+        toastView.text = message
+        toastView.font = FontGuide.size16Bold
+        view.addSubview(toastView)
+        toastView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
+            toastView.widthAnchor.constraint(equalToConstant: (view.frame.size.width / 2) + 40),
+            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 24),
+        ])
+        UIView.animate(withDuration: 2.0, delay: 0.2) { //2.5초
+            toastView.alpha = 0
+        } completion: { _ in
+            toastView.removeFromSuperview()
+        }
+    }
 }
 
 extension AdminRootViewController: AdminTableViewDelegate {
@@ -125,8 +144,11 @@ extension AdminRootViewController: AdminTableViewDelegate {
             self.navigationController?.pushViewController(AdminRegisterViewController(), animated: true)
             break
         case 5:
-            // 탈퇴하기
-            deleteAccount()
+            if isAdmin == false {
+                showToast(message: "이 아이디는 탈퇴할 수 없습니다!")
+            } else {
+                deleteAccount()
+            }
             break
         default:
             break
