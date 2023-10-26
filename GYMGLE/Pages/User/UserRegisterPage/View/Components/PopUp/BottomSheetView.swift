@@ -17,7 +17,6 @@ class BottomSheetView: UIView {
         $0.text = "등록 기간"
     }
     let datePicker = UIDatePicker().then{
-        $0.minimumDate = Date()
         $0.preferredDatePickerStyle = .wheels
         $0.datePickerMode = .date
     }

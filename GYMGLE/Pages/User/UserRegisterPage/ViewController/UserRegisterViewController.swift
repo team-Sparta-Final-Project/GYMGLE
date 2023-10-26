@@ -218,29 +218,22 @@ extension UserRegisterViewController {
     
     
     @objc private func presentBottomSheet(){
-//        self.view.endEditing(true)
-//        let popup = PopUpView()
-//
-//        self.view.addSubview(popup)
-//        popup.snp.makeConstraints{
-//            $0.top.bottom.left.right.equalToSuperview()
-//        }
-//        popup.datePicker.date = self.endDate
-//        popup.label.text = self.endDate.formatted(date:.complete, time: .omitted)
-//
-//        popup.endDateClosure = {
-//            self.endDate = $0
-//        }
+        // TODO: 등록일 > 등록 마감일 이면 토스트창 출력하기
+        
         let bottomSheet = BottomSheetController(onlyDate: false)
         bottomSheet.delegate = self
-        bottomSheet.date = startDate
+        bottomSheet.minDate = startDate
+        bottomSheet.date = endDate
         
         present(bottomSheet, animated: true)
     }
     
     @objc private func setStartDate(){
+        // TODO: 등록일 > 등록 마감일 이면 토스트창 출력하기
+        
         let bottomSheet = BottomSheetController(onlyDate: true)
         bottomSheet.delegate = self
+        bottomSheet.minDate = startDate
         
         present(bottomSheet, animated: true)
     }

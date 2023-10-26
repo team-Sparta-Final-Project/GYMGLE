@@ -46,7 +46,6 @@
 		2782A4B82AEA46BB00B110F9 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */; };
 		2782A4BC2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4BB2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift */; };
 		27E24B802ADF8A790031122F /* UserRegisterViewIDPWController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E24B7F2ADF8A790031122F /* UserRegisterViewIDPWController.swift */; };
-		27E24B852ADF9E010031122F /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E24B842ADF9E010031122F /* PopUpView.swift */; };
 		630A0BEE2AD9269100525A6E /* Extension_UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630A0BED2AD9269100525A6E /* Extension_UILabel.swift */; };
 		630CE14B2ADD1B5E001EC547 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE14A2ADD1B5E001EC547 /* TabbarViewController.swift */; };
 		630CE14D2ADD5C8A001EC547 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE14C2ADD5C8A001EC547 /* User.swift */; };
@@ -123,7 +122,6 @@
 		2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		2782A4BB2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewDateOnly.swift; sourceTree = "<group>"; };
 		27E24B7F2ADF8A790031122F /* UserRegisterViewIDPWController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegisterViewIDPWController.swift; sourceTree = "<group>"; };
-		27E24B842ADF9E010031122F /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
 		630A0BED2AD9269100525A6E /* Extension_UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UILabel.swift; sourceTree = "<group>"; };
 		630CE14A2ADD1B5E001EC547 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
 		630CE14C2ADD5C8A001EC547 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = GYMGLE/User.swift; sourceTree = SOURCE_ROOT; };
@@ -480,7 +478,6 @@
 		27E24B812ADF97A30031122F /* PopUp */ = {
 			isa = PBXGroup;
 			children = (
-				27E24B842ADF9E010031122F /* PopUpView.swift */,
 				2782A4B52AEA466D00B110F9 /* BottomSheetController.swift */,
 				2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */,
 				2782A4BB2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift */,
@@ -756,7 +753,6 @@
 				630CE1532ADD5CB8001EC547 /* Account.swift in Sources */,
 				D1E0187D2ADCEE0000D1C53D /* CustomTextCell.swift in Sources */,
 				D1E0186F2ADCEC4B00D1C53D /* AdminLoginView.swift in Sources */,
-				27E24B852ADF9E010031122F /* PopUpView.swift in Sources */,
 				D1E018692ADCEC1A00D1C53D /* AdminRootViewController.swift in Sources */,
 				D1E018652ADCEBFA00D1C53D /* AdminNoticeViewController.swift in Sources */,
 				074428752ADFB38400EB7D05 /* UserCommunityViewController.swift in Sources */,

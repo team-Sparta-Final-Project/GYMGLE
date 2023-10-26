@@ -12,7 +12,7 @@ protocol BottomSheetControllerDelegate {
 }
 
 class BottomSheetController: UIViewController {
-    
+    // TODO: 등록일 > 등록 마감일 이면 토스트창 출력하기
     var isOnlyDate = false
     
     init(onlyDate:Bool){
@@ -29,6 +29,7 @@ class BottomSheetController: UIViewController {
     var sheetViewDateOnly = BottomSheetViewDateOnly()
     var delegate: BottomSheetControllerDelegate?
     
+    var minDate = Date()
     var date = Date()
     
     override func loadView() {
@@ -47,13 +48,12 @@ class BottomSheetController: UIViewController {
         }
         
         if isOnlyDate {
-            sheetViewDateOnly.datePicker.minimumDate = date
+            sheetViewDateOnly.datePicker.minimumDate = minDate
             sheetViewDateOnly.doneButton.addTarget(self, action: #selector(clickedDoneButton), for: .touchUpInside)
         }else{
-            clickedMonthButton()
-            didChangeDate()
+            sheetView.datePicker.date = date
             
-            sheetView.datePicker.minimumDate = date
+            sheetView.datePicker.minimumDate = minDate
             sheetView.doneButton.addTarget(self, action: #selector(clickedDoneButton), for: .touchUpInside)
             sheetView.monthButton.addTarget(self, action: #selector(clickedMonthButton), for: .touchUpInside)
             sheetView.month3Button.addTarget(self, action: #selector(clickedMonth3Button), for: .touchUpInside)
@@ -63,8 +63,11 @@ class BottomSheetController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        didChangeDate()
+    }
+    
     @objc private func clickedDoneButton(){
-        print("테스트 - 눌리냐")
         if isOnlyDate {
             delegate?.didClickDoneButton(date: sheetViewDateOnly.datePicker.date, isOnlyDate: isOnlyDate)
         }else{
@@ -74,50 +77,50 @@ class BottomSheetController: UIViewController {
     }
     
     @objc private func clickedMonthButton(){
-        sheetView.datePicker.date = date.addingTimeInterval(60*60*24*30)
+        sheetView.datePicker.date = minDate.addingTimeInterval(60*60*24*30)
         sheetView.monthButton.layer.borderColor = ColorGuide.main.cgColor
         sheetView.month3Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
         sheetView.month6Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
         sheetView.month12Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
     }
     @objc private func clickedMonth3Button(){
-        sheetView.datePicker.date = date.addingTimeInterval(60*60*24*30*3)
+        sheetView.datePicker.date = minDate.addingTimeInterval(60*60*24*30*3)
         sheetView.monthButton.layer.borderColor = ColorGuide.shadowBorder.cgColor
         sheetView.month3Button.layer.borderColor = ColorGuide.main.cgColor
         sheetView.month6Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
         sheetView.month12Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
     }
     @objc private func clickedMonth6Button(){
-        sheetView.datePicker.date = date.addingTimeInterval(60*60*24*30*6)
+        sheetView.datePicker.date = minDate.addingTimeInterval(60*60*24*30*6)
         sheetView.monthButton.layer.borderColor = ColorGuide.shadowBorder.cgColor
         sheetView.month3Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
         sheetView.month6Button.layer.borderColor = ColorGuide.main.cgColor
         sheetView.month12Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
     }
     @objc private func clickedMonth12Button(){
-        sheetView.datePicker.date = date.addingTimeInterval(60*60*24*365)
+        sheetView.datePicker.date = minDate.addingTimeInterval(60*60*24*365)
         sheetView.monthButton.layer.borderColor = ColorGuide.shadowBorder.cgColor
         sheetView.month3Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
         sheetView.month6Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
         sheetView.month12Button.layer.borderColor = ColorGuide.main.cgColor
     }
     @objc private func didChangeDate(){
-        if sheetView.datePicker.date.formatted(date: .numeric, time: .omitted) == date.addingTimeInterval(60*60*24*30).formatted(date: .numeric, time: .omitted) {
+        if sheetView.datePicker.date.formatted(date: .numeric, time: .omitted) == minDate.addingTimeInterval(60*60*24*30).formatted(date: .numeric, time: .omitted) {
             sheetView.monthButton.layer.borderColor = ColorGuide.main.cgColor
             sheetView.month3Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
             sheetView.month6Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
             sheetView.month12Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
-        }else if sheetView.datePicker.date.formatted(date: .numeric, time: .omitted) == date.addingTimeInterval(60*60*24*30*3).formatted(date: .numeric, time: .omitted) {
+        }else if sheetView.datePicker.date.formatted(date: .numeric, time: .omitted) == minDate.addingTimeInterval(60*60*24*30*3).formatted(date: .numeric, time: .omitted) {
             sheetView.monthButton.layer.borderColor = ColorGuide.shadowBorder.cgColor
             sheetView.month3Button.layer.borderColor = ColorGuide.main.cgColor
             sheetView.month6Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
             sheetView.month12Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
-        }else if sheetView.datePicker.date.formatted(date: .numeric, time: .omitted) == date.addingTimeInterval(60*60*24*30*6).formatted(date: .numeric, time: .omitted) {
+        }else if sheetView.datePicker.date.formatted(date: .numeric, time: .omitted) == minDate.addingTimeInterval(60*60*24*30*6).formatted(date: .numeric, time: .omitted) {
             sheetView.monthButton.layer.borderColor = ColorGuide.shadowBorder.cgColor
             sheetView.month3Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
             sheetView.month6Button.layer.borderColor = ColorGuide.main.cgColor
             sheetView.month12Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
-        }else if sheetView.datePicker.date.formatted(date: .numeric, time: .omitted) == date.addingTimeInterval(60*60*24*365).formatted(date: .numeric, time: .omitted) {
+        }else if sheetView.datePicker.date.formatted(date: .numeric, time: .omitted) == minDate.addingTimeInterval(60*60*24*365).formatted(date: .numeric, time: .omitted) {
             sheetView.monthButton.layer.borderColor = ColorGuide.shadowBorder.cgColor
             sheetView.month3Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
             sheetView.month6Button.layer.borderColor = ColorGuide.shadowBorder.cgColor
