@@ -10,6 +10,7 @@ class AdminTableView: UITableView {
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
+        self.separatorStyle = .none
         self.dataSource = self
         self.delegate = self
         self.isScrollEnabled = false
@@ -53,7 +54,6 @@ extension AdminTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageCell", for: indexPath) as! MyPageTableViewCell
         cell.label.text = cellContents[indexPath.row]
-
         cell.label.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20)
             $0.centerY.equalToSuperview()

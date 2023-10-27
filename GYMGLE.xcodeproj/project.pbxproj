@@ -45,6 +45,7 @@
 		2782A4B62AEA466D00B110F9 /* BottomSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4B52AEA466D00B110F9 /* BottomSheetController.swift */; };
 		2782A4B82AEA46BB00B110F9 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */; };
 		2782A4BC2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4BB2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift */; };
+		2782A4BE2AEB88E500B110F9 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4BD2AEB88E500B110F9 /* CustomButton.swift */; };
 		27E24B802ADF8A790031122F /* UserRegisterViewIDPWController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E24B7F2ADF8A790031122F /* UserRegisterViewIDPWController.swift */; };
 		630A0BEE2AD9269100525A6E /* Extension_UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630A0BED2AD9269100525A6E /* Extension_UILabel.swift */; };
 		630CE14B2ADD1B5E001EC547 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE14A2ADD1B5E001EC547 /* TabbarViewController.swift */; };
@@ -122,6 +123,7 @@
 		2782A4B52AEA466D00B110F9 /* BottomSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetController.swift; sourceTree = "<group>"; };
 		2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		2782A4BB2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewDateOnly.swift; sourceTree = "<group>"; };
+		2782A4BD2AEB88E500B110F9 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		27E24B7F2ADF8A790031122F /* UserRegisterViewIDPWController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegisterViewIDPWController.swift; sourceTree = "<group>"; };
 		630A0BED2AD9269100525A6E /* Extension_UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UILabel.swift; sourceTree = "<group>"; };
 		630CE14A2ADD1B5E001EC547 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
@@ -483,6 +485,7 @@
 				2782A4B52AEA466D00B110F9 /* BottomSheetController.swift */,
 				2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */,
 				2782A4BB2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift */,
+				2782A4BD2AEB88E500B110F9 /* CustomButton.swift */,
 			);
 			path = PopUp;
 			sourceTree = "<group>";
@@ -796,6 +799,7 @@
 				07997FF72AD843A5002ACFCB /* UserRootViewController.swift in Sources */,
 				D1E0187C2ADCEE0000D1C53D /* LabelCell.swift in Sources */,
 				07997FF92AD843BD002ACFCB /* UserRootModel.swift in Sources */,
+				2782A4BE2AEB88E500B110F9 /* CustomButton.swift in Sources */,
 				27E24B802ADF8A790031122F /* UserRegisterViewIDPWController.swift in Sources */,
 				D15C22302AE50F7D002C4213 /* Protocol_Delegate.swift in Sources */,
 				D1E018832ADCEEED00D1C53D /* CustomTextField.swift in Sources */,
