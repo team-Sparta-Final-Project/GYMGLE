@@ -23,7 +23,7 @@ class UserRegisterView: UIView {
     private func configure(){
         self.backgroundColor = ColorGuide.background
         
-        topLabel()
+//        topLabel()
         bottomButton()
         centerTableView()
         addTextView()
@@ -62,7 +62,7 @@ class UserRegisterView: UIView {
         self.addSubviews(segmented)
         
         segmented.snp.makeConstraints{
-            $0.centerY.equalTo(label)
+            $0.top.equalToSuperview().inset(92)
             $0.right.equalToSuperview().inset(22)
         }
         
@@ -89,7 +89,7 @@ class UserRegisterView: UIView {
         
         self.addSubview(tableView)
         tableView.snp.makeConstraints{
-            $0.top.equalTo(label.snp.bottom).offset(35)
+            $0.top.equalToSuperview().inset(132)
             $0.left.right.equalToSuperview().inset(24)
             $0.bottom.equalTo(button.snp.top).inset(-280)
         }

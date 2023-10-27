@@ -31,14 +31,14 @@ class BottomSheetViewDateOnly: UIView {
         
         
         
-        subViewsConfigure()
+        subViewsLayoutConfigure()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func subViewsConfigure(){
+    func subViewsLayoutConfigure(){
         self.addSubview(datePicker)
         datePicker.snp.makeConstraints{
             $0.bottom.equalToSuperview().inset(76)
