@@ -23,7 +23,7 @@ final class UserRegisterViewController: UIViewController {
     private var isCellEmpty = true
     
     var startDate = Date()
-    var endDate = Date()
+    var endDate = Date(timeIntervalSinceNow: 60*60*24*30)
     let viewConfigure = UserRegisterView()
     
     override func loadView() {
@@ -55,6 +55,7 @@ final class UserRegisterViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = false
         setCustomBackButton()
+        navigationController?.navigationItem.title = ""
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -216,10 +217,20 @@ extension UserRegisterViewController {
         self.view.endEditing(true)
     }
     
+    //MARK: - 바텀시트
+    @objc private func setStartDate(){
+        // TODO: 등록일 > 등록 마감일 이면 토스트창 출력하기
+        
+        let bottomSheet = BottomSheetController(onlyDate: true)
+        bottomSheet.delegate = self
+        bottomSheet.date = startDate
+        bottomSheet.endDate = endDate
+        present(bottomSheet, animated: true)
+    }
     
     @objc private func presentBottomSheet(){
         // TODO: 등록일 > 등록 마감일 이면 토스트창 출력하기
-        
+                
         let bottomSheet = BottomSheetController(onlyDate: false)
         bottomSheet.delegate = self
         bottomSheet.minDate = startDate
@@ -228,31 +239,24 @@ extension UserRegisterViewController {
         present(bottomSheet, animated: true)
     }
     
-    @objc private func setStartDate(){
-        // TODO: 등록일 > 등록 마감일 이면 토스트창 출력하기
-        
-        let bottomSheet = BottomSheetController(onlyDate: true)
-        bottomSheet.delegate = self
-        bottomSheet.minDate = startDate
-        
-        present(bottomSheet, animated: true)
-    }
+    
     
     @objc private func trainerRegister(){
         
-        if viewConfigure.textView.isHidden {
-            viewConfigure.label.text = "회원 등록"
-        }else {
-            viewConfigure.label.text = "트레이너 등록"
-        }
+//        if viewConfigure.textView.isHidden {
+//            viewConfigure.label.text = "회원 등록"
+//        }else {
+//            viewConfigure.label.text = "트레이너 등록"
+//        }
         viewConfigure.textView.isHidden.toggle()
         
-        let startDateCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
-        startDateCell?.isHidden.toggle()
-        let endDateCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
-        endDateCell?.isHidden.toggle()
-        let additionalCell = self.viewConfigure.tableView.subviews[0] as? UITableViewCell
-        additionalCell?.isHidden.toggle()
+        
+//        let startDateCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
+//        startDateCell?.isHidden.toggle()
+//        let endDateCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
+//        endDateCell?.isHidden.toggle()
+//        let additionalCell = self.viewConfigure.tableView.subviews[0] as? UITableViewCell
+//        additionalCell?.isHidden.toggle()
         
     }
     @objc private func buttonClicked(){

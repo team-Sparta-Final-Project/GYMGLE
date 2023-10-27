@@ -33,19 +33,19 @@ class AdminRegisterView: UIView {
         $0.layer.addBorder([.bottom], color: .gray, width: 0.5)
     }
     
-    lazy var adminNumberTextField = UITextField().then {
-        $0.borderStyle = .none
-        $0.placeholder = "사업자 전화 번호"
-        $0.keyboardType = .numbersAndPunctuation
-        $0.font = FontGuide.size14
-        
-        let placeholderPadding = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: $0.frame.height))
-        $0.leftView = placeholderPadding
-        $0.leftViewMode = .always
-        $0.frame.size.width = 344.5
-        $0.frame.size.height = 30
-        $0.layer.addBorder([.bottom], color: .gray, width: 0.5)
-    }
+//    lazy var adminNumberTextField = UITextField().then {
+//        $0.borderStyle = .none
+//        $0.placeholder = "사업자 전화 번호"
+//        $0.keyboardType = .numbersAndPunctuation
+//        $0.font = FontGuide.size14
+//        
+//        let placeholderPadding = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: $0.frame.height))
+//        $0.leftView = placeholderPadding
+//        $0.leftViewMode = .always
+//        $0.frame.size.width = 344.5
+//        $0.frame.size.height = 30
+//        $0.layer.addBorder([.bottom], color: .gray, width: 0.5)
+//    }
     
     lazy var phoneTextField = UITextField().then {
         $0.borderStyle = .none
@@ -122,7 +122,7 @@ class AdminRegisterView: UIView {
         super.init(frame: frame)
         self.backgroundColor = ColorGuide.background
         
-        addSubviews(titleLabel, adminNameTextField, adminNumberTextField, phoneTextField, registerNumberTextField, validCheckButton, idTextField, duplicationCheckButton, passwordTextField, registerButton)
+        addSubviews(titleLabel, adminNameTextField, phoneTextField, registerNumberTextField, validCheckButton, idTextField, duplicationCheckButton, passwordTextField, registerButton)
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(88)
@@ -134,13 +134,13 @@ class AdminRegisterView: UIView {
             $0.left.right.equalToSuperview().inset(24)
         }
         
-        adminNumberTextField.snp.makeConstraints {
-            $0.top.equalTo(adminNameTextField.snp.bottom).offset(52)
-            $0.left.right.equalToSuperview().inset(24)
-        }
+//        adminNumberTextField.snp.makeConstraints {
+//            $0.top.equalTo(adminNameTextField.snp.bottom).offset(52)
+//            $0.left.right.equalToSuperview().inset(24)
+//        }
         
         phoneTextField.snp.makeConstraints {
-            $0.top.equalTo(adminNumberTextField.snp.bottom).offset(52)
+            $0.top.equalTo(adminNameTextField.snp.bottom).offset(52)
             $0.left.right.equalToSuperview().inset(24)
         }
         

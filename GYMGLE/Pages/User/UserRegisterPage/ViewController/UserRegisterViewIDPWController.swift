@@ -6,12 +6,12 @@ import FirebaseDatabase
 class UserRegisterViewIDPWController: UIViewController {
     
     var pageTitle = ""
-    let buttonTitle = "등록하기"
+    let buttonTitle = "회원가입"
     
-    let cells = ["회원 아이디","회원 비밀번호"]
+    let cells = ["회원 이메일","회원 비밀번호"]
     let labelCells = [""]
-    let buttonCells = ["회원 아이디"]
-    let buttonText = ["중복 확인"]
+    let buttonCells = [""]
+    let buttonText = [""]
     
     var needIdPwUser:User?
     
@@ -59,8 +59,8 @@ class UserRegisterViewIDPWController: UIViewController {
         idField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
         pwField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
         
-        let verifyButton = idCell?.contentView.subviews[2] as? UIButton
-        //        verifyButton?.addTarget(self, action: #selector(idVerification), for: .touchUpInside)
+//        let verifyButton = idCell?.contentView.subviews[2] as? UIButton
+//        //        verifyButton?.addTarget(self, action: #selector(idVerification), for: .touchUpInside)
         
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -148,7 +148,7 @@ class UserRegisterViewIDPWController: UIViewController {
     
     @objc func buttonClicked(){
         if isCellEmpty{
-            showToast(message: "빈칸이 있거나 중복 확인이 안되었습니다.")
+            showToast(message: "모든 칸을 입력해 주세요.")
         }
         else {
             createUser()

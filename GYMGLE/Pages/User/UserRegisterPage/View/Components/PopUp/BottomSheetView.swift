@@ -31,38 +31,10 @@ class BottomSheetView: UIView {
         
     }
     
-    let monthButton = UIButton().then{
-        $0.setTitleColor(.black, for: .normal)
-        $0.setTitle("1개월", for: .normal)
-        $0.backgroundColor = .white
-        $0.layer.cornerRadius = 12
-        $0.layer.borderWidth = 1.0
-        $0.layer.borderColor = ColorGuide.shadowBorder.cgColor
-    }
-    let month3Button = UIButton().then{
-        $0.setTitleColor(.black, for: .normal)
-        $0.setTitle("3개월", for: .normal)
-        $0.backgroundColor = .white
-        $0.layer.cornerRadius = 12
-        $0.layer.borderWidth = 1.0
-        $0.layer.borderColor = ColorGuide.shadowBorder.cgColor
-    }
-    let month6Button = UIButton().then{
-        $0.setTitleColor(.black, for: .normal)
-        $0.setTitle("6개월", for: .normal)
-        $0.backgroundColor = .white
-        $0.layer.cornerRadius = 12
-        $0.layer.borderWidth = 1.0
-        $0.layer.borderColor = ColorGuide.shadowBorder.cgColor
-    }
-    let month12Button = UIButton().then{
-        $0.setTitleColor(.black, for: .normal)
-        $0.setTitle("12개월", for: .normal)
-        $0.backgroundColor = .white
-        $0.layer.cornerRadius = 12
-        $0.layer.borderWidth = 1.0
-        $0.layer.borderColor = ColorGuide.shadowBorder.cgColor
-    }
+    let monthButton = CustomButton(title: "1개월")
+    let month3Button = CustomButton(title: "3개월")
+    let month6Button = CustomButton(title: "6개월")
+    let month12Button = CustomButton(title: "12개월")
     
     
     let doneButton = UIButton.GYMGLEButtonPreset("확인")
@@ -74,14 +46,15 @@ class BottomSheetView: UIView {
         
         
         
-        subViewsConfigure()
+        subViewsLayoutConfigure()
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func subViewsConfigure(){
+    func subViewsLayoutConfigure(){
         self.addSubview(doneButton)
         doneButton.snp.makeConstraints{
             $0.bottom.equalToSuperview().inset(32)

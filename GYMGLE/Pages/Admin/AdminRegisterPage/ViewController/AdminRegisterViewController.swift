@@ -70,7 +70,7 @@ private extension AdminRegisterViewController {
         adminRegisterView.idTextField.delegate = self
         adminRegisterView.passwordTextField.delegate = self
         adminRegisterView.adminNameTextField.delegate = self
-        adminRegisterView.adminNumberTextField.delegate = self
+//        adminRegisterView.adminNumberTextField.delegate = self
         adminRegisterView.phoneTextField.delegate = self
         adminRegisterView.registerNumberTextField.delegate = self
     }
@@ -299,11 +299,11 @@ extension AdminRegisterViewController: UITextFieldDelegate {
         if let id = adminRegisterView.idTextField.text,
            let password = adminRegisterView.passwordTextField.text,
            let gymName = adminRegisterView.adminNameTextField.text,
-           let adminNumber = adminRegisterView.adminNumberTextField.text,
+//           let adminNumber = adminRegisterView.adminNumberTextField.text,
            let gymPhoneNumber = adminRegisterView.phoneTextField.text,
            let gymNumber = adminRegisterView.registerNumberTextField.text {
             // 유효성 검사
-            let isDataValid = id.count >= 1 && password.count >= 1 && gymName.count >= 1 && adminNumber.count >= 1 && gymPhoneNumber.count == 13 && gymNumber.count == 10
+            let isDataValid = id.count >= 1 && password.count >= 1 && gymName.count >= 1 && gymPhoneNumber.count == 13 && gymNumber.count == 10
             
             checkID()
             checkPW()
