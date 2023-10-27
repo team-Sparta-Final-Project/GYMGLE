@@ -76,12 +76,6 @@ private extension QRcodeCheckViewController {
            plusImage.translatesAutoresizingMaskIntoConstraints = false
            return plusImage
        }()
-        lazy var refreshButton: UIButton = {
-            let button = UIButton()
-            button.buttonImageMakeUI(image: "goforward", color: ColorGuide.main)
-            button.addTarget(self, action: #selector(refreshButtonTapped), for: .touchUpInside)
-            return button
-        }()
         lazy var backButton: UIButton = {
             let button = UIButton()
             button.buttonImageMakeUI(image: "chevron.backward", color: ColorGuide.main)
@@ -89,14 +83,10 @@ private extension QRcodeCheckViewController {
             return button
         }()
         view.addSubview(plusImage)
-        view.addSubview(refreshButton)
         view.addSubview(backButton)
         NSLayoutConstraint.activate([
             plusImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             plusImage.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-
-            refreshButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
-            refreshButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
             backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
             backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
@@ -187,7 +177,7 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
                 self.captureSession.stopRunning()
                 AudioServicesPlaySystemSound(SystemSoundID(1006))
             }
-            
+            ReadAdminUid()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 self.captureSession.startRunning()
             }

@@ -417,7 +417,6 @@ extension AdminRegisterViewController {
         self.adminRegisterView.registerNumberTextField.text = gymInfo?.gymnumber
         self.adminRegisterView.idTextField.text = gymInfo?.gymAccount.id
         self.adminRegisterView.passwordTextField.text = gymInfo?.gymAccount.password
-        self.adminRegisterView.adminNumberTextField.text = "031-000-0000" //❗️❗️❗️❗️❗️❗️
         self.adminRegisterView.idTextField.isEnabled = false
         self.adminRegisterView.passwordTextField.isEnabled = false
         self.adminRegisterView.registerNumberTextField.isEnabled = false

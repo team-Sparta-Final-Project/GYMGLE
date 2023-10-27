@@ -31,6 +31,7 @@ extension AdminTableView: UITableViewDelegate {
         UIView.animate(withDuration: 0.2) {
             let cell = tableView.cellForRow(at: indexPath)
             cell?.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            cell?.backgroundColor = ColorGuide.main
         }
     }
     
@@ -38,6 +39,7 @@ extension AdminTableView: UITableViewDelegate {
         UIView.animate(withDuration: 0.2) {
             let cell = tableView.cellForRow(at: indexPath)
             cell?.transform = .identity
+            cell?.backgroundColor = ColorGuide.white
         }
     }
 
@@ -56,6 +58,7 @@ extension AdminTableView: UITableViewDataSource {
             $0.left.equalToSuperview().offset(20)
             $0.centerY.equalToSuperview()
         }
+        cell.selectionStyle = .none
         return cell
     }
     
