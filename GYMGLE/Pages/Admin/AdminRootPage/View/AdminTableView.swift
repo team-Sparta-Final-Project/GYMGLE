@@ -1,8 +1,4 @@
-
 import UIKit
-import FirebaseAuth
-import FirebaseCore
-import FirebaseDatabase
 
 class AdminTableView: UITableView {
     // MARK: - Properties
@@ -17,6 +13,7 @@ class AdminTableView: UITableView {
         self.separatorStyle = .none
         self.dataSource = self
         self.delegate = self
+        self.isScrollEnabled = false
         self.register(MyPageTableViewCell.self, forCellReuseIdentifier: "MyPageCell")
     }
     
@@ -35,6 +32,7 @@ extension AdminTableView: UITableViewDelegate {
         UIView.animate(withDuration: 0.2) {
             let cell = tableView.cellForRow(at: indexPath)
             cell?.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            cell?.backgroundColor = ColorGuide.main
         }
     }
     
@@ -42,8 +40,10 @@ extension AdminTableView: UITableViewDelegate {
         UIView.animate(withDuration: 0.2) {
             let cell = tableView.cellForRow(at: indexPath)
             cell?.transform = .identity
+            cell?.backgroundColor = ColorGuide.white
         }
     }
+
 }
 
 extension AdminTableView: UITableViewDataSource {
@@ -54,11 +54,11 @@ extension AdminTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageCell", for: indexPath) as! MyPageTableViewCell
         cell.label.text = cellContents[indexPath.row]
-        
         cell.label.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20)
             $0.centerY.equalToSuperview()
         }
+        cell.selectionStyle = .none
         return cell
     }
     

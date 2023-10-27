@@ -6,11 +6,10 @@
 //
 import UIKit
 import SnapKit
-import Then
+
 
 final class AdminRootView: UIView {
     
-    let tableView = AdminTableView()
     // MARK: - UIProperties
     private lazy var pageTitleLabel: UILabel = {
         let label = UILabel()
@@ -44,49 +43,13 @@ final class AdminRootView: UIView {
         button.buttonMakeUI(backgroundColor: .white, cornerRadius: 16, borderWidth: 0, borderColor: ColorGuide.textHint.cgColor, setTitle: "로그아웃", font: FontGuide.size16Bold, setTitleColor: ColorGuide.main)
         return button
     }()
-    // 회원등록 버튼
-    lazy var gymUserRegisterButton: UIButton = {
-        let button = UIButton()
-        button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 12.0, borderWidth: 2.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "회원등록", font: FontGuide.size24Bold, setTitleColor: ColorGuide.black)
-        return button
-    }()
-    //회원관리 버튼
-    lazy var gymUserManageButton: UIButton = {
-        let button = UIButton()
-        button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 12.0, borderWidth: 2.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "회원관리", font: FontGuide.size24Bold, setTitleColor: ColorGuide.black)
-        return button
-    }()
-    //QR 스캐너 버튼
-    lazy var gymQRCodeButton: UIButton = {
-        let button = UIButton()
-        button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 12.0, borderWidth: 2.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "QR스캐너", font: FontGuide.size24Bold, setTitleColor: ColorGuide.black)
-        return button
-    }()
-    //공지사항 버튼
-    lazy var gymNoticeButton: UIButton = {
-        let button = UIButton()
-        button.buttonMakeUI(backgroundColor: ColorGuide.white, cornerRadius: 12.0, borderWidth: 2.0, borderColor: ColorGuide.textHint.cgColor, setTitle: "공지사항", font: FontGuide.size24Bold, setTitleColor: ColorGuide.black)
-        return button
-    }()
-    //로그아웃 버튼
-    lazy var logOutButton: UIButton = {
-        let button = UIButton()
-        button.buttonMakeUI(backgroundColor: ColorGuide.main, cornerRadius: 10.0, borderWidth: 0.0, borderColor: UIColor
-            .clear.cgColor, setTitle: "회원 탈퇴", font: FontGuide.size19Bold, setTitleColor: UIColor.white)
-        return button
-    }()
+
+    lazy var adminTableView = AdminTableView()
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = ColorGuide.background
         viewMakeUI()
-        addSubviews(tableView)
-        
-        tableView.snp.makeConstraints {
-            $0.top.equalTo(gymLabelStackView.snp.bottom).offset(20)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(60*6)
-        }
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -105,8 +68,8 @@ private extension AdminRootView {
     }
     func topMakeUI() {
 
-        let topView = [pageTitleLabel, gymLabelStackView, gymSettingButton]
-        for view in topView {
+        let allView = [pageTitleLabel, gymLabelStackView, gymSettingButton, adminTableView]
+        for view in allView {
             self.addSubview(view)
         }
         NSLayoutConstraint.activate([
@@ -121,43 +84,14 @@ private extension AdminRootView {
             gymSettingButton.centerYAnchor.constraint(equalTo: self.gymLabelStackView.centerYAnchor),
             gymSettingButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
             gymSettingButton.widthAnchor.constraint(equalToConstant: 85),
-            gymSettingButton.heightAnchor.constraint(equalToConstant: 34)
+            gymSettingButton.heightAnchor.constraint(equalToConstant: 34),
+
         ])
-    }
-    func middleMakeUI() {
-        let middleView = [gymUserRegisterButton, gymUserManageButton, gymQRCodeButton, gymNoticeButton]
-        for view in middleView {
-            self.addSubview(view)
+        adminTableView.snp.makeConstraints {
+            $0.top.equalTo(gymLabelStackView.snp.bottom).offset(40)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(60*6)
         }
-        NSLayoutConstraint.activate([
-            gymUserRegisterButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            gymUserRegisterButton.topAnchor.constraint(equalTo: self.gymLabelStackView.bottomAnchor, constant: 56),
-            gymUserRegisterButton.widthAnchor.constraint(equalToConstant: 160),
-            gymUserRegisterButton.heightAnchor.constraint(equalToConstant: 160),
-            
-            gymUserManageButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            gymUserManageButton.topAnchor.constraint(equalTo: self.gymLabelStackView.bottomAnchor, constant: 56),
-            gymUserManageButton.widthAnchor.constraint(equalToConstant: 160),
-            gymUserManageButton.heightAnchor.constraint(equalToConstant: 160),
-            
-            gymQRCodeButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            gymQRCodeButton.topAnchor.constraint(equalTo: self.gymUserRegisterButton.bottomAnchor, constant: 14),
-            gymQRCodeButton.widthAnchor.constraint(equalToConstant: 160),
-            gymQRCodeButton.heightAnchor.constraint(equalToConstant: 160),
-            
-            gymNoticeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            gymNoticeButton.topAnchor.constraint(equalTo: self.gymUserManageButton.bottomAnchor, constant: 14),
-            gymNoticeButton.widthAnchor.constraint(equalToConstant: 160),
-            gymNoticeButton.heightAnchor.constraint(equalToConstant: 160),
-        ])
     }
-    func bottomMakeUI() {
-        self.addSubview(logOutButton)
-        NSLayoutConstraint.activate([
-            logOutButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            logOutButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            logOutButton.topAnchor.constraint(equalTo: self.gymQRCodeButton.bottomAnchor, constant: 96),
-            logOutButton.heightAnchor.constraint(equalToConstant: 44)
-        ])
-    }
+   
 }

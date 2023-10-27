@@ -20,6 +20,7 @@ class AdminRegisterViewController: UIViewController {
     private var emailValid: Bool = false
     private var pwValid: Bool = false
     private var allValid: Bool = false
+    var gymInfo: GymInfo?
     
     let dataTest = DataManager.shared
     
@@ -42,6 +43,7 @@ class AdminRegisterViewController: UIViewController {
         setRegisterButton()
         setTextField()
         registerForKeyboardNotifications()
+        
     }
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         navigationController?.navigationBar.isHidden = false
@@ -58,6 +60,9 @@ class AdminRegisterViewController: UIViewController {
 private extension AdminRegisterViewController {
     func configureNav() {
         navigationController?.navigationBar.isHidden = true
+        if DataManager.shared.realGymInfo != nil {
+            updatedPageSetting()
+        }
     }
     
     func setRegisterButton() {
@@ -139,7 +144,9 @@ private extension AdminRegisterViewController {
     
     @objc func registerButtonTapped() {
         if !isIdDuplicated && !isNumberDuplicated && isValid && allValid {
-            registerGym()
+                registerGym()
+        } else if (self.adminRegisterView.adminNameTextField.text?.isEmpty != nil && self.adminRegisterView.phoneTextField.text?.isEmpty != nil) {
+            updatedAdminInfo()
         } else {
             let alert = UIAlertController(title: "등록할 수 없습니다.",
                                           message: "올바르지 않은 정보가 있습니다. 다시 입력해주세요.",
@@ -404,4 +411,27 @@ extension AdminRegisterViewController {
         }
     }
     
+    func updatedPageSetting() {
+        self.adminRegisterView.adminNameTextField.text = gymInfo?.gymName
+        self.adminRegisterView.phoneTextField.text = gymInfo?.gymPhoneNumber
+        self.adminRegisterView.registerNumberTextField.text = gymInfo?.gymnumber
+        self.adminRegisterView.idTextField.text = gymInfo?.gymAccount.id
+        self.adminRegisterView.passwordTextField.text = gymInfo?.gymAccount.password
+        self.adminRegisterView.idTextField.isEnabled = false
+        self.adminRegisterView.passwordTextField.isEnabled = false
+        self.adminRegisterView.registerNumberTextField.isEnabled = false
+        self.adminRegisterView.validCheckButton.isEnabled = false
+        self.adminRegisterView.duplicationCheckButton.isEnabled = false
+        self.adminRegisterView.registerButton.setTitle("수정", for: .normal)
+    }
+    
+    func updatedAdminInfo() {
+        let userID = Auth.auth().currentUser?.uid
+        let ref = Database.database().reference().child("users").child(userID!).child("gymInfo")
+        ref.updateChildValues(["gymName": "\(self.adminRegisterView.adminNameTextField.text!)"])
+        ref.updateChildValues(["gymPhoneNumber": "\(self.adminRegisterView.phoneTextField.text!)"])
+        DataManager.shared.realGymInfo?.gymName = self.adminRegisterView.adminNameTextField.text!
+        DataManager.shared.realGymInfo?.gymPhoneNumber = self.adminRegisterView.phoneTextField.text!
+        navigationController?.popViewController(animated: true)
+    }
 }
