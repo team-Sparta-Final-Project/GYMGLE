@@ -13,7 +13,7 @@ import FirebaseDatabase
 class MyPageTableView: UITableView {
     // MARK: - Properties
     
-    lazy var cellContents = ["이름", "공지사항", "친구초대", "구독목록", "고객센터", "로그아웃", "탈퇴하기"]
+    lazy var cellContents = ["\(DataManager.shared.userInfo!.name)", "공지사항", "로그아웃", "탈퇴하기"]
     weak var myPageDelegate: MyPageTableViewDelegate?
     
     // MARK: - Initialization
@@ -40,14 +40,21 @@ extension MyPageTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         UIView.animate(withDuration: 0.2) {
             let cell = tableView.cellForRow(at: indexPath)
-            cell?.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            cell?.transform = CGAffineTransform(scaleX: 0.95, y: 0.90)
+            cell?.backgroundColor = ColorGuide.shadowBorder
+            cell?.layer.cornerRadius = 30.0
         }
+    }
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.row != 0
     }
     
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
         UIView.animate(withDuration: 0.2) {
             let cell = tableView.cellForRow(at: indexPath)
             cell?.transform = .identity
+            cell?.backgroundColor = ColorGuide.white
         }
     }
 }
@@ -60,6 +67,7 @@ extension MyPageTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageCell", for: indexPath) as! MyPageTableViewCell
         cell.label.text = cellContents[indexPath.row]
+        cell.selectionStyle = .none
         
         if indexPath.row == 0 {
             let imageView = UIImageView()

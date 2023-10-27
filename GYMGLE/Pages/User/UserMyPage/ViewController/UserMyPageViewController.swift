@@ -46,7 +46,7 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
 
             break
         case 2:
-            // 로그아웃을 선택한 경우
+            // 로그아웃
             signOut()
             dismiss(animated: true) {
                 let vc = InitialViewController()
@@ -55,7 +55,7 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
             }
             break
         case 3:
-            // 탈퇴하기를 선택한 경우
+            // 탈퇴하기
             deleteAccount()
             break
         default:
