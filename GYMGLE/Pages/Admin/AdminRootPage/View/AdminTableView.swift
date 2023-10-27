@@ -31,8 +31,9 @@ extension AdminTableView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         UIView.animate(withDuration: 0.2) {
             let cell = tableView.cellForRow(at: indexPath)
-            cell?.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-            cell?.backgroundColor = ColorGuide.main
+            cell?.transform = CGAffineTransform(scaleX: 0.95, y: 0.90)
+            cell?.backgroundColor = ColorGuide.shadowBorder
+            cell?.layer.cornerRadius = 30.0
         }
     }
     
@@ -41,6 +42,7 @@ extension AdminTableView: UITableViewDelegate {
             let cell = tableView.cellForRow(at: indexPath)
             cell?.transform = .identity
             cell?.backgroundColor = ColorGuide.white
+            
         }
     }
 
