@@ -9,12 +9,12 @@ class AdminTableView: UITableView {
     
     lazy var cellContents = ["공지작성", "회원등록", "회원관리", "QR스캐너","정보변경", "탈퇴하기"]
     weak var adminRootDelegate: AdminTableViewDelegate?
-//    var adminRootViewController: AdminRootViewController?
 
     // MARK: - Initialization
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
+        self.separatorStyle = .none
         self.dataSource = self
         self.delegate = self
         self.register(MyPageTableViewCell.self, forCellReuseIdentifier: "MyPageCell")
@@ -55,18 +55,6 @@ extension AdminTableView: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageCell", for: indexPath) as! MyPageTableViewCell
         cell.label.text = cellContents[indexPath.row]
         
-//        if indexPath.row == 0 {
-//
-//            cell.label.snp.makeConstraints {
-//                $0.left.equalToSuperview().offset(20)
-//                $0.centerY.equalToSuperview()
-//            }
-//        } else {
-//            cell.label.snp.makeConstraints {
-//                $0.left.equalToSuperview().offset(20)
-//                $0.centerY.equalToSuperview()
-//            }
-//        }
         cell.label.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20)
             $0.centerY.equalToSuperview()
