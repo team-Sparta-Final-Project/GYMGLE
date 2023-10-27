@@ -57,6 +57,7 @@
 		630EDE172ADFBC8300B37982 /* Extension_ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */; };
 		63163E6D2AE11EF200186315 /* QRcodeCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */; };
 		63163E6F2AE11F0700186315 /* QRcodeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */; };
+		63B5A2252AEB627900105AB5 /* Extension_UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
@@ -133,6 +134,7 @@
 		630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_ToastView.swift; sourceTree = "<group>"; };
 		63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckViewController.swift; sourceTree = "<group>"; };
 		63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckView.swift; sourceTree = "<group>"; };
+		63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIImage.swift; sourceTree = "<group>"; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
@@ -568,6 +570,7 @@
 				D14ECB432AD917D600FF7853 /* Extension_UIView.swift */,
 				D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */,
 				630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */,
+				63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -751,6 +754,7 @@
 				63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */,
 				2730BC882ADC1DC500BFA23C /* UserManageController.swift in Sources */,
 				630CE1532ADD5CB8001EC547 /* Account.swift in Sources */,
+				63B5A2252AEB627900105AB5 /* Extension_UIImage.swift in Sources */,
 				D1E0187D2ADCEE0000D1C53D /* CustomTextCell.swift in Sources */,
 				D1E0186F2ADCEC4B00D1C53D /* AdminLoginView.swift in Sources */,
 				D1E018692ADCEC1A00D1C53D /* AdminRootViewController.swift in Sources */,
@@ -935,7 +939,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3R8ZWR4KRJ;
+				DEVELOPMENT_TEAM = 3L52QK9JPU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GYMGLE/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "앱이 카메라에 접근해도 되겠습니까?";
@@ -948,7 +952,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KKJP.GYMGLE;
+				PRODUCT_BUNDLE_IDENTIFIER = "Double-KKJP.GYMGLE";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -963,7 +967,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3R8ZWR4KRJ;
+				DEVELOPMENT_TEAM = 3L52QK9JPU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GYMGLE/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "앱이 카메라에 접근해도 되겠습니까?";
@@ -976,7 +980,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = KKJP.GYMGLE;
+				PRODUCT_BUNDLE_IDENTIFIER = "Double-KKJP.GYMGLE";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

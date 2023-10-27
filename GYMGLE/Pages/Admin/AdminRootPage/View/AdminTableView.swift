@@ -1,15 +1,10 @@
-
 import UIKit
-import FirebaseAuth
-import FirebaseCore
-import FirebaseDatabase
 
 class AdminTableView: UITableView {
     // MARK: - Properties
     
     lazy var cellContents = ["공지작성", "회원등록", "회원관리", "QR스캐너","정보변경", "탈퇴하기"]
     weak var adminRootDelegate: AdminTableViewDelegate?
-//    var adminRootViewController: AdminRootViewController?
 
     // MARK: - Initialization
     
@@ -17,6 +12,7 @@ class AdminTableView: UITableView {
         super.init(frame: frame, style: style)
         self.dataSource = self
         self.delegate = self
+        self.isScrollEnabled = false
         self.register(MyPageTableViewCell.self, forCellReuseIdentifier: "MyPageCell")
     }
     
@@ -44,6 +40,7 @@ extension AdminTableView: UITableViewDelegate {
             cell?.transform = .identity
         }
     }
+
 }
 
 extension AdminTableView: UITableViewDataSource {

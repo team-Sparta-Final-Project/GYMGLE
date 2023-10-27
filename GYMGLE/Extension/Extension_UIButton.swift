@@ -67,7 +67,7 @@ extension UIButton {
     }
     
     func buttonImageMakeUI(image: String, color: UIColor) {
-        self.setImage(UIImage(systemName: "\(image)"), for: .normal) //선택 x
+        self.setImage(UIImage(systemName: "\(image)")?.resized(to: CGSize(width: 28, height: 28)).withRenderingMode(.alwaysTemplate), for: .normal) //선택 x
         self.tintColor = color // 아이콘 색상
         self.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -81,3 +81,4 @@ extension UIButton {
         return button
     }
 }
+

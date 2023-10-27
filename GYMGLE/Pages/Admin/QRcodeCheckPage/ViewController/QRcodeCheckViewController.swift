@@ -16,7 +16,6 @@ final class QRcodeCheckViewController: UIViewController {
     // MARK: - properties
     // 실시간 캡처를 수행하기 선언(AVCaptureSession: 오디오 및 비디오 데이터 스트림을 캡처하고 처리하기 위한 핵심 구성 요소)
     private let captureSession = AVCaptureSession()
-    
     // MARK: - lifr cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,13 +53,13 @@ private extension QRcodeCheckViewController {
             output.rectOfInterest = rectConverted
             
             setGuideCrossLineView()
+           
             // input 에서 output 으로의 데이터 흐름을 시작
             captureSession.startRunning()
         }
         catch {
         }
     }
-    
     func setVideoLayer(rectOfInterest: CGRect) -> CGRect{
         let videoLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         videoLayer.frame = view.layer.bounds
@@ -71,19 +70,44 @@ private extension QRcodeCheckViewController {
     
     func setGuideCrossLineView() {
         lazy var plusImage: UIImageView = {
-            let plusImage = UIImageView()
-            plusImage.image = UIImage(systemName: "plus")
-            plusImage.tintColor = ColorGuide.main
-            plusImage.translatesAutoresizingMaskIntoConstraints = false
-            return plusImage
+           let plusImage = UIImageView()
+            plusImage.image = UIImage(systemName: "plus")?.resized(to: CGSize(width: 42, height: 36)).withRenderingMode(.alwaysTemplate)
+           plusImage.tintColor = ColorGuide.main
+           plusImage.translatesAutoresizingMaskIntoConstraints = false
+           return plusImage
+       }()
+        lazy var refreshButton: UIButton = {
+            let button = UIButton()
+            button.buttonImageMakeUI(image: "goforward", color: ColorGuide.main)
+            button.addTarget(self, action: #selector(refreshButtonTapped), for: .touchUpInside)
+            return button
+        }()
+        lazy var backButton: UIButton = {
+            let button = UIButton()
+            button.buttonImageMakeUI(image: "chevron.backward", color: ColorGuide.main)
+            button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+            return button
         }()
         view.addSubview(plusImage)
+        view.addSubview(refreshButton)
+        view.addSubview(backButton)
         NSLayoutConstraint.activate([
             plusImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             plusImage.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            plusImage.widthAnchor.constraint(equalToConstant: 30),
-            plusImage.heightAnchor.constraint(equalToConstant: 30)
+
+            refreshButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
+            refreshButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
         ])
+    }
+    @objc func refreshButtonTapped() {
+        ReadAdminUid()
+    }
+    
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
     func showToast(message: String) {
         let toastView = ToastView()
