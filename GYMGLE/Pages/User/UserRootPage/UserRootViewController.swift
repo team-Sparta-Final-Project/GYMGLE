@@ -16,6 +16,13 @@ import FirebaseAuth
 class UserRootViewController: UIViewController {
     let databaseRef = Database.database().reference()
     
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.alwaysBounceVertical = true
+        return scrollView
+    }()
+
+    
     let first = UserRootView()
     //    var user: User?
     //    var gymInfo: GymInfo?
@@ -24,12 +31,6 @@ class UserRootViewController: UIViewController {
     var totalExercise: Double = 0
     var totalUserCount: Double = 0
     
-    override func loadView() {
-        view = first
-        
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         first.inBtn.addTarget(self, action: #selector(inButtonClick), for: .touchUpInside)
@@ -37,6 +38,17 @@ class UserRootViewController: UIViewController {
         // 테스트데이터생성기
         decoyLogMaker()
         getLastWeekUserNumber()
+                view = scrollView
+        
+        view.backgroundColor = ColorGuide.userBackGround
+                scrollView.addSubview(first)
+                
+        first.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                    make.width.equalTo(view)
+                    make.bottom.equalTo(first.outBtn.snp.bottom).offset(20)
+
+                }
         
     }
     

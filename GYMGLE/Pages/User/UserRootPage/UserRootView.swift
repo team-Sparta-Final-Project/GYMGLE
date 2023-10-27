@@ -135,10 +135,12 @@ class UserRootView: UIView {
     private lazy var chartPlace = UIView().then {
         $0.backgroundColor = ColorGuide.white
         $0.layer.cornerRadius = 20
-        $0.layer.shadowColor = ColorGuide.goldTier.cgColor
-        $0.layer.shadowOpacity = 1
-        $0.layer.shadowRadius = 4
-        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = ColorGuide.goldTier.cgColor
+//        $0.layer.shadowColor = ColorGuide.goldTier.cgColor
+//        $0.layer.shadowOpacity = 1
+//        $0.layer.shadowRadius = 4
+//        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chartPlaceTapped)))
     }
     private lazy var chartTopText = UILabel().then {
@@ -216,15 +218,16 @@ class UserRootView: UIView {
     
     @objc func chartPlaceTapped() {
         UIView.animate(withDuration: 0.5, animations: {
-                self.chartPlace.layer.shadowOpacity = 1
-                self.chartPlace.layer.shadowRadius = 15
-                self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
+            self.chartPlace.layer.borderWidth = 2
+            self.chartPlace.layer.borderColor = ColorGuide.goldTier.cgColor
+//                self.chartPlace.layer.shadowRadius = 15
+//                self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
             }) { (completed) in
                 // 2초 후에 사라지는 애니메이션
                 UIView.animate(withDuration: 0.5, delay: 1.0, options: .curveEaseOut, animations: {
-                    self.chartPlace.layer.shadowOpacity = 1
-                    self.chartPlace.layer.shadowRadius = 4
-                    self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
+                    self.chartPlace.layer.borderWidth = 1
+                    self.chartPlace.layer.borderColor = ColorGuide.goldTier.cgColor
+//                    self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
                 }, completion: nil)
             }
     }
@@ -288,7 +291,7 @@ class UserRootView: UIView {
         addSubview(outBtn)
         
         healthName.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(90)
+            $0.top.equalToSuperview().offset(30)
             $0.leading.equalToSuperview().offset(20)
         }
         healthNameSub.snp.makeConstraints {
@@ -312,7 +315,7 @@ class UserRootView: UIView {
             $0.leading.equalTo(noticePlace.snp.leading).offset(42)
         }
         yesterUserPlace.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
+            $0.leading.equalTo(noticePlace.snp.leading).offset(0)
             $0.width.equalTo(170)
             $0.top.equalTo(noticePlace.snp.bottom).offset(12)
             $0.height.equalTo(170)
@@ -336,7 +339,8 @@ class UserRootView: UIView {
             $0.bottom.equalTo(yesterUserPlace.snp.bottom).offset(-22)
         }
         nowUserPlace.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.trailing.equalTo(noticePlace.snp.trailing).offset(0)
+            $0.leading.equalTo(yesterUserPlace.snp.trailing).offset(10)
             $0.width.equalTo(170)
             $0.top.equalTo(noticePlace.snp.bottom).offset(12)
             $0.height.equalTo(170)
