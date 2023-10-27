@@ -62,7 +62,6 @@ private extension AdminRegisterViewController {
         navigationController?.navigationBar.isHidden = true
         if DataManager.shared.realGymInfo != nil {
             updatedPageSetting()
-            updatedAdminInfo()
         }
     }
     
@@ -145,7 +144,9 @@ private extension AdminRegisterViewController {
     
     @objc func registerButtonTapped() {
         if !isIdDuplicated && !isNumberDuplicated && isValid && allValid {
-            registerGym()
+                registerGym()
+        } else if (self.adminRegisterView.adminNameTextField.text?.isEmpty != nil && self.adminRegisterView.phoneTextField.text?.isEmpty != nil) {
+            updatedAdminInfo()
         } else {
             let alert = UIAlertController(title: "등록할 수 없습니다.",
                                           message: "올바르지 않은 정보가 있습니다. 다시 입력해주세요.",
@@ -426,6 +427,12 @@ extension AdminRegisterViewController {
     }
     
     func updatedAdminInfo() {
-        //로직 구현❗️❗️❗️❗️❗️
+        let userID = Auth.auth().currentUser?.uid
+        let ref = Database.database().reference().child("users").child(userID!).child("gymInfo")
+        ref.updateChildValues(["gymName": "\(self.adminRegisterView.adminNameTextField.text!)"])
+        ref.updateChildValues(["gymPhoneNumber": "\(self.adminRegisterView.phoneTextField.text!)"])
+        DataManager.shared.realGymInfo?.gymName = self.adminRegisterView.adminNameTextField.text!
+        DataManager.shared.realGymInfo?.gymPhoneNumber = self.adminRegisterView.phoneTextField.text!
+        navigationController?.popViewController(animated: true)
     }
 }

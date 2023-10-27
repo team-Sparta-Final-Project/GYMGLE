@@ -24,10 +24,10 @@ final class AdminRootViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewSetting()
     }
     override func viewWillAppear(_ animated: Bool) {
         configuredView()
+        viewSetting()
     }
 }
 
