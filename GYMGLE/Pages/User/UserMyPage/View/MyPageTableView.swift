@@ -13,7 +13,7 @@ import FirebaseDatabase
 class MyPageTableView: UITableView {
     // MARK: - Properties
     
-    lazy var cellContents = ["이름", "공지사항", "로그아웃", "탈퇴하기"]
+    lazy var cellContents = ["이름", "공지사항", "친구초대", "구독목록", "고객센터", "로그아웃", "탈퇴하기"]
     weak var myPageDelegate: MyPageTableViewDelegate?
     
     // MARK: - Initialization
@@ -62,14 +62,18 @@ extension MyPageTableView: UITableViewDataSource {
         
         if indexPath.row == 0 {
             let imageView = UIImageView()
-            imageView.image = UIImage(systemName: "person")
+//            imageView.image = UIImage(systemName: "person")
+            imageView.layer.cornerRadius = 17
+            imageView.backgroundColor = .gray
+            imageView.clipsToBounds = true
+
             
             cell.addSubviews(imageView)
             
             imageView.snp.makeConstraints {
                 $0.left.equalToSuperview().offset(20)
                 $0.centerY.equalToSuperview()
-                $0.height.width.equalTo(32)
+                $0.height.width.equalTo(36)
             }
             
             cell.label.snp.makeConstraints {

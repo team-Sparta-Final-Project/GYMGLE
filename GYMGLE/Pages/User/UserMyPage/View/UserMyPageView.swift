@@ -34,9 +34,9 @@ class UserMyPageView: UIView {
         }
         
         tableView.snp.makeConstraints {
-            $0.top.equalTo(myPageLabel.snp.bottom).offset(12)
+            $0.top.equalTo(myPageLabel.snp.bottom).offset(20)
             $0.left.right.equalToSuperview()
-            $0.height.equalTo(60*4)
+            $0.height.equalTo(60*7)
         }
     }
     
