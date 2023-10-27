@@ -10,11 +10,12 @@ import AVFoundation
 
 final class QRcodeCheckView: UIView {
     
-
+    
 
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        //setGuideCrossLineView()
     }
     
     required init?(coder: NSCoder) {
@@ -22,7 +23,7 @@ final class QRcodeCheckView: UIView {
     }
 }
 
-extension QRcodeCheckView {
+private extension QRcodeCheckView {
     
 
 }
