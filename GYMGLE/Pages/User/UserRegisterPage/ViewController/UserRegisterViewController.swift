@@ -95,8 +95,16 @@ private extension UserRegisterViewController {
             let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
             phoneTextField?.text = emptyUser.number
             
-            (nameCell?.contentView.subviews[0] as? UILabel)?.isHidden = true
-            (phoneCell?.contentView.subviews[0] as? UILabel)?.isHidden = true
+            let nameHolder = (nameCell?.contentView.subviews[0] as? UILabel)!
+            let phoneHolder = (phoneCell?.contentView.subviews[0] as? UILabel)!
+            
+            phoneHolder.font = UIFont.systemFont(ofSize: 10)
+            nameHolder.font = UIFont.systemFont(ofSize: 10)
+
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut) {
+                phoneHolder.transform = CGAffineTransform(translationX: 0, y: -16)
+                nameHolder.transform = CGAffineTransform(translationX: 0, y: -16)
+            }
             
             let startDateCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
             let startDateLabel = startDateCell?.contentView.subviews[0] as? UILabel
