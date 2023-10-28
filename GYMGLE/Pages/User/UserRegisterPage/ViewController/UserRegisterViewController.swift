@@ -61,11 +61,11 @@ final class UserRegisterViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         let startDateCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
         let startDateButton = startDateCell?.contentView.subviews[1] as? UIButton
-        startDateButton?.addTarget(self, action: #selector(setStartDate), for: .touchUpInside)
+        startDateButton?.addTarget(self, action: #selector(presentBottomSheetSetStartDate), for: .touchUpInside)
         
         let endDateCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
         let endDateButton = endDateCell?.contentView.subviews[1] as? UIButton
-        endDateButton?.addTarget(self, action: #selector(presentBottomSheet), for: .touchUpInside)
+        endDateButton?.addTarget(self, action: #selector(presentBottomSheetSetEndDate), for: .touchUpInside)
         
         let nameCell = self.viewConfigure.tableView.subviews[8] as? UITableViewCell
         let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
@@ -95,8 +95,16 @@ private extension UserRegisterViewController {
             let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
             phoneTextField?.text = emptyUser.number
             
-            (nameCell?.contentView.subviews[0] as? UILabel)?.isHidden = true
-            (phoneCell?.contentView.subviews[0] as? UILabel)?.isHidden = true
+            let nameHolder = (nameCell?.contentView.subviews[0] as? UILabel)!
+            let phoneHolder = (phoneCell?.contentView.subviews[0] as? UILabel)!
+            
+            phoneHolder.font = UIFont.systemFont(ofSize: 10)
+            nameHolder.font = UIFont.systemFont(ofSize: 10)
+
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut) {
+                phoneHolder.transform = CGAffineTransform(translationX: 0, y: -16)
+                nameHolder.transform = CGAffineTransform(translationX: 0, y: -16)
+            }
             
             let startDateCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
             let startDateLabel = startDateCell?.contentView.subviews[0] as? UILabel
@@ -218,9 +226,7 @@ extension UserRegisterViewController {
     }
     
     //MARK: - 바텀시트
-    @objc private func setStartDate(){
-        // TODO: 등록일 > 등록 마감일 이면 토스트창 출력하기
-        
+    @objc private func presentBottomSheetSetStartDate(){
         let bottomSheet = BottomSheetController(onlyDate: true)
         bottomSheet.delegate = self
         bottomSheet.date = startDate
@@ -228,14 +234,11 @@ extension UserRegisterViewController {
         present(bottomSheet, animated: true)
     }
     
-    @objc private func presentBottomSheet(){
-        // TODO: 등록일 > 등록 마감일 이면 토스트창 출력하기
-                
+    @objc private func presentBottomSheetSetEndDate(){
         let bottomSheet = BottomSheetController(onlyDate: false)
         bottomSheet.delegate = self
         bottomSheet.minDate = startDate
         bottomSheet.date = endDate
-        
         present(bottomSheet, animated: true)
     }
     

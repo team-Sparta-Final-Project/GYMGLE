@@ -71,26 +71,29 @@ class TextFieldCell:UITableViewCell {
 extension TextFieldCell: UITextFieldDelegate{
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("테스트 - 수정시작됨")
-        self.placeHolderLabel.font = UIFont.systemFont(ofSize: 10)
-//        self.placeHolderLabel.backgroundColor = .red
-        self.placeHolderLabel.snp.makeConstraints{
-            $0.top.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(30)
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut) {
+            self.placeHolderLabel.transform = CGAffineTransform(translationX: 0, y: -16)
+            self.placeHolderLabel.font = UIFont.systemFont(ofSize: 10)
         }
+        
+        
+
+//        self.placeHolderLabel.snp.makeConstraints{
+//            $0.top.equalToSuperview()
+//            $0.bottom.equalToSuperview().inset(30)
+//        }
         
         
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         print("테스트 - 수정끝")
-        self.placeHolderLabel.font = UIFont.systemFont(ofSize: 10)
-//        self.placeHolderLabel.backgroundColor = .blue
-        self.placeHolderLabel.snp.makeConstraints{
-            $0.left.equalToSuperview()
-            $0.top.bottom.equalToSuperview().inset(10)
+        if self.textField.text == "" {
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut) {
+                self.placeHolderLabel.transform = CGAffineTransform(translationX: 0, y: 0)
+                self.placeHolderLabel.font = FontGuide.size14Bold
+            }
         }
-
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

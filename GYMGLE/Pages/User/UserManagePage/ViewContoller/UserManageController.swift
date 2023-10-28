@@ -126,10 +126,7 @@ extension UserManageViewController: UITableViewDataSource {
             cell.phone.text = cells[indexPath.row].number
             cell.gender.text = "남"
         }
-        
-        if cells.count == (indexPath.row + 1) || filteredUserList.count == (indexPath.row + 1) {
-            cell.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
-        }
+        cell.contentView.layer.addBorder([.top], color: ColorGuide.shadowBorder, width: 1.0)
         
         return cell
     }
