@@ -20,6 +20,7 @@ class AdminRegisterViewController: UIViewController {
     private var emailValid: Bool = false
     private var pwValid: Bool = false
     private var allValid: Bool = false
+    private var isServiceCheck: Bool = false
     var gymInfo: GymInfo?
     
     let dataTest = DataManager.shared
@@ -93,6 +94,7 @@ private extension AdminRegisterViewController {
         adminRegisterView.validCheckButton.addTarget(self, action: #selector(validCheckButtonTapped), for: .touchUpInside)
         adminRegisterView.duplicationCheckButton.addTarget(self, action: #selector(duplicationCheckButtonTapped), for: .touchUpInside)
         adminRegisterView.registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
+        adminRegisterView.checkButton.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
     }
     
     @objc func validCheckButtonTapped() {
@@ -155,6 +157,17 @@ private extension AdminRegisterViewController {
             present(alert, animated: true, completion: nil)
         }
     }
+    @objc func checkButtonTapped(sender: UIButton) {
+        sender.isSelected.toggle()
+        if sender.isSelected == true {
+            isServiceCheck = true
+            print("테스트 - \(isServiceCheck)")
+        } else {
+            isServiceCheck = false
+            print("테스트 - \(isServiceCheck)")
+        }
+    }
+    
     //키보드 올라오면 화면 올리기
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -422,12 +435,13 @@ extension AdminRegisterViewController {
         self.adminRegisterView.registerNumberTextField.isEnabled = false
         self.adminRegisterView.validCheckButton.isEnabled = false
         self.adminRegisterView.duplicationCheckButton.isEnabled = false
+        self.adminRegisterView.checkButton.isEnabled = false
         self.adminRegisterView.registerButton.setTitle("수정", for: .normal)
     }
     
     func updatedAdminInfo() {
-        let userID = Auth.auth().currentUser?.uid
-        let ref = Database.database().reference().child("users").child(userID!).child("gymInfo")
+        guard let userID = Auth.auth().currentUser?.uid else { return }
+        let ref = Database.database().reference().child("users").child(userID).child("gymInfo")
         ref.updateChildValues(["gymName": "\(self.adminRegisterView.adminNameTextField.text!)"])
         ref.updateChildValues(["gymPhoneNumber": "\(self.adminRegisterView.phoneTextField.text!)"])
         DataManager.shared.realGymInfo?.gymName = self.adminRegisterView.adminNameTextField.text!

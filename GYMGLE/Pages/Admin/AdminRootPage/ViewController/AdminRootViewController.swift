@@ -69,6 +69,7 @@ private extension AdminRootViewController {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
+            DataManager.shared.realGymInfo = nil
         } catch _ as NSError { }
     }
     
