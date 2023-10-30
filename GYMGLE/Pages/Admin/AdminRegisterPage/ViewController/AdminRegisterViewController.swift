@@ -76,7 +76,6 @@ private extension AdminRegisterViewController {
         adminRegisterView.idTextField.delegate = self
         adminRegisterView.passwordTextField.delegate = self
         adminRegisterView.adminNameTextField.delegate = self
-//        adminRegisterView.adminNumberTextField.delegate = self
         adminRegisterView.phoneTextField.delegate = self
         adminRegisterView.registerNumberTextField.delegate = self
     }
@@ -145,11 +144,13 @@ private extension AdminRegisterViewController {
     }
     
     @objc func registerButtonTapped() {
-        if !isIdDuplicated && !isNumberDuplicated && isValid && allValid {
+        if !isIdDuplicated && !isNumberDuplicated && isValid && allValid && isServiceCheck {
                 registerGym()
-        } else if (self.adminRegisterView.adminNameTextField.text?.isEmpty != nil && self.adminRegisterView.phoneTextField.text?.isEmpty != nil) {
+        } 
+        else if (self.adminRegisterView.adminNameTextField.text?.isEmpty != nil && self.adminRegisterView.phoneTextField.text?.isEmpty != nil && DataManager.shared.realGymInfo != nil) {
             updatedAdminInfo()
-        } else {
+        } 
+        else {
             let alert = UIAlertController(title: "등록할 수 없습니다.",
                                           message: "올바르지 않은 정보가 있습니다. 다시 입력해주세요.",
                                           preferredStyle: .alert)

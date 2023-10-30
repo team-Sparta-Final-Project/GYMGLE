@@ -123,11 +123,8 @@ class AdminRegisterView: UIView {
     private lazy var loginServiceLabel = UILabel().then {
         $0.textColor = ColorGuide.black
         $0.font = FontGuide.size14
-        $0.text = """
-                    귀하는 GYMGLE의 서비스 이용에 필요한 최소한의 개인정보 수집 및 이용에 동의하지
-                    않을 수 있으나 동의를 거부할 경우 회원 서비스 이용이 불가합니다.
-                  """
-        $0.numberOfLines = 2
+        $0.text = "귀하는 GYMGLE의 서비스 이용에 필요한 최소한의 개인정보 수집 및 이용에 동의하지 않을 수 있으나 동의를 거부할 경우 회원 서비스 이용이 불가합니다."
+        $0.numberOfLines = 0
     }
     lazy var registerButton: UIButton = UIButton.GYMGLEButtonPreset("등록")
 
@@ -196,6 +193,12 @@ class AdminRegisterView: UIView {
         checkButton.snp.makeConstraints {
             $0.left.equalToSuperview().inset(24)
             $0.top.equalTo(passwordTextField.snp.bottom).offset(52)
+        }
+        
+        loginServiceLabel.snp.makeConstraints {
+            $0.left.equalTo(checkButton.snp.right).offset(8)
+            $0.top.equalTo(checkButton.snp.top)
+            $0.right.equalToSuperview().offset(-24)
         }
     }
     
