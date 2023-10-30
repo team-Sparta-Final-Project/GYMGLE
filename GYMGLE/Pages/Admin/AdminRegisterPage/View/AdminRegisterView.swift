@@ -114,6 +114,21 @@ class AdminRegisterView: UIView {
         $0.layer.addBorder([.bottom], color: .gray, width: 0.5)
     }
     
+    lazy var checkButton = UIButton().then {
+        $0.setImage(UIImage(systemName: "rectangle")?.resized(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal)
+        $0.setImage(UIImage(systemName: "checkmark.rectangle")?.resized(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .selected)
+        $0.tintColor = ColorGuide.textHint
+    }
+    
+    private lazy var loginServiceLabel = UILabel().then {
+        $0.textColor = ColorGuide.black
+        $0.font = FontGuide.size14
+        $0.text = """
+                    귀하는 GYMGLE의 서비스 이용에 필요한 최소한의 개인정보 수집 및 이용에 동의하지
+                    않을 수 있으나 동의를 거부할 경우 회원 서비스 이용이 불가합니다.
+                  """
+        $0.numberOfLines = 2
+    }
     lazy var registerButton: UIButton = UIButton.GYMGLEButtonPreset("등록")
 
     // MARK: - Initialization
@@ -122,7 +137,7 @@ class AdminRegisterView: UIView {
         super.init(frame: frame)
         self.backgroundColor = ColorGuide.background
         
-        addSubviews(titleLabel, adminNameTextField, phoneTextField, registerNumberTextField, validCheckButton, idTextField, duplicationCheckButton, passwordTextField, registerButton)
+        addSubviews(titleLabel, adminNameTextField, phoneTextField, registerNumberTextField, validCheckButton, idTextField, duplicationCheckButton, passwordTextField, registerButton, checkButton, loginServiceLabel)
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(88)
@@ -177,6 +192,10 @@ class AdminRegisterView: UIView {
             $0.bottom.equalToSuperview().offset(-40)
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(44)
+        }
+        checkButton.snp.makeConstraints {
+            $0.left.equalToSuperview().inset(24)
+            $0.top.equalTo(passwordTextField.snp.bottom).offset(52)
         }
     }
     
