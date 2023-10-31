@@ -13,14 +13,17 @@ final class UserMyProfileView: UIView {
     private lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = ColorGuide.background
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private let profileImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "person")?.resized(to: CGSize(width: 80, height: 80)).withRenderingMode(.alwaysOriginal)
+        image.image = UIImage(systemName: "person.fill")?.resized(to: CGSize(width: 80, height: 80)).withRenderingMode(.alwaysOriginal)
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
+        image.layer.borderWidth = 1.2
+        image.layer.borderColor = ColorGuide.white.cgColor
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -35,7 +38,7 @@ final class UserMyProfileView: UIView {
     private lazy var nickName: UILabel = {
         let label = UILabel()
         label.text = "포메돈까스"
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16Bold, textAligment: .center)
+        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size19Bold, textAligment: .center)
         return label
     }()
     
@@ -48,7 +51,7 @@ final class UserMyProfileView: UIView {
     
     private lazy var labelStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [gymName, nickName, postCountLabel])
-        stack.spacing = 10
+        stack.spacing = 2
         stack.axis = .vertical
         stack.distribution = .fill
         stack.alignment = .fill
@@ -59,28 +62,31 @@ final class UserMyProfileView: UIView {
     lazy var postTableview: UITableView = {
         let table = UITableView()
         table.backgroundColor = ColorGuide.userBackGround
-        table.translatesAutoresizingMaskIntoConstraints = false
         table.layer.borderWidth = 3.0
         table.layer.borderColor = ColorGuide.main.cgColor
+        table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
     
     lazy var updateButton: UIButton = {
         let button = UIButton()
-        button.buttonImageMakeUI(backgroundColor: ColorGuide.white, image: "pencil", color: ColorGuide.black, cornerRadius: 20, borderWidth: 0.0, borderColor: UIColor.white.cgColor)
+        button.buttonImageMakeUI(backgroundColor: ColorGuide.white, image: "pencil", color: ColorGuide.black, cornerRadius: 12, borderWidth: 0.0, borderColor: UIColor.white.cgColor)
         return button
     }()
     
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = ColorGuide.profileBackground
+        configureView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
+    }
 }
 
 // MARK: - extension custom func
@@ -88,38 +94,47 @@ final class UserMyProfileView: UIView {
 private extension UserMyProfileView {
     
     func configureView() {
-        let views = [containerView, profileImageView, updateButton]
-        for view in views {
-            self.addSubview(view)
-        }
-        
-       
+        containerViewSetting()
+        viewSetting()
+        self.backgroundColor = ColorGuide.profileBackground
+    }
+    
+    func viewSetting() {
+        self.addSubviews(updateButton)
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: self.topAnchor, constant: 120),
-            containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
-            containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-            containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
-            
-            updateButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12),
-            updateButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            
-            profileImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: -44),
-            profileImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0)
+            updateButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            updateButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 80),
+            updateButton.widthAnchor.constraint(equalToConstant: 24),
+            updateButton.heightAnchor.constraint(equalToConstant: 24),
         ])
     }
     
     func containerViewSetting() {
+        self.addSubviews(containerView)
+        containerView.addSubview(profileImageView)
         containerView.addSubview(labelStackView)
         containerView.addSubview(postTableview)
         
         NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: self.topAnchor, constant: 180),
+            containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
+            containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
+            containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
+            
+            profileImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: -50),
+            profileImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            profileImageView.widthAnchor.constraint(equalToConstant: 80),
+            profileImageView.heightAnchor.constraint(equalToConstant: 80)
+        ])
+        
+        NSLayoutConstraint.activate([
             labelStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0),
-            labelStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 8),
-            labelStackView.widthAnchor.constraint(equalToConstant: 70),
+            labelStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 4),
+            labelStackView.widthAnchor.constraint(equalToConstant: 90),
             
             postTableview.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             postTableview.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            postTableview.topAnchor.constraint(equalTo: labelStackView.bottomAnchor, constant: 20),
+            postTableview.topAnchor.constraint(equalTo: labelStackView.bottomAnchor, constant: 6),
             postTableview.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0)
         ])
     }

@@ -21,7 +21,7 @@ final class UserMyProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        allSetting()
     }
     
 }
@@ -30,6 +30,9 @@ final class UserMyProfileViewController: UIViewController {
 
 private extension UserMyProfileViewController {
   
+    func allSetting() {
+        buttonTapped()
+    }
     
     func buttonTapped() {
         userMyProfileView.updateButton.addTarget(self, action: #selector(updateButtonButtoned), for: .touchUpInside)
