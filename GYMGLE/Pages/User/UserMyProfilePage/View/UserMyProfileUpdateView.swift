@@ -16,7 +16,7 @@ final class UserMyProfileUpdateView: UIView {
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = ColorGuide.profileBackground
+        self.backgroundColor = ColorGuide.userBackGround
     }
     
     required init?(coder: NSCoder) {

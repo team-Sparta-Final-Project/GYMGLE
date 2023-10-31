@@ -139,3 +139,13 @@ private extension UserMyProfileView {
         ])
     }
 }
+// MARK: - extension custom func
+
+extension UserMyProfileView {
+    
+    func dataSetting(gym: String, nick: String, postCount: Int) {
+        gymName.text = gym
+        nickName.text = nick
+        postCountLabel.text = "작성한 글 \(postCount)개"
+    }
+}
