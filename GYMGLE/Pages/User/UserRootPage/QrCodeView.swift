@@ -38,9 +38,10 @@ class QrCodeView: UIView {
         return button
     }()
     
-    override init(frame: CGRect){
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        self.backgroundColor = ColorGuide.userBackGround
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -63,7 +64,7 @@ private extension QrCodeView {
         qrViewPlace.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(0)
             $0.leading.equalToSuperview().offset(0)
-            $0.height.equalTo(800)
+            $0.top.bottom.equalToSuperview().offset(0)
         }
         qrViewImage.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-62)

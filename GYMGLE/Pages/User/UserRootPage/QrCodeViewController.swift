@@ -15,7 +15,7 @@ final class QrCodeViewController: UIViewController {
     
     private let qrcodeView = QrCodeView()
     lazy var dataTest = DataManager.shared
-    
+    var isHidden: Bool = true
     var user: User?
     
     override func loadView() {
@@ -25,20 +25,24 @@ final class QrCodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configuredView()
+        view.backgroundColor = ColorGuide.userBackGround
     }
 }
 
 private extension QrCodeViewController {
     
     func configuredView() {
-//        let qrCodeImage = generateQRCode(data: "\(dataTest.gymInfo.gymUserList[0].name)")
-//        print("name: \(dataTest.gymInfo.gymUserList[0].name)")
         let userId = DataManager.shared.userInfo?.account.id
         let qrCodeImage = generateQRCode(data: "\(userId ?? "")")
         let welcomeName = "\(userId ?? "")님\n 오늘도 즐거운 운동 하세요!"
         qrcodeView.dataSetting(image: qrCodeImage, text: welcomeName)
+        if isHidden == true {
+            qrcodeView.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        } else {
+            qrcodeView.backButton.isHidden = true
+        }
         
-        qrcodeView.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+       
     }
     
     func generateQRCode(data: String) -> UIImage {

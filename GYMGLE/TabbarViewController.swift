@@ -14,9 +14,9 @@ final class TabbarViewController: UITabBarController {
     
     enum TabBarMenu: Int {
         case userRootVC = 0
-        case initialVC
-        case userRootVC2
-        case initialVC2
+        case communnityVC
+        case qrCodeVC
+        case myVC
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,8 +36,8 @@ final class TabbarViewController: UITabBarController {
         
         let communnityVC = UserCommunityViewController()
         
-        let qrCodeVC = QrCodeViewController()
-        
+        let qrCodeVC =  QrCodeViewController()
+        qrCodeVC.isHidden = false
         let myVC = UserMyPageViewController()
         
 
@@ -46,7 +46,7 @@ final class TabbarViewController: UITabBarController {
         self.viewControllers = controllers
         
         self.tabBar.layer.borderWidth = 1
-        self.tabBar.layer.borderColor = UIColor.white.cgColor
+        self.tabBar.layer.borderColor = ColorGuide.userBackGround.cgColor
         
         self.tabBar.tintColor = ColorGuide.main //탭바 아이템 색
         
@@ -71,7 +71,7 @@ final class TabbarViewController: UITabBarController {
        
         self.tabBar.items![3].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         self.tabBar.items![3].image = UIImage(systemName: "person.crop.circle")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.textHint)
-        self.tabBar.items![3].selectedImage = UIImage(systemName: "person.crop.circle.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.main) // 이미지의 색을 정한 색으로 나오게 하기 위해..
+        self.tabBar.items![3].selectedImage = UIImage(systemName: "person.crop.circle.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.main)
         self.tabBar.items![3].title = "마이페이지"
     }
 }
