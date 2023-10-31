@@ -41,9 +41,10 @@ private extension UserMyProfileViewController {
 extension UserMyProfileViewController {
     
     @objc private func updateButtonButtoned() {
-        let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
-        userMyProfileUpdateVC.modalPresentationStyle = .fullScreen
-        userMyProfileUpdateVC.present(userMyProfileUpdateVC, animated: true)
+        print("테스트 - click")
+//        let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
+//        userMyProfileUpdateVC.modalPresentationStyle = .fullScreen
+//        userMyProfileUpdateVC.present(userMyProfileUpdateVC, animated: true)
     }
     
 }
