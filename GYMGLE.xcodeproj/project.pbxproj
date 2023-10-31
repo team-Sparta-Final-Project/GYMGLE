@@ -58,6 +58,7 @@
 		630EDE172ADFBC8300B37982 /* Extension_ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */; };
 		63163E6D2AE11EF200186315 /* QRcodeCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */; };
 		63163E6F2AE11F0700186315 /* QRcodeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */; };
+		632E7F182AF1201E00490C59 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E7F172AF1201E00490C59 /* Board.swift */; };
 		63B5A2252AEB627900105AB5 /* Extension_UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
@@ -136,6 +137,7 @@
 		630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_ToastView.swift; sourceTree = "<group>"; };
 		63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckViewController.swift; sourceTree = "<group>"; };
 		63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckView.swift; sourceTree = "<group>"; };
+		632E7F172AF1201E00490C59 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIImage.swift; sourceTree = "<group>"; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				630CE1522ADD5CB8001EC547 /* Account.swift */,
 				630CE1542ADD5CD0001EC547 /* InAndOut.swift */,
 				630CE1612ADD62AD001EC547 /* DataManager.swift */,
+				632E7F172AF1201E00490C59 /* Board.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -746,6 +749,7 @@
 				D1E0186B2ADCEC2C00D1C53D /* AdminRegisterView.swift in Sources */,
 				2730BC8A2ADC1E1700BFA23C /* UserManageView.swift in Sources */,
 				07997FF52AD84390002ACFCB /* UserRootView.swift in Sources */,
+				632E7F182AF1201E00490C59 /* Board.swift in Sources */,
 				D15C22292AE4FE25002C4213 /* MyPageTableView.swift in Sources */,
 				078055152AEA08D700DB2F39 /* AdminTableView.swift in Sources */,
 				63163E6D2AE11EF200186315 /* QRcodeCheckViewController.swift in Sources */,
