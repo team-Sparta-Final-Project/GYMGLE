@@ -13,17 +13,44 @@ import Charts
 
 class UserRootView: UIView {
     
+//    var user: User? {
+//        didSet {
+//            healthName.text = user?.name
+//            let isGym = user?.isInGym
+//            if isGym == true{
+//                nowUserNumber.text = "1"
+//            }else{
+//                nowUserNumber.text = "0"
+//            }
+//        }
+//    }
+    var noticeWrite: Notice? {
+        didSet {
+            noticeText.text = noticeWrite?.content
+        }
+    }
+    var sinceTime: InAndOut? {
+        didSet {
+            if let sinceTime = sinceTime {
+                let minutes = sinceTime.sinceInAndOutTime / 60
+                chartMidText.text = "\(minutes) 분"
+            } else {
+                chartMidText.text = "운동을 안하셨군요?"
+            }
+        }
+    }
+    
     var currentValue = 0
     let targetValue = 66
     let animationDuration = 2.0
     
     private lazy var healthName = UILabel().then {
-        $0.textColor = ColorGuide.black
+        $0.textColor = ColorGuide.main
         $0.font = FontGuide.size26Bold
-        $0.text = "김기호"
+        $0.text = DataManager.shared.userInfo?.name
     }
     private lazy var healthNameSub = UILabel().then {
-        $0.textColor = ColorGuide.black
+        $0.textColor = ColorGuide.main
         $0.font = FontGuide.size14Bold
         $0.text = "님 오늘도 힘내볼까요!"
     }
@@ -31,20 +58,20 @@ class UserRootView: UIView {
         $0.backgroundColor = ColorGuide.white
         $0.layer.cornerRadius = 20
         $0.tintColor = .white
-        $0.layer.shadowColor = ColorGuide.main.cgColor
-        $0.layer.shadowOpacity = 1
-        $0.layer.shadowRadius = 2
-        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(noticePlaceTapped)))
 
     }
     private lazy var noticeBell = UIImageView().then {
-        $0.image = UIImage(named: "bell.fill")
-        $0.backgroundColor = ColorGuide.black
+        $0.image = UIImage(systemName: "bell")
+        $0.tintColor = ColorGuide.black
+        $0.layer.shadowColor = ColorGuide.black.cgColor
+        $0.layer.shadowOpacity = 1
+        $0.layer.shadowRadius = 1
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
-    private lazy var noticeText = UILabel().then {
+    lazy var noticeText = UILabel().then {
         $0.textColor = ColorGuide.black
-        $0.font = FontGuide.size14Bold
+        $0.font = FontGuide.size14
         $0.text = """
 이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
 이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
@@ -57,10 +84,6 @@ class UserRootView: UIView {
     private lazy var yesterUserPlace = UIView().then {
         $0.backgroundColor = ColorGuide.white
         $0.layer.cornerRadius = 20
-        $0.layer.shadowColor = ColorGuide.main.cgColor
-        $0.layer.shadowOpacity = 1
-        $0.layer.shadowRadius = 2
-        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(startNumberAnimation)))
     }
     private lazy var yesterUserNumberPlace = UIView().then {
@@ -68,28 +91,24 @@ class UserRootView: UIView {
         $0.clipsToBounds = true
         $0.addSubview(yesterUserNumber)
     }
-    private lazy var yesterUserNumber = UILabel().then {
+    lazy var yesterUserNumber = UILabel().then {
         $0.textColor = ColorGuide.main
         $0.font = FontGuide.size50Bold
-        $0.text = "66"
+        $0.text = "0"
     }
     private lazy var yesterUserMyung = UILabel().then {
-        $0.textColor = ColorGuide.white
+        $0.textColor = ColorGuide.main
         $0.font = FontGuide.size14Bold
         $0.text = "명"
     }
     private lazy var yesterUserText = UILabel().then {
         $0.textColor = ColorGuide.main
         $0.font = FontGuide.size14Bold
-        $0.text = "어제 이시간 이용객 수"
+        $0.text = "저번 주 이시간 이용객 수"
     }
     private lazy var nowUserPlace = UIView().then {
         $0.backgroundColor = ColorGuide.main
         $0.layer.cornerRadius = 20
-        $0.layer.shadowColor = ColorGuide.black.cgColor
-        $0.layer.shadowOpacity = 1
-        $0.layer.shadowRadius = 2
-        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(startNumberAnimation2)))
     }
     private lazy var nowUserNumberPlace = UIView().then {
@@ -97,13 +116,14 @@ class UserRootView: UIView {
         $0.clipsToBounds = true
         $0.addSubview(nowUserNumber)
     }
-    private lazy var nowUserNumber = UILabel().then {
+    lazy var nowUserNumber = UILabel().then {
         $0.textColor = ColorGuide.white
         $0.font = FontGuide.size50Bold
-        $0.text = "12"
+//        $0.text = String(DataManager.shared.realGymInfo?.gymUserList.filter { $0.isInGym == true }.count ?? 0) 데이터모델 공사중입니다
+        $0.text = "0"
     }
     private lazy var nowUserMyung = UILabel().then {
-        $0.textColor = ColorGuide.main
+        $0.textColor = ColorGuide.white
         $0.font = FontGuide.size14Bold
         $0.text = "명"
     }
@@ -115,10 +135,12 @@ class UserRootView: UIView {
     private lazy var chartPlace = UIView().then {
         $0.backgroundColor = ColorGuide.white
         $0.layer.cornerRadius = 20
-        $0.layer.shadowColor = ColorGuide.goldTier.cgColor
-        $0.layer.shadowOpacity = 1
-        $0.layer.shadowRadius = 4
-        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = ColorGuide.goldTier.cgColor
+//        $0.layer.shadowColor = ColorGuide.goldTier.cgColor
+//        $0.layer.shadowOpacity = 1
+//        $0.layer.shadowRadius = 4
+//        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chartPlaceTapped)))
     }
     private lazy var chartTopText = UILabel().then {
@@ -127,27 +149,27 @@ class UserRootView: UIView {
         $0.text = "저번주 나의 운동량은.."
     }
     
-    private lazy var chartMidText = UILabel().then {
+    lazy var chartMidText = UILabel().then {
         $0.textColor = ColorGuide.goldTier
-        $0.font = FontGuide.size32Bold
+        $0.font = FontGuide.size24Bold
         $0.text = "상위 4% 에요!"
     }
-    private lazy var chartBottomText = UILabel().then {
+    lazy var chartBottomText = UILabel().then {
         $0.textColor = ColorGuide.main
         $0.font = FontGuide.size14Bold
         $0.text = "와우! 운동 러버시군요!"
     }
     var inBtn = UIButton().then {
-        $0.backgroundColor = ColorGuide.main
+        $0.backgroundColor = ColorGuide.white
         $0.setBackgroundColor(ColorGuide.black, for: .highlighted)
-        $0.setTitleColor(ColorGuide.white, for: .normal)
+        $0.setTitleColor(ColorGuide.main, for: .normal)
         $0.setTitleColor(ColorGuide.main, for: .highlighted)
         $0.setTitle("입실하기", for: .normal)
         $0.titleLabel?.font = FontGuide.size14Bold
         $0.layer.cornerRadius = 20
         $0.clipsToBounds = true
     }
-    private lazy var outBtn = UIButton().then {
+    lazy var outBtn = UIButton().then {
         $0.backgroundColor = ColorGuide.main
         $0.setBackgroundColor(ColorGuide.black, for: .highlighted)
         $0.setTitleColor(ColorGuide.white, for: .normal)
@@ -196,15 +218,16 @@ class UserRootView: UIView {
     
     @objc func chartPlaceTapped() {
         UIView.animate(withDuration: 0.5, animations: {
-                self.chartPlace.layer.shadowOpacity = 1
-                self.chartPlace.layer.shadowRadius = 15
-                self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
+            self.chartPlace.layer.borderWidth = 2
+            self.chartPlace.layer.borderColor = ColorGuide.goldTier.cgColor
+//                self.chartPlace.layer.shadowRadius = 15
+//                self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
             }) { (completed) in
                 // 2초 후에 사라지는 애니메이션
                 UIView.animate(withDuration: 0.5, delay: 1.0, options: .curveEaseOut, animations: {
-                    self.chartPlace.layer.shadowOpacity = 1
-                    self.chartPlace.layer.shadowRadius = 4
-                    self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
+                    self.chartPlace.layer.borderWidth = 1
+                    self.chartPlace.layer.borderColor = ColorGuide.goldTier.cgColor
+//                    self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
                 }, completion: nil)
             }
     }
@@ -227,8 +250,24 @@ class UserRootView: UIView {
     @objc func reloadView(){
         
     }
+    //❗️
+    // MARK: - 데이터 전달 및 받기
+    
+    func userDataSetting(userName: String, gymInUserCount: String, yesterUserCount: String, notice: String) {
+        healthName.text = userName
+        nowUserNumber.text = gymInUserCount
+        yesterUserNumber.text = yesterUserCount
+        noticeText.text = notice
+    }
+
+
+    
+    
+    
+    
+    //❗️
     func setupUI(){
-        self.backgroundColor = ColorGuide.white
+        self.backgroundColor = ColorGuide.userBackGround
         addSubview(healthName)
         addSubview(healthNameSub)
         addSubview(noticePlace)
@@ -252,7 +291,7 @@ class UserRootView: UIView {
         addSubview(outBtn)
         
         healthName.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(90)
+            $0.top.equalToSuperview().offset(30)
             $0.leading.equalToSuperview().offset(20)
         }
         healthNameSub.snp.makeConstraints {
@@ -276,7 +315,7 @@ class UserRootView: UIView {
             $0.leading.equalTo(noticePlace.snp.leading).offset(42)
         }
         yesterUserPlace.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
+            $0.leading.equalTo(noticePlace.snp.leading).offset(0)
             $0.width.equalTo(170)
             $0.top.equalTo(noticePlace.snp.bottom).offset(12)
             $0.height.equalTo(170)
@@ -300,7 +339,8 @@ class UserRootView: UIView {
             $0.bottom.equalTo(yesterUserPlace.snp.bottom).offset(-22)
         }
         nowUserPlace.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.trailing.equalTo(noticePlace.snp.trailing).offset(0)
+            $0.leading.equalTo(yesterUserPlace.snp.trailing).offset(10)
             $0.width.equalTo(170)
             $0.top.equalTo(noticePlace.snp.bottom).offset(12)
             $0.height.equalTo(170)

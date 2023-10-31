@@ -7,6 +7,9 @@ class UserRegisterView: UIView {
     lazy var button:UIButton = UIButton.GYMGLEButtonPreset("버튼 타이틀")
     lazy var textView = UITextView()
     
+    let items = ["회원", "트레이너"]
+    lazy var segmented = UISegmentedControl(items: items)
+
     //MARK: - View 자체 라이프사이클
     override init(frame: CGRect) {
         super .init(frame: frame)
@@ -16,13 +19,18 @@ class UserRegisterView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    //MARK: - 설정 함수
+    //MARK: - 뷰에 요소 배치 함수 (순서 조심)
     private func configure(){
+        self.backgroundColor = ColorGuide.background
         
-        topLabel()
+//        topLabel()
         bottomButton()
         centerTableView()
         addTextView()
+        
+        segmentedConfigure()
+        
+        
     }
     //MARK: - 테이블뷰 configure
     func heightConfigure(cellHeight:Int, emptyCellHeight:Int){
@@ -40,6 +48,28 @@ class UserRegisterView: UIView {
         tableView.buttonCellData = buttons
         tableView.buttonText = buttonText
     }
+    
+    //MARK: - 세그먼티드 컨트롤
+    
+    private func segmentedConfigure(){
+        
+        segmented.selectedSegmentIndex = 0
+        
+        segmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : ColorGuide.white], for: .selected)
+        segmented.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor(red: 0, green: 0, blue: 0, alpha: 0.61)], for: .normal)
+        segmented.selectedSegmentTintColor = ColorGuide.main
+        
+        self.addSubviews(segmented)
+        
+        segmented.snp.makeConstraints{
+            $0.top.equalToSuperview().inset(92)
+            $0.right.equalToSuperview().inset(22)
+        }
+        
+    }
+    
+    
+    
     //MARK: - 탑레이블
     private func topLabel(){
         
@@ -59,9 +89,9 @@ class UserRegisterView: UIView {
         
         self.addSubview(tableView)
         tableView.snp.makeConstraints{
-            $0.top.equalTo(label.snp.bottom).offset(35)
+            $0.top.equalToSuperview().inset(132)
             $0.left.right.equalToSuperview().inset(24)
-            $0.bottom.equalTo(button.snp.top).inset(-350)
+            $0.bottom.equalTo(button.snp.top).inset(-280)
         }
     }
     //MARK: - 텍스트 뷰
@@ -77,7 +107,7 @@ class UserRegisterView: UIView {
         textView.snp.makeConstraints{
             $0.left.right.equalToSuperview().inset(24)
             $0.top.equalTo(tableView.snp.bottom).inset(10)
-            $0.bottom.equalTo(button.snp.top).offset(-264)
+            $0.bottom.equalTo(button.snp.top).offset(-150)
         }
     }
     

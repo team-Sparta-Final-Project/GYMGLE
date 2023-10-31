@@ -21,16 +21,23 @@ class AdminLoginView: UIView {
         $0.text = "관리자 로그인"
     }
     
-    private lazy var idTextField = UITextField().then {
+    lazy var idTextField = UITextField().then {
         $0.borderStyle = .roundedRect
         $0.placeholder = "아이디"
+        $0.autocapitalizationType = .none // 자동으로 맨 앞을 대문자로 할건지
+        $0.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
+        $0.spellCheckingType = .no
         $0.font = FontGuide.size14
     }
     
-    private lazy var passwordTextField = UITextField().then {
+    lazy var passwordTextField = UITextField().then {
         $0.borderStyle = .roundedRect
         $0.placeholder = "비밀번호"
+        $0.autocapitalizationType = .none // 자동으로 맨 앞을 대문자로 할건지
+        $0.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
+        $0.spellCheckingType = .no
         $0.font = FontGuide.size14
+        $0.isSecureTextEntry = true
     }
     
     lazy var loginButton: UIButton = UIButton.GYMGLEButtonPreset("로그인")
@@ -40,7 +47,7 @@ class AdminLoginView: UIView {
     }
     
     lazy var registerButton = UIButton().then {
-        $0.buttonMakeUI(backgroundColor: .white, cornerRadius: 10, borderWidth: 0, borderColor: UIColor.clear.cgColor, setTitle: "새로운 헬스장 등록", font: FontGuide.size14Bold, setTitleColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.61))
+        $0.buttonMakeUI(backgroundColor: .clear, cornerRadius: 10, borderWidth: 0, borderColor: UIColor.clear.cgColor, setTitle: "새로운 헬스장 등록", font: FontGuide.size14Bold, setTitleColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.61))
     }
     
     lazy var userButton = UIButton().then {
@@ -51,7 +58,7 @@ class AdminLoginView: UIView {
     
     override init(frame: CGRect) {
         super .init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = ColorGuide.background
         
         addSubviews(imageView, loginLabel, idTextField, passwordTextField, loginButton, divider, registerButton, userButton)
         

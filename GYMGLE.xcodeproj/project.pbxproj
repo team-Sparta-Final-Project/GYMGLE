@@ -9,7 +9,13 @@
 /* Begin PBXBuildFile section */
 		0744286D2ADD0B1B00EB7D05 /* QrCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0744286C2ADD0B1B00EB7D05 /* QrCodeViewController.swift */; };
 		0744286F2ADD0D8800EB7D05 /* QrCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0744286E2ADD0D8800EB7D05 /* QrCodeView.swift */; };
+		074428732ADFB36800EB7D05 /* UserCommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074428722ADFB36800EB7D05 /* UserCommunityView.swift */; };
+		074428752ADFB38400EB7D05 /* UserCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074428742ADFB38400EB7D05 /* UserCommunityViewController.swift */; };
+		074428772ADFBBB000EB7D05 /* CommunityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074428762ADFBBB000EB7D05 /* CommunityCell.swift */; };
+		074428792AE0E2BA00EB7D05 /* UserCommunityWriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074428782AE0E2BA00EB7D05 /* UserCommunityWriteView.swift */; };
+		0744287B2AE0E2D200EB7D05 /* UserCommunityWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0744287A2AE0E2D200EB7D05 /* UserCommunityWriteViewController.swift */; };
 		0761A5222AD93D47002EECED /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0761A5212AD93D47002EECED /* Charts.framework */; };
+		078055152AEA08D700DB2F39 /* AdminTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078055142AEA08D700DB2F39 /* AdminTableView.swift */; };
 		07997FF52AD84390002ACFCB /* UserRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07997FF42AD84390002ACFCB /* UserRootView.swift */; };
 		07997FF72AD843A5002ACFCB /* UserRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07997FF62AD843A5002ACFCB /* UserRootViewController.swift */; };
 		07997FF92AD843BD002ACFCB /* UserRootModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07997FF82AD843BD002ACFCB /* UserRootModel.swift */; };
@@ -36,13 +42,34 @@
 		2730BC8F2ADC206B00BFA23C /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC8E2ADC206B00BFA23C /* CustomSearchBar.swift */; };
 		2730BC972ADC2DF500BFA23C /* ManageLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC962ADC2DF500BFA23C /* ManageLabelCell.swift */; };
 		2730BC992ADC2E2900BFA23C /* ManageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC982ADC2E2900BFA23C /* ManageTableView.swift */; };
+		2782A4B62AEA466D00B110F9 /* BottomSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4B52AEA466D00B110F9 /* BottomSheetController.swift */; };
+		2782A4B82AEA46BB00B110F9 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */; };
+		2782A4BC2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4BB2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift */; };
+		2782A4BE2AEB88E500B110F9 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4BD2AEB88E500B110F9 /* CustomButton.swift */; };
+		27E24B802ADF8A790031122F /* UserRegisterViewIDPWController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E24B7F2ADF8A790031122F /* UserRegisterViewIDPWController.swift */; };
 		630A0BEE2AD9269100525A6E /* Extension_UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630A0BED2AD9269100525A6E /* Extension_UILabel.swift */; };
 		630CE14B2ADD1B5E001EC547 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE14A2ADD1B5E001EC547 /* TabbarViewController.swift */; };
+		630CE14D2ADD5C8A001EC547 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE14C2ADD5C8A001EC547 /* User.swift */; };
+		630CE14F2ADD5C92001EC547 /* Notice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE14E2ADD5C92001EC547 /* Notice.swift */; };
+		630CE1512ADD5CAC001EC547 /* GymInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE1502ADD5CAC001EC547 /* GymInfo.swift */; };
+		630CE1532ADD5CB8001EC547 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE1522ADD5CB8001EC547 /* Account.swift */; };
+		630CE1552ADD5CD0001EC547 /* InAndOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE1542ADD5CD0001EC547 /* InAndOut.swift */; };
+		630CE1622ADD62AD001EC547 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CE1612ADD62AD001EC547 /* DataManager.swift */; };
+		630EDE172ADFBC8300B37982 /* Extension_ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */; };
+		63163E6D2AE11EF200186315 /* QRcodeCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */; };
+		63163E6F2AE11F0700186315 /* QRcodeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */; };
+		63B5A2252AEB627900105AB5 /* Extension_UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
 		D14ECB442AD917D600FF7853 /* Extension_UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB432AD917D600FF7853 /* Extension_UIView.swift */; };
 		D14ECB482AD928FF00FF7853 /* Extension_CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */; };
+		D15C22292AE4FE25002C4213 /* MyPageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C22282AE4FE25002C4213 /* MyPageTableView.swift */; };
+		D15C222C2AE50349002C4213 /* MyPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C222B2AE50349002C4213 /* MyPageTableViewCell.swift */; };
+		D15C22302AE50F7D002C4213 /* Protocol_Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C222F2AE50F7D002C4213 /* Protocol_Delegate.swift */; };
+		D1635A462AE0F9CD00CDEF11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D1635A452AE0F9CD00CDEF11 /* FirebaseAuth */; };
+		D16920A72ADFBB9F00BE1A2B /* UserMyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */; };
+		D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */; };
 		D1E0185F2ADCEB6700D1C53D /* AdminNoticeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E0185E2ADCEB6700D1C53D /* AdminNoticeDetailView.swift */; };
 		D1E018612ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E018602ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift */; };
 		D1E018632ADCEBE000D1C53D /* AdminNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E018622ADCEBE000D1C53D /* AdminNoticeView.swift */; };
@@ -67,7 +94,13 @@
 /* Begin PBXFileReference section */
 		0744286C2ADD0B1B00EB7D05 /* QrCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrCodeViewController.swift; sourceTree = "<group>"; };
 		0744286E2ADD0D8800EB7D05 /* QrCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrCodeView.swift; sourceTree = "<group>"; };
+		074428722ADFB36800EB7D05 /* UserCommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityView.swift; sourceTree = "<group>"; };
+		074428742ADFB38400EB7D05 /* UserCommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityViewController.swift; sourceTree = "<group>"; };
+		074428762ADFBBB000EB7D05 /* CommunityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCell.swift; sourceTree = "<group>"; };
+		074428782AE0E2BA00EB7D05 /* UserCommunityWriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityWriteView.swift; sourceTree = "<group>"; };
+		0744287A2AE0E2D200EB7D05 /* UserCommunityWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityWriteViewController.swift; sourceTree = "<group>"; };
 		0761A5212AD93D47002EECED /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = System/Library/Frameworks/Charts.framework; sourceTree = SDKROOT; };
+		078055142AEA08D700DB2F39 /* AdminTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTableView.swift; sourceTree = "<group>"; };
 		07997FF42AD84390002ACFCB /* UserRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootView.swift; path = GYMGLE/Pages/User/UserRootPage/UserRootView.swift; sourceTree = SOURCE_ROOT; };
 		07997FF62AD843A5002ACFCB /* UserRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootViewController.swift; path = GYMGLE/Pages/User/UserRootPage/UserRootViewController.swift; sourceTree = SOURCE_ROOT; };
 		07997FF82AD843BD002ACFCB /* UserRootModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootModel.swift; path = GYMGLE/Pages/User/UserRootPage/UserRootModel.swift; sourceTree = SOURCE_ROOT; };
@@ -87,13 +120,33 @@
 		2730BC8E2ADC206B00BFA23C /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		2730BC962ADC2DF500BFA23C /* ManageLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageLabelCell.swift; sourceTree = "<group>"; };
 		2730BC982ADC2E2900BFA23C /* ManageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageTableView.swift; sourceTree = "<group>"; };
+		2782A4B52AEA466D00B110F9 /* BottomSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetController.swift; sourceTree = "<group>"; };
+		2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
+		2782A4BB2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewDateOnly.swift; sourceTree = "<group>"; };
+		2782A4BD2AEB88E500B110F9 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		27E24B7F2ADF8A790031122F /* UserRegisterViewIDPWController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegisterViewIDPWController.swift; sourceTree = "<group>"; };
 		630A0BED2AD9269100525A6E /* Extension_UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UILabel.swift; sourceTree = "<group>"; };
 		630CE14A2ADD1B5E001EC547 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
+		630CE14C2ADD5C8A001EC547 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = GYMGLE/User.swift; sourceTree = SOURCE_ROOT; };
+		630CE14E2ADD5C92001EC547 /* Notice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Notice.swift; path = GYMGLE/Notice.swift; sourceTree = SOURCE_ROOT; };
+		630CE1502ADD5CAC001EC547 /* GymInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GymInfo.swift; path = GYMGLE/GymInfo.swift; sourceTree = SOURCE_ROOT; };
+		630CE1522ADD5CB8001EC547 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Account.swift; path = GYMGLE/Account.swift; sourceTree = SOURCE_ROOT; };
+		630CE1542ADD5CD0001EC547 /* InAndOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InAndOut.swift; path = GYMGLE/InAndOut.swift; sourceTree = SOURCE_ROOT; };
+		630CE1612ADD62AD001EC547 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_ToastView.swift; sourceTree = "<group>"; };
+		63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckViewController.swift; sourceTree = "<group>"; };
+		63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckView.swift; sourceTree = "<group>"; };
+		63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIImage.swift; sourceTree = "<group>"; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
 		D14ECB432AD917D600FF7853 /* Extension_UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIView.swift; sourceTree = "<group>"; };
 		D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_CALayer.swift; sourceTree = "<group>"; };
+		D15C22282AE4FE25002C4213 /* MyPageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableView.swift; sourceTree = "<group>"; };
+		D15C222B2AE50349002C4213 /* MyPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableViewCell.swift; sourceTree = "<group>"; };
+		D15C222F2AE50F7D002C4213 /* Protocol_Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol_Delegate.swift; sourceTree = "<group>"; };
+		D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageView.swift; sourceTree = "<group>"; };
+		D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageViewController.swift; sourceTree = "<group>"; };
 		D1E0185E2ADCEB6700D1C53D /* AdminNoticeDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdminNoticeDetailView.swift; path = GYMGLE/Pages/Admin/AdminNoticePage/AdminNoticeDetailPage/View/AdminNoticeDetailView.swift; sourceTree = SOURCE_ROOT; };
 		D1E018602ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdminNoticeDetailViewController.swift; path = GYMGLE/Pages/Admin/AdminNoticePage/AdminNoticeDetailPage/ViewController/AdminNoticeDetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		D1E018622ADCEBE000D1C53D /* AdminNoticeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminNoticeView.swift; sourceTree = "<group>"; };
@@ -127,6 +180,7 @@
 				2730BBFA2AD6BA1600BFA23C /* Then in Frameworks */,
 				2730BBF72AD6BA0200BFA23C /* QRCodeReader in Frameworks */,
 				2730BC132AD77C7F00BFA23C /* FirebaseAnalytics in Frameworks */,
+				D1635A462AE0F9CD00CDEF11 /* FirebaseAuth in Frameworks */,
 				0761A5222AD93D47002EECED /* Charts.framework in Frameworks */,
 				2730BC172AD77C7F00BFA23C /* FirebaseDatabase in Frameworks */,
 				2730BBE82AD66F0000BFA23C /* SnapKit in Frameworks */,
@@ -136,6 +190,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		074428712ADFB32700EB7D05 /* UserCommunityPage */ = {
+			isa = PBXGroup;
+			children = (
+				074428762ADFBBB000EB7D05 /* CommunityCell.swift */,
+				074428722ADFB36800EB7D05 /* UserCommunityView.swift */,
+				074428742ADFB38400EB7D05 /* UserCommunityViewController.swift */,
+				074428782AE0E2BA00EB7D05 /* UserCommunityWriteView.swift */,
+				0744287A2AE0E2D200EB7D05 /* UserCommunityWriteViewController.swift */,
+			);
+			path = UserCommunityPage;
+			sourceTree = "<group>";
+		};
 		0761A5202AD93D47002EECED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +248,12 @@
 		2730BC242AD7E6FB00BFA23C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				630CE14C2ADD5C8A001EC547 /* User.swift */,
+				630CE14E2ADD5C92001EC547 /* Notice.swift */,
+				630CE1502ADD5CAC001EC547 /* GymInfo.swift */,
+				630CE1522ADD5CB8001EC547 /* Account.swift */,
+				630CE1542ADD5CD0001EC547 /* InAndOut.swift */,
+				630CE1612ADD62AD001EC547 /* DataManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -290,6 +362,8 @@
 		2730BC3E2AD8103100BFA23C /* QRcodeCheckPage */ = {
 			isa = PBXGroup;
 			children = (
+				63163E6B2AE11ED300186315 /* ViewController */,
+				63163E6A2AE11ECA00186315 /* View */,
 			);
 			path = QRcodeCheckPage;
 			sourceTree = "<group>";
@@ -310,6 +384,8 @@
 		2730BC402AD8105E00BFA23C /* User */ = {
 			isa = PBXGroup;
 			children = (
+				074428712ADFB32700EB7D05 /* UserCommunityPage */,
+				D16920A32ADFBB7A00BE1A2B /* UserMyPage */,
 				2730BC3B2AD80B3E00BFA23C /* UserManagePage */,
 				2730BC3A2AD809C400BFA23C /* UserRegisterPage */,
 				2730BC392AD8084600BFA23C /* UserRootPage */,
@@ -356,6 +432,7 @@
 			isa = PBXGroup;
 			children = (
 				2730BC792AD9577C00BFA23C /* UserRegisterViewController.swift */,
+				27E24B7F2ADF8A790031122F /* UserRegisterViewIDPWController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -363,6 +440,7 @@
 		2730BC6E2AD9573300BFA23C /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				27E24B812ADF97A30031122F /* PopUp */,
 				D1E0187A2ADCEE0000D1C53D /* UserTableView.swift */,
 				D1E018772ADCEE0000D1C53D /* CustomTextCell.swift */,
 				D1E0187B2ADCEE0000D1C53D /* CustomTextView.swift */,
@@ -401,6 +479,17 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		27E24B812ADF97A30031122F /* PopUp */ = {
+			isa = PBXGroup;
+			children = (
+				2782A4B52AEA466D00B110F9 /* BottomSheetController.swift */,
+				2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */,
+				2782A4BB2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift */,
+				2782A4BD2AEB88E500B110F9 /* CustomButton.swift */,
+			);
+			path = PopUp;
+			sourceTree = "<group>";
+		};
 		630A0BE72AD9261800525A6E /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -413,8 +502,25 @@
 			isa = PBXGroup;
 			children = (
 				D1E018662ADCEC0C00D1C53D /* AdminRootView.swift */,
+				078055142AEA08D700DB2F39 /* AdminTableView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		63163E6A2AE11ECA00186315 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		63163E6B2AE11ED300186315 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		63879E442ADA7A6700FA23BD /* View */ = {
@@ -466,6 +572,8 @@
 				630A0BED2AD9269100525A6E /* Extension_UILabel.swift */,
 				D14ECB432AD917D600FF7853 /* Extension_UIView.swift */,
 				D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */,
+				630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */,
+				63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -475,6 +583,7 @@
 			children = (
 				63D855F12AD812A0008429BC /* ColorGuide.swift */,
 				63D855F32AD812C3008429BC /* FontGuide.swift */,
+				D15C222F2AE50F7D002C4213 /* Protocol_Delegate.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -491,6 +600,41 @@
 			isa = PBXGroup;
 			children = (
 				D1E0186E2ADCEC4B00D1C53D /* AdminLoginView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D15C222A2AE50329002C4213 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D15C222B2AE50349002C4213 /* MyPageTableViewCell.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		D16920A32ADFBB7A00BE1A2B /* UserMyPage */ = {
+			isa = PBXGroup;
+			children = (
+				D16920A52ADFBB8C00BE1A2B /* View */,
+				D16920A42ADFBB8400BE1A2B /* ViewController */,
+			);
+			path = UserMyPage;
+			sourceTree = "<group>";
+		};
+		D16920A42ADFBB8400BE1A2B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		D16920A52ADFBB8C00BE1A2B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D15C222A2AE50329002C4213 /* Components */,
+				D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */,
+				D15C22282AE4FE25002C4213 /* MyPageTableView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -521,6 +665,7 @@
 				2730BC162AD77C7F00BFA23C /* FirebaseDatabase */,
 				2730BC182AD77C7F00BFA23C /* FirebaseDatabaseSwift */,
 				2730BC1A2AD77C7F00BFA23C /* FirebaseMessaging */,
+				D1635A452AE0F9CD00CDEF11 /* FirebaseAuth */,
 			);
 			productName = GYMGLE;
 			productReference = 2730BBB42AD6668200BFA23C /* GYMGLE.app */;
@@ -589,28 +734,46 @@
 				D1E018672ADCEC0C00D1C53D /* AdminRootView.swift in Sources */,
 				D1E018632ADCEBE000D1C53D /* AdminNoticeView.swift in Sources */,
 				0744286D2ADD0B1B00EB7D05 /* QrCodeViewController.swift in Sources */,
+				074428792AE0E2BA00EB7D05 /* UserCommunityWriteView.swift in Sources */,
+				2782A4B62AEA466D00B110F9 /* BottomSheetController.swift in Sources */,
 				63D855F42AD812C3008429BC /* FontGuide.swift in Sources */,
 				D1E018712ADCEC5C00D1C53D /* AdminLoginViewController.swift in Sources */,
+				D15C222C2AE50349002C4213 /* MyPageTableViewCell.swift in Sources */,
+				D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */,
 				63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */,
+				63163E6F2AE11F0700186315 /* QRcodeCheckView.swift in Sources */,
+				630CE1552ADD5CD0001EC547 /* InAndOut.swift in Sources */,
 				D1E0186B2ADCEC2C00D1C53D /* AdminRegisterView.swift in Sources */,
 				2730BC8A2ADC1E1700BFA23C /* UserManageView.swift in Sources */,
 				07997FF52AD84390002ACFCB /* UserRootView.swift in Sources */,
+				D15C22292AE4FE25002C4213 /* MyPageTableView.swift in Sources */,
+				078055152AEA08D700DB2F39 /* AdminTableView.swift in Sources */,
+				63163E6D2AE11EF200186315 /* QRcodeCheckViewController.swift in Sources */,
 				630CE14B2ADD1B5E001EC547 /* TabbarViewController.swift in Sources */,
 				D1E0186D2ADCEC3800D1C53D /* AdminRegisterViewController.swift in Sources */,
 				2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */,
+				074428772ADFBBB000EB7D05 /* CommunityCell.swift in Sources */,
 				2730BC992ADC2E2900BFA23C /* ManageTableView.swift in Sources */,
 				63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */,
 				2730BC882ADC1DC500BFA23C /* UserManageController.swift in Sources */,
+				630CE1532ADD5CB8001EC547 /* Account.swift in Sources */,
+				63B5A2252AEB627900105AB5 /* Extension_UIImage.swift in Sources */,
 				D1E0187D2ADCEE0000D1C53D /* CustomTextCell.swift in Sources */,
 				D1E0186F2ADCEC4B00D1C53D /* AdminLoginView.swift in Sources */,
 				D1E018692ADCEC1A00D1C53D /* AdminRootViewController.swift in Sources */,
 				D1E018652ADCEBFA00D1C53D /* AdminNoticeViewController.swift in Sources */,
+				074428752ADFB38400EB7D05 /* UserCommunityViewController.swift in Sources */,
 				D1E0185F2ADCEB6700D1C53D /* AdminNoticeDetailView.swift in Sources */,
+				630CE1512ADD5CAC001EC547 /* GymInfo.swift in Sources */,
+				0744287B2AE0E2D200EB7D05 /* UserCommunityWriteViewController.swift in Sources */,
+				074428732ADFB36800EB7D05 /* UserCommunityView.swift in Sources */,
 				0744286F2ADD0D8800EB7D05 /* QrCodeView.swift in Sources */,
 				D1E018812ADCEE0000D1C53D /* CustomTextView.swift in Sources */,
 				2730BC8F2ADC206B00BFA23C /* CustomSearchBar.swift in Sources */,
 				2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */,
 				630A0BEE2AD9269100525A6E /* Extension_UILabel.swift in Sources */,
+				2782A4BC2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift in Sources */,
+				630EDE172ADFBC8300B37982 /* Extension_ToastView.swift in Sources */,
 				D1E018732ADCECAF00D1C53D /* AdminNoticeTableViewCell.swift in Sources */,
 				D1E018752ADCEDF100D1C53D /* UserRegisterView.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
@@ -619,18 +782,26 @@
 				D14ECB482AD928FF00FF7853 /* Extension_CALayer.swift in Sources */,
 				D1E018802ADCEE0000D1C53D /* UserTableView.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
+				630CE14F2ADD5C92001EC547 /* Notice.swift in Sources */,
 				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
 				D1E018612ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
 				D1E0187F2ADCEE0000D1C53D /* TextFieldCell.swift in Sources */,
+				D16920A72ADFBB9F00BE1A2B /* UserMyPageView.swift in Sources */,
 				2730BC972ADC2DF500BFA23C /* ManageLabelCell.swift in Sources */,
+				630CE1622ADD62AD001EC547 /* DataManager.swift in Sources */,
 				D1E0187E2ADCEE0000D1C53D /* EmptyCell.swift in Sources */,
+				630CE14D2ADD5C8A001EC547 /* User.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
+				2782A4B82AEA46BB00B110F9 /* BottomSheetView.swift in Sources */,
 				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
 				07997FF72AD843A5002ACFCB /* UserRootViewController.swift in Sources */,
 				D1E0187C2ADCEE0000D1C53D /* LabelCell.swift in Sources */,
 				07997FF92AD843BD002ACFCB /* UserRootModel.swift in Sources */,
+				2782A4BE2AEB88E500B110F9 /* CustomButton.swift in Sources */,
+				27E24B802ADF8A790031122F /* UserRegisterViewIDPWController.swift in Sources */,
+				D15C22302AE50F7D002C4213 /* Protocol_Delegate.swift in Sources */,
 				D1E018832ADCEEED00D1C53D /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -768,13 +939,14 @@
 		2730BBCC2AD6668400BFA23C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon 1";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GYMGLE/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "앱이 카메라에 접근해도 되겠습니까?";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -784,7 +956,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "DoubleK-JP-Management.GYMGLE";
+				PRODUCT_BUNDLE_IDENTIFIER = "Double-KKJP.GYMGLE";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -795,13 +967,14 @@
 		2730BBCD2AD6668400BFA23C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon 1";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GYMGLE/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "앱이 카메라에 접근해도 되겠습니까?";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -811,7 +984,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "DoubleK-JP-Management.GYMGLE";
+				PRODUCT_BUNDLE_IDENTIFIER = "Double-KKJP.GYMGLE";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -930,6 +1103,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		D1635A452AE0F9CD00CDEF11 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

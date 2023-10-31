@@ -14,16 +14,15 @@ class TextFieldCell:UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super .init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        textField.delegate = self
-                
+                        
         textField.textColor = ColorGuide.textHint
         textField.font = FontGuide.size14Bold
         
         textField.backgroundColor = .clear
+        textField.delegate = self
         
         self.layer.frame.size.width = 344.5
-//        self.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
+        self.backgroundColor = .clear
         self.contentView.clipsToBounds = true
         
         makeUI()
@@ -31,7 +30,6 @@ class TextFieldCell:UITableViewCell {
         self.contentView.addSubview(placeHolderLabel)
         self.contentView.addSubview(textField)
         
-//        placeHolderLabel.backgroundColor = .blue
         
         placeHolderLabel.snp.makeConstraints{
             $0.left.equalToSuperview()
@@ -73,26 +71,33 @@ class TextFieldCell:UITableViewCell {
 extension TextFieldCell: UITextFieldDelegate{
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("테스트 - 수정시작됨")
-        self.placeHolderLabel.font = UIFont.systemFont(ofSize: 10)
-//        self.placeHolderLabel.backgroundColor = .red
-        self.placeHolderLabel.snp.makeConstraints{
-            $0.top.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(30)
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut) {
+            self.placeHolderLabel.transform = CGAffineTransform(translationX: 0, y: -16)
+            self.placeHolderLabel.font = UIFont.systemFont(ofSize: 10)
         }
+        
+        
+
+//        self.placeHolderLabel.snp.makeConstraints{
+//            $0.top.equalToSuperview()
+//            $0.bottom.equalToSuperview().inset(30)
+//        }
         
         
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         print("테스트 - 수정끝")
-        self.placeHolderLabel.font = UIFont.systemFont(ofSize: 10)
-//        self.placeHolderLabel.backgroundColor = .blue
-        self.placeHolderLabel.snp.makeConstraints{
-            $0.left.equalToSuperview()
-            $0.top.bottom.equalToSuperview().inset(10)
+        if self.textField.text == "" {
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut) {
+                self.placeHolderLabel.transform = CGAffineTransform(translationX: 0, y: 0)
+                self.placeHolderLabel.font = FontGuide.size14Bold
+            }
         }
-
     }
-    
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        print("테스트 - 텍스트필드 수정중...")
+        return true
+    }
 }

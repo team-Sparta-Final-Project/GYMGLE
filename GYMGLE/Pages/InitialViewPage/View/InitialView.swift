@@ -16,16 +16,23 @@ class InitialView: UIView {
         $0.text = "로그인"
     }
     
-    private lazy var idTextField = UITextField().then {
+    lazy var idTextField = UITextField().then {
         $0.borderStyle = .roundedRect
         $0.placeholder = "아이디"
+        $0.autocapitalizationType = .none // 자동으로 맨 앞을 대문자로 할건지
+        $0.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
+        $0.spellCheckingType = .no
         $0.font = FontGuide.size14
     }
     
-    private lazy var passwordTextField = UITextField().then {
+    lazy var passwordTextField = UITextField().then {
         $0.borderStyle = .roundedRect
         $0.placeholder = "비밀번호"
+        $0.autocapitalizationType = .none // 자동으로 맨 앞을 대문자로 할건지
+        $0.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
+        $0.spellCheckingType = .no
         $0.font = FontGuide.size14
+        $0.isSecureTextEntry = true
     }
     
     lazy var loginButton: UIButton = UIButton.GYMGLEButtonPreset("로그인")
@@ -38,7 +45,7 @@ class InitialView: UIView {
     
     override init(frame: CGRect) {
         super .init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = ColorGuide.background
         
         addSubviews(imageView, loginLabel, idTextField, passwordTextField, loginButton, adminButton)
         

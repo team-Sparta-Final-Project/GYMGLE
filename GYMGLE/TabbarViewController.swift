@@ -8,32 +8,41 @@
 import UIKit
 
 final class TabbarViewController: UITabBarController {
+    
+    var user: User?
+    var gymInfo: GymInfo?
+    
     enum TabBarMenu: Int {
         case userRootVC = 0
         case initialVC
         case userRootVC2
         case initialVC2
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setTabControllers()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setTabControllers()
         self.delegate = self
     }
     
     func setTabControllers() {
         let userRootVC = UserRootViewController()
-        let naviUserRootVC = UINavigationController(rootViewController: userRootVC)
+//        userRootVC.user = user
+//        userRootVC.gymInfo = gymInfo
         
-        let initialVC = InitialViewController()
-        let naviInitialVC = UINavigationController(rootViewController: initialVC)
+        let communnityVC = UserCommunityViewController()
         
-        let userRootVC2 = UserRootViewController()
-        let naviUserRootVC2 = UINavigationController(rootViewController: userRootVC2)
+        let qrCodeVC = QrCodeViewController()
         
-        let initialVC2 = InitialViewController()
-        let naviInitialVC2 = UINavigationController(rootViewController: initialVC2)
+        let myVC = UserMyPageViewController()
         
-        let controllers = [naviUserRootVC, naviInitialVC, naviUserRootVC2, naviInitialVC2]
+
+        let controllers = [userRootVC, communnityVC, qrCodeVC, myVC]
+
         self.viewControllers = controllers
         
         self.tabBar.layer.borderWidth = 1
@@ -51,7 +60,7 @@ final class TabbarViewController: UITabBarController {
         self.tabBar.items![1].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         self.tabBar.items![1].image = UIImage(systemName: "doc")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.textHint)
         self.tabBar.items![1].selectedImage = UIImage(systemName: "doc.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.main)
-        self.tabBar.items![1].title = "공지사항"
+        self.tabBar.items![1].title = "커뮤니티"
         
        
         self.tabBar.items![2].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)

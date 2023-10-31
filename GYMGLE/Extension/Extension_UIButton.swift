@@ -44,7 +44,7 @@ extension UIButton {
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    //그림자 있는 이미지버튼
+    //그림자가 있는 이미지버튼
     func shadowButtonImageMakeUI(image: String, color: UIColor, backgroundColor: UIColor, cornerRadius: CGFloat, shadowColor: CGColor, shadowOpacity: Float, shadowRadius: CGFloat) {
         self.backgroundColor = backgroundColor
         self.setImage(UIImage(systemName: "\(image)"), for: .normal) //선택 x
@@ -69,6 +69,13 @@ extension UIButton {
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     
+    func buttonImageMakeUI(image: String, color: UIColor) {
+        self.setImage(UIImage(systemName: "\(image)")?.resized(to: CGSize(width: 28, height: 28)).withRenderingMode(.alwaysTemplate), for: .normal) //선택 x
+        self.tintColor = color // 아이콘 색상
+
+        self.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
     static func GYMGLEWhiteButtonPreset(_ title:String) -> UIButton{
         // 짐블 흰색 색 버튼 생성 메서드
         lazy var button = UIButton().then {
@@ -78,3 +85,4 @@ extension UIButton {
         return button
     }
 }
+
