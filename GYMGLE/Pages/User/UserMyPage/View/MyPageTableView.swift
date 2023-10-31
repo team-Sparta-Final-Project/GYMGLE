@@ -78,6 +78,7 @@ extension MyPageTableView: UITableViewDataSource {
 
             
             cell.addSubviews(imageView)
+            cell.arrowImageView.isHidden = true
             
             imageView.snp.makeConstraints {
                 $0.left.equalToSuperview().offset(20)

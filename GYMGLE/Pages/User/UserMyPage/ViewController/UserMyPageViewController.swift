@@ -56,7 +56,15 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
             break
         case 3:
             // 탈퇴하기
-            deleteAccount()
+            let alert = UIAlertController(title: "탈퇴하기",
+                                          message: "정말로 탈퇴하시겠습니까?",
+                                          preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                self.deleteAccount()
+            }))
+            alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+            present(alert, animated: true, completion: nil)
             break
         default:
             break
