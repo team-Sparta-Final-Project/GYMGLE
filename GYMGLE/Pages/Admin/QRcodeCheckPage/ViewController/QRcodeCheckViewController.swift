@@ -7,7 +7,7 @@
 
 import UIKit
 import AVFoundation
-import QRCodeReader
+//import QRCodeReader
 import FirebaseDatabase
 import FirebaseAuth
 
@@ -30,7 +30,7 @@ private extension QRcodeCheckViewController {
     
     func qrCodeSetting() {
         // 캡처 방식 (video, 전면카메라)
-        guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else { fatalError("No video device found") }
+        guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) else { fatalError("No video device found") }
         do {
             // 제한하고 싶은 영역
             let rectOfInterest = CGRect(x: (UIScreen.main.bounds.width - 200) / 2 , y: (UIScreen.main.bounds.height - 200) / 2, width: 200, height: 200)
