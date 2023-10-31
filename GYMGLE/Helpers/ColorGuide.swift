@@ -30,4 +30,5 @@ public enum ColorGuide {
     static let white = UIColor(red: 1, green: 1, blue: 1, alpha: 1.00) // 하얀색
     static let goldTier = UIColor(red: 0.255, green: 0.237, blue: 0.78, alpha: 1.00) // 골드 티어
     static let background = UIColor(red: 0.965, green: 0.953, blue: 0.953, alpha: 1.00)
+    static let profileBackground = UIColor(red: 0.86, green: 0.33, blue: 0.28, alpha: 1.00)
 }
