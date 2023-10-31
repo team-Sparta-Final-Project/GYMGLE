@@ -25,7 +25,6 @@ final class QrCodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configuredView()
-        view.backgroundColor = ColorGuide.userBackGround
     }
 }
 

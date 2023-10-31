@@ -13,9 +13,9 @@ import Then
 class QrCodeView: UIView {
     
     private lazy var qrViewPlace = UIView().then {
-        $0.backgroundColor = ColorGuide.white
+        $0.backgroundColor = ColorGuide.userBackGround
         $0.layer.cornerRadius = 20
-        $0.layer.shadowColor = ColorGuide.main.cgColor
+        $0.layer.shadowColor = ColorGuide.userBackGround.cgColor
         $0.layer.shadowOpacity = 1
         $0.layer.shadowRadius = 4
         $0.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -41,7 +41,6 @@ class QrCodeView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
-        self.backgroundColor = ColorGuide.userBackGround
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
