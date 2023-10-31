@@ -5,10 +5,12 @@ import FirebaseDatabase
 
 class UserRegisterViewIDPWController: UIViewController {
     
-    var pageTitle = ""
     let buttonTitle = "회원가입"
     
     let cells = ["회원 이메일","회원 비밀번호"]
+    
+    var idCell:TextFieldCell = TextFieldCell()
+    var pwCell:TextFieldCell = TextFieldCell()
     
     var needIdPwUser:User?
     
@@ -23,7 +25,6 @@ class UserRegisterViewIDPWController: UIViewController {
         heightConfigure(height: 45, empty: 24)
         
         viewConfigure.textView.isHidden = true
-        viewConfigure.label.text = pageTitle
         viewConfigure.button.setTitle(buttonTitle, for: .normal)
         
         view = viewConfigure
@@ -43,17 +44,8 @@ class UserRegisterViewIDPWController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
-        let idField = idCell?.contentView.subviews[1] as? UITextField
-        let pwCell = self.viewConfigure.tableView.subviews[0] as? UITableViewCell
-        let pwField = pwCell?.contentView.subviews[1] as? UITextField
-        
-        idField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
-        pwField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
-        
-//        let verifyButton = idCell?.contentView.subviews[2] as? UIButton
-//        //        verifyButton?.addTarget(self, action: #selector(idVerification), for: .touchUpInside)
-        
+        idCell.textField.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
+        pwCell.textField.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         viewConfigure.endEditing(true)
@@ -93,15 +85,8 @@ class UserRegisterViewIDPWController: UIViewController {
     
     
     @objc private func didChangeText(){
-        let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
-        let idTextField = idCell?.contentView.subviews[1] as? UITextField
-        guard let idText = idTextField?.text else { return }
-        let pwCell = self.viewConfigure.tableView.subviews[0] as? UITableViewCell
-        let pwField = pwCell?.contentView.subviews[1] as? UITextField
-        guard let pwText = pwField?.text else { return }
-        
         // TODO: 중복확인하고 비밀번호가 달라지면 다시 버튼이 비활성화 됨 : 아이디 중복확인하고 비밀번호 바꿔도 버튼 활성화되게 고칠것
-        if idText != "" && pwText != ""{
+        if idCell.textField.text != "" && pwCell.textField.text != ""{
             isCellEmpty = false
         }else{
             isCellEmpty = true
@@ -128,12 +113,8 @@ extension UserRegisterViewIDPWController {
     // 일단 유저만 가입 (accountType: 2)
     // 트레이너는 따로 버튼을 만드는 것도 고려해볼만?
     func createUser() {
-        let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
-        let idTextField = idCell?.contentView.subviews[1] as? UITextField
-        guard let id = idTextField?.text else { return }
-        let pwCell = self.viewConfigure.tableView.subviews[0] as? UITableViewCell
-        let pwField = pwCell?.contentView.subviews[1] as? UITextField
-        guard let pw = pwField?.text else { return }
+        guard let id = idCell.textField.text else { return }
+        guard let pw = pwCell.textField.text else { return }
         
         var user = needIdPwUser
         user?.account.id = id
@@ -206,6 +187,14 @@ extension UserRegisterViewIDPWController {
 
 //UserRegisterViewIDPWController
 extension UserRegisterViewIDPWController: UserTableViewDelegate {
+    func textFieldTarget(cell: TextFieldCell) {
+        if cell.placeHolderLabel.text == "회원 이메일" {
+            idCell = cell
+        }else if cell.placeHolderLabel.text == "회원 비밀번호"{
+            pwCell = cell
+        }
+    }
+    
     func dateButtonTarget(cell: LabelCell, text: String) {
         
     }

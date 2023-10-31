@@ -4,7 +4,6 @@ import FirebaseDatabase
 
 final class UserRegisterViewController: UIViewController {
     
-    var pageTitle = ""
     let buttonTitle = "다음"
     
     let cells = ["이름","전화번호","등록일","마감일","추가 정보"]
@@ -16,6 +15,8 @@ final class UserRegisterViewController: UIViewController {
     var nowEdit = false
     var editIndex = 0
     
+    var nameCell:TextFieldCell = TextFieldCell()
+    var phoneCell:TextFieldCell = TextFieldCell()
     var startCell:LabelCell = LabelCell()
     var endCell:LabelCell = LabelCell()
     
@@ -30,7 +31,6 @@ final class UserRegisterViewController: UIViewController {
         //셀높이설정
         heightConfigure(height: 45, empty: 24)
 
-        viewConfigure.label.text = pageTitle
         viewConfigure.button.setTitle(buttonTitle, for: .normal)
         
         viewConfigure.tableView.myDelegate = self
@@ -49,24 +49,16 @@ final class UserRegisterViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(endEdit))
         self.viewConfigure.addGestureRecognizer(tap)
         
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = false
         setCustomBackButton()
-        navigationController?.navigationItem.title = ""
     }
     
-    override func viewDidAppear(_ animated: Bool) {        
-        let nameCell = self.viewConfigure.tableView.subviews[8] as? UITableViewCell
-        let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
-        let phoneCell = self.viewConfigure.tableView.subviews[6] as? UITableViewCell
-        let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
-        
-        nameTextField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
-        phoneTextField?.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
+    override func viewDidAppear(_ animated: Bool) {
+        nameCell.textField.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
+        phoneCell.textField.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
         
         editingOn()
     }
@@ -81,26 +73,17 @@ private extension UserRegisterViewController {
     
     func editingOn(){
         if self.nowEdit {
-            let nameCell = self.viewConfigure.tableView.subviews[8] as? UITableViewCell
-            let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
-            nameTextField?.text = emptyUser.name
-            let phoneCell = self.viewConfigure.tableView.subviews[6] as? UITableViewCell
-            let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
-            phoneTextField?.text = emptyUser.number
+            nameCell.textField.text = emptyUser.name
+            phoneCell.textField.text = emptyUser.number
+            nameCell.placeHolderLabel.font = UIFont.systemFont(ofSize: 10)
+            phoneCell.placeHolderLabel.font = UIFont.systemFont(ofSize: 10)
             
-            let nameHolder = (nameCell?.contentView.subviews[0] as? UILabel)!
-            let phoneHolder = (phoneCell?.contentView.subviews[0] as? UILabel)!
-            
-            phoneHolder.font = UIFont.systemFont(ofSize: 10)
-            nameHolder.font = UIFont.systemFont(ofSize: 10)
-
             UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut) {
-                phoneHolder.transform = CGAffineTransform(translationX: 0, y: -16)
-                nameHolder.transform = CGAffineTransform(translationX: 0, y: -16)
+                self.nameCell.placeHolderLabel.transform = CGAffineTransform(translationX: 0, y: -16)
+                self.phoneCell.placeHolderLabel.transform = CGAffineTransform(translationX: 0, y: -16)
             }
             
             startCell.label.text = "등록일 : " + emptyUser.startSubscriptionDate.formatted(date:.complete, time: .omitted)
-
             endCell.label.text = "등록일 : " + emptyUser.endSubscriptionDate.formatted(date:.complete, time: .omitted)
             
             self.viewConfigure.textView.text = emptyUser.userInfo
@@ -130,17 +113,11 @@ private extension UserRegisterViewController {
             showToast(message: "작성 안된 곳이 있습니다.")
         }
         else {
-            let nameCell = self.viewConfigure.tableView.subviews[8] as? UITableViewCell
-            let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
-            guard let nameText = nameTextField?.text else { return }
-            let phoneCell = self.viewConfigure.tableView.subviews[6] as? UITableViewCell
-            let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
-            guard let phoneText = phoneTextField?.text else { return }
-            
+
             let info = self.viewConfigure.textView.text
             if nowEdit {
-                emptyUser.name = nameText
-                emptyUser.number = phoneText
+                emptyUser.name = nameCell.textField.text ?? ""
+                emptyUser.number = phoneCell.textField.text ?? ""
                 emptyUser.startSubscriptionDate = startDate
                 emptyUser.endSubscriptionDate = endDate
                 emptyUser.userInfo = info ?? "정보없음"
@@ -168,15 +145,14 @@ private extension UserRegisterViewController {
                 let IdPwVC = UserRegisterViewIDPWController()
                 IdPwVC.viewConfigure.segmented.isHidden = true
                 
-                emptyUser.name = nameText
-                emptyUser.number = phoneText
+                emptyUser.name = nameCell.textField.text ?? ""
+                emptyUser.number = phoneCell.textField.text ?? ""
                 emptyUser.startSubscriptionDate = startDate
                 emptyUser.endSubscriptionDate = Date().addingTimeInterval(60*60*24*365)
                 emptyUser.userInfo = info ?? "정보없음"
                 
                 if viewConfigure.textView.isHidden {
                     emptyUser.account.accountType = 1 
-                    IdPwVC.pageTitle = "트레이너 등록"
                 }
                 IdPwVC.needIdPwUser = emptyUser
                 navigationController?.pushViewController(IdPwVC, animated: true)
@@ -192,14 +168,7 @@ private extension UserRegisterViewController {
 
 extension UserRegisterViewController {
     @objc private func didChangeText(){
-        let nameCell = self.viewConfigure.tableView.subviews[8] as? UITableViewCell
-        let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
-        guard let nameText = nameTextField?.text else { return }
-        let phoneCell = self.viewConfigure.tableView.subviews[6] as? UITableViewCell
-        let phoneTextField = phoneCell?.contentView.subviews[1] as? UITextField
-        guard let phoneText = phoneTextField?.text else { return }
-        
-        if nameText != "" && phoneText.count >= 11{
+        if nameCell.textField.text != "" && phoneCell.textField.text?.count ?? 0 >= 11{
             self.viewConfigure.button.backgroundColor = ColorGuide.main
             isCellEmpty = false
         }else{
@@ -258,6 +227,14 @@ extension UserRegisterViewController: BottomSheetControllerDelegate {
 }
 
 extension UserRegisterViewController: UserTableViewDelegate {
+    func textFieldTarget(cell: TextFieldCell) {
+        if cell.placeHolderLabel.text == "이름" {
+            nameCell = cell
+        }else if cell.placeHolderLabel.text == "전화번호"{
+            phoneCell = cell
+        }
+    }
+    
     func dateButtonTarget(cell: LabelCell, text:String) {
         if text == "등록일" {
             startCell = cell

@@ -2,7 +2,6 @@ import UIKit
 
 class UserRegisterView: UIView {
     //MARK: - UI 컴포넌트 선언부
-    lazy var label = UILabel()
     lazy var tableView = UserTableView()
     lazy var button:UIButton = UIButton.GYMGLEButtonPreset("버튼 타이틀")
     lazy var textView = UITextView()
@@ -23,7 +22,6 @@ class UserRegisterView: UIView {
     private func configure(){
         self.backgroundColor = ColorGuide.background
         
-//        topLabel()
         bottomButton()
         centerTableView()
         addTextView()
@@ -31,11 +29,6 @@ class UserRegisterView: UIView {
         segmentedConfigure()
         
         
-    }
-    //MARK: - 테이블뷰 configure
-    func heightConfigure(cellHeight:Int, emptyCellHeight:Int){
-        tableView.cellHeight = cellHeight
-        tableView.emptyCellHeight = emptyCellHeight
     }
     //MARK: - 세그먼티드 컨트롤
     
@@ -58,20 +51,6 @@ class UserRegisterView: UIView {
     
     
     
-    //MARK: - 탑레이블
-    private func topLabel(){
-        
-        label.text = "페이지 타이틀 레이블"
-        label.font = FontGuide.customFont(size: 32, lineHeight: 40, isBold: true)
-        
-        self.addSubview(label)
-        
-        label.snp.makeConstraints{
-            $0.top.equalToSuperview().inset(88)
-            $0.left.equalToSuperview().inset(22)
-            $0.height.equalTo(34)
-        }
-    }
     //MARK: - 센터 테이블 뷰
     private func centerTableView(){
         

@@ -4,6 +4,7 @@ protocol UserTableViewDelegate {
     func cellTypeConfigure(cell:[String],labelOrder:[String],buttonText:[String])
     func heightConfigure(height:Int,empty:Int)
     func dateButtonTarget(cell:LabelCell,text:String)
+    func textFieldTarget(cell:TextFieldCell)
 }
 
 class UserTableView: UITableView {
@@ -78,6 +79,8 @@ extension UserTableView: UITableViewDataSource {
             let cell = TextFieldCell()
             cell.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
             cell.placeHolderLabel.text = cellData[indexPath.row]
+            
+            myDelegate?.textFieldTarget(cell: cell)
             return cell
         }
     }
