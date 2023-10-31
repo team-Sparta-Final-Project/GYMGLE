@@ -41,7 +41,9 @@ final class TabbarViewController: UITabBarController {
         let myVC = UserMyPageViewController()
         
 
-        let controllers = [userRootVC, communnityVC, qrCodeVC, myVC]
+//        let controllers = [userRootVC, communnityVC, qrCodeVC, myVC]
+          let controllers = [userRootVC, qrCodeVC, myVC]
+
 
         self.viewControllers = controllers
         
@@ -57,22 +59,22 @@ final class TabbarViewController: UITabBarController {
         self.tabBar.items![0].title = "홈"
         
         
+//        self.tabBar.items![1].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
+//        self.tabBar.items![1].image = UIImage(systemName: "doc")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.textHint)
+//        self.tabBar.items![1].selectedImage = UIImage(systemName: "doc.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.main)
+//        self.tabBar.items![1].title = "커뮤니티"
+        
+       
         self.tabBar.items![1].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
-        self.tabBar.items![1].image = UIImage(systemName: "doc")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.textHint)
-        self.tabBar.items![1].selectedImage = UIImage(systemName: "doc.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.main)
-        self.tabBar.items![1].title = "커뮤니티"
+        self.tabBar.items![1].image = UIImage(systemName: "qrcode")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.textHint)
+        self.tabBar.items![1].selectedImage = UIImage(systemName: "qrcode")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.main)
+        self.tabBar.items![1].title = "QR코드"
         
        
         self.tabBar.items![2].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
-        self.tabBar.items![2].image = UIImage(systemName: "qrcode")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.textHint)
-        self.tabBar.items![2].selectedImage = UIImage(systemName: "qrcode")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.main)
-        self.tabBar.items![2].title = "QR코드"
-        
-       
-        self.tabBar.items![3].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
-        self.tabBar.items![3].image = UIImage(systemName: "person.crop.circle")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.textHint)
-        self.tabBar.items![3].selectedImage = UIImage(systemName: "person.crop.circle.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.main)
-        self.tabBar.items![3].title = "마이페이지"
+        self.tabBar.items![2].image = UIImage(systemName: "person.crop.circle")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.textHint)
+        self.tabBar.items![2].selectedImage = UIImage(systemName: "person.crop.circle.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.main)
+        self.tabBar.items![2].title = "마이페이지"
     }
 }
 
