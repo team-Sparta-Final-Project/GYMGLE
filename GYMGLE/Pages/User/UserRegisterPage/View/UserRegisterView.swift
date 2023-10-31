@@ -37,18 +37,6 @@ class UserRegisterView: UIView {
         tableView.cellHeight = cellHeight
         tableView.emptyCellHeight = emptyCellHeight
     }
-    
-    func dataSourceConfigure(cells:[String],labels:[String],buttons:[String],buttonText:[String]){
-        
-        let maped = cells.map{ [$0] }
-        let joined = Array(maped.joined(separator: [""]))
-        
-        tableView.cellData = joined
-        tableView.labelCellData = labels
-        tableView.buttonCellData = buttons
-        tableView.buttonText = buttonText
-    }
-    
     //MARK: - 세그먼티드 컨트롤
     
     private func segmentedConfigure(){

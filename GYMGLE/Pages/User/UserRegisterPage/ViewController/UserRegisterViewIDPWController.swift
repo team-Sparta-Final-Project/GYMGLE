@@ -9,14 +9,8 @@ class UserRegisterViewIDPWController: UIViewController {
     let buttonTitle = "회원가입"
     
     let cells = ["회원 이메일","회원 비밀번호"]
-    let labelCells = [""]
-    let buttonCells = [""]
-    let buttonText = [""]
     
     var needIdPwUser:User?
-    
-    let cellHeight = 45
-    let emptyCellHeight = 24
     
     let viewConfigure = UserRegisterView()
     
@@ -24,14 +18,11 @@ class UserRegisterViewIDPWController: UIViewController {
     private var isNotVerified = true
     
     override func loadView() {
+        cellTypeConfigure(cell: cells,labelOrder: [],buttonText: [])
+        // 높이설정
+        heightConfigure(height: 45, empty: 24)
+        
         viewConfigure.textView.isHidden = true
-        viewConfigure.heightConfigure(cellHeight: cellHeight, emptyCellHeight: emptyCellHeight)
-        viewConfigure.dataSourceConfigure(
-            cells: cells,
-            labels: labelCells,
-            buttons: buttonCells,
-            buttonText: buttonText
-        )
         viewConfigure.label.text = pageTitle
         viewConfigure.button.setTitle(buttonTitle, for: .normal)
         
@@ -40,6 +31,7 @@ class UserRegisterViewIDPWController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.viewConfigure.tableView.myDelegate = self
         self.viewConfigure.button.backgroundColor = .lightGray
         viewConfigure.button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         
@@ -99,35 +91,6 @@ class UserRegisterViewIDPWController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
     }
     
-    //    @objc func idVerification(){
-    //        let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
-    //        let idTextField = idCell?.contentView.subviews[1] as? UITextField
-    //        guard let idText = idTextField?.text else { return }
-    //
-    //        let idList = DataManager.shared.gymInfo.gymUserList.map{
-    //            $0.account.id
-    //        }
-    //        if idList.contains(idText) {
-    //            isNotVerified = true
-    //            let alert = UIAlertController(title: "중복된 아이디입니다.",
-    //                                          message: "다른 아이디를 입력하여 주시옵소서",
-    //                                          preferredStyle: .alert)
-    //            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-    //            present(alert, animated: true, completion: nil)
-    //        }else{
-    //            isNotVerified = false
-    //            let alert = UIAlertController(title: "사용가능한 아이디 입니다.",
-    //                                          message: "확인 버튼을 눌러주세요.",
-    //                                          preferredStyle: .alert)
-    //            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-    //            present(alert, animated: true, completion: nil)
-    //            idTextField?.allowsEditingTextAttributes = false
-    //        }
-    //        buttonOnCheck()
-    //
-    //
-    //        print("테스트 - 버리피케이션")
-    //    }
     
     @objc private func didChangeText(){
         let idCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
@@ -239,4 +202,24 @@ extension UserRegisterViewIDPWController {
             print("Error signing out: %@", signOutError)
         }
     }
+}
+
+//UserRegisterViewIDPWController
+extension UserRegisterViewIDPWController: UserTableViewDelegate {
+    func dateButtonTarget(cell: LabelCell, text: String) {
+        
+    }
+    
+    func heightConfigure(height: Int, empty: Int) {
+        viewConfigure.tableView.cellHeight = height
+        viewConfigure.tableView.emptyCellHeight = empty
+    }
+    
+    func cellTypeConfigure(cell: [String], labelOrder: [String], buttonText: [String]) {
+        let maped = cell.map{ [$0] }
+        let joined = Array(maped.joined(separator: [""]))
+        viewConfigure.tableView.cellData = joined
+        
+    }
+    
 }

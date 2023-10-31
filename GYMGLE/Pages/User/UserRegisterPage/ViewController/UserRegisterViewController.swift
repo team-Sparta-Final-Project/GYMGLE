@@ -7,9 +7,8 @@ final class UserRegisterViewController: UIViewController {
     var pageTitle = ""
     let buttonTitle = "다음"
     
-    let cells = ["이름","전화번호","등록일","등록 기간","추가 정보"]
-    let labelCells = ["등록일","등록 기간", "추가 정보"]
-    let buttonCells = ["등록일","등록 기간","추가 정보"]
+    let cells = ["이름","전화번호","등록일","마감일","추가 정보"]
+    let labelCells = ["등록일","마감일","추가 정보"]
     let buttonText = ["날짜","날짜","성별"]
     
     var emptyUser = User(account: Account(id: "", password: "", accountType: 2), name: "", number: "", startSubscriptionDate: Date(), endSubscriptionDate: Date(), userInfo: "", isInGym: false, adminUid: DataManager.shared.gymUid!)
@@ -17,8 +16,8 @@ final class UserRegisterViewController: UIViewController {
     var nowEdit = false
     var editIndex = 0
     
-    let cellHeight = 45
-    let emptyCellHeight = 24
+    var startCell:LabelCell = LabelCell()
+    var endCell:LabelCell = LabelCell()
     
     private var isCellEmpty = true
     
@@ -27,22 +26,24 @@ final class UserRegisterViewController: UIViewController {
     let viewConfigure = UserRegisterView()
     
     override func loadView() {
-        viewConfigure.heightConfigure(cellHeight: cellHeight, emptyCellHeight: emptyCellHeight)
-        viewConfigure.dataSourceConfigure(
-            cells: cells,
-            labels: labelCells,
-            buttons: buttonCells,
-            buttonText: buttonText
-        )
+        cellTypeConfigure(cell: cells, labelOrder: labelCells, buttonText: buttonText)
+        //셀높이설정
+        heightConfigure(height: 45, empty: 24)
+
         viewConfigure.label.text = pageTitle
         viewConfigure.button.setTitle(buttonTitle, for: .normal)
-        viewConfigure.segmented.addTarget(self, action: #selector(trainerRegister), for: .valueChanged)
+        
+        viewConfigure.tableView.myDelegate = self
+        
         view = viewConfigure
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         self.viewConfigure.button.backgroundColor = .lightGray
+        self.viewConfigure.segmented.addTarget(self, action: #selector(trainerRegister), for: .valueChanged)
         self.viewConfigure.button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(endEdit))
@@ -58,15 +59,7 @@ final class UserRegisterViewController: UIViewController {
         navigationController?.navigationItem.title = ""
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        let startDateCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
-        let startDateButton = startDateCell?.contentView.subviews[1] as? UIButton
-        startDateButton?.addTarget(self, action: #selector(presentBottomSheetSetStartDate), for: .touchUpInside)
-        
-        let endDateCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
-        let endDateButton = endDateCell?.contentView.subviews[1] as? UIButton
-        endDateButton?.addTarget(self, action: #selector(presentBottomSheetSetEndDate), for: .touchUpInside)
-        
+    override func viewDidAppear(_ animated: Bool) {        
         let nameCell = self.viewConfigure.tableView.subviews[8] as? UITableViewCell
         let nameTextField = nameCell?.contentView.subviews[1] as? UITextField
         let phoneCell = self.viewConfigure.tableView.subviews[6] as? UITableViewCell
@@ -106,13 +99,9 @@ private extension UserRegisterViewController {
                 nameHolder.transform = CGAffineTransform(translationX: 0, y: -16)
             }
             
-            let startDateCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
-            let startDateLabel = startDateCell?.contentView.subviews[0] as? UILabel
-            startDateLabel?.text = "등록일 : " + emptyUser.startSubscriptionDate.formatted(date:.complete, time: .omitted)
-            
-            let endDateCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
-            let endDateLabel = endDateCell?.contentView.subviews[0] as? UILabel
-            endDateLabel?.text = "등록마감일 : " + emptyUser.endSubscriptionDate.formatted(date:.complete, time: .omitted)
+            startCell.label.text = "등록일 : " + emptyUser.startSubscriptionDate.formatted(date:.complete, time: .omitted)
+
+            endCell.label.text = "등록일 : " + emptyUser.endSubscriptionDate.formatted(date:.complete, time: .omitted)
             
             self.viewConfigure.textView.text = emptyUser.userInfo
         }
@@ -175,8 +164,6 @@ private extension UserRegisterViewController {
                     print("JSON 인코딩 에러")
                     completion()
                 }
-                let ref = Database.database().reference()
-                //                DataManager.shared.realGymInfo!.gymUserList[editIndex] = emptyUser
             } else {
                 let IdPwVC = UserRegisterViewIDPWController()
                 IdPwVC.viewConfigure.segmented.isHidden = true
@@ -245,21 +232,7 @@ extension UserRegisterViewController {
     
     
     @objc private func trainerRegister(){
-        
-//        if viewConfigure.textView.isHidden {
-//            viewConfigure.label.text = "회원 등록"
-//        }else {
-//            viewConfigure.label.text = "트레이너 등록"
-//        }
         viewConfigure.textView.isHidden.toggle()
-        
-        
-//        let startDateCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
-//        startDateCell?.isHidden.toggle()
-//        let endDateCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
-//        endDateCell?.isHidden.toggle()
-//        let additionalCell = self.viewConfigure.tableView.subviews[0] as? UITableViewCell
-//        additionalCell?.isHidden.toggle()
         
     }
     @objc private func buttonClicked(){
@@ -274,18 +247,38 @@ extension UserRegisterViewController {
 extension UserRegisterViewController: BottomSheetControllerDelegate {
     func didClickDoneButton(date: Date, isOnlyDate: Bool) {
         if isOnlyDate {
-            let startDateCell = self.viewConfigure.tableView.subviews[4] as? UITableViewCell
-            let startDateLabel = startDateCell?.contentView.subviews[0] as? UILabel
-            startDateLabel?.text = "등록일 : " + date.formatted(date:.complete, time: .omitted)
-            
+            startCell.label.text = "등록일 : " + date.formatted(date:.complete, time: .omitted)
             self.startDate = date
         } else {
-            let endDateCell = self.viewConfigure.tableView.subviews[2] as? UITableViewCell
-            let endDateLabel = endDateCell?.contentView.subviews[0] as? UILabel
-            endDateLabel?.text = "등록 기간 : " + date.formatted(date:.complete, time: .omitted)
-            
+            endCell.label.text = "등록 기간 : " + date.formatted(date:.complete, time: .omitted)
             self.endDate = date
         }
     }
     
+}
+
+extension UserRegisterViewController: UserTableViewDelegate {
+    func dateButtonTarget(cell: LabelCell, text:String) {
+        if text == "등록일" {
+            startCell = cell
+            cell.CheckButton.addTarget(self, action: #selector(presentBottomSheetSetStartDate), for: .touchUpInside)
+        }else if text == "마감일" {
+            endCell = cell
+            cell.CheckButton.addTarget(self, action: #selector(presentBottomSheetSetEndDate), for: .touchUpInside)
+        }
+        
+    }
+        
+    func heightConfigure(height: Int, empty: Int) {
+        viewConfigure.tableView.cellHeight = height
+        viewConfigure.tableView.emptyCellHeight = empty
+    }
+    
+    func cellTypeConfigure(cell: [String], labelOrder: [String], buttonText: [String]) {
+        let maped = cell.map{ [$0] }
+        let joined = Array(maped.joined(separator: [""]))
+        viewConfigure.tableView.cellData = joined
+        viewConfigure.tableView.labelCellData = labelOrder
+        viewConfigure.tableView.buttonText = buttonText
+    }
 }
