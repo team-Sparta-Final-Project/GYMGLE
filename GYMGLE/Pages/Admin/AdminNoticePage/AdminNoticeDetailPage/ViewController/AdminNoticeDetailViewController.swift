@@ -40,7 +40,7 @@ final class AdminNoticeDetailViewController: UIViewController {
 // MARK: - extension custom func
 private extension AdminNoticeDetailViewController {
     func viewConfigure() {
-
+        
         viewSetting()
         adminNoticeDetailView.contentTextView.delegate = self
         registerForKeyboardNotifications()
@@ -48,7 +48,7 @@ private extension AdminNoticeDetailViewController {
     }
     func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     func viewSetting() {
@@ -164,14 +164,7 @@ private extension AdminNoticeDetailViewController {
                 print(Error)
             }
         }
-//     func textViewIsEmptyAlert() {
-//         let alert = UIAlertController(title: "공지사항이 비었습니다!", message: "", preferredStyle: .alert)
-//         let ok = UIAlertAction(title: "확인", style: .default)
-//         let cancel = UIAlertAction(title: "취소", style: .cancel)
-//         alert.addAction(ok)
-//         alert.addAction(cancel)
-//         self.present(alert, animated: true, completion: nil)
-//     }
+    }
 }
 // MARK: - @objc func
 extension AdminNoticeDetailViewController {
@@ -189,8 +182,8 @@ extension AdminNoticeDetailViewController {
     @objc private func keyboardWillHide(_ notification: Notification) {
         let realCreateButtonFrame = self.view.frame.size.height - 88 - self.adminNoticeDetailView.createButton.frame.size.height
         var createButtonFrame = adminNoticeDetailView.createButton.frame
-            createButtonFrame.origin.y = realCreateButtonFrame
-            self.adminNoticeDetailView.createButton.frame = createButtonFrame
+        createButtonFrame.origin.y = realCreateButtonFrame
+        self.adminNoticeDetailView.createButton.frame = createButtonFrame
         
     }
     @objc private func createButtonTapped() {
@@ -205,6 +198,7 @@ extension AdminNoticeDetailViewController {
         
     }
 }
+
 
 // MARK: - UITextViewDelegate
 extension AdminNoticeDetailViewController: UITextViewDelegate {
@@ -234,3 +228,4 @@ extension AdminNoticeDetailViewController: UITextViewDelegate {
         }
     }
 }
+
