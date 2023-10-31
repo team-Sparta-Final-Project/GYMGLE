@@ -30,6 +30,9 @@ final class AdminNoticeDetailView: UIView {
         textView.clipsToBounds = true
         textView.layer.cornerRadius = 30
         textView.textContainerInset = UIEdgeInsets(top: 18, left: 18, bottom: 18, right: 18)
+        textView.autocapitalizationType = .none // 자동으로 맨 앞을 대문자로 할건지
+        textView.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
+        textView.spellCheckingType = .no //스펠링 체크
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()

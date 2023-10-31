@@ -164,7 +164,14 @@ private extension AdminNoticeDetailViewController {
                 print(Error)
             }
         }
-    }
+//     func textViewIsEmptyAlert() {
+//         let alert = UIAlertController(title: "공지사항이 비었습니다!", message: "", preferredStyle: .alert)
+//         let ok = UIAlertAction(title: "확인", style: .default)
+//         let cancel = UIAlertAction(title: "취소", style: .cancel)
+//         alert.addAction(ok)
+//         alert.addAction(cancel)
+//         self.present(alert, animated: true, completion: nil)
+//     }
 }
 // MARK: - @objc func
 extension AdminNoticeDetailViewController {

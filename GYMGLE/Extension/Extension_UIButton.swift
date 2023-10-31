@@ -9,6 +9,7 @@ import UIKit
 
 extension UIButton {
     
+    //텍스트 버튼
     func buttonMakeUI(backgroundColor: UIColor,cornerRadius: CGFloat, borderWidth: CGFloat, borderColor: CGColor, setTitle: String, font: UIFont, setTitleColor:  UIColor) {
         self.backgroundColor = backgroundColor
         self.layer.cornerRadius = cornerRadius
@@ -28,6 +29,8 @@ extension UIButton {
         }
         return button
     }
+    
+    //그림자 있는 텍스트 버튼
     func shadowButtonMakeUI(backgroundColor: UIColor, cornerRadius: CGFloat, shadowColor: CGColor, shadowOpacity: Float, shadowRadius: CGFloat, setTitle: String, font: UIFont, setTitleColor:  UIColor) {
         self.backgroundColor = backgroundColor
         self.setTitle(setTitle, for: .normal)
@@ -69,6 +72,7 @@ extension UIButton {
     func buttonImageMakeUI(image: String, color: UIColor) {
         self.setImage(UIImage(systemName: "\(image)")?.resized(to: CGSize(width: 28, height: 28)).withRenderingMode(.alwaysTemplate), for: .normal) //선택 x
         self.tintColor = color // 아이콘 색상
+
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     
