@@ -9,6 +9,8 @@ import UIKit
 import FirebaseAuth
 import FirebaseCore
 import FirebaseDatabase
+import FirebaseStorage
+import Firebase
 
 final class UserMyProfileViewController: UIViewController {
     
@@ -25,10 +27,19 @@ final class UserMyProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
+        if DataManager.shared.profile?.nickName == nil {
+            let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
+            userMyProfileUpdateVC.modalPresentationStyle = .overCurrentContext
+            present(userMyProfileUpdateVC, animated: true) {
+                self.showToast(message: "프로필을 먼저 설정해주세요.")
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
+        tabBarController?.tabBar.isHidden = true
         self.userMyProfileView.postTableview.reloadData()
     }
     
@@ -40,6 +51,7 @@ private extension UserMyProfileViewController {
   
     func allSetting() {
         buttonTapped()
+        setCustomBackButton()
         userMyProfileView.postTableview.dataSource = self
         userMyProfileView.postTableview.delegate = self
         userMyProfileView.postTableview.register(CommunityCell.self, forCellReuseIdentifier: "CommunityCell")
@@ -50,6 +62,29 @@ private extension UserMyProfileViewController {
         userMyProfileView.updateButton.addTarget(self, action: #selector(updateButtonButtoned), for: .touchUpInside)
         userMyProfileView.banButton.addTarget(self, action: #selector(banButtonButtoned), for: .touchUpInside)
     }
+    
+    func setCustomBackButton() {
+        navigationController?.navigationBar.topItem?.title = "마이페이지"
+        navigationController?.navigationBar.tintColor = .black
+    }
+    func showToast(message: String) {
+        let toastView = ToastView()
+        toastView.configure()
+        toastView.text = message
+        view.addSubview(toastView)
+        toastView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
+            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
+        ])
+        UIView.animate(withDuration: 2.5, delay: 0.2) { //2.5초
+            toastView.alpha = 0
+        } completion: { _ in
+            toastView.removeFromSuperview()
+        }
+    }
 }
 
 // MARK: - extension @objc func
@@ -57,9 +92,8 @@ private extension UserMyProfileViewController {
 extension UserMyProfileViewController {
     
     @objc private func updateButtonButtoned() {
-        print("테스트 - click")
         let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
-        userMyProfileUpdateVC.modalPresentationStyle = .fullScreen
+        userMyProfileUpdateVC.modalPresentationStyle = .overCurrentContext
         present(userMyProfileUpdateVC, animated: true)
     }
     @objc private func banButtonButtoned() {
@@ -82,7 +116,7 @@ extension UserMyProfileViewController {
 extension UserMyProfileViewController: UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0 //❗️
+        return 10 //❗️
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -97,6 +131,7 @@ extension UserMyProfileViewController: UITableViewDataSource  {
 
 extension UserMyProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let boardDetailVC = BoardDetailViewController()
+        navigationController?.pushViewController(boardDetailVC, animated: true)
     }
 }

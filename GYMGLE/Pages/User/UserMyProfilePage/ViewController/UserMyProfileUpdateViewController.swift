@@ -7,6 +7,11 @@
 
 import UIKit
 import PhotosUI
+import FirebaseStorage
+import Firebase
+import FirebaseAuth
+import FirebaseCore
+import FirebaseDatabase
 
 final class UserMyProfileUpdateViewController: UIViewController {
 
@@ -46,6 +51,21 @@ private extension UserMyProfileUpdateViewController {
         userMyprofileUpdateView.imageButton.addTarget(self, action:  #selector(imageButtonTapped), for: .touchUpInside)
         userMyprofileUpdateView.successedButton.addTarget(self, action:  #selector(successedButtonTapped), for: .touchUpInside)
     }
+    
+    func uploadImage(image: UIImage, pathRoot: String, completion: @escaping (URL?) -> Void) {
+        guard let imageData = image.jpegData(compressionQuality: 0.4) else { return }
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpeg"
+        
+        let imageName = UUID().uuidString + String(Date().timeIntervalSince1970)
+        
+        let firebaseReference = Storage.storage().reference().child("\(imageName)")
+        firebaseReference.putData(imageData, metadata: metaData) { metaData, error in
+            firebaseReference.downloadURL { url, _ in
+                completion(url)
+            }
+        }
+    }
 }
 
 // MARK: - extension @objc func
@@ -59,7 +79,13 @@ extension UserMyProfileUpdateViewController {
         setupImagePicker()
     }
     @objc private func successedButtonTapped() {
+        uploadImage(image: userMyprofileUpdateView.profileImageView.image!, pathRoot: DataManager.shared.gymUid!) { url in
+            if let url = url {
+                //DataManager.shared.profile?.image = url
+            }
+        }
         dismiss(animated: true)
+        
     }
 }
 
@@ -96,7 +122,7 @@ extension UserMyProfileUpdateViewController: PHPickerViewControllerDelegate {
             itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
                 if let image = image as? UIImage {
                     DispatchQueue.main.async {
-                        //작성❗️
+                        self.userMyprofileUpdateView.profileImageView.image = image.resized(to: CGSize(width: 100, height: 100))
                     }
                 }
             }

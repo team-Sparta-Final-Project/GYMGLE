@@ -37,10 +37,10 @@ final class UserMyProfileUpdateView: UIView {
         return divider
     }()
     
-    private lazy var profileImageView: UIImageView = {
+    lazy var profileImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(systemName: "person.fill")?.resized(to: CGSize(width: 100, height: 100)).withRenderingMode(.alwaysTemplate)
-        image.contentMode = .scaleAspectFill
+        image.image = UIImage(systemName: "person.fill")?.resized(to: CGSize(width: 100, height: 100))
+        image.contentMode = .scaleAspectFit
         image.clipsToBounds = true
         image.tintColor = ColorGuide.main.withAlphaComponent(0.4)
         image.backgroundColor = ColorGuide.textHint.withAlphaComponent(0.4)

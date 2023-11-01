@@ -46,9 +46,9 @@ extension MyPageTableView: UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.row != 0
-    }
+//    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+//        return indexPath.row != 0
+//    }
     
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
         UIView.animate(withDuration: 0.2) {
@@ -78,7 +78,6 @@ extension MyPageTableView: UITableViewDataSource {
 
             
             cell.addSubviews(imageView)
-            cell.arrowImageView.isHidden = true
             
             imageView.snp.makeConstraints {
                 $0.left.equalToSuperview().offset(20)

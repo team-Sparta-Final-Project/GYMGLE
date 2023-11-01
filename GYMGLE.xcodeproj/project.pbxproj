@@ -70,6 +70,7 @@
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
+		63DF7C2E2AF2663F00B66EFC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 63DF7C2D2AF2663F00B66EFC /* FirebaseStorage */; };
 		63F777CF2AF137C600A3DF2B /* UserMyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F777CE2AF137C600A3DF2B /* UserMyProfileViewController.swift */; };
 		63F777D12AF137EC00A3DF2B /* UserMyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F777D02AF137EC00A3DF2B /* UserMyProfileView.swift */; };
 		63F777D32AF13F0E00A3DF2B /* UserMyProfileUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F777D22AF13F0E00A3DF2B /* UserMyProfileUpdateView.swift */; };
@@ -210,6 +211,7 @@
 				2730BC152AD77C7F00BFA23C /* FirebaseAnalyticsSwift in Frameworks */,
 				2730BBF42AD6B9DC00BFA23C /* QRCode in Frameworks */,
 				2730BBFA2AD6BA1600BFA23C /* Then in Frameworks */,
+				63DF7C2E2AF2663F00B66EFC /* FirebaseStorage in Frameworks */,
 				2730BBF72AD6BA0200BFA23C /* QRCodeReader in Frameworks */,
 				2730BC132AD77C7F00BFA23C /* FirebaseAnalytics in Frameworks */,
 				D1635A462AE0F9CD00CDEF11 /* FirebaseAuth in Frameworks */,
@@ -770,6 +772,7 @@
 				2730BC182AD77C7F00BFA23C /* FirebaseDatabaseSwift */,
 				2730BC1A2AD77C7F00BFA23C /* FirebaseMessaging */,
 				D1635A452AE0F9CD00CDEF11 /* FirebaseAuth */,
+				63DF7C2D2AF2663F00B66EFC /* FirebaseStorage */,
 			);
 			productName = GYMGLE;
 			productReference = 2730BBB42AD6668200BFA23C /* GYMGLE.app */;
@@ -1223,6 +1226,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		63DF7C2D2AF2663F00B66EFC /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 		D1635A452AE0F9CD00CDEF11 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

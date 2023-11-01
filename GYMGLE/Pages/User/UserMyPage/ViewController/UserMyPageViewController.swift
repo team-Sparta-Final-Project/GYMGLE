@@ -26,6 +26,13 @@ class UserMyPageViewController: UIViewController {
         super.viewDidLoad()
         userMyPageView.tableView.myPageDelegate = self
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+        tabBarController?.tabBar.isHidden = false
+    }
+   
 }
 
 // MARK: - Actions
@@ -35,12 +42,15 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
     func didSelectCell(at indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            // 이름을 선택한 경우
+            let userMyProfileVC = UserMyProfileViewController()
+            print("테스트 - ddd")
+            self.navigationController?.pushViewController(userMyProfileVC, animated: true)
             break
         case 1:
             // 공지사항을 선택한 경우
             let adminNoticeVC = AdminNoticeViewController()
             adminNoticeVC.isAdmin = false
+            print("테스트 - ddd")
             let vc = UINavigationController(rootViewController: adminNoticeVC)
             present(vc, animated: true)
 

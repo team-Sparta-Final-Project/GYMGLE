@@ -62,8 +62,6 @@ final class UserMyProfileView: UIView {
     lazy var postTableview: UITableView = {
         let table = UITableView()
         table.backgroundColor = ColorGuide.userBackGround
-        table.layer.borderWidth = 3.0
-        table.layer.borderColor = ColorGuide.main.cgColor
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
