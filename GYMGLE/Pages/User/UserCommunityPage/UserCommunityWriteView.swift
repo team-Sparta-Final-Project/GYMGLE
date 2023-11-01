@@ -23,8 +23,9 @@ class UserCommunityWriteView: UIView {
     }
     private(set) lazy var writePlace = UITextView().then {
         $0.backgroundColor = ColorGuide.white
-        $0.text = "내용을 입력하세요."
-
+        $0.text = ""
+        $0.layer.cornerRadius = 20
+        $0.textContainerInset = .init(top: 20, left: 20, bottom: 0, right: 0)
     }
     private(set) lazy var countNumberLabel = UILabel().then {
         $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .center)

@@ -17,7 +17,6 @@ class UserCommunityViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         first.writePlace.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(writePlaceTap)))
     }
     

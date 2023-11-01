@@ -25,58 +25,35 @@ class UserCommunityView: UIView,UITableViewDelegate {
         $0.isHidden = true
     }
     private(set) lazy var writePlace = UIButton().then {
-        $0.backgroundColor = ColorGuide.white
+        $0.backgroundColor = ColorGuide.main
         $0.setImage(UIImage(systemName: "pencil"), for: .normal)
-        $0.layer.cornerRadius = 16
-        $0.tintColor = ColorGuide.black
-//        let pp = UserCommunityWriteViewController()
+        $0.layer.cornerRadius = 30
+        $0.tintColor = ColorGuide.white
+        $0.layer.shadowColor = ColorGuide.black.cgColor
+        $0.layer.shadowOpacity = 0.25
+        $0.layer.shadowRadius = 4
+        $0.layer.shadowOffset = CGSize(width: 0, height: 2)
     }
-    private lazy var mirrorPlace = UIButton().then {
-        $0.backgroundColor = ColorGuide.white
-        $0.setImage(UIImage(systemName: "circle.grid.2x1.left.filled"), for: .normal)
-        $0.tintColor = ColorGuide.black
-        $0.layer.cornerRadius = 16
-        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(mirrorPlaceTap)))
-    }
-    private lazy var appNoticePlace = UIView().then {
-        $0.backgroundColor = ColorGuide.white
+//    private lazy var mirrorPlace = UIButton().then {
+//        $0.backgroundColor = ColorGuide.white
+//        $0.setImage(UIImage(systemName: "circle.grid.2x1.left.filled"), for: .normal)
+//        $0.tintColor = ColorGuide.black
+//        $0.layer.cornerRadius = 16
+////        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(mirrorPlaceTap)))
+//    }
+    private lazy var appNoticePlace = UISearchBar().then {
         $0.layer.cornerRadius = 20
-        $0.tintColor = .white
-        $0.layer.shadowColor = ColorGuide.main.cgColor
-    }
-    private lazy var appNoticeBell = UIImageView().then {
-        $0.image = UIImage(systemName: "bell.fill")
-        $0.tintColor = ColorGuide.main
-    }
-    private lazy var appNoticeText = UILabel().then {
-        $0.textColor = ColorGuide.black
-        $0.font = FontGuide.size14Bold
-        $0.text = """
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
+        $0.searchTextField.placeholder = "검색"
+        $0.searchTextField.textColor = ColorGuide.textHint
+        $0.searchTextField.clearButtonMode = .whileEditing
+        $0.searchTextField.layer.borderWidth = 0
+        $0.searchTextField.layer.cornerRadius = 10
+        $0.searchTextField.layer.borderColor = ColorGuide.textHint.cgColor
+        $0.searchBarStyle = .minimal
 
-"""
-    }
-    private lazy var myNoticeText = UILabel().then {
-        $0.textColor = ColorGuide.black
-        $0.font = FontGuide.size14Bold
-        $0.text = """
-이번 주 토요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-
-"""
-        $0.isHidden = true
     }
     private(set) lazy var appTableView = UITableView().then {
         $0.backgroundColor = .clear
-//        $0.layer.cornerRadius = 20
-//        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(noticePlaceTapped)))
         $0.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     }
     
@@ -93,47 +70,17 @@ class UserCommunityView: UIView,UITableViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    @objc func writePlaceTap() {
-//        let userCommunityWriteViewController = UserCommunityWriteViewController()
-//
-//        self.present(userCommunityWriteViewController, animated: true)
-//    }
-    
-    @objc func mirrorPlaceTap() {
-//        let com = CommunityCell()
-        print("asdasfa")
-        if mirrorPlace.isSelected == true {
-                print("선택됨")
-            GymgleName.isHidden = false
-            appNoticeText.isHidden = false
-            healthName.isHidden = true
-            myNoticeText.isHidden = true
-//            com.myallView.isHidden = false
-//            com.allView.isHidden = true
-            mirrorPlace.isSelected = false
-        } else if mirrorPlace.isSelected == false{
-            print("선택안됨")
-            GymgleName.isHidden = true
-            appNoticeText.isHidden = true
-            healthName.isHidden = false
-            myNoticeText.isHidden = false
-//            com.myallView.isHidden = true
-//            com.allView.isHidden = false
-            mirrorPlace.isSelected = true
-        }
-    }
-
     func setupUI(){
         self.backgroundColor = ColorGuide.userBackGround
         addSubview(GymgleName)
         addSubview(healthName)
-        addSubview(writePlace)
-        addSubview(mirrorPlace)
+//        addSubview(mirrorPlace)
         addSubview(appNoticePlace)
-        addSubview(appNoticeBell)
-        addSubview(appNoticeText)
-        addSubview(myNoticeText)
         addSubview(appTableView)
+        addSubview(writePlace)
+
+//        writePlace.addSubview(yourTableView)
+//        appTableView.addSubview(yourTableView)
         
         GymgleName.snp.makeConstraints {
             $0.top.equalToSuperview().offset(90)
@@ -144,39 +91,25 @@ class UserCommunityView: UIView,UITableViewDelegate {
             $0.leading.equalToSuperview().offset(20)
         }
         writePlace.snp.makeConstraints {
-            $0.centerY.equalTo(GymgleName.snp.centerY)
+            $0.bottom.equalToSuperview().offset(-122)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.width.equalTo(32)
-            $0.height.equalTo(32)
+            $0.width.equalTo(60)
+            $0.height.equalTo(60)
         }
-        mirrorPlace.snp.makeConstraints {
-            $0.centerY.equalTo(GymgleName.snp.centerY)
-            $0.trailing.equalTo(writePlace.snp.leading).offset(-6)
-            $0.width.equalTo(32)
-            $0.height.equalTo(32)
-        }
+//        mirrorPlace.snp.makeConstraints {
+//            $0.centerY.equalTo(GymgleName.snp.centerY)
+//            $0.trailing.equalTo(writePlace.snp.leading).offset(-6)
+//            $0.width.equalTo(32)
+//            $0.height.equalTo(32)
+//        }
         appNoticePlace.snp.makeConstraints {
-            $0.top.equalTo(GymgleName.snp.bottom).offset(12)
+            $0.top.equalTo(GymgleName.snp.bottom).offset(4)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(50)
         }
-        appNoticeBell.snp.makeConstraints {
-            $0.top.equalTo(appNoticePlace.snp.top).offset(18)
-            $0.leading.equalTo(appNoticePlace.snp.leading).offset(16)
-            $0.height.equalTo(16)
-            $0.width.equalTo(16)
-        }
-        appNoticeText.snp.makeConstraints {
-            $0.top.equalTo(appNoticePlace.snp.top).offset(18)
-            $0.leading.equalTo(appNoticePlace.snp.leading).offset(42)
-        }
-        myNoticeText.snp.makeConstraints {
-            $0.top.equalTo(appNoticePlace.snp.top).offset(18)
-            $0.leading.equalTo(appNoticePlace.snp.leading).offset(42)
-        }
         appTableView.snp.makeConstraints {
-            $0.top.equalTo(appNoticePlace.snp.bottom).offset(8)
+            $0.top.equalTo(appNoticePlace.snp.bottom).offset(0)
             $0.centerX.equalToSuperview()
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
@@ -189,7 +122,7 @@ class UserCommunityView: UIView,UITableViewDelegate {
 extension UserCommunityView:UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0 // TODO: 데이터모델 공사중입니다
+        return 5 // TODO: 데이터모델 공사중입니다
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
