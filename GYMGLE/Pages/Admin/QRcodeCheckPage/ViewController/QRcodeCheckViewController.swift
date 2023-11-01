@@ -7,7 +7,6 @@
 
 import UIKit
 import AVFoundation
-//import QRCodeReader
 import FirebaseDatabase
 import FirebaseAuth
 

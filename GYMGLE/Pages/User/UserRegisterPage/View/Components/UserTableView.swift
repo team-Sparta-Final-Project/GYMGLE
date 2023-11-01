@@ -1,14 +1,23 @@
 import UIKit
 
+protocol UserTableViewDelegate {
+    func cellTypeConfigure(cell:[String],labelOrder:[String],buttonText:[String])
+    func heightConfigure(height:Int,empty:Int)
+    func dateButtonTarget(cell:LabelCell,text:String)
+    func textFieldTarget(cell:TextFieldCell)
+}
+
 class UserTableView: UITableView {
-    
+    // TODO: 데이터를 컨트롤러에서 애초에 전달받을 이유가 없고 여기서 그려주면 됨 그리고 셀자체를 여러개 파일로만들어서 관리하기 쉽게 하자
+    // 버튼 셀, 라벨 셀, 텍스트 셀 이 세개로 애초에 만드는 것
     //MARK: - 셀 설정
-    var cellData:[String] = ["회원 이름","","회원 전화번호","","회원 아이디","","회원 비밀번호","","등록 기간","","추가 정보"]
-    var labelCellData:[String] = ["등록 기간","","추가 정보"]
-    var buttonCellData:[String] = ["회원 아이디"]
-    var buttonText:[String] = ["중복 확인","확인"]
+    var cellData:[String] = []
+    var labelCellData:[String] = []
+    var buttonText:[String] = []
     var emptyCellHeight:Int = 12
     var cellHeight:Int = 40
+    
+    var myDelegate: UserTableViewDelegate?
     
     //MARK: - 라이프사이클
     override init(frame: CGRect, style: UITableView.Style) {
@@ -23,6 +32,9 @@ class UserTableView: UITableView {
 
         self.separatorStyle = .none
         self.clipsToBounds = false
+        
+        
+        
     }
     
     required init?(coder: NSCoder) {
@@ -30,8 +42,6 @@ class UserTableView: UITableView {
         fatalError("init(coder:) has not been implemented")
         
     }
-    
-    
     
 }
 
@@ -45,23 +55,22 @@ extension UserTableView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if cellData[indexPath.row] == "" {
             let cell = EmptyCell()
             return cell
         }else if labelCellData.contains(cellData[indexPath.row]){
             
             let cell = LabelCell()
-            if cellData[indexPath.row] == "추가 정보" {
+            if indexPath.row == (cellData.count - 1) {
             }else{
                 cell.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
             }
             cell.label.text = cellData[indexPath.row]
-            if buttonCellData.contains(cellData[indexPath.row]) {
-                
-                cell.setButton(buttonText.first ?? "미설정")
-                buttonText.remove(at: 0)
-            }
+            cell.CheckButton.setTitle(buttonText.first, for: .normal)
+            myDelegate?.dateButtonTarget(cell: cell, text: cellData[indexPath.row])
+            buttonText.remove(at: 0)
+            
+            
             
             return cell
 
@@ -69,13 +78,9 @@ extension UserTableView: UITableViewDataSource {
         else {
             let cell = TextFieldCell()
             cell.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
-//            cell.textField.placeholder = cellData[indexPath.row]
             cell.placeHolderLabel.text = cellData[indexPath.row]
-            if buttonCellData.contains(cellData[indexPath.row]) {
-                
-                cell.setButton(buttonText.first ?? "미설정")
-                buttonText.remove(at: 0)
-            }
+            
+            myDelegate?.textFieldTarget(cell: cell)
             return cell
         }
     }
