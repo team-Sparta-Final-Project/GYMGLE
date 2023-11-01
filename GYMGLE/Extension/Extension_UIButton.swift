@@ -61,7 +61,7 @@ extension UIButton {
     // 이미지 버튼
     func buttonImageMakeUI(backgroundColor: UIColor, image: String, color: UIColor, cornerRadius: CGFloat, borderWidth: CGFloat, borderColor: CGColor) {
         self.backgroundColor = backgroundColor
-        self.setImage(UIImage(systemName: "\(image)"), for: .normal) //선택 x
+        self.setImage(UIImage(systemName: "\(image)")?.resized(to: CGSize(width: 20, height: 20)).withRenderingMode(.alwaysTemplate), for: .normal) //선택 x
         self.tintColor = color // 아이콘 색상
         self.layer.cornerRadius = cornerRadius
         self.layer.borderWidth = borderWidth
