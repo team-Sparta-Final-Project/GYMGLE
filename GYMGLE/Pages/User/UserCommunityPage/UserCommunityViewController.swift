@@ -7,7 +7,13 @@
 
 import UIKit
 
-class UserCommunityViewController: UIViewController {
+class UserCommunityViewController: UIViewController, CommunityTableViewDelegate {
+    
+    func didSelectCell(at indexPath: IndexPath) {
+            let destinationViewController = BoardDetailViewController()
+            present(destinationViewController, animated: true)
+            print(navigationController == nil)
+    }
     
     let first = UserCommunityView()
     
@@ -18,6 +24,8 @@ class UserCommunityViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         first.writePlace.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(writePlaceTap)))
+        first.delegate = self
+        self.view = first
     }
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기

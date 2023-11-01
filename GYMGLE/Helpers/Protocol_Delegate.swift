@@ -14,3 +14,7 @@ protocol MyPageTableViewDelegate: AnyObject {
 protocol AdminTableViewDelegate: AnyObject {
     func didSelectCell(at indexPath: IndexPath)
 }
+
+protocol CommunityTableViewDelegate: AnyObject {
+    func didSelectCell(at indexPath: IndexPath)
+}
