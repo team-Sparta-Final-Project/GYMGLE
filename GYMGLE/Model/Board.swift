@@ -18,7 +18,7 @@ struct Board: Codable {
 //프로필
 struct Profile: Codable {
     var nickName: String
-    var image: String
+    var image: URL
 }
 
 //코멘트
