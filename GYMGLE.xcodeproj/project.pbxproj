@@ -68,6 +68,8 @@
 		D15C22292AE4FE25002C4213 /* MyPageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C22282AE4FE25002C4213 /* MyPageTableView.swift */; };
 		D15C222C2AE50349002C4213 /* MyPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C222B2AE50349002C4213 /* MyPageTableViewCell.swift */; };
 		D15C22302AE50F7D002C4213 /* Protocol_Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C222F2AE50F7D002C4213 /* Protocol_Delegate.swift */; };
+		D16142172AF1F52E00628295 /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16142162AF1F52E00628295 /* ReportView.swift */; };
+		D16142192AF1F53700628295 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16142182AF1F53700628295 /* ReportViewController.swift */; };
 		D1635A462AE0F9CD00CDEF11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D1635A452AE0F9CD00CDEF11 /* FirebaseAuth */; };
 		D16920A72ADFBB9F00BE1A2B /* UserMyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */; };
 		D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */; };
@@ -147,6 +149,8 @@
 		D15C22282AE4FE25002C4213 /* MyPageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableView.swift; sourceTree = "<group>"; };
 		D15C222B2AE50349002C4213 /* MyPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableViewCell.swift; sourceTree = "<group>"; };
 		D15C222F2AE50F7D002C4213 /* Protocol_Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol_Delegate.swift; sourceTree = "<group>"; };
+		D16142162AF1F52E00628295 /* ReportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
+		D16142182AF1F53700628295 /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageView.swift; sourceTree = "<group>"; };
 		D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageViewController.swift; sourceTree = "<group>"; };
 		D1E0185E2ADCEB6700D1C53D /* AdminNoticeDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdminNoticeDetailView.swift; path = GYMGLE/Pages/Admin/AdminNoticePage/AdminNoticeDetailPage/View/AdminNoticeDetailView.swift; sourceTree = SOURCE_ROOT; };
@@ -232,6 +236,8 @@
 		2730BBB62AD6668200BFA23C /* GYMGLE */ = {
 			isa = PBXGroup;
 			children = (
+				D16142162AF1F52E00628295 /* ReportView.swift */,
+				D16142182AF1F53700628295 /* ReportViewController.swift */,
 				63D855F02AD81289008429BC /* Helpers */,
 				63D855EF2AD8126F008429BC /* Extension */,
 				63D855EE2AD81261008429BC /* Application */,
@@ -780,6 +786,7 @@
 				630EDE172ADFBC8300B37982 /* Extension_ToastView.swift in Sources */,
 				D1E018732ADCECAF00D1C53D /* AdminNoticeTableViewCell.swift in Sources */,
 				D1E018752ADCEDF100D1C53D /* UserRegisterView.swift in Sources */,
+				D16142192AF1F53700628295 /* ReportViewController.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
 				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
@@ -802,6 +809,7 @@
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
 				07997FF72AD843A5002ACFCB /* UserRootViewController.swift in Sources */,
 				D1E0187C2ADCEE0000D1C53D /* LabelCell.swift in Sources */,
+				D16142172AF1F52E00628295 /* ReportView.swift in Sources */,
 				07997FF92AD843BD002ACFCB /* UserRootModel.swift in Sources */,
 				2782A4BE2AEB88E500B110F9 /* CustomButton.swift in Sources */,
 				27E24B802ADF8A790031122F /* UserRegisterViewIDPWController.swift in Sources */,
