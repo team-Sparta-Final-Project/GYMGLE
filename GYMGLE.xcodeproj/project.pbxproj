@@ -79,6 +79,8 @@
 		D15C22292AE4FE25002C4213 /* MyPageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C22282AE4FE25002C4213 /* MyPageTableView.swift */; };
 		D15C222C2AE50349002C4213 /* MyPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C222B2AE50349002C4213 /* MyPageTableViewCell.swift */; };
 		D15C22302AE50F7D002C4213 /* Protocol_Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C222F2AE50F7D002C4213 /* Protocol_Delegate.swift */; };
+		D161421F2AF2258E00628295 /* BlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D161421E2AF2258E00628295 /* BlockView.swift */; };
+		D16142212AF225A100628295 /* BlockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16142202AF225A100628295 /* BlockViewController.swift */; };
 		D1635A462AE0F9CD00CDEF11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D1635A452AE0F9CD00CDEF11 /* FirebaseAuth */; };
 		D16920A72ADFBB9F00BE1A2B /* UserMyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */; };
 		D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */; };
@@ -169,6 +171,8 @@
 		D15C22282AE4FE25002C4213 /* MyPageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableView.swift; sourceTree = "<group>"; };
 		D15C222B2AE50349002C4213 /* MyPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableViewCell.swift; sourceTree = "<group>"; };
 		D15C222F2AE50F7D002C4213 /* Protocol_Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol_Delegate.swift; sourceTree = "<group>"; };
+		D161421E2AF2258E00628295 /* BlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockView.swift; sourceTree = "<group>"; };
+		D16142202AF225A100628295 /* BlockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockViewController.swift; sourceTree = "<group>"; };
 		D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageView.swift; sourceTree = "<group>"; };
 		D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageViewController.swift; sourceTree = "<group>"; };
 		D1E0185E2ADCEB6700D1C53D /* AdminNoticeDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdminNoticeDetailView.swift; path = GYMGLE/Pages/Admin/AdminNoticePage/AdminNoticeDetailPage/View/AdminNoticeDetailView.swift; sourceTree = SOURCE_ROOT; };
@@ -265,6 +269,8 @@
 				2730BBC32AD6668400BFA23C /* Assets.xcassets */,
 				2730BBC82AD6668400BFA23C /* Info.plist */,
 				2730BBFE2AD77AC500BFA23C /* GoogleService-Info.plist */,
+				D161421E2AF2258E00628295 /* BlockView.swift */,
+				D16142202AF225A100628295 /* BlockViewController.swift */,
 			);
 			path = GYMGLE;
 			sourceTree = "<group>";
@@ -889,12 +895,14 @@
 				D1E018612ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
 				D1E0187F2ADCEE0000D1C53D /* TextFieldCell.swift in Sources */,
+				D16142212AF225A100628295 /* BlockViewController.swift in Sources */,
 				D16920A72ADFBB9F00BE1A2B /* UserMyPageView.swift in Sources */,
 				275A12E12AF1FEEB00CC72EE /* BoardDetailCommentCell.swift in Sources */,
 				2730BC972ADC2DF500BFA23C /* ManageLabelCell.swift in Sources */,
 				630CE1622ADD62AD001EC547 /* DataManager.swift in Sources */,
 				D1E0187E2ADCEE0000D1C53D /* EmptyCell.swift in Sources */,
 				630CE14D2ADD5C8A001EC547 /* User.swift in Sources */,
+				D161421F2AF2258E00628295 /* BlockView.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
 				2782A4B82AEA46BB00B110F9 /* BottomSheetView.swift in Sources */,
 				275A12ED2AF22E8A00CC72EE /* BoardDetailCommentSection.swift in Sources */,
