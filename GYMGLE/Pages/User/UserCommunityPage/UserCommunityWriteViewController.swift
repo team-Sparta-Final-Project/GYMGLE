@@ -50,7 +50,7 @@ extension UserCommunityWriteViewController {
         userCommunityWriteView.frame.origin.y = 0
     }
     @objc private func createButtonTapped() {
-        if userCommunityWriteView.writePlace.text.isEmpty || userCommunityWriteView.writePlace.text == "공지사항을 입력하세요." {
+        if userCommunityWriteView.writePlace.text.isEmpty || userCommunityWriteView.writePlace.text == "내용을 입력하세요." {
             //            showToast(message: "내용물이 비었습니다.")
         } else {
             // 여기에 등록 및 수정 코드 작성❗️
