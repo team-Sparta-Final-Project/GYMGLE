@@ -42,6 +42,13 @@
 		2730BC8F2ADC206B00BFA23C /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC8E2ADC206B00BFA23C /* CustomSearchBar.swift */; };
 		2730BC972ADC2DF500BFA23C /* ManageLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC962ADC2DF500BFA23C /* ManageLabelCell.swift */; };
 		2730BC992ADC2E2900BFA23C /* ManageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BC982ADC2E2900BFA23C /* ManageTableView.swift */; };
+		275A12DE2AF1D6F100CC72EE /* BoardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275A12DD2AF1D6F100CC72EE /* BoardDetailViewController.swift */; };
+		275A12E12AF1FEEB00CC72EE /* BoardDetailCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275A12E02AF1FEEB00CC72EE /* BoardDetailCommentCell.swift */; };
+		275A12E32AF1FF9F00CC72EE /* BoardDetailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275A12E22AF1FF9F00CC72EE /* BoardDetailTableView.swift */; };
+		275A12E72AF2047F00CC72EE /* BoardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275A12E62AF2047F00CC72EE /* BoardDetailView.swift */; };
+		275A12E92AF2152100CC72EE /* BoardDetailContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275A12E82AF2152100CC72EE /* BoardDetailContentCell.swift */; };
+		275A12EB2AF21BB700CC72EE /* BoardProfileMini.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275A12EA2AF21BB700CC72EE /* BoardProfileMini.swift */; };
+		275A12ED2AF22E8A00CC72EE /* BoardDetailCommentSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275A12EC2AF22E8A00CC72EE /* BoardDetailCommentSection.swift */; };
 		2782A4B62AEA466D00B110F9 /* BottomSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4B52AEA466D00B110F9 /* BottomSheetController.swift */; };
 		2782A4B82AEA46BB00B110F9 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */; };
 		2782A4BC2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4BB2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift */; };
@@ -125,6 +132,13 @@
 		2730BC8E2ADC206B00BFA23C /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		2730BC962ADC2DF500BFA23C /* ManageLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageLabelCell.swift; sourceTree = "<group>"; };
 		2730BC982ADC2E2900BFA23C /* ManageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageTableView.swift; sourceTree = "<group>"; };
+		275A12DD2AF1D6F100CC72EE /* BoardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailViewController.swift; sourceTree = "<group>"; };
+		275A12E02AF1FEEB00CC72EE /* BoardDetailCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailCommentCell.swift; sourceTree = "<group>"; };
+		275A12E22AF1FF9F00CC72EE /* BoardDetailTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailTableView.swift; sourceTree = "<group>"; };
+		275A12E62AF2047F00CC72EE /* BoardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailView.swift; sourceTree = "<group>"; };
+		275A12E82AF2152100CC72EE /* BoardDetailContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailContentCell.swift; sourceTree = "<group>"; };
+		275A12EA2AF21BB700CC72EE /* BoardProfileMini.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardProfileMini.swift; sourceTree = "<group>"; };
+		275A12EC2AF22E8A00CC72EE /* BoardDetailCommentSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailCommentSection.swift; sourceTree = "<group>"; };
 		2782A4B52AEA466D00B110F9 /* BottomSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetController.swift; sourceTree = "<group>"; };
 		2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		2782A4BB2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewDateOnly.swift; sourceTree = "<group>"; };
@@ -396,6 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				63F777CB2AF1375800A3DF2B /* UserMyProfilePage */,
+				275A12DC2AF1D6B600CC72EE /* UserBoardDetailPage */,
 				074428712ADFB32700EB7D05 /* UserCommunityPage */,
 				D16920A32ADFBB7A00BE1A2B /* UserMyPage */,
 				2730BC3B2AD80B3E00BFA23C /* UserManagePage */,
@@ -489,6 +504,44 @@
 				2730BC962ADC2DF500BFA23C /* ManageLabelCell.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		275A12DC2AF1D6B600CC72EE /* UserBoardDetailPage */ = {
+			isa = PBXGroup;
+			children = (
+				275A12E52AF2046E00CC72EE /* View */,
+				275A12E42AF2046300CC72EE /* ViewController */,
+			);
+			path = UserBoardDetailPage;
+			sourceTree = "<group>";
+		};
+		275A12DF2AF1FED700CC72EE /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				275A12E22AF1FF9F00CC72EE /* BoardDetailTableView.swift */,
+				275A12E02AF1FEEB00CC72EE /* BoardDetailCommentCell.swift */,
+				275A12E82AF2152100CC72EE /* BoardDetailContentCell.swift */,
+				275A12EA2AF21BB700CC72EE /* BoardProfileMini.swift */,
+				275A12EC2AF22E8A00CC72EE /* BoardDetailCommentSection.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		275A12E42AF2046300CC72EE /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				275A12DD2AF1D6F100CC72EE /* BoardDetailViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		275A12E52AF2046E00CC72EE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				275A12E62AF2047F00CC72EE /* BoardDetailView.swift */,
+				275A12DF2AF1FED700CC72EE /* Components */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		27E24B812ADF97A30031122F /* PopUp */ = {
@@ -777,6 +830,7 @@
 				2782A4B62AEA466D00B110F9 /* BottomSheetController.swift in Sources */,
 				63D855F42AD812C3008429BC /* FontGuide.swift in Sources */,
 				D1E018712ADCEC5C00D1C53D /* AdminLoginViewController.swift in Sources */,
+				275A12E72AF2047F00CC72EE /* BoardDetailView.swift in Sources */,
 				D15C222C2AE50349002C4213 /* MyPageTableViewCell.swift in Sources */,
 				D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */,
 				63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */,
@@ -809,12 +863,14 @@
 				0744287B2AE0E2D200EB7D05 /* UserCommunityWriteViewController.swift in Sources */,
 				074428732ADFB36800EB7D05 /* UserCommunityView.swift in Sources */,
 				0744286F2ADD0D8800EB7D05 /* QrCodeView.swift in Sources */,
+				275A12E92AF2152100CC72EE /* BoardDetailContentCell.swift in Sources */,
 				D1E018812ADCEE0000D1C53D /* CustomTextView.swift in Sources */,
 				2730BC8F2ADC206B00BFA23C /* CustomSearchBar.swift in Sources */,
 				2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */,
 				63F777CF2AF137C600A3DF2B /* UserMyProfileViewController.swift in Sources */,
 				630A0BEE2AD9269100525A6E /* Extension_UILabel.swift in Sources */,
 				2782A4BC2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift in Sources */,
+				275A12EB2AF21BB700CC72EE /* BoardProfileMini.swift in Sources */,
 				630EDE172ADFBC8300B37982 /* Extension_ToastView.swift in Sources */,
 				D1E018732ADCECAF00D1C53D /* AdminNoticeTableViewCell.swift in Sources */,
 				D1E018752ADCEDF100D1C53D /* UserRegisterView.swift in Sources */,
@@ -823,21 +879,25 @@
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
 				D14ECB482AD928FF00FF7853 /* Extension_CALayer.swift in Sources */,
 				D1E018802ADCEE0000D1C53D /* UserTableView.swift in Sources */,
+				275A12DE2AF1D6F100CC72EE /* BoardDetailViewController.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
 				630CE14F2ADD5C92001EC547 /* Notice.swift in Sources */,
 				63F777D32AF13F0E00A3DF2B /* UserMyProfileUpdateView.swift in Sources */,
 				63F777D12AF137EC00A3DF2B /* UserMyProfileView.swift in Sources */,
 				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
+				275A12E32AF1FF9F00CC72EE /* BoardDetailTableView.swift in Sources */,
 				D1E018612ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
 				D1E0187F2ADCEE0000D1C53D /* TextFieldCell.swift in Sources */,
 				D16920A72ADFBB9F00BE1A2B /* UserMyPageView.swift in Sources */,
+				275A12E12AF1FEEB00CC72EE /* BoardDetailCommentCell.swift in Sources */,
 				2730BC972ADC2DF500BFA23C /* ManageLabelCell.swift in Sources */,
 				630CE1622ADD62AD001EC547 /* DataManager.swift in Sources */,
 				D1E0187E2ADCEE0000D1C53D /* EmptyCell.swift in Sources */,
 				630CE14D2ADD5C8A001EC547 /* User.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
 				2782A4B82AEA46BB00B110F9 /* BottomSheetView.swift in Sources */,
+				275A12ED2AF22E8A00CC72EE /* BoardDetailCommentSection.swift in Sources */,
 				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
 				07997FF72AD843A5002ACFCB /* UserRootViewController.swift in Sources */,
