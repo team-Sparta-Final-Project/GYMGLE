@@ -70,6 +70,10 @@
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
+		63F777CF2AF137C600A3DF2B /* UserMyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F777CE2AF137C600A3DF2B /* UserMyProfileViewController.swift */; };
+		63F777D12AF137EC00A3DF2B /* UserMyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F777D02AF137EC00A3DF2B /* UserMyProfileView.swift */; };
+		63F777D32AF13F0E00A3DF2B /* UserMyProfileUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F777D22AF13F0E00A3DF2B /* UserMyProfileUpdateView.swift */; };
+		63F777D52AF13F1D00A3DF2B /* UserMyProfileUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F777D42AF13F1D00A3DF2B /* UserMyProfileUpdateViewController.swift */; };
 		D14ECB442AD917D600FF7853 /* Extension_UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB432AD917D600FF7853 /* Extension_UIView.swift */; };
 		D14ECB482AD928FF00FF7853 /* Extension_CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */; };
 		D15C22292AE4FE25002C4213 /* MyPageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C22282AE4FE25002C4213 /* MyPageTableView.swift */; };
@@ -156,6 +160,10 @@
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
+		63F777CE2AF137C600A3DF2B /* UserMyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyProfileViewController.swift; sourceTree = "<group>"; };
+		63F777D02AF137EC00A3DF2B /* UserMyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyProfileView.swift; sourceTree = "<group>"; };
+		63F777D22AF13F0E00A3DF2B /* UserMyProfileUpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyProfileUpdateView.swift; sourceTree = "<group>"; };
+		63F777D42AF13F1D00A3DF2B /* UserMyProfileUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyProfileUpdateViewController.swift; sourceTree = "<group>"; };
 		D14ECB432AD917D600FF7853 /* Extension_UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIView.swift; sourceTree = "<group>"; };
 		D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_CALayer.swift; sourceTree = "<group>"; };
 		D15C22282AE4FE25002C4213 /* MyPageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableView.swift; sourceTree = "<group>"; };
@@ -401,6 +409,7 @@
 		2730BC402AD8105E00BFA23C /* User */ = {
 			isa = PBXGroup;
 			children = (
+				63F777CB2AF1375800A3DF2B /* UserMyProfilePage */,
 				275A12DC2AF1D6B600CC72EE /* UserBoardDetailPage */,
 				074428712ADFB32700EB7D05 /* UserCommunityPage */,
 				D16920A32ADFBB7A00BE1A2B /* UserMyPage */,
@@ -644,6 +653,33 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		63F777CB2AF1375800A3DF2B /* UserMyProfilePage */ = {
+			isa = PBXGroup;
+			children = (
+				63F777CD2AF137A600A3DF2B /* View */,
+				63F777CC2AF1379200A3DF2B /* ViewController */,
+			);
+			path = UserMyProfilePage;
+			sourceTree = "<group>";
+		};
+		63F777CC2AF1379200A3DF2B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				63F777CE2AF137C600A3DF2B /* UserMyProfileViewController.swift */,
+				63F777D42AF13F1D00A3DF2B /* UserMyProfileUpdateViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		63F777CD2AF137A600A3DF2B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				63F777D02AF137EC00A3DF2B /* UserMyProfileView.swift */,
+				63F777D22AF13F0E00A3DF2B /* UserMyProfileUpdateView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		D14ECB382AD9093700FF7853 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -814,6 +850,7 @@
 				2730BC992ADC2E2900BFA23C /* ManageTableView.swift in Sources */,
 				63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */,
 				2730BC882ADC1DC500BFA23C /* UserManageController.swift in Sources */,
+				63F777D52AF13F1D00A3DF2B /* UserMyProfileUpdateViewController.swift in Sources */,
 				630CE1532ADD5CB8001EC547 /* Account.swift in Sources */,
 				63B5A2252AEB627900105AB5 /* Extension_UIImage.swift in Sources */,
 				D1E0187D2ADCEE0000D1C53D /* CustomTextCell.swift in Sources */,
@@ -830,6 +867,7 @@
 				D1E018812ADCEE0000D1C53D /* CustomTextView.swift in Sources */,
 				2730BC8F2ADC206B00BFA23C /* CustomSearchBar.swift in Sources */,
 				2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */,
+				63F777CF2AF137C600A3DF2B /* UserMyProfileViewController.swift in Sources */,
 				630A0BEE2AD9269100525A6E /* Extension_UILabel.swift in Sources */,
 				2782A4BC2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift in Sources */,
 				275A12EB2AF21BB700CC72EE /* BoardProfileMini.swift in Sources */,
@@ -844,6 +882,8 @@
 				275A12DE2AF1D6F100CC72EE /* BoardDetailViewController.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
 				630CE14F2ADD5C92001EC547 /* Notice.swift in Sources */,
+				63F777D32AF13F0E00A3DF2B /* UserMyProfileUpdateView.swift in Sources */,
+				63F777D12AF137EC00A3DF2B /* UserMyProfileView.swift in Sources */,
 				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
 				275A12E32AF1FF9F00CC72EE /* BoardDetailTableView.swift in Sources */,
 				D1E018612ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift in Sources */,
