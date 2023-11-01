@@ -9,6 +9,12 @@ import UIKit
 
 class UserCommunityView: UIView,UITableViewDelegate {
     
+    weak var delegate: CommunityTableViewDelegate?
+    
+    func userDidSelectRow(at indexPath: IndexPath) {
+            delegate?.didSelectCell(at: indexPath)
+        }
+    
     private let dummyDataManager = DataManager.shared
     var gymInfo: GymInfo?
     var userName: User?
@@ -129,20 +135,16 @@ extension UserCommunityView:UITableViewDataSource{
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CommunityCell
         cell.selectionStyle = .none
-//        var date = dateToString(date: dummyDataManager.gymInfo.noticeList[indexPath.row].date)
-//        cell.nameLabel.text = dummyDataManager.gymInfo.gymName
-//        cell.ctextLabel.text = dummyDataManager.gymInfo.noticeList[indexPath.row].content
-//        cell.dateLabel.text = date
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension // 셀의 높이 (예: 100)에 간격 (예: 12)을 더해 설정
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            // 셀을 클릭했을 때 호출됩니다.
-            let pp = UserCommunityViewController()
-        
-         let adminNoticeDetailVC = AdminNoticeDetailViewController()
+        userDidSelectRow(at: indexPath)
+//            let pp = UserCommunityViewController()
+//
+//         let adminNoticeDetailVC = AdminNoticeDetailViewController()
 //         adminNoticeDetailVC.noticeInfo = dummyDataManager.gymInfo.noticeList[indexPath.row] 데이터모델 공사중입니다
             // 새로운 뷰를 모달로 표시합니다.
 //            self.present(pp, animated: true, completion: nil)
