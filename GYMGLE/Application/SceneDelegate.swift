@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         let navi = UINavigationController(rootViewController: InitialViewController())
         window?.rootViewController = navi
-//        window?.rootViewController = UserManageViewController()
+//        window?.rootViewController = BoardDetailViewController()
         window?.makeKeyAndVisible()
     }
 
