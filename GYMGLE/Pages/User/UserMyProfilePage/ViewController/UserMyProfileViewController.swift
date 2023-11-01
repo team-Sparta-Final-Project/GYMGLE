@@ -48,6 +48,7 @@ private extension UserMyProfileViewController {
     
     func buttonTapped() {
         userMyProfileView.updateButton.addTarget(self, action: #selector(updateButtonButtoned), for: .touchUpInside)
+        userMyProfileView.banButton.addTarget(self, action: #selector(banButtonButtoned), for: .touchUpInside)
     }
 }
 
@@ -57,11 +58,22 @@ extension UserMyProfileViewController {
     
     @objc private func updateButtonButtoned() {
         print("테스트 - click")
-//        let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
-//        userMyProfileUpdateVC.modalPresentationStyle = .fullScreen
-//        userMyProfileUpdateVC.present(userMyProfileUpdateVC, animated: true)
+        let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
+        userMyProfileUpdateVC.modalPresentationStyle = .fullScreen
+        present(userMyProfileUpdateVC, animated: true)
     }
-    
+    @objc private func banButtonButtoned() {
+            let alert = UIAlertController(title: "차단", message: "사용자를 차단하시겠습니까?", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "확인", style: .default) { okAction in
+                print("확인")
+            }
+            let cancel = UIAlertAction(title: "취소", style: .cancel) { cancelAction in
+                print("취소")
+            }
+            alert.addAction(ok)
+            alert.addAction(cancel)
+            self.present(alert, animated: true, completion: nil)
+    }
 }
 
 

@@ -17,7 +17,7 @@ final class UserMyProfileView: UIView {
         return view
     }()
     
-    private let profileImageView: UIImageView = {
+    private lazy var profileImageView: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(systemName: "person.fill")?.resized(to: CGSize(width: 80, height: 80)).withRenderingMode(.alwaysOriginal)
         image.contentMode = .scaleAspectFill
@@ -70,7 +70,13 @@ final class UserMyProfileView: UIView {
     
     lazy var updateButton: UIButton = {
         let button = UIButton()
-        button.buttonImageMakeUI(backgroundColor: ColorGuide.white, image: "pencil", color: ColorGuide.black, cornerRadius: 12, borderWidth: 0.0, borderColor: UIColor.white.cgColor)
+        button.buttonImageMakeUI(backgroundColor: ColorGuide.white, image: "pencil", color: ColorGuide.black, cornerRadius: 14, borderWidth: 0.0, borderColor: UIColor.white.cgColor)
+        return button
+    }()
+    
+    lazy var banButton: UIButton = {
+        let button = UIButton()
+        button.buttonMakeUI(backgroundColor: ColorGuide.background, cornerRadius: 14.0, borderWidth: 0.0, borderColor: UIColor.clear.cgColor, setTitle: "차단", font: FontGuide.size14, setTitleColor: ColorGuide.black)
         return button
     }()
     
@@ -86,6 +92,7 @@ final class UserMyProfileView: UIView {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
+       
     }
 }
 
@@ -101,11 +108,17 @@ private extension UserMyProfileView {
     
     func viewSetting() {
         self.addSubviews(updateButton)
+        self.addSubviews(banButton)
         NSLayoutConstraint.activate([
             updateButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             updateButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 80),
-            updateButton.widthAnchor.constraint(equalToConstant: 24),
-            updateButton.heightAnchor.constraint(equalToConstant: 24),
+            updateButton.widthAnchor.constraint(equalToConstant: 28),
+            updateButton.heightAnchor.constraint(equalToConstant: 28),
+            
+            banButton.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 90),
+            banButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            banButton.topAnchor.constraint(equalTo: updateButton.bottomAnchor, constant: 40),
+            banButton.bottomAnchor.constraint(equalTo: containerView.topAnchor, constant: -6)
         ])
     }
     
