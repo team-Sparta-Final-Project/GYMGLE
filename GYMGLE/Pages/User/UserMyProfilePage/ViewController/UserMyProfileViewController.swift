@@ -30,9 +30,7 @@ final class UserMyProfileViewController: UIViewController {
         if DataManager.shared.profile?.nickName == nil {
             let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
             userMyProfileUpdateVC.modalPresentationStyle = .overCurrentContext
-            present(userMyProfileUpdateVC, animated: true) {
-                self.showToast(message: "프로필을 먼저 설정해주세요.")
-            }
+            present(userMyProfileUpdateVC, animated: true)
         }
     }
     
@@ -67,24 +65,7 @@ private extension UserMyProfileViewController {
         navigationController?.navigationBar.topItem?.title = "마이페이지"
         navigationController?.navigationBar.tintColor = .black
     }
-    func showToast(message: String) {
-        let toastView = ToastView()
-        toastView.configure()
-        toastView.text = message
-        view.addSubview(toastView)
-        toastView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
-            toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
-            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
-        ])
-        UIView.animate(withDuration: 2.5, delay: 0.2) { //2.5초
-            toastView.alpha = 0
-        } completion: { _ in
-            toastView.removeFromSuperview()
-        }
-    }
+   
 }
 
 // MARK: - extension @objc func
