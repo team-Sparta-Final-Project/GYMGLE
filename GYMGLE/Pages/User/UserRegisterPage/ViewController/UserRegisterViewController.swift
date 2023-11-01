@@ -28,7 +28,7 @@ final class UserRegisterViewController: UIViewController {
     
     override func loadView() {
         cellTypeConfigure(cell: cells, labelOrder: labelCells, buttonText: buttonText)
-        //셀높이설정
+
         heightConfigure(height: 45, empty: 24)
 
         viewConfigure.button.setTitle(buttonTitle, for: .normal)

@@ -36,8 +36,9 @@ final class TabbarViewController: UITabBarController {
         
         let communnityVC = UserCommunityViewController()
         
-        let qrCodeVC =  QrCodeViewController()
-        qrCodeVC.isHidden = false
+        let qrCodeVC =  BoardDetailViewController() //테스트코드 나중에 지울것
+//        let qrCodeVC =  QrCodeViewController() //테스트코드 나중에 지울것
+//        qrCodeVC.isHidden = false
         let myVC = UserMyPageViewController()
         
 
