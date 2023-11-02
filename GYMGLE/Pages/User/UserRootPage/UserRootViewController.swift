@@ -20,7 +20,7 @@ class UserRootViewController: UIViewController {
         scrollView.alwaysBounceVertical = true
         return scrollView
     }()
-
+    
     
     let first = UserRootView()
     var num = 0
@@ -59,9 +59,30 @@ class UserRootViewController: UIViewController {
                     let roundedTimes = times.rounded()
                     if roundedTimes >= 0 {
                         self.first.chartMidText.text = String("평균보다 \(roundedTimes)% 많습니다!")
+                        switch roundedTimes {
+                        case 0..<20:
+                            self.borderAnimation(color: .systemBrown) // 브론즈
+                            self.first.chartMidText.textColor = .systemBrown
+                        case 20..<40:
+                            self.borderAnimation(color: .lightGray) // 실버
+                            self.first.chartMidText.textColor = .lightGray
+                        case 40..<60:
+                            self.borderAnimation(color: UIColor(red: 200/255, green: 155/255, blue: 60/255, alpha: 1)) // 골드
+                            self.first.chartMidText.textColor = UIColor(red: 200/255, green: 155/255, blue: 60/255, alpha: 1)
+                        case 60..<80:
+                            self.borderAnimation(color: .systemGreen) // 플레
+                            self.first.chartMidText.textColor = .systemGreen
+                        case 80...:
+                            self.borderAnimation(color: .systemBlue) // 다이아
+                            self.first.chartMidText.textColor = .systemBlue
+                        default:
+                            break
+                        }
                     } else {
                         self.first.chartMidText.text = String("평균보다 \(abs(roundedTimes))% 적습니다.")
+                        self.first.chartMidText.textColor = .black
                         self.first.chartBottomText.text = "꾸준함이 중요하죠!"
+                        self.borderAnimation(color: .black) // 아이언
                     }
                 }
             }
@@ -269,6 +290,61 @@ class UserRootViewController: UIViewController {
             self.totalUserCount = Double(count)
             completion()
         }
+    }
+    
+    func borderAnimation(color: UIColor) {
+        let path = UIBezierPath()
+        let rect = self.first.chartPlace.bounds
+        path.move(to: CGPoint(x: rect.minX + 176, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.minX + 20, y: rect.maxY))
+        path.addArc(
+            withCenter: CGPoint(x: rect.minX + 20, y: rect.maxY - 20),
+            radius: 20,
+            startAngle: CGFloat.pi / 2,
+            endAngle: CGFloat.pi,
+            clockwise: true
+        )
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + 20))
+        path.addArc(
+            withCenter: CGPoint(x: rect.minX + 20, y: rect.minY + 20),
+            radius: 20,
+            startAngle: CGFloat.pi,
+            endAngle: -CGFloat.pi / 2,
+            clockwise: true
+        )
+        path.addLine(to: CGPoint(x: rect.maxX - 20, y: rect.minY))
+        path.addArc(
+            withCenter: CGPoint(x: rect.maxX - 20, y: rect.minY + 20),
+            radius: 20,
+            startAngle: -CGFloat.pi / 2,
+            endAngle: 0,
+            clockwise: true
+        )
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - 20))
+        path.addArc(
+            withCenter: CGPoint(x: rect.maxX - 20, y: rect.maxY - 20),
+            radius: 20,
+            startAngle: 0,
+            endAngle: CGFloat.pi / 2,
+            clockwise: true
+        )
+        path.close()
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.strokeColor = color.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.lineWidth = 2.0 // 보더 두께
+        
+        // 애니메이션 설정
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.fromValue = 0
+        animation.toValue = 1
+        animation.duration = 2.0 // 애니메이션 시간 (초)
+        
+        // 애니메이션을 shapeLayer에 추가
+        shapeLayer.add(animation, forKey: "borderFillAnimation")
+        self.first.chartPlace.layer.addSublayer(shapeLayer)
     }
 }
 

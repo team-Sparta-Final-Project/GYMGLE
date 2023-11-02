@@ -132,15 +132,11 @@ class UserRootView: UIView {
         $0.font = FontGuide.size14Bold
         $0.text = "지금 헬스장 이용객 수"
     }
-    private lazy var chartPlace = UIView().then {
+    lazy var chartPlace = UIView().then {
         $0.backgroundColor = ColorGuide.white
+        $0.layer.borderColor = UIColor.clear.cgColor
         $0.layer.cornerRadius = 20
         $0.layer.borderWidth = 1
-        $0.layer.borderColor = ColorGuide.goldTier.cgColor
-//        $0.layer.shadowColor = ColorGuide.goldTier.cgColor
-//        $0.layer.shadowOpacity = 1
-//        $0.layer.shadowRadius = 4
-//        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chartPlaceTapped)))
     }
     private lazy var chartTopText = UILabel().then {
@@ -150,7 +146,7 @@ class UserRootView: UIView {
     }
     
     lazy var chartMidText = UILabel().then {
-        $0.textColor = ColorGuide.goldTier
+//        $0.textColor = ColorGuide.goldTier
         $0.font = FontGuide.size24Bold
         $0.text = "상위 4% 에요!"
     }
@@ -219,14 +215,14 @@ class UserRootView: UIView {
     @objc func chartPlaceTapped() {
         UIView.animate(withDuration: 0.5, animations: {
             self.chartPlace.layer.borderWidth = 2
-            self.chartPlace.layer.borderColor = ColorGuide.goldTier.cgColor
+//            self.chartPlace.layer.borderColor = ColorGuide.goldTier.cgColor
 //                self.chartPlace.layer.shadowRadius = 15
 //                self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
             }) { (completed) in
                 // 2초 후에 사라지는 애니메이션
                 UIView.animate(withDuration: 0.5, delay: 1.0, options: .curveEaseOut, animations: {
                     self.chartPlace.layer.borderWidth = 1
-                    self.chartPlace.layer.borderColor = ColorGuide.goldTier.cgColor
+//                    self.chartPlace.layer.borderColor = ColorGuide.goldTier.cgColor
 //                    self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
                 }, completion: nil)
             }
