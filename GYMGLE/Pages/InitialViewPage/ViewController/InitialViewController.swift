@@ -61,7 +61,6 @@ private extension InitialViewController {
         if let currentUser = Auth.auth().currentUser {
             let userRef = Database.database().reference().child("users").child(currentUser.uid)
             let userRef2 = Database.database().reference().child("accounts").child(currentUser.uid)
-            let userRef3 = Database.database().reference().child("profiles").child(currentUser.uid).child("profile")
             
             userRef.observeSingleEvent(of: .value) { (snapshot) in
                 if let userData = snapshot.value as? [String: Any],
@@ -97,7 +96,8 @@ private extension InitialViewController {
                 if let userData = snapshot.value as? [String: Any],
                    let adminUid = userData["adminUid"] as? String,
                    let account = userData["account"] as? [String: Any],
-                   let accountType = account["accountType"] as? Int {
+                   let accountType = account["accountType"] as? Int,
+                   let profileData = userData["profile"] as? [String: Any] {
                     // 트레이너 일때
                     if accountType == 1 {
                         Database.database().reference().child("users").child(adminUid).observeSingleEvent(of: .value) { (snapshot) in
@@ -110,6 +110,10 @@ private extension InitialViewController {
                                     let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
                                     let gymInfo = try JSONDecoder().decode(GymInfo.self, from: gymInfoData)
                                     DataManager.shared.realGymInfo = gymInfo
+                                    
+                                    let profileInfoData = try JSONSerialization.data(withJSONObject: profileData, options: [])
+                                    let profileInfo = try JSONDecoder().decode(Profile.self, from: profileInfoData)
+                                    DataManager.shared.profile = profileInfo
                                 } catch {
                                     print("Decoding error: \(error.localizedDescription)")
                                 }
@@ -129,6 +133,10 @@ private extension InitialViewController {
                             let userInfoData = try JSONSerialization.data(withJSONObject: userData, options: [])
                             let userInfo = try JSONDecoder().decode(User.self, from: userInfoData)
                             DataManager.shared.userInfo = userInfo
+                            
+                            let profileInfoData = try JSONSerialization.data(withJSONObject: profileData, options: [])
+                            let profileInfo = try JSONDecoder().decode(Profile.self, from: profileInfoData)
+                            DataManager.shared.profile = profileInfo
                         } catch DecodingError.dataCorrupted(let context) {
                             print("Data corrupted: \(context.debugDescription)")
                         } catch DecodingError.keyNotFound(let key, let context) {
@@ -148,19 +156,6 @@ private extension InitialViewController {
                         }
                     }
                 }
-            }
-            
-            userRef3.observeSingleEvent(of: .value) { (snapshot) in
-                if let profileData = snapshot.value as? [String: Any] {
-                    do {
-                        let profileInfoData = try JSONSerialization.data(withJSONObject: profileData, options: [])
-                        let profileInfo = try JSONDecoder().decode(Profile.self, from: profileInfoData)
-                        DataManager.shared.profile = profileInfo
-                    } catch {
-                        print("Decoding error: \(error.localizedDescription)")
-                    }
-                }
-                   
             }
         }
     }
@@ -187,19 +182,23 @@ extension InitialViewController {
                 if let user = result?.user {
                     let userRef = Database.database().reference().child("accounts").child(user.uid)
                     let userRef2 = Database.database().reference().child("users").child(user.uid)
-                    let userRef3 = Database.database().reference().child("profiles").child(user.uid).child("profile")
                     
                     userRef.observeSingleEvent(of: .value) { (snapshot, _)  in
                         if let userData = snapshot.value as? [String: Any],
                            let adminUid = userData["adminUid"] as? String,
                            let account = userData["account"] as? [String: Any],
-                           let accountType = account["accountType"] as? Int {
+                           let accountType = account["accountType"] as? Int,
+                           let profileData = userData["profile"] as? [String: Any] {
                             // 트레이너 일때
                             if accountType == 1 {
                                 do {
                                     let userInfoData = try JSONSerialization.data(withJSONObject: userData, options: [])
                                     let userInfo = try JSONDecoder().decode(User.self, from: userInfoData)
                                     DataManager.shared.userInfo = userInfo
+                                    
+                                    let profileInfoData = try JSONSerialization.data(withJSONObject: profileData, options: [])
+                                    let profileInfo = try JSONDecoder().decode(Profile.self, from: profileInfoData)
+                                    DataManager.shared.profile = profileInfo
                                 } catch {
                                     print("Decoding error: \(error.localizedDescription)")
                                 }
@@ -215,6 +214,10 @@ extension InitialViewController {
                                     let userInfoData = try JSONSerialization.data(withJSONObject: userData, options: [])
                                     let userInfo = try JSONDecoder().decode(User.self, from: userInfoData)
                                     DataManager.shared.userInfo = userInfo
+                                    
+                                    let profileInfoData = try JSONSerialization.data(withJSONObject: profileData, options: [])
+                                    let profileInfo = try JSONDecoder().decode(Profile.self, from: profileInfoData)
+                                    DataManager.shared.profile = profileInfo
                                 } catch {
                                     print("Decoding error: \(error.localizedDescription)")
                                 }
@@ -242,19 +245,6 @@ extension InitialViewController {
                                 self.present(alert, animated: true, completion: nil)
                             }
                         }
-                    }
-                    
-                    userRef3.observeSingleEvent(of: .value) { (snapshot) in
-                        if let profileData = snapshot.value as? [String: Any] {
-                            do {
-                                let profileInfoData = try JSONSerialization.data(withJSONObject: profileData, options: [])
-                                let profileInfo = try JSONDecoder().decode(Profile.self, from: profileInfoData)
-                                DataManager.shared.profile = profileInfo
-                            } catch {
-                                print("Decoding error: \(error.localizedDescription)")
-                            }
-                        }
-                           
                     }
                 }
             }
