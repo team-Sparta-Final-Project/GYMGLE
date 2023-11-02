@@ -17,7 +17,7 @@ final class UserMyProfileView: UIView {
         return view
     }()
     
-    private lazy var profileImageView: UIImageView = {
+    lazy var profileImageView: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(systemName: "person.fill")?.resized(to: CGSize(width: 80, height: 80)).withRenderingMode(.alwaysOriginal)
         image.contentMode = .scaleAspectFill

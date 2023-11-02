@@ -32,8 +32,9 @@ final class UserMyProfileViewController: UIViewController {
             userMyProfileUpdateVC.modalPresentationStyle = .overCurrentContext
             present(userMyProfileUpdateVC, animated: true)
         }
-        print("테스트 - \(userMyProfileView.nickName.text!)")
-        getProfile()
+        
+
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +42,12 @@ final class UserMyProfileViewController: UIViewController {
         navigationController?.navigationBar.isHidden = false
         tabBarController?.tabBar.isHidden = true
         self.userMyProfileView.postTableview.reloadData()
+        
+        getProfile() {
+            self.downloadImage(imageView: self.userMyProfileView.profileImageView)
+            self.userMyProfileView.nickName.text = DataManager.shared.profile?.nickName
+            print("프로필: \(DataManager.shared.profile!)")
+        }
     }
     
 }
@@ -67,44 +74,35 @@ private extension UserMyProfileViewController {
         navigationController?.navigationBar.topItem?.title = "마이페이지"
         navigationController?.navigationBar.tintColor = .black
     }
-
-//    let ref = Database.database().reference().child("profiles/\(Auth.auth().currentUser!.uid)/profile")
-//    ref.observeSingleEvent(of: .value) { DataSnapshot in
-//        guard let value = DataSnapshot.value as? [String: Any] else {
-//            print("테스트 - 값")
-//            return
-//        }
-//        do {
-//            let jsonData = try JSONSerialization.data(withJSONObject: value, options: [])
-//            let profile = try JSONDecoder().decode(Profile.self, from: jsonData)
-//            print("테스트 - \(profile)")
-//        } catch {
-//            print("테스트 - error")
-//        }
-//    }
-    func getProfile() {
+    func getProfile(completion: @escaping () -> Void) {
         let ref = Database.database().reference().child("profiles")
-        let query = ref.queryOrdered(byChild: "profile/nickName").queryEqual(toValue: "ddd")
+        let query = ref.queryOrdered(byChild: "profile/nickName").queryEqual(toValue: "\(userMyProfileView.nickName.text!)")
         query.observeSingleEvent(of: .value) { dataSnapshot in
-            if dataSnapshot.exists() {
-                if let profileData = dataSnapshot.value as? [String: Any] {
-                    do {
-                        // JSON 데이터를 [Profile] 배열로 디코딩
-                        let jsonData = try JSONSerialization.data(withJSONObject: profileData, options: [])
-                        let profiles = try JSONDecoder().decode(Profile.self, from: jsonData)
-                       
-                        
-                        print("테스트 - \(profiles)")
-                    } catch {
-                        print("테스트 - 오류: \(error)")
-                    }
-                } else {
-                    print("테스트 - profileData를 딕셔너리로 변환하는 중 오류 발생")
+            if let profileData = dataSnapshot.value as? [String: Any] {
+                if let nickName = profileData["nickName"] as? String,
+                   let imageUrlString = profileData["image"] as? String,
+                   let imageUrl = URL(string: imageUrlString) {
+                    DataManager.shared.profile = Profile(image: imageUrl, nickName: nickName)
+                    
                 }
-            } else {
-                // 데이터가 존재하지 않는 경우
-                print("테스트 - 데이터가 존재하지 않습니다.")
             }
+        }
+        completion()
+    }
+    func downloadImage(imageView: UIImageView) {
+        guard let url = DataManager.shared.profile?.image else  {return}
+        Storage.storage().reference(forURL: "\(url)").downloadURL { url, error  in
+            URLSession.shared.dataTask(with: url!) { data, response, error in
+                 if let error = error {
+                     print("오류 - \(error.localizedDescription)")
+                     return
+                 }
+                 if let data = data, let image = UIImage(data: data) {
+                     DispatchQueue.main.async {
+                         imageView.image = image
+                     }
+                 }
+             }.resume()
         }
     }
 }
