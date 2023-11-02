@@ -2,13 +2,17 @@ import UIKit
 import SnapKit
 import Then
 
-protocol BoardDetailContentCellDelegate {
-    func likeButtonTarget()
+protocol BoardProfilelikeButtonDelegate {
+    func likeButtonTapped()
 }
 
 class BoardDetailContentCell: UITableViewCell {
     
+    var likeDelegate:BoardProfilelikeButtonDelegate?
+    
     let profileSize:CGFloat = 24.0
+    
+    var liked:Bool = false
     
     let profileLine = BoardProfileLine()
     
@@ -43,10 +47,12 @@ class BoardDetailContentCell: UITableViewCell {
         super .init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
         
-        
-        
+        likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+
         configure()
     }
+    
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -83,5 +89,17 @@ class BoardDetailContentCell: UITableViewCell {
         
     }
     
+    @objc func likeButtonTapped(){
+        self.likeDelegate?.likeButtonTapped()
+        if liked {
+            self.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            liked = false
+        } else {
+            self.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            liked = true
+        }
+        
+    }
+
     
 }

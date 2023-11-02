@@ -10,9 +10,9 @@ import UIKit
 class UserCommunityViewController: UIViewController, CommunityTableViewDelegate {
     
     func didSelectCell(at indexPath: IndexPath) {
-            let destinationViewController = BoardDetailViewController()
-            present(destinationViewController, animated: true)
-            print(navigationController == nil)
+        let destinationViewController = BoardDetailViewController()
+        
+        navigationController?.pushViewController(destinationViewController, animated: true)
     }
     
     let first = UserCommunityView()
