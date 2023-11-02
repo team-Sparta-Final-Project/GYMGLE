@@ -137,7 +137,7 @@ class UserRootView: UIView {
         $0.layer.borderColor = UIColor.clear.cgColor
         $0.layer.cornerRadius = 20
         $0.layer.borderWidth = 1
-        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chartPlaceTapped)))
+//        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chartPlaceTapped)))
     }
     private lazy var chartTopText = UILabel().then {
         $0.textColor = ColorGuide.main
@@ -212,21 +212,21 @@ class UserRootView: UIView {
             isNoticePlaceExpanded.toggle()
         }
     
-    @objc func chartPlaceTapped() {
-        UIView.animate(withDuration: 0.5, animations: {
-            self.chartPlace.layer.borderWidth = 2
-//            self.chartPlace.layer.borderColor = ColorGuide.goldTier.cgColor
-//                self.chartPlace.layer.shadowRadius = 15
-//                self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
-            }) { (completed) in
-                // 2초 후에 사라지는 애니메이션
-                UIView.animate(withDuration: 0.5, delay: 1.0, options: .curveEaseOut, animations: {
-                    self.chartPlace.layer.borderWidth = 1
-//                    self.chartPlace.layer.borderColor = ColorGuide.goldTier.cgColor
-//                    self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
-                }, completion: nil)
-            }
-    }
+//    @objc func chartPlaceTapped() {
+//        UIView.animate(withDuration: 0.5, animations: {
+//            self.chartPlace.layer.borderWidth = 2
+////            self.chartPlace.layer.borderColor = ColorGuide.goldTier.cgColor
+////                self.chartPlace.layer.shadowRadius = 15
+////                self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
+//            }) { (completed) in
+//                // 2초 후에 사라지는 애니메이션
+//                UIView.animate(withDuration: 0.5, delay: 1.0, options: .curveEaseOut, animations: {
+//                    self.chartPlace.layer.borderWidth = 1
+////                    self.chartPlace.layer.borderColor = ColorGuide.goldTier.cgColor
+////                    self.chartPlace.layer.shadowOffset = CGSize(width: 0, height: 0)
+//                }, completion: nil)
+//            }
+//    }
     @objc func startNumberAnimation(){
         let transition = CATransition()
                 transition.duration = 1

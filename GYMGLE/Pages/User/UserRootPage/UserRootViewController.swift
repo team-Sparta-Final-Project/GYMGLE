@@ -27,9 +27,11 @@ class UserRootViewController: UIViewController {
     var totalExerciseForUser: Double = 0
     var totalExercise: Double = 0
     var totalUserCount: Double = 0
+    var roundedTimes: Double = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setChartPlace()
         first.inBtn.addTarget(self, action: #selector(inButtonClick), for: .touchUpInside)
         first.outBtn.addTarget(self, action: #selector(outButtonClick), for: .touchUpInside)
         getLastWeekUserNumber()
@@ -63,18 +65,23 @@ class UserRootViewController: UIViewController {
                         case 0..<20:
                             self.borderAnimation(color: .systemBrown) // 브론즈
                             self.first.chartMidText.textColor = .systemBrown
+                            self.roundedTimes = roundedTimes
                         case 20..<40:
                             self.borderAnimation(color: .lightGray) // 실버
                             self.first.chartMidText.textColor = .lightGray
+                            self.roundedTimes = roundedTimes
                         case 40..<60:
                             self.borderAnimation(color: UIColor(red: 200/255, green: 155/255, blue: 60/255, alpha: 1)) // 골드
                             self.first.chartMidText.textColor = UIColor(red: 200/255, green: 155/255, blue: 60/255, alpha: 1)
+                            self.roundedTimes = roundedTimes
                         case 60..<80:
                             self.borderAnimation(color: .systemGreen) // 플레
                             self.first.chartMidText.textColor = .systemGreen
+                            self.roundedTimes = roundedTimes
                         case 80...:
                             self.borderAnimation(color: .systemBlue) // 다이아
                             self.first.chartMidText.textColor = .systemBlue
+                            self.roundedTimes = roundedTimes
                         default:
                             break
                         }
@@ -344,7 +351,86 @@ class UserRootViewController: UIViewController {
         
         // 애니메이션을 shapeLayer에 추가
         shapeLayer.add(animation, forKey: "borderFillAnimation")
+        // 뷰에 레이어 추가
         self.first.chartPlace.layer.addSublayer(shapeLayer)
+    }
+    
+    func clearBorder() {
+        let path = UIBezierPath()
+        let rect = self.first.chartPlace.bounds
+        path.move(to: CGPoint(x: rect.minX + 176, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.minX + 20, y: rect.maxY))
+        path.addArc(
+            withCenter: CGPoint(x: rect.minX + 20, y: rect.maxY - 20),
+            radius: 20,
+            startAngle: CGFloat.pi / 2,
+            endAngle: CGFloat.pi,
+            clockwise: true
+        )
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + 20))
+        path.addArc(
+            withCenter: CGPoint(x: rect.minX + 20, y: rect.minY + 20),
+            radius: 20,
+            startAngle: CGFloat.pi,
+            endAngle: -CGFloat.pi / 2,
+            clockwise: true
+        )
+        path.addLine(to: CGPoint(x: rect.maxX - 20, y: rect.minY))
+        path.addArc(
+            withCenter: CGPoint(x: rect.maxX - 20, y: rect.minY + 20),
+            radius: 20,
+            startAngle: -CGFloat.pi / 2,
+            endAngle: 0,
+            clockwise: true
+        )
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - 20))
+        path.addArc(
+            withCenter: CGPoint(x: rect.maxX - 20, y: rect.maxY - 20),
+            radius: 20,
+            startAngle: 0,
+            endAngle: CGFloat.pi / 2,
+            clockwise: true
+        )
+        path.close()
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.strokeColor = UIColor.white.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.lineWidth = 2.0 // 보더 두께
+        
+        self.first.chartPlace.layer.addSublayer(shapeLayer)
+    }
+    
+    func setChartPlace() {
+        self.first.chartPlace.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chartPlaceTapped)))
+    }
+    
+    @objc func chartPlaceTapped() {
+        if roundedTimes >= 0 {
+            switch roundedTimes {
+            case 0..<20:
+                self.clearBorder()
+                self.borderAnimation(color: .systemBrown) // 브론즈
+            case 20..<40:
+                self.clearBorder()
+                self.borderAnimation(color: .lightGray) // 실버
+            case 40..<60:
+                self.clearBorder()
+                self.borderAnimation(color: UIColor(red: 200/255, green: 155/255, blue: 60/255, alpha: 1)) // 골드
+            case 60..<80:
+                self.clearBorder()
+                self.borderAnimation(color: .systemGreen) // 플레
+            case 80...:
+                self.clearBorder()
+                self.borderAnimation(color: .systemBlue) // 다이아
+            default:
+                break
+            }
+        } else {
+            self.clearBorder()
+            self.borderAnimation(color: .black) // 아이언
+        }
     }
 }
 
