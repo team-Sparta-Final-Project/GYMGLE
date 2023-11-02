@@ -19,8 +19,7 @@ final class UserMyProfileViewController: UIViewController {
     let userMyProfileView = UserMyProfileView()
     var userUid: String? //❗️ 전페이지에서 uid를 받아와 이걸로 검색을 해 정보들을 가져와야 함⭐️⭐️⭐️⭐️⭐️
     var post: [Board] = [] // 셀 나타내기
-    
-    
+
     // MARK: - life cycle
 
     override func loadView() {
@@ -49,11 +48,15 @@ private extension UserMyProfileViewController {
     func allSetting() {
         buttonTapped()
         setCustomBackButton()
+        tableViewSetting()
+        profileIsNil()
+        buttonSetting()
+    }
+    
+    func tableViewSetting() {
         userMyProfileView.postTableview.dataSource = self
         userMyProfileView.postTableview.delegate = self
         userMyProfileView.postTableview.register(CommunityCell.self, forCellReuseIdentifier: "CommunityCell")
-        profileIsNil()
-        buttonSetting()
     }
     
     func buttonTapped() {
@@ -90,7 +93,6 @@ private extension UserMyProfileViewController {
                 self.userMyProfileView.dataSetting(gym: gymName, nick: nickName, postCount: self.post.count)
                 self.userMyProfileView.postTableview.reloadData()
             }
-
             return
         }
     }
@@ -112,8 +114,8 @@ private extension UserMyProfileViewController {
                     completion()
                 }
             }
-            completion()
         }
+        completion()
     }
     //이미지 가져오기
     func downloadImage(imageView: UIImageView) {

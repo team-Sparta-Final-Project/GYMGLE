@@ -9,11 +9,12 @@ import UIKit
 import FirebaseAuth
 import FirebaseCore
 import FirebaseDatabase
+import FirebaseStorage
 
 class MyPageTableView: UITableView {
     // MARK: - Properties
     
-    lazy var cellContents = ["\(DataManager.shared.userInfo!.name)", "공지사항", "로그아웃", "탈퇴하기"]
+    lazy var cellContents = ["\(DataManager.shared.profile?.nickName)", "공지사항", "로그아웃", "탈퇴하기"]
     weak var myPageDelegate: MyPageTableViewDelegate?
     
     // MARK: - Initialization
@@ -28,6 +29,23 @@ class MyPageTableView: UITableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    //킹피셔로 다시 구현⭐️⭐️⭐️
+    func downloadImage(imageView: UIImageView) {
+        guard let url = DataManager.shared.profile?.image else  {return}
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("오류 - \(error.localizedDescription)")
+                return
+            }
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    imageView.image = image
+                }
+            }
+        }.resume()
     }
 }
 
@@ -68,16 +86,23 @@ extension MyPageTableView: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageCell", for: indexPath) as! MyPageTableViewCell
         cell.label.text = cellContents[indexPath.row]
         cell.selectionStyle = .none
-        
+        //⭐️⭐️⭐️
         if indexPath.row == 0 {
             let imageView = UIImageView()
-//            imageView.image = UIImage(systemName: "person")
+            if DataManager.shared.profile == nil {
+                imageView.image = UIImage(systemName: "person")
+                cell.label.text = "프로필을 설정해주세요."
+            }
+            cell.label.text = DataManager.shared.profile?.nickName
+            downloadImage(imageView: imageView)
+            
+            
             imageView.layer.cornerRadius = 17
             imageView.backgroundColor = .gray
             imageView.clipsToBounds = true
 
             
-            cell.addSubviews(imageView)
+            cell.addSubview(imageView)
             
             imageView.snp.makeConstraints {
                 $0.left.equalToSuperview().offset(20)

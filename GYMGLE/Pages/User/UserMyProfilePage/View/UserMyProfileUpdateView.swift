@@ -11,7 +11,7 @@ final class UserMyProfileUpdateView: UIView {
 
     
     // MARK: - UIProperties
-    private lazy var pageLabel: UILabel = {
+    lazy var pageLabel: UILabel = {
         let label = UILabel()
         label.text = "프로필 수정"
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size19Bold, textAligment: .center)
@@ -146,6 +146,8 @@ private extension UserMyProfileUpdateView {
         NSLayoutConstraint.activate([
             profileImageView.topAnchor.constraint(equalTo: dividerView.bottomAnchor, constant: 40),
             profileImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
+            profileImageView.widthAnchor.constraint(equalToConstant: 100),
+            profileImageView.heightAnchor.constraint(equalToConstant: 100),
             
             imageButton.trailingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 4),
             imageButton.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: -8),

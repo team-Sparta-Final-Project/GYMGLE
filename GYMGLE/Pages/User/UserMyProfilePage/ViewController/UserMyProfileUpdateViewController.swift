@@ -17,7 +17,6 @@ final class UserMyProfileUpdateViewController: UIViewController {
 
     // MARK: - pripertise
     let userMyprofileUpdateView = UserMyProfileUpdateView()
-    
     // MARK: - life cycle
 
     override func loadView() {
@@ -28,7 +27,10 @@ final class UserMyProfileUpdateViewController: UIViewController {
         super.viewDidLoad()
         allSetting()
         if DataManager.shared.profile?.nickName == nil {
+            userMyprofileUpdateView.pageLabel.text = "프로필 추가"
             showToast(message: "프로필을 먼저 설정해주세요.")
+        } else {
+            userMyprofileUpdateView.pageLabel.text = "프로필 수정"
         }
     }
     
@@ -47,6 +49,7 @@ private extension UserMyProfileUpdateViewController {
         userMyprofileUpdateView.nickNameTextField.delegate = self
         allButtonSetting()
         userMyprofileUpdateView.nickNameTextField.text = DataManager.shared.profile?.nickName
+        downloadImage(imageView: userMyprofileUpdateView.profileImageView)
     }
     
     func allButtonSetting() {
@@ -79,6 +82,22 @@ private extension UserMyProfileUpdateViewController {
             ref.setValue(profileJSON)
         } catch {
             print("테스트 - error")
+        }
+    }
+    func downloadImage(imageView: UIImageView) {
+        guard let url = DataManager.shared.profile?.image else  {return}
+        Storage.storage().reference(forURL: "\(url)").downloadURL { url, error  in
+            URLSession.shared.dataTask(with: url!) { data, response, error in
+                if let error = error {
+                    print("오류 - \(error.localizedDescription)")
+                    return
+                }
+                if let data = data, let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        imageView.image = image
+                    }
+                }
+            }.resume()
         }
     }
     func showToast(message: String) {
@@ -118,7 +137,6 @@ extension UserMyProfileUpdateViewController {
                 DataManager.shared.profile = myProfile
                 self.createdProfile(url: url)
             }
-                
         }
         dismiss(animated: true)
     }
