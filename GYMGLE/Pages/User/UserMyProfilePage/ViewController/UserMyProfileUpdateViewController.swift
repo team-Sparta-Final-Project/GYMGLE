@@ -46,6 +46,7 @@ private extension UserMyProfileUpdateViewController {
     func allSetting() {
         userMyprofileUpdateView.nickNameTextField.delegate = self
         allButtonSetting()
+        userMyprofileUpdateView.nickNameTextField.text = DataManager.shared.profile?.nickName
     }
     
     func allButtonSetting() {
