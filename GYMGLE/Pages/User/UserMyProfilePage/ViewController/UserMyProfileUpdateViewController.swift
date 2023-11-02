@@ -71,7 +71,7 @@ private extension UserMyProfileUpdateViewController {
     func createdProfile(url: URL) {
         guard let nickName = userMyprofileUpdateView.nickNameTextField.text else { return }
         let newProfile = Profile(image: url, nickName: nickName)
-        let ref = Database.database().reference().child("profiles/\(Auth.auth().currentUser!.uid)/profile")
+        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/profile")
         do {
             let profileData = try JSONEncoder().encode(newProfile)
             let profileJSON = try JSONSerialization.jsonObject(with: profileData, options: [])

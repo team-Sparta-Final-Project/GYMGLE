@@ -87,8 +87,6 @@ private extension UserMyProfileViewController {
             }
             getPost {
                 self.userMyProfileView.postTableview.reloadData()
-                print("테스트 - \(self.post)")
-                print("테스트 - \(self.post.count)")
                 guard let gymNAme = DataManager.shared.realGymInfo?.gymName, let nickName = DataManager.shared.profile?.nickName else { return }
                 self.userMyProfileView.dataSetting(gym: gymNAme, nick: nickName, postCount: self.post.count)
             }
@@ -103,7 +101,7 @@ private extension UserMyProfileViewController {
 
 private extension UserMyProfileViewController {
     func getProfile(completion: @escaping () -> Void) {
-        let ref = Database.database().reference().child("profiles").child("\(userUid!)")
+        let ref = Database.database().reference().child("accounts").child("\(userUid!)").child("profile")
         ref.observeSingleEvent(of: .value) { dataSnapshot in
             if let profileData = dataSnapshot.value as? [String: Any] {
                 if let nickName = profileData["nickName"] as? String,
