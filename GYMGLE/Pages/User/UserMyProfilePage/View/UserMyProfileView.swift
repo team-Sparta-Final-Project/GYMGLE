@@ -35,9 +35,9 @@ final class UserMyProfileView: UIView {
         return label
     }()
     
-    private lazy var nickName: UILabel = {
+    lazy var nickName: UILabel = {
         let label = UILabel()
-        label.text = "포메돈까스"
+        label.text = "안녕"
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size19Bold, textAligment: .center)
         return label
     }()

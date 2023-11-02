@@ -17,9 +17,15 @@ struct Board: Codable {
 
 //프로필
 struct Profile: Codable {
-    var nickName: String
     var image: URL
+    var nickName: String
+
+    enum CodingKeys: String, CodingKey {
+        case image
+        case nickName
+    }
 }
+
 
 //코멘트
 struct Comment: Codable {

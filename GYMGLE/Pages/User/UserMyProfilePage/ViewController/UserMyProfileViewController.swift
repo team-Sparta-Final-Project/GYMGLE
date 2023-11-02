@@ -32,6 +32,8 @@ final class UserMyProfileViewController: UIViewController {
             userMyProfileUpdateVC.modalPresentationStyle = .overCurrentContext
             present(userMyProfileUpdateVC, animated: true)
         }
+        print("테스트 - \(userMyProfileView.nickName.text!)")
+        getProfile()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,7 +67,46 @@ private extension UserMyProfileViewController {
         navigationController?.navigationBar.topItem?.title = "마이페이지"
         navigationController?.navigationBar.tintColor = .black
     }
-   
+
+//    let ref = Database.database().reference().child("profiles/\(Auth.auth().currentUser!.uid)/profile")
+//    ref.observeSingleEvent(of: .value) { DataSnapshot in
+//        guard let value = DataSnapshot.value as? [String: Any] else {
+//            print("테스트 - 값")
+//            return
+//        }
+//        do {
+//            let jsonData = try JSONSerialization.data(withJSONObject: value, options: [])
+//            let profile = try JSONDecoder().decode(Profile.self, from: jsonData)
+//            print("테스트 - \(profile)")
+//        } catch {
+//            print("테스트 - error")
+//        }
+//    }
+    func getProfile() {
+        let ref = Database.database().reference().child("profiles")
+        let query = ref.queryOrdered(byChild: "profile/nickName").queryEqual(toValue: "ddd")
+        query.observeSingleEvent(of: .value) { dataSnapshot in
+            if dataSnapshot.exists() {
+                if let profileData = dataSnapshot.value as? [String: Any] {
+                    do {
+                        // JSON 데이터를 [Profile] 배열로 디코딩
+                        let jsonData = try JSONSerialization.data(withJSONObject: profileData, options: [])
+                        let profiles = try JSONDecoder().decode(Profile.self, from: jsonData)
+                       
+                        
+                        print("테스트 - \(profiles)")
+                    } catch {
+                        print("테스트 - 오류: \(error)")
+                    }
+                } else {
+                    print("테스트 - profileData를 딕셔너리로 변환하는 중 오류 발생")
+                }
+            } else {
+                // 데이터가 존재하지 않는 경우
+                print("테스트 - 데이터가 존재하지 않습니다.")
+            }
+        }
+    }
 }
 
 // MARK: - extension @objc func

@@ -12,7 +12,7 @@ import FirebaseDatabase
 
 class BlockViewController: UIViewController {
     
-    let profile = Profile(nickName: "example", image: URL(fileURLWithPath: "www.naver.com"))
+    let profile = Profile(image: URL(fileURLWithPath: "www.naver.com"), nickName: "example")
     var blockedUsers: [String] = []
     var posts: [Board] = []
     

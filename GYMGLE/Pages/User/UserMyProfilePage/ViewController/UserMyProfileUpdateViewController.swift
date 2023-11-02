@@ -70,7 +70,7 @@ private extension UserMyProfileUpdateViewController {
     }
     func createdProfile(url: URL) {
         guard let nickName = userMyprofileUpdateView.nickNameTextField.text else { return }
-        let newProfile = Profile(nickName: nickName, image: url)
+        let newProfile = Profile(image: url, nickName: nickName)
         let ref = Database.database().reference().child("profiles/\(Auth.auth().currentUser!.uid)/profile")
         do {
             let profileData = try JSONEncoder().encode(newProfile)
@@ -112,8 +112,9 @@ extension UserMyProfileUpdateViewController {
     }
     @objc private func successedButtonTapped() {
         uploadImage(image: userMyprofileUpdateView.profileImageView.image!) { url in
-            if let url = url {
-                DataManager.shared.profile?.image = url
+            if let url = url, let nickName = self.userMyprofileUpdateView.nickNameTextField.text {
+                let myProfile = Profile(image: url, nickName: nickName)
+                DataManager.shared.profile = myProfile
                 self.createdProfile(url: url)
             }
                 
