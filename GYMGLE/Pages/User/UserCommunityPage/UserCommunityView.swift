@@ -6,9 +6,18 @@
 //
 
 import UIKit
+import FirebaseStorage
+import Firebase
+import FirebaseAuth
+import FirebaseCore
+import FirebaseDatabase
+
 
 class UserCommunityView: UIView,UITableViewDelegate {
+    var posts: [Board] = [] // 게시물 데이터를 저장할 배열
+    let first = CommunityCell()
     
+
     weak var delegate: CommunityTableViewDelegate?
     
     func userDidSelectRow(at indexPath: IndexPath) {
@@ -69,11 +78,37 @@ class UserCommunityView: UIView,UITableViewDelegate {
         appTableView.dataSource = self
         appTableView.delegate = self
         appTableView.register(CommunityCell.self, forCellReuseIdentifier: "Cell")
-        
+        decodeData()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    func decodeData() {
+        // Firebase에서 데이터 가져오기
+        let databaseRef = Database.database().reference().child("posts")
+        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            self.posts.removeAll() // 데이터를 새로 받을 때 배열 비우기
+            if let user = Auth.auth().currentUser {
+                let uid = user.uid
+                if let data = snapshot.value as? [String: Any] {
+                    for (key, value) in data {
+                        if let postDict = value as? [String: Any],
+                           let content = postDict["content"] as? String,
+                           let like = postDict["likeCount"] as? Int,
+                           let timestamp = postDict["date"] as? TimeInterval {
+                            let date = Date(timeIntervalSince1970: timestamp) // Double을 Date로 변환
+                            let post = Board(uid: uid, content: content, date: date, isUpdated: false, likeCount: like)
+                            self.posts.append(post)
+                        }
+                    }
+                }
+                self.appTableView.reloadData() // 테이블 뷰 리로드
+            }
+        }) { (error) in
+            // 에러 핸들링
+            print("Firebase에서 데이터를 가져오는 동안 에러 발생: \(error.localizedDescription)")
+        }
     }
     
     func setupUI(){
@@ -128,13 +163,17 @@ class UserCommunityView: UIView,UITableViewDelegate {
 extension UserCommunityView:UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5 // TODO: 데이터모델 공사중입니다
+        return posts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CommunityCell
         cell.selectionStyle = .none
+        if indexPath.row < posts.count {
+            let data = posts[indexPath.row]
+            cell.configure(with: data)
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

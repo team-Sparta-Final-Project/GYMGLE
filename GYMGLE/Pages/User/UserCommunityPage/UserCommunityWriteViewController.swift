@@ -6,6 +6,11 @@
 //
 
 import UIKit
+import FirebaseStorage
+import Firebase
+import FirebaseAuth
+import FirebaseCore
+import FirebaseDatabase
 
 class UserCommunityWriteViewController: UIViewController {
     let userCommunityWriteView = UserCommunityWriteView()
@@ -29,7 +34,8 @@ class UserCommunityWriteViewController: UIViewController {
         super.viewDidLoad()
         
         first.addButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(createButtonTapped)))
-
+        
+        first.addButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(        createBoardButtonTapped)))
     }
     
 }
@@ -72,9 +78,44 @@ extension UserCommunityWriteViewController {
         }
     }
 }
+extension UserCommunityWriteViewController{
     
-
+}
 extension UserCommunityWriteViewController: UITextViewDelegate {
+    func createdBoard() {
+        if let user = Auth.auth().currentUser {
+            let uid = user.uid
+        guard let boardText = first.writePlace.text else { return }
+        let currentDate = Date()
+        let newBoard = Board(uid: uid, content: boardText, date: currentDate, isUpdated: false, likeCount: 0)
+        let ref = Database.database().reference().child("boards").childByAutoId()
+//        let ref2 = Database.database().reference().child("profiles").child(uid)
+//            ref2.observeSingleEvent(of: .value) { (snapshot) in
+//                if let profileData = snapshot.value as? [String: Any],
+//                   let nickName = profileData["nickName"] as? String {
+//                    print("사용자의 닉네임: \(nickName)")
+//                    let newProfile = Profile(nickName: nickName, image: url)
+//                } else {
+//                    print("프로필 데이터를 가져오는 데 문제가 있습니다.")
+//                }
+//            }
+
+        do {
+            let boardData = try JSONEncoder().encode(newBoard)
+            let boardJSON = try JSONSerialization.jsonObject(with: boardData, options: [])
+            ref.setValue(boardJSON)
+        } catch {
+            print("테스트 - error")
+        }
+    }
+    }
+    
+    @objc private func createBoardButtonTapped() {
+        if let text = userCommunityWriteView.writePlace.text {
+            self.createdBoard()
+            dismiss(animated: true, completion: nil)
+        }
+        }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if userCommunityWriteView.writePlace.text == "내용을 입력하세요." {
