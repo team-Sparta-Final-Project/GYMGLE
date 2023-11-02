@@ -10,7 +10,7 @@ import SnapKit
 
 class BoardDetailCommentCell: UITableViewCell {
 
-    let profileMini = BoardProfileMini()
+    let profileLine = BoardProfileLine()
     let contentLabel = UILabel().then{
         $0.numberOfLines = 0
         $0.font = FontGuide.size14
@@ -26,13 +26,14 @@ class BoardDetailCommentCell: UITableViewCell {
         self.backgroundColor = .clear
         
         
-        self.addSubviews(profileMini,contentLabel)
-        profileMini.snp.makeConstraints{
-            $0.top.left.equalToSuperview().inset(20)
+        self.contentView.addSubviews(profileLine,contentLabel)
+        
+        profileLine.snp.makeConstraints{
+            $0.top.left.right.equalToSuperview().inset(20)
         }
         
         contentLabel.snp.makeConstraints{
-            $0.top.equalTo(profileMini.snp.bottom).offset(12)
+            $0.top.equalTo(profileLine.snp.bottom).offset(12)
             $0.left.equalToSuperview().inset(52)
             $0.right.equalToSuperview().inset(20)
             $0.bottom.equalToSuperview().inset(20)

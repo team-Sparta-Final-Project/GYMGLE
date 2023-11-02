@@ -2,15 +2,19 @@ import UIKit
 import SnapKit
 import Then
 
-protocol BoardDetailContentCellDelegate {
-    func likeButtonTarget()
+protocol BoardProfilelikeButtonDelegate {
+    func likeButtonTapped()
 }
 
 class BoardDetailContentCell: UITableViewCell {
     
+    var likeDelegate:BoardProfilelikeButtonDelegate?
+    
     let profileSize:CGFloat = 24.0
     
-    let profileMini = BoardProfileMini()
+    var liked:Bool = false
+    
+    let profileLine = BoardProfileLine()
     
     let contentLabel = UILabel().then{
         $0.numberOfLines = 0
@@ -19,13 +23,7 @@ class BoardDetailContentCell: UITableViewCell {
 
         //"오늘도 운동 완료!\n하제하기 싫은거 인정?"
     }
-    
-    let timeLabel = UILabel().then{
-        $0.textColor = ColorGuide.textHint
-        $0.text = "2시간 전"
-        $0.font = FontGuide.size14
-    }
-    
+        
     let commentCount = UILabel().then{
         $0.textColor = ColorGuide.textHint
         $0.text = "답글 12개"
@@ -38,17 +36,23 @@ class BoardDetailContentCell: UITableViewCell {
         $0.font = FontGuide.size14
     }
     
-    let likeButton = UIImageView().then{
+    let likeButton = UIButton().then{
         $0.tintColor = ColorGuide.textHint
-        $0.image = UIImage(systemName: "heart")
+        $0.setImage(UIImage(systemName: "heart"), for: .normal)
     }
+    
+
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super .init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
         
+        likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+
         configure()
     }
+    
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -56,26 +60,21 @@ class BoardDetailContentCell: UITableViewCell {
         
     func configure(){
 
-        self.addSubview(profileMini)
-        profileMini.snp.makeConstraints{
-            $0.top.left.equalToSuperview().inset(20)
+        self.contentView.addSubview(profileLine)
+        profileLine.snp.makeConstraints{
+            $0.top.left.right.equalToSuperview().inset(20)
         }
+                
         
-        self.addSubview(timeLabel)
-        timeLabel.snp.makeConstraints{
-            $0.centerY.equalTo(profileMini)
-            $0.top.right.equalToSuperview().inset(20)
-        }
-        
-        self.addSubview(contentLabel)
+        self.contentView.addSubview(contentLabel)
         contentLabel.snp.makeConstraints{
-            $0.top.equalTo(profileMini.snp.bottom).offset(12)
+            $0.top.equalTo(profileLine.snp.bottom).offset(12)
             $0.left.right.equalToSuperview().inset(20)
         }
 
-        self.addSubviews(commentCount,likeCount,likeButton)
+        self.contentView.addSubviews(commentCount,likeCount,likeButton)
         commentCount.snp.makeConstraints{
-            $0.left.equalTo(profileMini.snp.left)
+            $0.left.equalTo(profileLine.snp.left)
             $0.top.equalTo(contentLabel.snp.bottom).offset(20)
             $0.bottom.equalToSuperview().inset(10)
         }
@@ -90,5 +89,17 @@ class BoardDetailContentCell: UITableViewCell {
         
     }
     
+    @objc func likeButtonTapped(){
+        self.likeDelegate?.likeButtonTapped()
+        if liked {
+            self.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            liked = false
+        } else {
+            self.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            liked = true
+        }
+        
+    }
+
     
 }

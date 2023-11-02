@@ -2,22 +2,44 @@ import UIKit
 
 class BoardDetailViewController: UIViewController {
     
-    var temp = ["aaa","bbb","ccc","ddd","eee"]
+    var temp:[Any] = []
     
     let viewConfigure = BoardDetailView()
     
     override func loadView() {
         viewConfigure.tableView.dataSource = self
         viewConfigure.tableView.delegate = self
+        viewConfigure.commentSection.commentButtonDelegate = self
         view = viewConfigure
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        makeDummy()
     }
     
+    
+    @objc func showCommentPopUp(){
+        print("테스트 - asdjhaskjdhkajsdhjkash")
+    }
+
+    
 }
+//MARK: - @objc 모음 익스텐션
+extension BoardDetailViewController {
+    
+    func makeDummy(){
+        temp.append(Board(uid: "마알티즈국빱", content: "안녕하세요", date: Date(), isUpdated: false, likeCount: 0))
+        temp.append(Comment(uid: "국빱애호가", comment: "반갑습니다", date: Date(), isUpdated: false))
+    }
+    
+    
+    
+}
+
+
+//MARK: - 테이블뷰 익스텐션
 
 extension BoardDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -34,18 +56,44 @@ extension BoardDetailViewController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if temp[indexPath.row] == "aaa"{
+        if temp[indexPath.row] is Board {
+            let content = temp[indexPath.row] as! Board
             let cell = BoardDetailContentCell()
             cell.selectionStyle = .none
+            cell.profileLine.infoDelegate = self
+            cell.contentLabel.text = content.content
+            cell.profileLine.writerLabel.text = content.uid
             return cell
-        } else if temp[indexPath.row] == "ccc"{
+        } else if temp[indexPath.row] is Comment {
+            let comment = temp[indexPath.row] as! Comment
             let cell = BoardDetailCommentCell()
-            cell.contentLabel.text = "짧은 텍스트\n두줄짜리"
+            cell.profileLine.writerLabel.text = comment.uid
+            cell.contentLabel.text = comment.comment
+            cell.profileLine.profileImage.image = UIImage(systemName: "heart.fill")
+            cell.profileLine.profileImage.tintColor = .systemMint
+            cell.profileLine.infoDelegate = self
             return cell
         }else {
-            return BoardDetailCommentCell()
+            let cell = BoardDetailCommentCell()
+            cell.profileLine.infoDelegate = self
+            return cell
         }
     }
     
     
+}
+
+//MARK: - 테이블뷰 셀 델리겟
+extension BoardDetailViewController:BoardProfileInfoButtonDelegate {
+    func infoButtonTapped(nickName:String) {
+        print("테스트 - \(nickName)")
+    }
+}
+
+
+extension BoardDetailViewController:CommentButtonDelegate {
+    func commentButtonTapped(text:String) {
+        temp.append(Comment(uid: "국빱애호가", comment: text, date: Date(), isUpdated: false))
+        self.viewConfigure.tableView.reloadData()
+    }
 }

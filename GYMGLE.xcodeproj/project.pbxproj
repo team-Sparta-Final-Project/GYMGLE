@@ -47,7 +47,7 @@
 		275A12E32AF1FF9F00CC72EE /* BoardDetailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275A12E22AF1FF9F00CC72EE /* BoardDetailTableView.swift */; };
 		275A12E72AF2047F00CC72EE /* BoardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275A12E62AF2047F00CC72EE /* BoardDetailView.swift */; };
 		275A12E92AF2152100CC72EE /* BoardDetailContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275A12E82AF2152100CC72EE /* BoardDetailContentCell.swift */; };
-		275A12EB2AF21BB700CC72EE /* BoardProfileMini.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275A12EA2AF21BB700CC72EE /* BoardProfileMini.swift */; };
+		275A12EB2AF21BB700CC72EE /* BoardProfileLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275A12EA2AF21BB700CC72EE /* BoardProfileLine.swift */; };
 		275A12ED2AF22E8A00CC72EE /* BoardDetailCommentSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275A12EC2AF22E8A00CC72EE /* BoardDetailCommentSection.swift */; };
 		2782A4B62AEA466D00B110F9 /* BottomSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4B52AEA466D00B110F9 /* BottomSheetController.swift */; };
 		2782A4B82AEA46BB00B110F9 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */; };
@@ -142,7 +142,7 @@
 		275A12E22AF1FF9F00CC72EE /* BoardDetailTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailTableView.swift; sourceTree = "<group>"; };
 		275A12E62AF2047F00CC72EE /* BoardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailView.swift; sourceTree = "<group>"; };
 		275A12E82AF2152100CC72EE /* BoardDetailContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailContentCell.swift; sourceTree = "<group>"; };
-		275A12EA2AF21BB700CC72EE /* BoardProfileMini.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardProfileMini.swift; sourceTree = "<group>"; };
+		275A12EA2AF21BB700CC72EE /* BoardProfileLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardProfileLine.swift; sourceTree = "<group>"; };
 		275A12EC2AF22E8A00CC72EE /* BoardDetailCommentSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailCommentSection.swift; sourceTree = "<group>"; };
 		2782A4B52AEA466D00B110F9 /* BottomSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetController.swift; sourceTree = "<group>"; };
 		2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
@@ -535,7 +535,7 @@
 				275A12E22AF1FF9F00CC72EE /* BoardDetailTableView.swift */,
 				275A12E02AF1FEEB00CC72EE /* BoardDetailCommentCell.swift */,
 				275A12E82AF2152100CC72EE /* BoardDetailContentCell.swift */,
-				275A12EA2AF21BB700CC72EE /* BoardProfileMini.swift */,
+				275A12EA2AF21BB700CC72EE /* BoardProfileLine.swift */,
 				275A12EC2AF22E8A00CC72EE /* BoardDetailCommentSection.swift */,
 			);
 			path = Components;
@@ -885,7 +885,7 @@
 				63F777CF2AF137C600A3DF2B /* UserMyProfileViewController.swift in Sources */,
 				630A0BEE2AD9269100525A6E /* Extension_UILabel.swift in Sources */,
 				2782A4BC2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift in Sources */,
-				275A12EB2AF21BB700CC72EE /* BoardProfileMini.swift in Sources */,
+				275A12EB2AF21BB700CC72EE /* BoardProfileLine.swift in Sources */,
 				630EDE172ADFBC8300B37982 /* Extension_ToastView.swift in Sources */,
 				D1E018732ADCECAF00D1C53D /* AdminNoticeTableViewCell.swift in Sources */,
 				D1E018752ADCEDF100D1C53D /* UserRegisterView.swift in Sources */,

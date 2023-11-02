@@ -1,7 +1,13 @@
 import UIKit
 import SnapKit
 
+protocol CommentButtonDelegate{
+    func commentButtonTapped(text:String)
+}
+
 class BoardDetailCommentSection:UIView {
+    
+    var commentButtonDelegate:CommentButtonDelegate?
     
     let profileSize:CGFloat = 24.0
     
@@ -43,7 +49,7 @@ class BoardDetailCommentSection:UIView {
             $0.right.equalTo(button.snp.left)
         }
 
-        
+        button.addTarget(self, action: #selector(commentButtonTapped), for: .touchUpInside)
         
     }
     
@@ -51,6 +57,10 @@ class BoardDetailCommentSection:UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    @objc func commentButtonTapped(){
+        self.commentButtonDelegate?.commentButtonTapped(text:textField.text ?? "z")
+        self.textField.text = ""
+    }
+
     
 }
