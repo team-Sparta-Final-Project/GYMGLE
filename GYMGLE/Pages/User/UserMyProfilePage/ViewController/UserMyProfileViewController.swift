@@ -17,8 +17,10 @@ final class UserMyProfileViewController: UIViewController {
     
     // MARK: - prirperties
     let userMyProfileView = UserMyProfileView()
-    var userUid: String? = "0N2Mu23kf6UiTHvQEOyetFfn2FA2"//❗️ 전페이지에서 uid를 받아와 이걸로 검색을 해 정보들을 가져와야 함⭐️⭐️⭐️⭐️⭐️
+    var userUid: String? //❗️ 전페이지에서 uid를 받아와 이걸로 검색을 해 정보들을 가져와야 함⭐️⭐️⭐️⭐️⭐️
     var post: [Board] = [] // 셀 나타내기
+    
+    
     // MARK: - life cycle
 
     override func loadView() {
@@ -33,13 +35,12 @@ final class UserMyProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         tabBarController?.tabBar.isHidden = true
-        getPost {
-            self.userMyProfileView.postTableview.reloadData()
-        }
         allSetting()
     }
     
 }
+
+
 
 // MARK: - private extension custom func
 
@@ -52,6 +53,7 @@ private extension UserMyProfileViewController {
         userMyProfileView.postTableview.delegate = self
         userMyProfileView.postTableview.register(CommunityCell.self, forCellReuseIdentifier: "CommunityCell")
         profileIsNil()
+        buttonSetting()
     }
     
     func buttonTapped() {
@@ -60,9 +62,11 @@ private extension UserMyProfileViewController {
     }
     func buttonSetting() {
         if userUid == Auth.auth().currentUser?.uid { // 내 프로필 진입 시
-            
+            userMyProfileView.banButton.isHidden = true
+            userMyProfileView.updateButton.isHidden = false
         } else { //다른 사람 프로필 진입 시
-            
+            userMyProfileView.banButton.isHidden = false
+            userMyProfileView.updateButton.isHidden = true
         }
     }
     func setCustomBackButton() {
@@ -77,19 +81,29 @@ private extension UserMyProfileViewController {
             present(userMyProfileUpdateVC, animated: true)
             return
         } else {
-            getProfile() {
+            getProfile {
                 self.downloadImage(imageView: self.userMyProfileView.profileImageView)
                 self.userMyProfileView.nickName.text = DataManager.shared.profile?.nickName
             }
-            guard let gymNAme = DataManager.shared.realGymInfo?.gymName, let nickName = DataManager.shared.profile?.nickName else { return }
-            userMyProfileView.dataSetting(gym: gymNAme, nick: nickName, postCount: self.post.count)
+            getPost {
+                self.userMyProfileView.postTableview.reloadData()
+                print("테스트 - \(self.post)")
+                print("테스트 - \(self.post.count)")
+                guard let gymNAme = DataManager.shared.realGymInfo?.gymName, let nickName = DataManager.shared.profile?.nickName else { return }
+                self.userMyProfileView.dataSetting(gym: gymNAme, nick: nickName, postCount: self.post.count)
+            }
             return
         }
     }
-    
-    // userMyProfileView.nickName.text! -> 이부분 닉네임 프로퍼티로 변경해야 함⭐️⭐️⭐️⭐️⭐️
+}
+
+
+
+// MARK: - private extension data func logic
+
+private extension UserMyProfileViewController {
     func getProfile(completion: @escaping () -> Void) {
-        let ref = Database.database().reference().child("profiles").child("\(userUid)")
+        let ref = Database.database().reference().child("profiles").child("\(userUid!)")
         ref.observeSingleEvent(of: .value) { dataSnapshot in
             if let profileData = dataSnapshot.value as? [String: Any] {
                 if let nickName = profileData["nickName"] as? String,
@@ -139,6 +153,8 @@ private extension UserMyProfileViewController {
   
 }
 
+
+
 // MARK: - extension @objc func
 
 extension UserMyProfileViewController {
@@ -163,6 +179,8 @@ extension UserMyProfileViewController {
 }
 
 
+
+
 // MARK: - UITableViewDataSource
 
 extension UserMyProfileViewController: UITableViewDataSource  {
@@ -179,6 +197,8 @@ extension UserMyProfileViewController: UITableViewDataSource  {
         return cell
     }
 }
+
+
 
 // MARK: - UITableViewDelegate
 

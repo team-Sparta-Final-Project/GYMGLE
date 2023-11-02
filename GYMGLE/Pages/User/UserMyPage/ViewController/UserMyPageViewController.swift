@@ -43,6 +43,7 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
         switch indexPath.row {
         case 0:
             let userMyProfileVC = UserMyProfileViewController()
+            userMyProfileVC.userUid = Auth.auth().currentUser?.uid
             self.navigationController?.pushViewController(userMyProfileVC, animated: true)
             break
         case 1:
