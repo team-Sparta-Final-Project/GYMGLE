@@ -17,7 +17,7 @@ final class UserMyProfileView: UIView {
         return view
     }()
     
-    private lazy var profileImageView: UIImageView = {
+    lazy var profileImageView: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(systemName: "person.fill")?.resized(to: CGSize(width: 80, height: 80)).withRenderingMode(.alwaysOriginal)
         image.contentMode = .scaleAspectFill
@@ -35,9 +35,9 @@ final class UserMyProfileView: UIView {
         return label
     }()
     
-    private lazy var nickName: UILabel = {
+    lazy var nickName: UILabel = {
         let label = UILabel()
-        label.text = "포메돈까스"
+        label.text = "안녕"
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size19Bold, textAligment: .center)
         return label
     }()
@@ -141,7 +141,7 @@ private extension UserMyProfileView {
         NSLayoutConstraint.activate([
             labelStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0),
             labelStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 4),
-            labelStackView.widthAnchor.constraint(equalToConstant: 90),
+            labelStackView.widthAnchor.constraint(equalToConstant: 140),
             
             postTableview.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             postTableview.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),

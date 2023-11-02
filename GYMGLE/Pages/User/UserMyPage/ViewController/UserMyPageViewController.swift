@@ -43,14 +43,13 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
         switch indexPath.row {
         case 0:
             let userMyProfileVC = UserMyProfileViewController()
-            print("테스트 - ddd")
+            userMyProfileVC.userUid = Auth.auth().currentUser?.uid
             self.navigationController?.pushViewController(userMyProfileVC, animated: true)
             break
         case 1:
             // 공지사항을 선택한 경우
             let adminNoticeVC = AdminNoticeViewController()
             adminNoticeVC.isAdmin = false
-            print("테스트 - ddd")
             let vc = UINavigationController(rootViewController: adminNoticeVC)
             present(vc, animated: true)
 
