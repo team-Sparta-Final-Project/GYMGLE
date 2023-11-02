@@ -9,6 +9,12 @@ import UIKit
 
 class CommunityCell: UITableViewCell {
     
+    func configure(with data: Board) {
+            mainTextLabel.text = data.content
+//          timeLabel.text = data.date
+//          LikeLabel.text = data.likeCount
+    }
+        
     //    lazy의 역할 찾아볼것
     lazy var allView: UIView = {
         let view = UIView()
@@ -53,52 +59,80 @@ class CommunityCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+//
+//    lazy var mainTextLabel : UILabel = {
+//        let view = UILabel()
+//        allView.addSubview(view)
+//        view.leadingAnchor.constraint(equalTo: imageView1.trailingAnchor, constant: 8).isActive = true
+//        view.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4).isActive = true
+//        let tlb = view.bottomAnchor.constraint(equalTo: allView.bottomAnchor, constant: -24)
+//        tlb.priority = .init(rawValue: 999)
+//        tlb.isActive = true
+//        view.text = "운동조아!!\n월요일조아\n하체 조아\n하체 짱\n하체 최고"
+//        view.font = FontGuide.size14
+//        view.textColor = ColorGuide.black
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.numberOfLines = 4
+//        return view
+//    }()
+    let mainTextLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
+    let timeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    let replyLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let LikeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setView()
-        
 
-        let textLabel = UILabel()
-        allView.addSubview(textLabel)
-        textLabel.leadingAnchor.constraint(equalTo: imageView1.trailingAnchor, constant: 8).isActive = true
-        textLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4).isActive = true
-        let tlb = textLabel.bottomAnchor.constraint(equalTo: allView.bottomAnchor, constant: -24)
+        allView.addSubview(mainTextLabel)
+        mainTextLabel.leadingAnchor.constraint(equalTo: imageView1.trailingAnchor, constant: 8).isActive = true
+        mainTextLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4).isActive = true
+        let tlb = mainTextLabel.bottomAnchor.constraint(equalTo: allView.bottomAnchor, constant: -24)
         tlb.priority = .init(rawValue: 999)
         tlb.isActive = true
-        textLabel.text = "운동조아!!\n월요일조아\n하체 조아\n하체 짱\n하체 최고"
-        textLabel.font = FontGuide.size14
-        textLabel.textColor = ColorGuide.black
-        textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.numberOfLines = 4
+        mainTextLabel.text = "운동조아!!\n월요일조아\n하체 조아\n하체 짱\n하체 최고"
+        mainTextLabel.font = FontGuide.size14
+        mainTextLabel.textColor = ColorGuide.black
+        mainTextLabel.numberOfLines = 4
 
         
-        let timeLabel = UILabel()
         allView.addSubview(timeLabel)
         timeLabel.trailingAnchor.constraint(equalTo: allView.trailingAnchor, constant: -20).isActive = true
         timeLabel.topAnchor.constraint(equalTo: allView.topAnchor, constant: 10).isActive = true
         timeLabel.text = "4시간"
         timeLabel.font = FontGuide.size14
         timeLabel.textColor = ColorGuide.textHint
-        timeLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        let replyLabel = UILabel()
         allView.addSubview(replyLabel)
         replyLabel.trailingAnchor.constraint(equalTo: allView.trailingAnchor, constant: -20).isActive = true
         replyLabel.bottomAnchor.constraint(equalTo: allView.bottomAnchor, constant: -10).isActive = true
         replyLabel.text = "답글 7개"
         replyLabel.font = FontGuide.size14
         replyLabel.textColor = ColorGuide.textHint
-        replyLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        let LikeLabel = UILabel()
         allView.addSubview(LikeLabel)
         LikeLabel.trailingAnchor.constraint(equalTo: replyLabel.leadingAnchor, constant: -8).isActive = true
         LikeLabel.bottomAnchor.constraint(equalTo: allView.bottomAnchor, constant: -10).isActive = true
         LikeLabel.text = "좋아요 2330개"
         LikeLabel.font = FontGuide.size14
         LikeLabel.textColor = ColorGuide.textHint
-        LikeLabel.translatesAutoresizingMaskIntoConstraints = false
     }
     
     
@@ -133,6 +167,7 @@ class CommunityCell: UITableViewCell {
         self.backgroundColor = .white
     }
 
+    
 }
 //
 //extension CommunityCell {
