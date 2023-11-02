@@ -87,9 +87,9 @@ private extension UserMyProfileViewController {
             }
             getPost {
                 self.userMyProfileView.postTableview.reloadData()
-                guard let gymNAme = DataManager.shared.realGymInfo?.gymName, let nickName = DataManager.shared.profile?.nickName else { return }
-                self.userMyProfileView.dataSetting(gym: gymNAme, nick: nickName, postCount: self.post.count)
             }
+            guard let gymName = DataManager.shared.realGymInfo?.gymName, let nickName = DataManager.shared.profile?.nickName else { return }
+            self.userMyProfileView.dataSetting(gym: gymName, nick: nickName, postCount: self.post.count)
             return
         }
     }
