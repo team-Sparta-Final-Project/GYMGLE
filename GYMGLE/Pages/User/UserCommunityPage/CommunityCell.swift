@@ -134,3 +134,15 @@ class CommunityCell: UITableViewCell {
     }
 
 }
+//
+//extension CommunityCell {
+//
+//    func dataSetting(nick: String, mainText: String, date: Date, likeCount: Int, commentCount: Int) {
+//        nameLabel.text = nick
+//        timeLabel.text = "\(date)시간"
+//        Likelabel.text = "좋아요 \(likeCount)개"
+//        replyLabel.text = "답글 \(likeCount)개"
+//        textLabel!.text = mainText
+//
+//    }
+//}

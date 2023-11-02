@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UserCommunityWriteView: UIView {
+class UserCommunityWriteView: UIView, UITextViewDelegate {
     
     private lazy var GymgleName = UILabel().then {
         $0.textColor = ColorGuide.main
@@ -21,11 +21,15 @@ class UserCommunityWriteView: UIView {
         $0.layer.cornerRadius = 16
 //        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(mirrorPlaceTap)))
     }
-    private(set) lazy var writePlace = UITextView().then {
+    lazy var writePlace = UITextView().then {
         $0.backgroundColor = ColorGuide.white
         $0.text = ""
         $0.layer.cornerRadius = 20
         $0.textContainerInset = .init(top: 20, left: 20, bottom: 0, right: 0)
+        $0.isUserInteractionEnabled = true
+        $0.delegate = self // 델리게이트 설정
+//        텍스트뷰의 델리게이트를 이용해서 델리게이트 함수 / 텍스트뷰값을 가져올 수 있는 함수가 있음
+//        텍스트뷰에 쓰여진 텍스트값을 가져오는것
     }
     private(set) lazy var countNumberLabel = UILabel().then {
         $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .center)

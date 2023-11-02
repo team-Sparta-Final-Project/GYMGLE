@@ -6,6 +6,11 @@
 //
 
 import UIKit
+import FirebaseStorage
+import Firebase
+import FirebaseAuth
+import FirebaseCore
+import FirebaseDatabase
 
 class UserCommunityWriteViewController: UIViewController {
     let userCommunityWriteView = UserCommunityWriteView()
@@ -29,7 +34,8 @@ class UserCommunityWriteViewController: UIViewController {
         super.viewDidLoad()
         
         first.addButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(createButtonTapped)))
-
+        
+        first.addButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(        createBoardButtonTapped)))
     }
     
 }
@@ -72,9 +78,32 @@ extension UserCommunityWriteViewController {
         }
     }
 }
+extension UserCommunityWriteViewController{
     
-
+}
 extension UserCommunityWriteViewController: UITextViewDelegate {
+    
+    func createdBoard() {
+        if let user = Auth.auth().currentUser {
+            let uid = user.uid
+        guard let boardText = userCommunityWriteView.writePlace.text else { return }
+        let currentDate = Date()
+        let newBoard = Board(uid: uid, content: boardText, date: currentDate, isUpdated: false, likeCount: 0)
+        let ref = Database.database().reference().child("boards").childByAutoId()
+        do {
+            let boardData = try JSONEncoder().encode(newBoard)
+            let boardJSON = try JSONSerialization.jsonObject(with: boardData, options: [])
+            ref.setValue(boardJSON)
+        } catch {
+            print("테스트 - error")
+        }
+    }
+    }
+    
+    @objc private func createBoardButtonTapped() {
+                self.createdBoard()
+        dismiss(animated: true, completion: nil)
+        }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if userCommunityWriteView.writePlace.text == "내용을 입력하세요." {
@@ -102,4 +131,7 @@ extension UserCommunityWriteViewController: UITextViewDelegate {
             userCommunityWriteView.countNumberLabel.attributedText = attributedString
         }
     }
+    func textViewDidChanges(_ textView: UITextView) {
+           let text = textView.text
+       }
 }
