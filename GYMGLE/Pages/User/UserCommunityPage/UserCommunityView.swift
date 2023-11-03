@@ -15,6 +15,7 @@ import FirebaseDatabase
 
 class UserCommunityView: UIView,UITableViewDelegate {
     var posts: [Board] = [] // 게시물 데이터를 저장할 배열
+    var keys: [String] = []
     var filteredPost: [Board] = []
     let first = CommunityCell()
     
@@ -130,11 +131,13 @@ class UserCommunityView: UIView,UITableViewDelegate {
             //            }
             for childSnapshot in snapshot.children {
                 if let snapshot = childSnapshot as? DataSnapshot,
-                   let data = snapshot.value as? [String: Any] {
+                   let data = snapshot.value as? [String: Any],
+                   let key = snapshot.key as? String {
                     do {
                         let dataInfoJSON = try JSONSerialization.data(withJSONObject: data, options: [])
                         let dataInfo = try JSONDecoder().decode(Board.self, from: dataInfoJSON)
                         self.posts.append(dataInfo)
+                        self.keys.append(key)
                     } catch {
                         print("디코딩 에러")
                     }

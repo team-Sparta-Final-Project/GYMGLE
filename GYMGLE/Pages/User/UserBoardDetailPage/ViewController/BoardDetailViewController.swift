@@ -6,6 +6,7 @@ class BoardDetailViewController: UIViewController {
     
     var temp:[Any] = []
     var board: Board?
+    var boardUid: String?
     
     let viewConfigure = BoardDetailView()
     
