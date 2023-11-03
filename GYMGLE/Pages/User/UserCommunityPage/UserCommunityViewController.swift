@@ -18,7 +18,8 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     }
     
     let first = UserCommunityView()
-    
+    let second = CommunityCell()
+
     override func loadView() {
         view = first
         
@@ -33,7 +34,6 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
-        first.appTableView.reloadData()
     }
     
     @objc func writePlaceTap() {

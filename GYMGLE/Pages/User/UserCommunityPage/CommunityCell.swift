@@ -105,8 +105,9 @@ class CommunityCell: UITableViewCell {
         
         allView.addSubview(mainTextLabel)
         mainTextLabel.leadingAnchor.constraint(equalTo: imageView1.trailingAnchor, constant: 8).isActive = true
+        mainTextLabel.trailingAnchor.constraint(equalTo: allView.trailingAnchor, constant: -24).isActive = true
         mainTextLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4).isActive = true
-        let tlb = mainTextLabel.bottomAnchor.constraint(equalTo: allView.bottomAnchor, constant: -24)
+        let tlb = mainTextLabel.bottomAnchor.constraint(equalTo: allView.bottomAnchor, constant: -30)
         tlb.priority = .init(rawValue: 999)
         tlb.isActive = true
         mainTextLabel.text = "운동조아!!\n월요일조아\n하체 조아\n하체 짱\n하체 최고"

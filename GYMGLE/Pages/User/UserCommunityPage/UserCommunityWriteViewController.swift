@@ -138,14 +138,15 @@ extension UserCommunityWriteViewController: UITextViewDelegate {
 //            }
 //        })
 //    }
-
+    
 
     @objc private func createBoardButtonTapped() {
         if let text = userCommunityWriteView.writePlace.text {
             self.createdBoard()
             dismiss(animated: true, completion: nil)
+            second.decodeData()
         }
-        }
+    }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if userCommunityWriteView.writePlace.text == "내용을 입력하세요." {
