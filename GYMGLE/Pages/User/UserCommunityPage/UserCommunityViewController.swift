@@ -11,6 +11,8 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     
     func didSelectCell(at indexPath: IndexPath) {
         let destinationViewController = BoardDetailViewController()
+        let data = first.posts[indexPath.row]
+        destinationViewController.board = data
         
         navigationController?.pushViewController(destinationViewController, animated: true)
     }
