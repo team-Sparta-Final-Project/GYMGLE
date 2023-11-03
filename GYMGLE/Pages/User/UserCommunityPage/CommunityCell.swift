@@ -10,11 +10,13 @@ import UIKit
 class CommunityCell: UITableViewCell {
     
     func configure(with data: Board) {
-            mainTextLabel.text = data.content
-//          timeLabel.text = data.date
-//          LikeLabel.text = data.likeCount
+        mainTextLabel.text = data.content
+        timeLabel.text = data.date.timeAgo()
+        LikeLabel.text = "좋아요 \(data.likeCount)개"
+        nameLabel.text = data.profile.nickName
+        imageView1.kf.setImage(with: data.profile.image)
     }
-        
+    
     //    lazy의 역할 찾아볼것
     lazy var allView: UIView = {
         let view = UIView()
@@ -30,7 +32,7 @@ class CommunityCell: UITableViewCell {
         return view
     }()
     
-//    init 안에서 allView랑 imageView 둘다 관여받고있기때문에 lazy var로 밖에 빼서 사용할 수 있음
+    //    init 안에서 allView랑 imageView 둘다 관여받고있기때문에 lazy var로 밖에 빼서 사용할 수 있음
     
     lazy var imageView1: UIImageView = {
         let view = UIImageView()
@@ -59,22 +61,22 @@ class CommunityCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-//
-//    lazy var mainTextLabel : UILabel = {
-//        let view = UILabel()
-//        allView.addSubview(view)
-//        view.leadingAnchor.constraint(equalTo: imageView1.trailingAnchor, constant: 8).isActive = true
-//        view.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4).isActive = true
-//        let tlb = view.bottomAnchor.constraint(equalTo: allView.bottomAnchor, constant: -24)
-//        tlb.priority = .init(rawValue: 999)
-//        tlb.isActive = true
-//        view.text = "운동조아!!\n월요일조아\n하체 조아\n하체 짱\n하체 최고"
-//        view.font = FontGuide.size14
-//        view.textColor = ColorGuide.black
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.numberOfLines = 4
-//        return view
-//    }()
+    //
+    //    lazy var mainTextLabel : UILabel = {
+    //        let view = UILabel()
+    //        allView.addSubview(view)
+    //        view.leadingAnchor.constraint(equalTo: imageView1.trailingAnchor, constant: 8).isActive = true
+    //        view.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4).isActive = true
+    //        let tlb = view.bottomAnchor.constraint(equalTo: allView.bottomAnchor, constant: -24)
+    //        tlb.priority = .init(rawValue: 999)
+    //        tlb.isActive = true
+    //        view.text = "운동조아!!\n월요일조아\n하체 조아\n하체 짱\n하체 최고"
+    //        view.font = FontGuide.size14
+    //        view.textColor = ColorGuide.black
+    //        view.translatesAutoresizingMaskIntoConstraints = false
+    //        view.numberOfLines = 4
+    //        return view
+    //    }()
     let mainTextLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -100,7 +102,7 @@ class CommunityCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setView()
-
+        
         allView.addSubview(mainTextLabel)
         mainTextLabel.leadingAnchor.constraint(equalTo: imageView1.trailingAnchor, constant: 8).isActive = true
         mainTextLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4).isActive = true
@@ -111,7 +113,7 @@ class CommunityCell: UITableViewCell {
         mainTextLabel.font = FontGuide.size14
         mainTextLabel.textColor = ColorGuide.black
         mainTextLabel.numberOfLines = 4
-
+        
         
         allView.addSubview(timeLabel)
         timeLabel.trailingAnchor.constraint(equalTo: allView.trailingAnchor, constant: -20).isActive = true
@@ -155,10 +157,10 @@ class CommunityCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
@@ -166,7 +168,7 @@ class CommunityCell: UITableViewCell {
         self.layer.cornerRadius = 20
         self.backgroundColor = .white
     }
-
+    
     
 }
 //
