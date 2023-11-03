@@ -9,6 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseCore
 import FirebaseDatabase
+import Kingfisher
 
 class MyPageTableView: UITableView {
     // MARK: - Properties
@@ -71,7 +72,13 @@ extension MyPageTableView: UITableViewDataSource {
         
         if indexPath.row == 0 {
             let imageView = UIImageView()
-//            imageView.image = UIImage(systemName: "person")
+            if DataManager.shared.profile == nil {
+                imageView.image = UIImage(systemName: "person")
+                cell.label.text = "프로필을 설정해주세요."
+            }
+            cell.label.text = DataManager.shared.profile?.nickName
+            imageView.kf.setImage(with: DataManager.shared.profile?.image)
+            
             imageView.layer.cornerRadius = 17
             imageView.backgroundColor = .gray
             imageView.clipsToBounds = true
