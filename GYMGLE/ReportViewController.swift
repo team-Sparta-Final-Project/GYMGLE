@@ -9,8 +9,8 @@ import UIKit
 import MessageUI
 
 class ReportViewController: UIViewController {
-    // 더미데이터
-    let board = Board(uid: "example", content: "example", date: Date(), isUpdated: false, likeCount: 0)
+    // 넘겨받은 게시물 데이터
+    var board: Board?
     
     private let reportView = ReportView()
     
@@ -49,7 +49,7 @@ private extension ReportViewController {
             vc.mailComposeDelegate = self
             vc.setToRecipients(["gymgle7@gmail.com"])
             vc.setSubject("신고")
-            let body = "유효한 신고접수를 위해서 UID와 Content를 삭제하거나 수정하지 마십시오.\n\nUID: \(board.uid)\nContent: \(board.content)"
+            let body = "유효한 신고접수를 위해서 UID와 Content를 삭제하거나 수정하지 마십시오.\n\nUID: \(board!.uid)\nContent: \(board!.content)"
             vc.setMessageBody(body, isHTML: false)
             
             present(vc, animated: true, completion: nil)
