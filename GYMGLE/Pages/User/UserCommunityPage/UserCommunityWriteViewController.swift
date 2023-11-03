@@ -87,7 +87,8 @@ extension UserCommunityWriteViewController: UITextViewDelegate {
             let uid = user.uid
         guard let boardText = first.writePlace.text else { return }
         let currentDate = Date()
-        let newBoard = Board(uid: uid, content: boardText, date: currentDate, isUpdated: false, likeCount: 0)
+            let Profile = postDict(image: "", nickName:""),
+            let newBoard = Board(uid: uid, content: boardText, date: currentDate, isUpdated: false, likeCount: 0, profile: Profile)
         let ref = Database.database().reference().child("boards").childByAutoId()
 //        let ref2 = Database.database().reference().child("profiles").child(uid)
 //            ref2.observeSingleEvent(of: .value) { (snapshot) in
