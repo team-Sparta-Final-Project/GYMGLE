@@ -14,31 +14,7 @@ import Firebase
 import Kingfisher
 
 
-final class UserMyProfileViewController: UIViewController, SendUpdatedDataProtocol {
-    func updatedProfileData(viewController: UserMyProfileUpdateViewController, updatedData: Profile) {
-        if DataManager.shared.profile?.nickName == nil {
-            let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
-            userMyProfileUpdateVC.modalPresentationStyle = .overCurrentContext
-            present(userMyProfileUpdateVC, animated: true)
-            return
-        } else {
-            getProfile {
-                if self.userUid == Auth.auth().currentUser?.uid {
-                    DataManager.shared.profile = updatedData
-                }
-                self.userMyProfileView.profileImageView.kf.setImage(with: updatedData.image)
-                self.userMyProfileView.nickName.text = updatedData.nickName
-            }
-            getPost {
-                guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
-                self.userMyProfileView.dataSetting(gym: gymName, nick: updatedData.nickName, postCount: self.post.count)
-                self.userMyProfileView.postTableview.reloadData()
-            }
-            return
-        }
-    }
-    
-    
+final class UserMyProfileViewController: UIViewController {
 
     // MARK: - prirperties
     let userMyProfileView = UserMyProfileView()
@@ -62,8 +38,8 @@ final class UserMyProfileViewController: UIViewController, SendUpdatedDataProtoc
         navigationController?.navigationBar.isHidden = false
         tabBarController?.tabBar.isHidden = true
         allSetting()
+        dataSetting()
     }
-    
 }
 
 // MARK: - private extension custom func
@@ -71,7 +47,6 @@ final class UserMyProfileViewController: UIViewController, SendUpdatedDataProtoc
 private extension UserMyProfileViewController {
   
     func allSetting() {
-        
         buttonTapped()
         setCustomBackButton()
         tableViewSetting()
@@ -104,15 +79,40 @@ private extension UserMyProfileViewController {
     }
     
     func profileIsNil() {
-        
+        if DataManager.shared.profile?.nickName == nil {
+            let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
+            userMyProfileUpdateVC.modalPresentationStyle = .overFullScreen
+            userMyProfileUpdateVC.delegate = self
+            present(userMyProfileUpdateVC, animated: true)
+            return
+        }
+    }
+    func dataSetting() {
+        //자기가 들어오는 거면 싱글톤으로 보여주기
+        if userUid == Auth.auth().currentUser?.uid {
+            guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
+            guard let nickName = DataManager.shared.profile?.nickName else { return }
+            guard let url = DataManager.shared.profile?.image else { return }
+            self.userMyProfileView.dataSetting(gym: gymName, name: nickName, postCount: self.post.count, imageUrl: url)
+            getPost { self.userMyProfileView.postTableview.reloadData() }
+        } else { // 다른 사람이 들어오는거면 싱글톤이 아닌 uid를 사용해 서버를 통해서 보여주기
+            getProfile {
+                guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
+                guard let url = self.url else { return }
+                self.userMyProfileView.dataSetting(gym: gymName, name: self.nickName, postCount: self.post.count, imageUrl: url)
+                self.getPost { self.userMyProfileView.postTableview.reloadData() }
+            }
+        }
     }
 }
 
 // MARK: - private extension data func logic
 
 private extension UserMyProfileViewController {
+    //쓰는 이유: 다른 사람이 다른 사람 프로필을 들어가면 userUid를 통해 프로필을 얻어야 함 -> 그리고 변수에 저장
     func getProfile(completion: @escaping () -> Void) {
-        let ref = Database.database().reference().child("accounts").child("\(userUid!)").child("profile")
+        guard let userUid = self.userUid else {return}
+        let ref = Database.database().reference().child("accounts").child("\(userUid)").child("profile")
         ref.observeSingleEvent(of: .value) { dataSnapshot in
             if let profileData = dataSnapshot.value as? [String: Any] {
                 if let nickName = profileData["nickName"] as? String,
@@ -127,7 +127,7 @@ private extension UserMyProfileViewController {
             }
         }
     }
-
+    // 포스트 얻기 위해 사용
     func getPost(completion: @escaping () -> Void) {
         let ref = Database.database().reference().child("boards")
         let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)")
@@ -196,5 +196,25 @@ extension UserMyProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let boardDetailVC = BoardDetailViewController()
         navigationController?.pushViewController(boardDetailVC, animated: true)
+    }
+}
+
+// MARK: - SendUpdatedDataProtocol
+
+extension UserMyProfileViewController: SendUpdatedDataProtocol {
+    func updatedProfileData(viewController: UserMyProfileUpdateViewController, updatedData: Profile) {
+        guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
+        DispatchQueue.main.async {
+            self.userMyProfileView.dataSetting(gym: gymName, name: updatedData.nickName, postCount: self.post.count, imageUrl: updatedData.image)
+        }
+        let newProfile = Profile(image: updatedData.image, nickName: updatedData.nickName)
+        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/profile")
+        do {
+            let profileData = try JSONEncoder().encode(newProfile)
+            let profileJSON = try JSONSerialization.jsonObject(with: profileData, options: [])
+            ref.setValue(profileJSON)
+        } catch {
+            print("테스트 - error")
+        }
     }
 }

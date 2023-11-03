@@ -14,12 +14,9 @@ import FirebaseCore
 import FirebaseDatabase
 import Kingfisher
 
-protocol SendUpdatedDataProtocol: AnyObject {
-    func updatedProfileData(viewController: UserMyProfileUpdateViewController, updatedData: Profile)
-}
+
 
 final class UserMyProfileUpdateViewController: UIViewController {
-
 
     // MARK: - pripertise
     let userMyprofileUpdateView = UserMyProfileUpdateView()
@@ -32,19 +29,15 @@ final class UserMyProfileUpdateViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
-
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
     }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         viewDisappearEvent()
     }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -58,12 +51,14 @@ private extension UserMyProfileUpdateViewController {
     func allSetting() {
         userMyprofileUpdateView.nickNameTextField.delegate = self
         allButtonSetting()
+        // 프로필이 없을 경우 와 있을 경우 싱글톤에서 받아옴
         if DataManager.shared.profile?.nickName == nil {
             userMyprofileUpdateView.pageLabel.text = "프로필 추가"
         } else {
             userMyprofileUpdateView.pageLabel.text = "프로필 수정"
-            userMyprofileUpdateView.nickNameTextField.text = DataManager.shared.profile?.nickName
-            downloadImage(imageView: userMyprofileUpdateView.profileImageView)
+            guard let nickName = DataManager.shared.profile?.nickName else { return }
+            guard let url = DataManager.shared.profile?.image else { return }
+            userMyprofileUpdateView.dataSetting(nickName: nickName, imageUrl: url)
         }
     }
     
@@ -72,9 +67,9 @@ private extension UserMyProfileUpdateViewController {
         userMyprofileUpdateView.imageButton.addTarget(self, action:  #selector(imageButtonTapped), for: .touchUpInside)
         userMyprofileUpdateView.successedButton.addTarget(self, action:  #selector(successedButtonTapped), for: .touchUpInside)
     }
-    // 스토리지에 올리기
+    // 이미지를 스토리지에 올리기
     func uploadImage(image: UIImage, completion: @escaping (URL?) -> Void) {
-        guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
+        guard let imageData = image.jpegData(compressionQuality: 0.4) else { return }
         let metaData = StorageMetadata()
         metaData.contentType = "image/jpeg"
         
@@ -87,27 +82,6 @@ private extension UserMyProfileUpdateViewController {
             }
         }
     }
-    // 프로필 서버에 올리기
-    func createdProfile(url: URL, completion: @escaping () -> Void) {
-        guard let nickName = userMyprofileUpdateView.nickNameTextField.text else { return }
-        let newProfile = Profile(image: url, nickName: nickName)
-        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/profile")
-        do {
-            let profileData = try JSONEncoder().encode(newProfile)
-            let profileJSON = try JSONSerialization.jsonObject(with: profileData, options: [])
-            ref.setValue(profileJSON)
-            completion()
-        } catch {
-            print("테스트 - error")
-            completion()
-        }
-    }
-    //이미지 가져오기 (싱글톤에서)
-    func downloadImage(imageView: UIImageView) {
-        guard let url = DataManager.shared.profile?.image else  {return}
-        imageView.kf.setImage(with: url)
-    }
-
     //닉네임 중복 검사 (서버에서 검사하기)
     func nickNameDuplicateCheck(completion: @escaping (Bool) -> Void) {
         let ref = Database.database().reference().child("accounts")
@@ -134,8 +108,8 @@ private extension UserMyProfileUpdateViewController {
                 self.uploadImage(image: self.userMyprofileUpdateView.profileImageView.image!) { url in
                     if let url = url, let nickName = self.userMyprofileUpdateView.nickNameTextField.text {
                         let myProfile = Profile(image: url, nickName: nickName)
-                        DataManager.shared.profile = myProfile
                         self.delegate?.updatedProfileData(viewController: self, updatedData: myProfile)
+                        DataManager.shared.profile = myProfile
                     }
                 }
             } else {
@@ -169,7 +143,6 @@ extension UserMyProfileUpdateViewController {
 // MARK: - UITextFieldDelegate
 extension UserMyProfileUpdateViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
         let maxLength = 20
         let currentString: NSString = (textField.text ?? "") as NSString
         let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
@@ -196,16 +169,14 @@ extension UserMyProfileUpdateViewController {
 extension UserMyProfileUpdateViewController: PHPickerViewControllerDelegate {
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        
         picker.dismiss(animated: true)
         
         let itemProvider: NSItemProvider? = results.first?.itemProvider
-        
         if let itemProvider = itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
             itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
                 if let image = image as? UIImage {
                     DispatchQueue.main.async {
-                        self.userMyprofileUpdateView.profileImageView.image = image.resized(to: CGSize(width: 100, height: 100))
+                        self.userMyprofileUpdateView.profileImageViewSetting(image: image.resized(to: CGSize(width: 100, height: 100)))
                     }
                 }
             }

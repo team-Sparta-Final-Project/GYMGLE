@@ -18,3 +18,7 @@ protocol AdminTableViewDelegate: AnyObject {
 protocol CommunityTableViewDelegate: AnyObject {
     func didSelectCell(at indexPath: IndexPath)
 }
+
+protocol SendUpdatedDataProtocol: AnyObject {
+    func updatedProfileData(viewController: UserMyProfileUpdateViewController, updatedData: Profile)
+}
