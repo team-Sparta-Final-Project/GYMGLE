@@ -101,11 +101,11 @@ class UserCommunityView: UIView,UITableViewDelegate {
     func decodeData() {
         // Firebase에서 데이터 가져오기
         let databaseRef = Database.database().reference().child("boards")
-        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
+        databaseRef.observeSingleEvent(of: .value) { snapshot in
             self.posts.removeAll() // 데이터를 새로 받을 때 배열 비우기
             if let user = Auth.auth().currentUser {
                 let uid = user.uid
-                
+
                 if let data = snapshot.value as? [String: Any] {
                     for (key, value) in data {
                         if let postDict = value as? [String: Any],
@@ -114,20 +114,18 @@ class UserCommunityView: UIView,UITableViewDelegate {
                            let timestamp = postDict["date"] as? TimeInterval {
                             let date = Date(timeIntervalSince1970: timestamp) // Double을 Date로 변환
                             
-                            self.fetchProfileData(forUserID: uid) { profile in
-                                if let profile = profile {
-                                    let post = Board(uid: uid, content: content, date: date, isUpdated: false, likeCount: like, profile: profile)
-                                    self.posts.append(post)
-                                    self.appTableView.reloadData() // 테이블 뷰 리로드
-                                } else {
-                                    print("프로필 데이터를 가져오지 못했습니다.")
-                                }
+                            if let profile = DataManager.shared.profile {
+                                let post = Board(uid: uid, content: content, date: date, isUpdated: false, likeCount: like, profile: profile)
+                                self.posts.append(post)
+                                self.appTableView.reloadData() // 테이블 뷰 리로드
+                            } else {
+                                print("프로필 데이터를 가져오지 못했습니다.")
                             }
                         }
                     }
                 }
             }
-        })
+        }
     }
                                        
 //    func decodeData() {
