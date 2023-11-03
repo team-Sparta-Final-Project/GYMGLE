@@ -17,7 +17,7 @@ class UserCommunityWriteViewController: UIViewController {
     let userCommunityView = UserCommunityView()
 
     let first = UserCommunityWriteView()
-    let second = UserCommunityView()
+//    let second = UserCommunityView()
 
     
     var posts: [Board]?
@@ -39,10 +39,15 @@ class UserCommunityWriteViewController: UIViewController {
         first.addButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(createButtonTapped)))
         
         first.addButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(        createBoardButtonTapped)))
+        first.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
     
 }
 extension UserCommunityWriteViewController {
+    @objc func backButtonTapped() {
+        self.dismiss(animated: true)
+    }
+    
     @objc private func keyboardWillShow(_ notification: Notification) {
         if let userInfo = notification.userInfo,
            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
@@ -103,7 +108,7 @@ extension UserCommunityWriteViewController: UITextViewDelegate {
                     let boardData = try JSONEncoder().encode(newBoard)
                     let boardJSON = try JSONSerialization.jsonObject(with: boardData, options: [])
                     ref.setValue(boardJSON)
-                    second.appTableView.reloadData()
+//                    second.appTableView.reloadData()
                 } catch {
                     print("게시물을 저장하는 동안 오류 발생: \(error)")
                 }
@@ -145,7 +150,6 @@ extension UserCommunityWriteViewController: UITextViewDelegate {
         if let text = userCommunityWriteView.writePlace.text {
             self.createdBoard()
             dismiss(animated: true, completion: nil)
-            second.decodeData()
         }
     }
     
