@@ -18,7 +18,8 @@ class UserCommunityWriteViewController: UIViewController {
 
     let first = UserCommunityWriteView()
     
-    let dataTest = DataManager.shared
+    var posts: [Board]?
+    
     var noticeInfo: Notice? {
         didSet {
             userCommunityWriteView.writePlace.text = noticeInfo?.content

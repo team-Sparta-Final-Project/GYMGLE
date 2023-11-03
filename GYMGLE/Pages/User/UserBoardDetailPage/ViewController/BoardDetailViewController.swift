@@ -17,6 +17,7 @@ class BoardDetailViewController: UIViewController {
 //    var boardUid: String = "-NiIHXxC9JORJ6D5Fl78"
     
     var board: Board?
+    var boardUid: String?
     
     var comments: [Comment]?
     
