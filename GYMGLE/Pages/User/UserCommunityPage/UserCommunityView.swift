@@ -102,51 +102,32 @@ class UserCommunityView: UIView,UITableViewDelegate {
         }
     }
     func decodeData() {
-        // Firebase에서 데이터 가져오기
         let databaseRef = Database.database().reference().child("boards")
 
-        databaseRef.observeSingleEvent(of: .value) { snapshot in
-            self.posts.removeAll() // 데이터를 새로 받을 때 배열 비우기
-            //            if let user = Auth.auth().currentUser {
-            //                let uid = user.uid
-            //
-            //                if let data = snapshot.value as? [String: Any] {
-            //                    for (key, value) in data {
-            //                        if let postDict = value as? [String: Any],
-            //                           let content = postDict["content"] as? String,
-            //                           let like = postDict["likeCount"] as? Int,
-            //                           let timestamp = postDict["date"] as? TimeInterval {
-            //                            let date = Date(timeIntervalSince1970: timestamp) // Double을 Date로 변환
-            //
-            //                            if let profile = DataManager.shared.profile {
-            //                                let post = Board(uid: uid, content: content, date: date, isUpdated: false, likeCount: like, profile: profile)
-            //                                self.posts.append(post)
-            //                                self.appTableView.reloadData() // 테이블 뷰 리로드
-            //                            } else {
-            //                                print("프로필 데이터를 가져오지 못했습니다.")
-            //                            }
-            //                        }
-            //                    }
-            //                }
-            //            }
-            for childSnapshot in snapshot.children {
-                if let snapshot = childSnapshot as? DataSnapshot,
-                   let data = snapshot.value as? [String: Any],
-                   let key = snapshot.key as? String {
-                    do {
-                        let dataInfoJSON = try JSONSerialization.data(withJSONObject: data, options: [])
-                        let dataInfo = try JSONDecoder().decode(Board.self, from: dataInfoJSON)
-                        self.posts.append(dataInfo)
-                        self.keys.append(key)
-                    } catch {
-                        print("디코딩 에러")
+        let numberOfPostsToRetrieve = 30  // 가져올 게시물 개수 (원하는 개수로 수정)
+        databaseRef.queryOrdered(byChild: "date")
+            .queryLimited(toLast: UInt(numberOfPostsToRetrieve))
+            .observeSingleEvent(of: .value) { snapshot in
+                self.posts.removeAll() // 데이터를 새로 받을 때 배열 비우기
+                for childSnapshot in snapshot.children {
+                    if let snapshot = childSnapshot as? DataSnapshot,
+                        let data = snapshot.value as? [String: Any],
+                        let key = snapshot.key as? String {
+                        do {
+                            let dataInfoJSON = try JSONSerialization.data(withJSONObject: data, options: [])
+                            let dataInfo = try JSONDecoder().decode(Board.self, from: dataInfoJSON)
+                            self.posts.insert(dataInfo, at: 0) // 가장 최근 게시물을 맨 위에 추가
+                          self.keys.append(key)
+                        } catch {
+                            print("디코딩 에러")
+                        }
                     }
                 }
+                // 테이블 뷰에 업데이트된 순서대로 표시
+                self.appTableView.reloadData()
             }
-        }
     }
 
-    
     func setupUI(){
         self.backgroundColor = ColorGuide.userBackGround
         addSubview(GymgleName)

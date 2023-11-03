@@ -17,6 +17,8 @@ class UserCommunityWriteViewController: UIViewController {
     let userCommunityView = UserCommunityView()
 
     let first = UserCommunityWriteView()
+    let second = UserCommunityView()
+
     
     var posts: [Board]?
     
@@ -101,6 +103,7 @@ extension UserCommunityWriteViewController: UITextViewDelegate {
                     let boardData = try JSONEncoder().encode(newBoard)
                     let boardJSON = try JSONSerialization.jsonObject(with: boardData, options: [])
                     ref.setValue(boardJSON)
+                    second.appTableView.reloadData()
                 } catch {
                     print("게시물을 저장하는 동안 오류 발생: \(error)")
                 }
@@ -109,12 +112,42 @@ extension UserCommunityWriteViewController: UITextViewDelegate {
             }
         }
     }
+//    func setupDatabaseObserver() {
+//        let databaseRef = Database.database().reference().child("boards")
+//
+//        // .childAdded 옵션을 사용합니다.
+//        databaseRef.observe(.childAdded, with: { (snapshot) in
+//            if let postData = snapshot.value as? [String: Any],
+//               let uid = postData["uid"] as? String,
+//               let content = postData["content"] as? String,
+//               let timestamp = postData["date"] as? TimeInterval,
+//               let likeCount = postData["likeCount"] as? Int {
+//
+//                let date = Date(timeIntervalSince1970: timestamp)
+//
+//                self.second.fetchProfileData(forUserID: uid) { profile in
+//                    if let profile = profile {
+//                        let post = Board(uid: uid, content: content, date: date, isUpdated: false, likeCount: likeCount, profile: profile)
+//
+//                        // 새로운 게시물을 데이터 소스에 추가하고 테이블 뷰를 업데이트
+//                        self.second.posts.insert(post, at: 0) // 새 게시물을 맨 위에 추가
+//                        self.second.appTableView.reloadData()
+//                    } else {
+//                        print("프로필 데이터를 가져오지 못했습니다.")
+//                    }
+//                }
+//            }
+//        })
+//    }
+    
+
     @objc private func createBoardButtonTapped() {
         if let text = userCommunityWriteView.writePlace.text {
             self.createdBoard()
             dismiss(animated: true, completion: nil)
+            second.decodeData()
         }
-        }
+    }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if userCommunityWriteView.writePlace.text == "내용을 입력하세요." {
