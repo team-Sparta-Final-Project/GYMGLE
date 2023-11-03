@@ -80,7 +80,9 @@ class UserCommunityView: UIView,UITableViewDelegate {
         appTableView.dataSource = self
         appTableView.delegate = self
         appTableView.register(CommunityCell.self, forCellReuseIdentifier: "Cell")
-        decodeData()
+        decodeData {
+            self.appTableView.reloadData()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -101,7 +103,8 @@ class UserCommunityView: UIView,UITableViewDelegate {
             }
         }
     }
-    func decodeData() {
+    
+    func decodeData(completion: @escaping () -> Void) {
         let databaseRef = Database.database().reference().child("boards")
 
         let numberOfPostsToRetrieve = 30  // 가져올 게시물 개수 (원하는 개수로 수정)
@@ -117,14 +120,15 @@ class UserCommunityView: UIView,UITableViewDelegate {
                             let dataInfoJSON = try JSONSerialization.data(withJSONObject: data, options: [])
                             let dataInfo = try JSONDecoder().decode(Board.self, from: dataInfoJSON)
                             self.posts.insert(dataInfo, at: 0) // 가장 최근 게시물을 맨 위에 추가
-                          self.keys.append(key)
+                            self.keys.append(key)
                         } catch {
                             print("디코딩 에러")
                         }
                     }
                 }
+                completion()
                 // 테이블 뷰에 업데이트된 순서대로 표시
-                self.appTableView.reloadData()
+//                self.appTableView.reloadData()
             }
     }
 
