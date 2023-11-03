@@ -5,6 +5,7 @@ class BoardDetailViewController: UIViewController {
     let profile = Profile(image: URL(string:"https://i.namu.wiki/i/_-uuCMpeISXkf8ByapepsmppPEKWXY9v3dTferwAVCxXKLEOMWzOA3-1rXi_Cyw_7jPARqh_-hEFgK-n5WmCRVyMzXu6TGLKjfbREZTYMTcDM7RuRuQXmDDoBJwoda-rRbhnvqxVPdcBX3nkpU_Snw.svg")!, nickName: "닉네임")
     
     var temp:[Any] = []
+    var board: Board?
     
     let viewConfigure = BoardDetailView()
     
