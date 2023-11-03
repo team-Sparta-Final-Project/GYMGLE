@@ -115,7 +115,7 @@ class UserCommunityView: UIView,UITableViewDelegate {
                            let timestamp = postDict["date"] as? TimeInterval {
                             let date = Date(timeIntervalSince1970: timestamp) // Double을 Date로 변환
                             
-                            fetchProfileData(forUserID: uid) { profile in
+                            self.fetchProfileData(forUserID: uid) { profile in
                                 if let profile = profile {
                                     let post = Board(uid: uid, content: content, date: date, isUpdated: false, likeCount: like, profile: profile)
                                     self.posts.append(post)
@@ -128,10 +128,6 @@ class UserCommunityView: UIView,UITableViewDelegate {
                     }
                 }
             }
-        }
-        { (error) in
-            // 에러 핸들링
-            print("Firebase에서 데이터를 가져오는 동안 에러 발생: \(error.localizedDescription)")
         }
     }
 //    func decodeData() {
