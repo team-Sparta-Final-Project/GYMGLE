@@ -6,19 +6,24 @@ class BoardDetailViewController: UIViewController {
     let ref = Database.database().reference()
     
     let profile = Profile(image: URL(string:"https://i.namu.wiki/i/_-uuCMpeISXkf8ByapepsmppPEKWXY9v3dTferwAVCxXKLEOMWzOA3-1rXi_Cyw_7jPARqh_-hEFgK-n5WmCRVyMzXu6TGLKjfbREZTYMTcDM7RuRuQXmDDoBJwoda-rRbhnvqxVPdcBX3nkpU_Snw.svg")!, nickName: "닉네임")
-        
+    
     var temp:[Any] = []
+    
+    
+    
     var keyList:[String] = []
+    
     var boardUid: String = "-NiIHSztswt9jfzt-AhJ"
 //    var boardUid: String = "-NiIHXxC9JORJ6D5Fl78"
     
     var board: Board?
+    
     var comments: [Comment]?
     
     let viewConfigure = BoardDetailView()
     
     override func loadView() {
-        board = Board(uid: "마알티즈국빱", content: "안녕하세요", date: Date(), isUpdated: false, likeCount: 0,profile: profile)
+//        board = Board(uid: "마알티즈국빱", content: "안녕하세요", date: Date(), isUpdated: false, likeCount: 0,profile: profile)
         downloadComments()
         
         viewConfigure.tableView.dataSource = self

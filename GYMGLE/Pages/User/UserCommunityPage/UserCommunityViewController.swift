@@ -14,6 +14,7 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
         let data = first.posts[indexPath.row]
         destinationViewController.board = data
         
+        
         navigationController?.pushViewController(destinationViewController, animated: true)
     }
     
