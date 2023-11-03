@@ -87,6 +87,7 @@
 		D1635A462AE0F9CD00CDEF11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D1635A452AE0F9CD00CDEF11 /* FirebaseAuth */; };
 		D16920A72ADFBB9F00BE1A2B /* UserMyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */; };
 		D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */; };
+		D16D42752AF3C90E0083EB17 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D16D42742AF3C90E0083EB17 /* Kingfisher */; };
 		D1E0185F2ADCEB6700D1C53D /* AdminNoticeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E0185E2ADCEB6700D1C53D /* AdminNoticeDetailView.swift */; };
 		D1E018612ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E018602ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift */; };
 		D1E018632ADCEBE000D1C53D /* AdminNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E018622ADCEBE000D1C53D /* AdminNoticeView.swift */; };
@@ -214,6 +215,7 @@
 				63DF7C2E2AF2663F00B66EFC /* FirebaseStorage in Frameworks */,
 				2730BBF72AD6BA0200BFA23C /* QRCodeReader in Frameworks */,
 				2730BC132AD77C7F00BFA23C /* FirebaseAnalytics in Frameworks */,
+				D16D42752AF3C90E0083EB17 /* Kingfisher in Frameworks */,
 				D1635A462AE0F9CD00CDEF11 /* FirebaseAuth in Frameworks */,
 				0761A5222AD93D47002EECED /* Charts.framework in Frameworks */,
 				2730BC172AD77C7F00BFA23C /* FirebaseDatabase in Frameworks */,
@@ -773,6 +775,7 @@
 				2730BC1A2AD77C7F00BFA23C /* FirebaseMessaging */,
 				D1635A452AE0F9CD00CDEF11 /* FirebaseAuth */,
 				63DF7C2D2AF2663F00B66EFC /* FirebaseStorage */,
+				D16D42742AF3C90E0083EB17 /* Kingfisher */,
 			);
 			productName = GYMGLE;
 			productReference = 2730BBB42AD6668200BFA23C /* GYMGLE.app */;
@@ -808,6 +811,7 @@
 				2730BBF52AD6BA0200BFA23C /* XCRemoteSwiftPackageReference "QRCodeReader.swift" */,
 				2730BBF82AD6BA1600BFA23C /* XCRemoteSwiftPackageReference "Then" */,
 				2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D16D42732AF3C90E0083EB17 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 2730BBB52AD6668200BFA23C /* Products */;
 			projectDirPath = "";
@@ -1179,6 +1183,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		D16D42732AF3C90E0083EB17 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.10.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1236,6 +1248,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		D16D42742AF3C90E0083EB17 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D16D42732AF3C90E0083EB17 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
