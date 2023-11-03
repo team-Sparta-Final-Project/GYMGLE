@@ -12,22 +12,22 @@ class BoardDetailView: UIView {
         
         self.backgroundColor = ColorGuide.background
         
+        
         //MARK: - main
-        
-        self.addSubview(tableView)
-        tableView.snp.makeConstraints{
-            $0.top.equalToSuperview().inset(52)
-            $0.bottom.equalToSuperview()
-            $0.left.right.equalToSuperview()
-        }
-        
+    
         self.addSubview(commentSection)
         commentSection.snp.makeConstraints{
             $0.bottom.equalTo(self.keyboardLayoutGuide.snp.top)
             $0.left.right.equalToSuperview()
         }
         
-//        addKeyboardNotification()
+        self.addSubview(tableView)
+        tableView.snp.makeConstraints{
+            $0.top.equalToSuperview().inset(52)
+            $0.bottom.equalTo(commentSection.snp.top)
+            $0.left.right.equalToSuperview()
+        }
+        
     }
     
     //MARK: - 업데이트 뷰
@@ -55,6 +55,7 @@ class BoardDetailView: UIView {
     @objc func keyboardWillDisappear(_ noti: NSNotification){
         print("테스트 - down")
     }
+    
 
     
     
