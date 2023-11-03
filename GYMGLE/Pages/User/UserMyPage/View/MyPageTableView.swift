@@ -11,10 +11,11 @@ import FirebaseCore
 import FirebaseDatabase
 import Kingfisher
 
+
 class MyPageTableView: UITableView {
     // MARK: - Properties
     
-    lazy var cellContents = ["\(DataManager.shared.userInfo!.name)", "공지사항", "로그아웃", "탈퇴하기"]
+    lazy var cellContents = ["\(DataManager.shared.profile?.nickName)", "공지사항", "로그아웃", "탈퇴하기"]
     weak var myPageDelegate: MyPageTableViewDelegate?
     
     // MARK: - Initialization
@@ -78,13 +79,14 @@ extension MyPageTableView: UITableViewDataSource {
             }
             cell.label.text = DataManager.shared.profile?.nickName
             imageView.kf.setImage(with: DataManager.shared.profile?.image)
+
             
             imageView.layer.cornerRadius = 17
             imageView.backgroundColor = .gray
             imageView.clipsToBounds = true
 
             
-            cell.addSubviews(imageView)
+            cell.addSubview(imageView)
             
             imageView.snp.makeConstraints {
                 $0.left.equalToSuperview().offset(20)

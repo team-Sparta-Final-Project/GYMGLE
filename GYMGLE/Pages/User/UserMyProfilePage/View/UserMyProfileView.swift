@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseStorage
 
 final class UserMyProfileView: UIView {
 
@@ -44,7 +45,7 @@ final class UserMyProfileView: UIView {
     
     private lazy var postCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "작성한 글 12개"
+        label.text = "작성한 글 0개"
         label.labelMakeUI(textColor: ColorGuide.textHint, font: FontGuide.size14, textAligment: .center)
         return label
     }()
@@ -141,7 +142,7 @@ private extension UserMyProfileView {
         NSLayoutConstraint.activate([
             labelStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0),
             labelStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 4),
-            labelStackView.widthAnchor.constraint(equalToConstant: 140),
+            labelStackView.widthAnchor.constraint(equalToConstant: 180),
             
             postTableview.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             postTableview.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
@@ -158,5 +159,22 @@ extension UserMyProfileView {
         gymName.text = gym
         nickName.text = nick
         postCountLabel.text = "작성한 글 \(postCount)개"
+    }
+    
+    func downloadImage(imageView: UIImageView) {
+        guard let url = DataManager.shared.profile?.image else  {return}
+        Storage.storage().reference(forURL: "\(url)").downloadURL { url, error  in
+            URLSession.shared.dataTask(with: url!) { data, response, error in
+                if let error = error {
+                    print("오류 - \(error.localizedDescription)")
+                    return
+                }
+                if let data = data, let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        imageView.image = image
+                    }
+                }
+            }.resume()
+        }
     }
 }

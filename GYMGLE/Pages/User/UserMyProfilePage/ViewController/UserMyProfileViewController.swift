@@ -13,14 +13,16 @@ import FirebaseStorage
 import Firebase
 import Kingfisher
 
+
 final class UserMyProfileViewController: UIViewController {
     
-    
+
     // MARK: - prirperties
     let userMyProfileView = UserMyProfileView()
     var userUid: String? //❗️ 전페이지에서 uid를 받아와 이걸로 검색을 해 정보들을 가져와야 함⭐️⭐️⭐️⭐️⭐️
     var post: [Board] = [] // 셀 나타내기
-    
+    var nickName: String = ""
+    var url: URL?
     
     // MARK: - life cycle
 
@@ -41,8 +43,6 @@ final class UserMyProfileViewController: UIViewController {
     
 }
 
-
-
 // MARK: - private extension custom func
 
 private extension UserMyProfileViewController {
@@ -50,11 +50,15 @@ private extension UserMyProfileViewController {
     func allSetting() {
         buttonTapped()
         setCustomBackButton()
+        tableViewSetting()
+        profileIsNil()
+        buttonSetting()
+    }
+    
+    func tableViewSetting() {
         userMyProfileView.postTableview.dataSource = self
         userMyProfileView.postTableview.delegate = self
         userMyProfileView.postTableview.register(CommunityCell.self, forCellReuseIdentifier: "CommunityCell")
-        profileIsNil()
-        buttonSetting()
     }
     
     func buttonTapped() {
@@ -83,20 +87,22 @@ private extension UserMyProfileViewController {
             return
         } else {
             getProfile {
-                self.downloadImage(imageView: self.userMyProfileView.profileImageView)
-                self.userMyProfileView.nickName.text = DataManager.shared.profile?.nickName
+                if self.userUid == Auth.auth().currentUser?.uid {
+                    guard let url = self.url else {return}
+                    DataManager.shared.profile = Profile(image: url, nickName: self.nickName)
+                }
+                self.userMyProfileView.profileImageView.kf.setImage(with: self.url)
+                self.userMyProfileView.nickName.text = self.nickName
             }
             getPost {
+                guard let gymName = DataManager.shared.realGymInfo?.gymName, let nickName = DataManager.shared.profile?.nickName else { return }
+                self.userMyProfileView.dataSetting(gym: gymName, nick: nickName, postCount: self.post.count)
                 self.userMyProfileView.postTableview.reloadData()
             }
-            guard let gymName = DataManager.shared.realGymInfo?.gymName, let nickName = DataManager.shared.profile?.nickName else { return }
-            self.userMyProfileView.dataSetting(gym: gymName, nick: nickName, postCount: self.post.count)
             return
         }
     }
 }
-
-
 
 // MARK: - private extension data func logic
 
@@ -108,20 +114,16 @@ private extension UserMyProfileViewController {
                 if let nickName = profileData["nickName"] as? String,
                    let imageUrlString = profileData["image"] as? String,
                    let imageUrl = URL(string: imageUrlString) {
-                    DataManager.shared.profile = Profile(image: imageUrl, nickName: nickName)
+                    self.nickName = nickName
+                    self.url = imageUrl
+                    completion()
+                } else {
                     completion()
                 }
             }
-            completion()
         }
     }
-    //이미지 가져오기
-    func downloadImage(imageView: UIImageView) {
-        guard let url = DataManager.shared.profile?.image else  {return}
-        Storage.storage().reference(forURL: "\(url)").downloadURL { url, error  in
-            imageView.kf.setImage(with: url)
-        }
-    }
+
     func getPost(completion: @escaping () -> Void) {
         let ref = Database.database().reference().child("boards")
         let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)")
@@ -139,19 +141,18 @@ private extension UserMyProfileViewController {
             }
         }
     }
-  
 }
-
-
 
 // MARK: - extension @objc func
 
 extension UserMyProfileViewController {
     
     @objc private func updateButtonButtoned() {
+//        let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
+//        userMyProfileUpdateVC.modalPresentationStyle = .fullScreen
+//        present(userMyProfileUpdateVC, animated: true)
         let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
-        userMyProfileUpdateVC.modalPresentationStyle = .overCurrentContext
-        present(userMyProfileUpdateVC, animated: true)
+        navigationController?.pushViewController(userMyProfileUpdateVC, animated: true)
     }
     @objc private func banButtonButtoned() {
             let alert = UIAlertController(title: "차단", message: "사용자를 차단하시겠습니까?", preferredStyle: .alert)
@@ -166,9 +167,6 @@ extension UserMyProfileViewController {
             self.present(alert, animated: true, completion: nil)
     }
 }
-
-
-
 
 // MARK: - UITableViewDataSource
 

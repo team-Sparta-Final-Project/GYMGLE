@@ -104,7 +104,7 @@ class UserCommunityView: UIView,UITableViewDelegate {
     func decodeData() {
         // Firebase에서 데이터 가져오기
         let databaseRef = Database.database().reference().child("boards")
-        
+
         databaseRef.observeSingleEvent(of: .value) { snapshot in
             self.posts.removeAll() // 데이터를 새로 받을 때 배열 비우기
             //            if let user = Auth.auth().currentUser {
@@ -145,6 +145,7 @@ class UserCommunityView: UIView,UITableViewDelegate {
             }
         }
     }
+
     
     func setupUI(){
         self.backgroundColor = ColorGuide.userBackGround
