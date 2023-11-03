@@ -12,7 +12,10 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     func didSelectCell(at indexPath: IndexPath) {
         let destinationViewController = BoardDetailViewController()
         let data = first.posts[indexPath.row]
+        let key = first.keys[indexPath.row]
         destinationViewController.board = data
+        destinationViewController.boardUid = key
+        
         
         navigationController?.pushViewController(destinationViewController, animated: true)
     }
@@ -38,6 +41,7 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     
     @objc func writePlaceTap() {
         let userCommunityWriteViewController = UserCommunityWriteViewController()
+        
 
         self.present(userCommunityWriteViewController, animated: true)
     }

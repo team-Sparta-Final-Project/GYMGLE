@@ -15,18 +15,20 @@ import FirebaseDatabase
 
 class UserCommunityView: UIView,UITableViewDelegate {
     var posts: [Board] = [] // 게시물 데이터를 저장할 배열
+    var keys: [String] = []
+    var filteredPost: [Board] = []
     let first = CommunityCell()
-
+    
     weak var delegate: CommunityTableViewDelegate?
     
     func userDidSelectRow(at indexPath: IndexPath) {
-            delegate?.didSelectCell(at: indexPath)
-        }
+        delegate?.didSelectCell(at: indexPath)
+    }
     
     private let dummyDataManager = DataManager.shared
     var gymInfo: GymInfo?
     var userName: User?
-        
+    
     private lazy var GymgleName = UILabel().then {
         $0.textColor = ColorGuide.main
         $0.font = FontGuide.size26Bold
@@ -48,13 +50,13 @@ class UserCommunityView: UIView,UITableViewDelegate {
         $0.layer.shadowRadius = 4
         $0.layer.shadowOffset = CGSize(width: 0, height: 2)
     }
-//    private lazy var mirrorPlace = UIButton().then {
-//        $0.backgroundColor = ColorGuide.white
-//        $0.setImage(UIImage(systemName: "circle.grid.2x1.left.filled"), for: .normal)
-//        $0.tintColor = ColorGuide.black
-//        $0.layer.cornerRadius = 16
-////        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(mirrorPlaceTap)))
-//    }
+    //    private lazy var mirrorPlace = UIButton().then {
+    //        $0.backgroundColor = ColorGuide.white
+    //        $0.setImage(UIImage(systemName: "circle.grid.2x1.left.filled"), for: .normal)
+    //        $0.tintColor = ColorGuide.black
+    //        $0.layer.cornerRadius = 16
+    ////        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(mirrorPlaceTap)))
+    //    }
     private lazy var appNoticePlace = UISearchBar().then {
         $0.layer.cornerRadius = 20
         $0.searchTextField.placeholder = "검색"
@@ -64,7 +66,8 @@ class UserCommunityView: UIView,UITableViewDelegate {
         $0.searchTextField.layer.cornerRadius = 10
         $0.searchTextField.layer.borderColor = ColorGuide.textHint.cgColor
         $0.searchBarStyle = .minimal
-
+        $0.delegate = self
+        
     }
     private(set) lazy var appTableView = UITableView().then {
         $0.backgroundColor = .clear
@@ -91,8 +94,8 @@ class UserCommunityView: UIView,UITableViewDelegate {
                let imageString = profileData["image"] as? String,
                let imageURL = URL(string: imageString),
                let nickName = profileData["nickName"] as? String {
-                   let profile = Profile(image: imageURL, nickName: nickName)
-                   completion(profile)
+                let profile = Profile(image: imageURL, nickName: nickName)
+                completion(profile)
             } else {
                 completion(nil)
             }
@@ -101,37 +104,40 @@ class UserCommunityView: UIView,UITableViewDelegate {
     func decodeData() {
         // Firebase에서 데이터 가져오기
         let databaseRef = Database.database().reference().child("boards")
+
         databaseRef.observeSingleEvent(of: .value) { snapshot in
             self.posts.removeAll() // 데이터를 새로 받을 때 배열 비우기
-//            if let user = Auth.auth().currentUser {
-//                let uid = user.uid
-//
-//                if let data = snapshot.value as? [String: Any] {
-//                    for (key, value) in data {
-//                        if let postDict = value as? [String: Any],
-//                           let content = postDict["content"] as? String,
-//                           let like = postDict["likeCount"] as? Int,
-//                           let timestamp = postDict["date"] as? TimeInterval {
-//                            let date = Date(timeIntervalSince1970: timestamp) // Double을 Date로 변환
-//
-//                            if let profile = DataManager.shared.profile {
-//                                let post = Board(uid: uid, content: content, date: date, isUpdated: false, likeCount: like, profile: profile)
-//                                self.posts.append(post)
-//                                self.appTableView.reloadData() // 테이블 뷰 리로드
-//                            } else {
-//                                print("프로필 데이터를 가져오지 못했습니다.")
-//                            }
-//                        }
-//                    }
-//                }
-//            }
+            //            if let user = Auth.auth().currentUser {
+            //                let uid = user.uid
+            //
+            //                if let data = snapshot.value as? [String: Any] {
+            //                    for (key, value) in data {
+            //                        if let postDict = value as? [String: Any],
+            //                           let content = postDict["content"] as? String,
+            //                           let like = postDict["likeCount"] as? Int,
+            //                           let timestamp = postDict["date"] as? TimeInterval {
+            //                            let date = Date(timeIntervalSince1970: timestamp) // Double을 Date로 변환
+            //
+            //                            if let profile = DataManager.shared.profile {
+            //                                let post = Board(uid: uid, content: content, date: date, isUpdated: false, likeCount: like, profile: profile)
+            //                                self.posts.append(post)
+            //                                self.appTableView.reloadData() // 테이블 뷰 리로드
+            //                            } else {
+            //                                print("프로필 데이터를 가져오지 못했습니다.")
+            //                            }
+            //                        }
+            //                    }
+            //                }
+            //            }
             for childSnapshot in snapshot.children {
                 if let snapshot = childSnapshot as? DataSnapshot,
-                   let data = snapshot.value as? [String: Any] {
+                   let data = snapshot.value as? [String: Any],
+                   let key = snapshot.key as? String {
                     do {
                         let dataInfoJSON = try JSONSerialization.data(withJSONObject: data, options: [])
                         let dataInfo = try JSONDecoder().decode(Board.self, from: dataInfoJSON)
                         self.posts.append(dataInfo)
+                        self.keys.append(key)
                     } catch {
                         print("디코딩 에러")
                     }
@@ -139,46 +145,19 @@ class UserCommunityView: UIView,UITableViewDelegate {
             }
         }
     }
-                                       
-//    func decodeData() {
-//        // Firebase에서 데이터 가져오기
-//        let databaseRef = Database.database().reference().child("boards")
-//        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
-//            self.posts.removeAll() // 데이터를 새로 받을 때 배열 비우기
-//            if let user = Auth.auth().currentUser {
-//                let uid = user.uid
-//                if let data = snapshot.value as? [String: Any] {
-//                    for (key, value) in data {
-//                        if let postDict = value as? [String: Any],
-//                           let content = postDict["content"] as? String,
-//                           let like = postDict["likeCount"] as? Int,
-//                           let Profile = postDict("profile"),
-//                           let timestamp = postDict["date"] as? TimeInterval {
-//                            let date = Date(timeIntervalSince1970: timestamp) // Double을 Date로 변환
-//                            let post = Board(uid: uid, content: content, date: date, isUpdated: false, likeCount: like, profile: Profile)
-//                            self.posts.append(post)
-//                        }
-//                    }
-//                }
-//                self.appTableView.reloadData() // 테이블 뷰 리로드
-//            }
-//        }) { (error) in
-//            // 에러 핸들링
-//            print("Firebase에서 데이터를 가져오는 동안 에러 발생: \(error.localizedDescription)")
-//        }
-//    }
+
     
     func setupUI(){
         self.backgroundColor = ColorGuide.userBackGround
         addSubview(GymgleName)
         addSubview(healthName)
-//        addSubview(mirrorPlace)
+        //        addSubview(mirrorPlace)
         addSubview(appNoticePlace)
         addSubview(appTableView)
         addSubview(writePlace)
-
-//        writePlace.addSubview(yourTableView)
-//        appTableView.addSubview(yourTableView)
+        
+        //        writePlace.addSubview(yourTableView)
+        //        appTableView.addSubview(yourTableView)
         
         GymgleName.snp.makeConstraints {
             $0.top.equalToSuperview().offset(90)
@@ -194,12 +173,12 @@ class UserCommunityView: UIView,UITableViewDelegate {
             $0.width.equalTo(60)
             $0.height.equalTo(60)
         }
-//        mirrorPlace.snp.makeConstraints {
-//            $0.centerY.equalTo(GymgleName.snp.centerY)
-//            $0.trailing.equalTo(writePlace.snp.leading).offset(-6)
-//            $0.width.equalTo(32)
-//            $0.height.equalTo(32)
-//        }
+        //        mirrorPlace.snp.makeConstraints {
+        //            $0.centerY.equalTo(GymgleName.snp.centerY)
+        //            $0.trailing.equalTo(writePlace.snp.leading).offset(-6)
+        //            $0.width.equalTo(32)
+        //            $0.height.equalTo(32)
+        //        }
         appNoticePlace.snp.makeConstraints {
             $0.top.equalTo(GymgleName.snp.bottom).offset(4)
             $0.leading.equalToSuperview().offset(20)
@@ -215,21 +194,28 @@ class UserCommunityView: UIView,UITableViewDelegate {
         }
         
     }
-
+    
 }
 extension UserCommunityView:UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
+        return appNoticePlace.text?.isEmpty == true ? posts.count : filteredPost.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CommunityCell
         cell.selectionStyle = .none
-        if indexPath.row < posts.count {
-            let data = posts[indexPath.row]
-            cell.configure(with: data)
+        if appNoticePlace.text?.isEmpty == true {
+            if indexPath.row < posts.count {
+                let data = posts[indexPath.row]
+                cell.configure(with: data)
+            }
+        } else {
+            if indexPath.row < filteredPost.count {
+                let data = filteredPost[indexPath.row]
+                cell.configure(with: data)
+            }
         }
         return cell
     }
@@ -238,12 +224,17 @@ extension UserCommunityView:UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         userDidSelectRow(at: indexPath)
-//            let pp = UserCommunityViewController()
-//
-//         let adminNoticeDetailVC = AdminNoticeDetailViewController()
-//         adminNoticeDetailVC.noticeInfo = dummyDataManager.gymInfo.noticeList[indexPath.row] 데이터모델 공사중입니다
-            // 새로운 뷰를 모달로 표시합니다.
-//            self.present(pp, animated: true, completion: nil)
-        }
+    }
+    
+}
 
+extension UserCommunityView: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let searchQuery = searchText.lowercased()
+        
+        filteredPost = posts.filter { post in
+            return post.content.lowercased().contains(searchQuery) || post.profile.nickName.lowercased().contains(searchQuery)
+        }
+        appTableView.reloadData()
+    }
 }
