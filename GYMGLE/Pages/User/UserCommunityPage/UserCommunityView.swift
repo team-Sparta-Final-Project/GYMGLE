@@ -127,8 +127,9 @@ class UserCommunityView: UIView,UITableViewDelegate {
                     }
                 }
             }
-        }
+        })
     }
+                                       
 //    func decodeData() {
 //        // Firebase에서 데이터 가져오기
 //        let databaseRef = Database.database().reference().child("boards")

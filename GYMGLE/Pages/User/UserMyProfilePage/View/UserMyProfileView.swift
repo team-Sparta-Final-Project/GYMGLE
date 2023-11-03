@@ -44,7 +44,7 @@ final class UserMyProfileView: UIView {
     
     private lazy var postCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "작성한 글 12개"
+        label.text = "작성한 글 0개"
         label.labelMakeUI(textColor: ColorGuide.textHint, font: FontGuide.size14, textAligment: .center)
         return label
     }()
