@@ -20,9 +20,6 @@ class BoardDetailViewController: UIViewController {
     }
     
     
-    @objc func showCommentPopUp(){
-        print("테스트 - asdjhaskjdhkajsdhjkash")
-    }
 
     
 }
@@ -34,6 +31,9 @@ extension BoardDetailViewController {
         temp.append(Comment(uid: "국빱애호가", comment: "반갑습니다", date: Date(), isUpdated: false))
     }
     
+    @objc func showCommentPopUp(){
+        print("테스트 - asdjhaskjdhkajsdhjkash")
+    }
     
     
 }
