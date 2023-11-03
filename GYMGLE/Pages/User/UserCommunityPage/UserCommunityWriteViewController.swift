@@ -85,30 +85,39 @@ extension UserCommunityWriteViewController: UITextViewDelegate {
     func createdBoard() {
         if let user = Auth.auth().currentUser {
             let uid = user.uid
-        guard let boardText = first.writePlace.text else { return }
-        let currentDate = Date()
-            let Profile = postDict(image: "", nickName:""),
-            let newBoard = Board(uid: uid, content: boardText, date: currentDate, isUpdated: false, likeCount: 0, profile: Profile)
-        let ref = Database.database().reference().child("boards").childByAutoId()
-//        let ref2 = Database.database().reference().child("profiles").child(uid)
-//            ref2.observeSingleEvent(of: .value) { (snapshot) in
-//                if let profileData = snapshot.value as? [String: Any],
-//                   let nickName = profileData["nickName"] as? String {
-//                    print("사용자의 닉네임: \(nickName)")
-//                    let newProfile = Profile(nickName: nickName, image: url)
-//                } else {
-//                    print("프로필 데이터를 가져오는 데 문제가 있습니다.")
-//                }
-//            }
+            guard let boardText = first.writePlace.text else { return }
+            let currentDate = Date()
 
-        do {
-            let boardData = try JSONEncoder().encode(newBoard)
-            let boardJSON = try JSONSerialization.jsonObject(with: boardData, options: [])
-            ref.setValue(boardJSON)
-        } catch {
-            print("테스트 - error")
+            // 이 부분에서 프로필 정보를 가져옵니다.
+            let ref2 = Database.database().reference().child("profiles").child(uid)
+            ref2.observeSingleEvent(of: .value) { (snapshot) in
+                if let profileData = snapshot.value as? [String: Any],
+                    let nickName = profileData["nickName"] as? String,
+                    let imageURLString = profileData["image"] as? String {
+                    if let imageURL = URL(string: imageURLString) {
+                        // 프로필 정보를 사용하여 Profile 객체를 만듭니다.
+                        let newProfile = Profile(image: imageURL, nickName: nickName)
+                        
+                        // 게시물을 생성하고 프로필을 할당합니다.
+                        let newBoard = Board(uid: uid, content: boardText, date: currentDate, isUpdated: false, likeCount: 0, profile: newProfile)
+                        
+                        // Firebase에 게시물을 저장합니다.
+                        let ref = Database.database().reference().child("boards").childByAutoId()
+                        do {
+                            let boardData = try JSONEncoder().encode(newBoard)
+                            let boardJSON = try JSONSerialization.jsonObject(with: boardData, options: [])
+                            ref.setValue(boardJSON)
+                        } catch {
+                            print("게시물을 저장하는 동안 오류 발생: \(error)")
+                        }
+                    } else {
+                        print("Invalid image URL")
+                    }
+                } else {
+                    print("프로필 데이터를 가져오는 데 문제가 있습니다.")
+                }
+            }
         }
-    }
     }
     
     @objc private func createBoardButtonTapped() {
