@@ -32,7 +32,6 @@ class UserMyPageViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         tabBarController?.tabBar.isHidden = false
-        userMyPageView.tableView.reloadData() //⭐️⭐️⭐️
     }
    
 }

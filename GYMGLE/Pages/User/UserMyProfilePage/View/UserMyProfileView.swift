@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseStorage
 
 final class UserMyProfileView: UIView {
 
@@ -158,5 +159,22 @@ extension UserMyProfileView {
         gymName.text = gym
         nickName.text = nick
         postCountLabel.text = "작성한 글 \(postCount)개"
+    }
+    
+    func downloadImage(imageView: UIImageView) {
+        guard let url = DataManager.shared.profile?.image else  {return}
+        Storage.storage().reference(forURL: "\(url)").downloadURL { url, error  in
+            URLSession.shared.dataTask(with: url!) { data, response, error in
+                if let error = error {
+                    print("오류 - \(error.localizedDescription)")
+                    return
+                }
+                if let data = data, let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        imageView.image = image
+                    }
+                }
+            }.resume()
+        }
     }
 }

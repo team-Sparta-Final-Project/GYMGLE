@@ -71,6 +71,7 @@ final class UserMyProfileUpdateView: UIView {
         textField.layer.borderColor = ColorGuide.textHint.cgColor
         textField.layer.borderWidth = 1.0
         textField.textColor = ColorGuide.black
+        textField.placeholder = "닉네임을 입력해주세요."
         textField.autocapitalizationType = .none // 자동으로 맨 앞을 대문자로 할건지
         textField.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
         textField.spellCheckingType = .no
@@ -80,7 +81,10 @@ final class UserMyProfileUpdateView: UIView {
 
     private lazy var nickNameHintLabel: UILabel = {
         let label = UILabel()
-        label.text = "* 닉네임은 띄어쓰기 없이 한글,영문,숫자만 가능해요."
+        label.text = """
+                     * 띄어쓰기 없이 한글, 영문, 숫자로 20자만 가능해요.
+                    """
+        label.numberOfLines = 2
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size14, textAligment: .left)
         return label
     }()
