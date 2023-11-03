@@ -88,6 +88,7 @@
 		D16920A72ADFBB9F00BE1A2B /* UserMyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */; };
 		D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */; };
 		D16D42752AF3C90E0083EB17 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D16D42742AF3C90E0083EB17 /* Kingfisher */; };
+		D16D42772AF4B09A0083EB17 /* Extension_Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D42762AF4B09A0083EB17 /* Extension_Date.swift */; };
 		D1E0185F2ADCEB6700D1C53D /* AdminNoticeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E0185E2ADCEB6700D1C53D /* AdminNoticeDetailView.swift */; };
 		D1E018612ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E018602ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift */; };
 		D1E018632ADCEBE000D1C53D /* AdminNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E018622ADCEBE000D1C53D /* AdminNoticeView.swift */; };
@@ -181,6 +182,7 @@
 		D16142202AF225A100628295 /* BlockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockViewController.swift; sourceTree = "<group>"; };
 		D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageView.swift; sourceTree = "<group>"; };
 		D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageViewController.swift; sourceTree = "<group>"; };
+		D16D42762AF4B09A0083EB17 /* Extension_Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_Date.swift; sourceTree = "<group>"; };
 		D1E0185E2ADCEB6700D1C53D /* AdminNoticeDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdminNoticeDetailView.swift; path = GYMGLE/Pages/Admin/AdminNoticePage/AdminNoticeDetailPage/View/AdminNoticeDetailView.swift; sourceTree = SOURCE_ROOT; };
 		D1E018602ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdminNoticeDetailViewController.swift; path = GYMGLE/Pages/Admin/AdminNoticePage/AdminNoticeDetailPage/ViewController/AdminNoticeDetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		D1E018622ADCEBE000D1C53D /* AdminNoticeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminNoticeView.swift; sourceTree = "<group>"; };
@@ -655,6 +657,7 @@
 				D14ECB472AD928FF00FF7853 /* Extension_CALayer.swift */,
 				630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */,
 				63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */,
+				D16D42762AF4B09A0083EB17 /* Extension_Date.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -870,6 +873,7 @@
 				63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */,
 				2730BC882ADC1DC500BFA23C /* UserManageController.swift in Sources */,
 				63F777D52AF13F1D00A3DF2B /* UserMyProfileUpdateViewController.swift in Sources */,
+				D16D42772AF4B09A0083EB17 /* Extension_Date.swift in Sources */,
 				630CE1532ADD5CB8001EC547 /* Account.swift in Sources */,
 				63B5A2252AEB627900105AB5 /* Extension_UIImage.swift in Sources */,
 				D1E0187D2ADCEE0000D1C53D /* CustomTextCell.swift in Sources */,
