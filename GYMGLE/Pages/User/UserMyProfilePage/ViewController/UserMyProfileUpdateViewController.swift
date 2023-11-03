@@ -39,6 +39,7 @@ final class UserMyProfileUpdateViewController: UIViewController {
         viewDisappearEvent()
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
         self.view.endEditing(true)
     }
 }
@@ -69,7 +70,7 @@ private extension UserMyProfileUpdateViewController {
     }
     // 이미지를 스토리지에 올리기
     func uploadImage(image: UIImage, completion: @escaping (URL?) -> Void) {
-        guard let imageData = image.jpegData(compressionQuality: 0.4) else { return }
+        guard let imageData = image.jpegData(compressionQuality: 0.2) else { return }
         let metaData = StorageMetadata()
         metaData.contentType = "image/jpeg"
         
@@ -103,15 +104,30 @@ private extension UserMyProfileUpdateViewController {
         }
     }
     func viewDisappearEvent() {
+        self.uploadImage(image: self.userMyprofileUpdateView.profileImageView.image!) { url in
+            if let url = url, let nickName = self.userMyprofileUpdateView.nickNameTextField.text {
+                let myProfile = Profile(image: url, nickName: nickName)
+                self.delegate?.updatedProfileData(viewController: self, updatedData: myProfile)
+                DataManager.shared.profile = myProfile
+            }
+        }
+    }
+}
+
+// MARK: - extension @objc func
+
+extension UserMyProfileUpdateViewController {
+    
+    @objc private func backButtonTapped() {
+        presentingViewController?.dismiss(animated: true)
+    }
+    @objc private func imageButtonTapped() {
+        setupImagePicker()
+    }
+    @objc private func successedButtonTapped() {
         nickNameDuplicateCheck(completion: { isDuplicated in
             if !isDuplicated || DataManager.shared.profile?.nickName == self.userMyprofileUpdateView.nickNameTextField.text {
-                self.uploadImage(image: self.userMyprofileUpdateView.profileImageView.image!) { url in
-                    if let url = url, let nickName = self.userMyprofileUpdateView.nickNameTextField.text {
-                        let myProfile = Profile(image: url, nickName: nickName)
-                        self.delegate?.updatedProfileData(viewController: self, updatedData: myProfile)
-                        DataManager.shared.profile = myProfile
-                    }
-                }
+                self.presentingViewController?.dismiss(animated: true)
             } else {
                 DispatchQueue.main.async {
                     let alert = UIAlertController(title: "닉네임 중복",
@@ -122,21 +138,6 @@ private extension UserMyProfileUpdateViewController {
                 }
             }
         })
-    }
-}
-
-// MARK: - extension @objc func
-
-extension UserMyProfileUpdateViewController {
-    
-    @objc private func backButtonTapped() {
-        dismiss(animated: true)
-    }
-    @objc private func imageButtonTapped() {
-        setupImagePicker()
-    }
-    @objc private func successedButtonTapped() {
-        dismiss(animated: true)
     }
 }
 

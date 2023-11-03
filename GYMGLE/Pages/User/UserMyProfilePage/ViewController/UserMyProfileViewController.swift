@@ -13,7 +13,6 @@ import FirebaseStorage
 import Firebase
 import Kingfisher
 
-
 final class UserMyProfileViewController: UIViewController {
 
     // MARK: - prirperties
@@ -31,6 +30,7 @@ final class UserMyProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("테스트 - \(post.count)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,7 +38,6 @@ final class UserMyProfileViewController: UIViewController {
         navigationController?.navigationBar.isHidden = false
         tabBarController?.tabBar.isHidden = true
         allSetting()
-        dataSetting()
     }
 }
 
@@ -52,6 +51,7 @@ private extension UserMyProfileViewController {
         tableViewSetting()
         profileIsNil()
         buttonSetting()
+        dataSetting()
     }
     
     func tableViewSetting() {
@@ -90,11 +90,14 @@ private extension UserMyProfileViewController {
     func dataSetting() {
         //자기가 들어오는 거면 싱글톤으로 보여주기
         if userUid == Auth.auth().currentUser?.uid {
-            guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
-            guard let nickName = DataManager.shared.profile?.nickName else { return }
-            guard let url = DataManager.shared.profile?.image else { return }
-            self.userMyProfileView.dataSetting(gym: gymName, name: nickName, postCount: self.post.count, imageUrl: url)
-            getPost { self.userMyProfileView.postTableview.reloadData() }
+            getPost {
+                guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
+                guard let nickName = DataManager.shared.profile?.nickName else { return }
+                guard let url = DataManager.shared.profile?.image else { return }
+                self.userMyProfileView.dataSetting(gym: gymName, name: nickName, postCount: self.post.count, imageUrl: url)
+                self.userMyProfileView.postTableview.reloadData()
+            }
+            
         } else { // 다른 사람이 들어오는거면 싱글톤이 아닌 uid를 사용해 서버를 통해서 보여주기
             getProfile {
                 guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
@@ -138,6 +141,7 @@ private extension UserMyProfileViewController {
                 let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
                 let posts = try JSONDecoder().decode([Board].self, from: jsonData)
                 self.post = posts
+                print("테스트 - \(self.post)")
                 completion()
             } catch let error {
                 print("테스트 - \(error)")

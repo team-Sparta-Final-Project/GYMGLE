@@ -20,7 +20,7 @@ final class UserMyProfileView: UIView {
     
     private lazy var profileImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(systemName: "goforward")?.withRenderingMode(.alwaysOriginal)
+        //image.image = UIImage(systemName: "goforward")?.withRenderingMode(.alwaysOriginal)
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
         image.layer.borderWidth = 1.2
@@ -31,21 +31,18 @@ final class UserMyProfileView: UIView {
     
     private lazy var gymName: UILabel = {
         let label = UILabel()
-        label.text = "만나짐"
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size14, textAligment: .center)
         return label
     }()
     
     private lazy var nickName: UILabel = {
         let label = UILabel()
-        label.text = "안녕"
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size19Bold, textAligment: .center)
         return label
     }()
     
     private lazy var postCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "작성한 글 0개"
         label.labelMakeUI(textColor: ColorGuide.textHint, font: FontGuide.size14, textAligment: .center)
         return label
     }()
