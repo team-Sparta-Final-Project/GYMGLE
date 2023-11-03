@@ -11,7 +11,7 @@ class CommunityCell: UITableViewCell {
     
     func configure(with data: Board) {
         mainTextLabel.text = data.content
-        timeLabel.text = "\(data.date)"
+        timeLabel.text = data.date.timeAgo()
         LikeLabel.text = "좋아요 \(data.likeCount)개"
         nameLabel.text = data.profile.nickName
         imageView1.kf.setImage(with: data.profile.image)
