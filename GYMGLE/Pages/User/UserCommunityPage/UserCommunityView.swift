@@ -16,7 +16,6 @@ import FirebaseDatabase
 class UserCommunityView: UIView,UITableViewDelegate {
     var posts: [Board] = [] // 게시물 데이터를 저장할 배열
     let first = CommunityCell()
-    
 
     weak var delegate: CommunityTableViewDelegate?
     
@@ -84,13 +83,30 @@ class UserCommunityView: UIView,UITableViewDelegate {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    func fetchProfileData(forUserID userID: String, completion: @escaping (Profile?) -> Void) {
+        let profileRef = Database.database().reference().child("profiles").child(userID)
+        
+        profileRef.observeSingleEvent(of: .value) { snapshot in
+            if let profileData = snapshot.value as? [String: Any],
+               let imageString = profileData["image"] as? String,
+               let imageURL = URL(string: imageString),
+               let nickName = profileData["nickName"] as? String {
+                   let profile = Profile(image: imageURL, nickName: nickName)
+                   completion(profile)
+            } else {
+                completion(nil)
+            }
+        }
+    }
     func decodeData() {
         // Firebase에서 데이터 가져오기
-        let databaseRef = Database.database().reference().child("posts")
-        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
+        let databaseRef = Database.database().reference().child("boards")
+        
+        databaseRef.observeSingleEvent(of: .value) { snapshot in
             self.posts.removeAll() // 데이터를 새로 받을 때 배열 비우기
             if let user = Auth.auth().currentUser {
                 let uid = user.uid
+                
                 if let data = snapshot.value as? [String: Any] {
                     for (key, value) in data {
                         if let postDict = value as? [String: Any],
@@ -98,18 +114,53 @@ class UserCommunityView: UIView,UITableViewDelegate {
                            let like = postDict["likeCount"] as? Int,
                            let timestamp = postDict["date"] as? TimeInterval {
                             let date = Date(timeIntervalSince1970: timestamp) // Double을 Date로 변환
-                            let post = Board(uid: uid, content: content, date: date, isUpdated: false, likeCount: like)
-                            self.posts.append(post)
+                            
+                            fetchProfileData(forUserID: uid) { profile in
+                                if let profile = profile {
+                                    let post = Board(uid: uid, content: content, date: date, isUpdated: false, likeCount: like, profile: profile)
+                                    self.posts.append(post)
+                                    self.appTableView.reloadData() // 테이블 뷰 리로드
+                                } else {
+                                    print("프로필 데이터를 가져오지 못했습니다.")
+                                }
+                            }
                         }
                     }
                 }
-                self.appTableView.reloadData() // 테이블 뷰 리로드
             }
-        }) { (error) in
+        }
+        { (error) in
             // 에러 핸들링
             print("Firebase에서 데이터를 가져오는 동안 에러 발생: \(error.localizedDescription)")
         }
     }
+//    func decodeData() {
+//        // Firebase에서 데이터 가져오기
+//        let databaseRef = Database.database().reference().child("boards")
+//        databaseRef.observeSingleEvent(of: .value, with: { (snapshot) in
+//            self.posts.removeAll() // 데이터를 새로 받을 때 배열 비우기
+//            if let user = Auth.auth().currentUser {
+//                let uid = user.uid
+//                if let data = snapshot.value as? [String: Any] {
+//                    for (key, value) in data {
+//                        if let postDict = value as? [String: Any],
+//                           let content = postDict["content"] as? String,
+//                           let like = postDict["likeCount"] as? Int,
+//                           let Profile = postDict("profile"),
+//                           let timestamp = postDict["date"] as? TimeInterval {
+//                            let date = Date(timeIntervalSince1970: timestamp) // Double을 Date로 변환
+//                            let post = Board(uid: uid, content: content, date: date, isUpdated: false, likeCount: like, profile: Profile)
+//                            self.posts.append(post)
+//                        }
+//                    }
+//                }
+//                self.appTableView.reloadData() // 테이블 뷰 리로드
+//            }
+//        }) { (error) in
+//            // 에러 핸들링
+//            print("Firebase에서 데이터를 가져오는 동안 에러 발생: \(error.localizedDescription)")
+//        }
+//    }
     
     func setupUI(){
         self.backgroundColor = ColorGuide.userBackGround

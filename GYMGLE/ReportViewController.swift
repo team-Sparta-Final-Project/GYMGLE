@@ -10,7 +10,7 @@ import MessageUI
 
 class ReportViewController: UIViewController {
     // 더미데이터
-    let board = Board(uid: "example", content: "example", date: Date(), isUpdated: false, likeCount: 0)
+    let board = Board(uid: "example", content: "example", date: Date(), isUpdated: false, likeCount: 0, profile: <#Profile#>)
     
     private let reportView = ReportView()
     
