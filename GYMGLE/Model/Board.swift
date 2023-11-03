@@ -13,6 +13,7 @@ struct Board: Codable {
     var date: Date
     var isUpdated: Bool
     var likeCount: Int
+    var profile: Profile
 }
 
 //프로필
@@ -33,5 +34,6 @@ struct Comment: Codable {
     var comment: String
     var date: Date
     var isUpdated: Bool
+    var profile: Profile
 }
 

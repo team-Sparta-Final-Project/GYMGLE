@@ -11,6 +11,7 @@ import FirebaseCore
 import FirebaseDatabase
 import FirebaseStorage
 import Firebase
+import Kingfisher
 
 final class UserMyProfileViewController: UIViewController {
     
@@ -121,17 +122,7 @@ private extension UserMyProfileViewController {
     func downloadImage(imageView: UIImageView) {
         guard let url = DataManager.shared.profile?.image else  {return}
         Storage.storage().reference(forURL: "\(url)").downloadURL { url, error  in
-            URLSession.shared.dataTask(with: url!) { data, response, error in
-                if let error = error {
-                    print("오류 - \(error.localizedDescription)")
-                    return
-                }
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        imageView.image = image
-                    }
-                }
-            }.resume()
+            imageView.kf.setImage(with: url)
         }
     }
     func getPost(completion: @escaping () -> Void) {

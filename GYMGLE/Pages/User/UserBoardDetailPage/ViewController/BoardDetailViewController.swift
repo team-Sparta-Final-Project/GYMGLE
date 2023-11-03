@@ -2,6 +2,8 @@ import UIKit
 
 class BoardDetailViewController: UIViewController {
     
+    let profile = Profile(image: URL(string:"https://i.namu.wiki/i/_-uuCMpeISXkf8ByapepsmppPEKWXY9v3dTferwAVCxXKLEOMWzOA3-1rXi_Cyw_7jPARqh_-hEFgK-n5WmCRVyMzXu6TGLKjfbREZTYMTcDM7RuRuQXmDDoBJwoda-rRbhnvqxVPdcBX3nkpU_Snw.svg")!, nickName: "닉네임")
+    
     var temp:[Any] = []
     
     let viewConfigure = BoardDetailView()
@@ -20,20 +22,21 @@ class BoardDetailViewController: UIViewController {
     }
     
     
-    @objc func showCommentPopUp(){
-        print("테스트 - asdjhaskjdhkajsdhjkash")
-    }
 
     
 }
 //MARK: - @objc 모음 익스텐션
 extension BoardDetailViewController {
     
+    
     func makeDummy(){
-        temp.append(Board(uid: "마알티즈국빱", content: "안녕하세요", date: Date(), isUpdated: false, likeCount: 0))
-        temp.append(Comment(uid: "국빱애호가", comment: "반갑습니다", date: Date(), isUpdated: false))
+        temp.append(Board(uid: "마알티즈국빱", content: "안녕하세요", date: Date(), isUpdated: false, likeCount: 0,profile: profile))
+        temp.append(Comment(uid: "국빱애호가", comment: "반갑습니다", date: Date(), isUpdated: false, profile: profile))
     }
     
+    @objc func showCommentPopUp(){
+        print("테스트 - asdjhaskjdhkajsdhjkash")
+    }
     
     
 }
@@ -93,7 +96,7 @@ extension BoardDetailViewController:BoardProfileInfoButtonDelegate {
 
 extension BoardDetailViewController:CommentButtonDelegate {
     func commentButtonTapped(text:String) {
-        temp.append(Comment(uid: "국빱애호가", comment: text, date: Date(), isUpdated: false))
+        temp.append(Comment(uid: "국빱애호가", comment: text, date: Date(), isUpdated: false,profile: profile))
         self.viewConfigure.tableView.reloadData()
     }
 }
