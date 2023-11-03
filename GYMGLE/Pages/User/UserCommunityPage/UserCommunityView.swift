@@ -101,14 +101,22 @@ class UserCommunityView: UIView,UITableViewDelegate {
     func decodeData() {
         // Firebase에서 데이터 가져오기
         let databaseRef = Database.database().reference().child("boards")
-
-        databaseRef.observeSingleEvent(of: .value) { snapshot in
+                databaseRef.queryOrdered(byChild: "date")
+                   .observeSingleEvent(of: .value) { snapshot in
             self.posts.removeAll() // 데이터를 새로 받을 때 배열 비우기
             if let user = Auth.auth().currentUser {
                 let uid = user.uid
 
                 if let data = snapshot.value as? [String: Any] {
-                    for (key, value) in data {
+                    for (key, value) in data.sorted(by: { (lhs, rhs) -> Bool in
+                        if let leftDict = lhs.value as? [String: Any],
+                           let rightDict = rhs.value as? [String: Any],
+                           let leftTimestamp = leftDict["date"] as? TimeInterval,
+                           let rightTimestamp = rightDict["date"] as? TimeInterval {
+                            return leftTimestamp > rightTimestamp
+                        }
+                        return false
+                    }) {
                         if let postDict = value as? [String: Any],
                            let content = postDict["content"] as? String,
                            let like = postDict["likeCount"] as? Int,
@@ -118,12 +126,12 @@ class UserCommunityView: UIView,UITableViewDelegate {
                             if let profile = DataManager.shared.profile {
                                 let post = Board(uid: uid, content: content, date: date, isUpdated: false, likeCount: like, profile: profile)
                                 self.posts.append(post)
-                                self.appTableView.reloadData() // 테이블 뷰 리로드
-                            } else {
-                                print("프로필 데이터를 가져오지 못했습니다.")
                             }
                         }
                     }
+                    
+                    // 정렬된 데이터를 가져왔으므로 테이블 뷰를 리로드합니다.
+                    self.appTableView.reloadData()
                 }
             }
         }
