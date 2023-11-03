@@ -14,11 +14,16 @@ import FirebaseCore
 import FirebaseDatabase
 import Kingfisher
 
+protocol SendUpdatedDataProtocol: AnyObject {
+    func updatedProfileData(viewController: UserMyProfileUpdateViewController, updatedData: Profile)
+}
+
 final class UserMyProfileUpdateViewController: UIViewController {
 
 
     // MARK: - pripertise
     let userMyprofileUpdateView = UserMyProfileUpdateView()
+    weak var delegate: SendUpdatedDataProtocol?
     // MARK: - life cycle
     override func loadView() {
         view = userMyprofileUpdateView
@@ -33,6 +38,11 @@ final class UserMyProfileUpdateViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewDisappearEvent()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -62,9 +72,9 @@ private extension UserMyProfileUpdateViewController {
         userMyprofileUpdateView.imageButton.addTarget(self, action:  #selector(imageButtonTapped), for: .touchUpInside)
         userMyprofileUpdateView.successedButton.addTarget(self, action:  #selector(successedButtonTapped), for: .touchUpInside)
     }
-    
+    // 스토리지에 올리기
     func uploadImage(image: UIImage, completion: @escaping (URL?) -> Void) {
-        guard let imageData = image.jpegData(compressionQuality: 0.4) else { return }
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
         let metaData = StorageMetadata()
         metaData.contentType = "image/jpeg"
         
@@ -77,6 +87,7 @@ private extension UserMyProfileUpdateViewController {
             }
         }
     }
+    // 프로필 서버에 올리기
     func createdProfile(url: URL, completion: @escaping () -> Void) {
         guard let nickName = userMyprofileUpdateView.nickNameTextField.text else { return }
         let newProfile = Profile(image: url, nickName: nickName)
@@ -91,29 +102,13 @@ private extension UserMyProfileUpdateViewController {
             completion()
         }
     }
+    //이미지 가져오기 (싱글톤에서)
     func downloadImage(imageView: UIImageView) {
         guard let url = DataManager.shared.profile?.image else  {return}
         imageView.kf.setImage(with: url)
     }
-    func showToast(message: String) {
-        let toastView = ToastView()
-        toastView.configure()
-        toastView.text = message
-        view.addSubview(toastView)
-        toastView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
-            toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
-            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
-        ])
-        UIView.animate(withDuration: 2.5, delay: 0.2) { //2.5초
-            toastView.alpha = 0
-        } completion: { _ in
-            toastView.removeFromSuperview()
-        }
-    }
-    
+
+    //닉네임 중복 검사 (서버에서 검사하기)
     func nickNameDuplicateCheck(completion: @escaping (Bool) -> Void) {
         let ref = Database.database().reference().child("accounts")
         let target = userMyprofileUpdateView.nickNameTextField.text
@@ -133,29 +128,14 @@ private extension UserMyProfileUpdateViewController {
             }
         }
     }
-}
-
-// MARK: - extension @objc func
-
-extension UserMyProfileUpdateViewController {
-    
-    @objc private func backButtonTapped() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    @objc private func imageButtonTapped() {
-        setupImagePicker()
-    }
-    @objc private func successedButtonTapped() {
-        
+    func viewDisappearEvent() {
         nickNameDuplicateCheck(completion: { isDuplicated in
             if !isDuplicated || DataManager.shared.profile?.nickName == self.userMyprofileUpdateView.nickNameTextField.text {
                 self.uploadImage(image: self.userMyprofileUpdateView.profileImageView.image!) { url in
                     if let url = url, let nickName = self.userMyprofileUpdateView.nickNameTextField.text {
-                        self.createdProfile(url: url) {
-                            let myProfile = Profile(image: url, nickName: nickName)
-                            DataManager.shared.profile = myProfile
-                            self.navigationController?.popViewController(animated: true)
-                        }
+                        let myProfile = Profile(image: url, nickName: nickName)
+                        DataManager.shared.profile = myProfile
+                        self.delegate?.updatedProfileData(viewController: self, updatedData: myProfile)
                     }
                 }
             } else {
@@ -168,6 +148,21 @@ extension UserMyProfileUpdateViewController {
                 }
             }
         })
+    }
+}
+
+// MARK: - extension @objc func
+
+extension UserMyProfileUpdateViewController {
+    
+    @objc private func backButtonTapped() {
+        dismiss(animated: true)
+    }
+    @objc private func imageButtonTapped() {
+        setupImagePicker()
+    }
+    @objc private func successedButtonTapped() {
+        dismiss(animated: true)
     }
 }
 

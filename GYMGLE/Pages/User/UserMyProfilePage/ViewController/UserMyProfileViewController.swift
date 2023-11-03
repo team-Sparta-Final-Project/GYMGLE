@@ -14,7 +14,30 @@ import Firebase
 import Kingfisher
 
 
-final class UserMyProfileViewController: UIViewController {
+final class UserMyProfileViewController: UIViewController, SendUpdatedDataProtocol {
+    func updatedProfileData(viewController: UserMyProfileUpdateViewController, updatedData: Profile) {
+        if DataManager.shared.profile?.nickName == nil {
+            let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
+            userMyProfileUpdateVC.modalPresentationStyle = .overCurrentContext
+            present(userMyProfileUpdateVC, animated: true)
+            return
+        } else {
+            getProfile {
+                if self.userUid == Auth.auth().currentUser?.uid {
+                    DataManager.shared.profile = updatedData
+                }
+                self.userMyProfileView.profileImageView.kf.setImage(with: updatedData.image)
+                self.userMyProfileView.nickName.text = updatedData.nickName
+            }
+            getPost {
+                guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
+                self.userMyProfileView.dataSetting(gym: gymName, nick: updatedData.nickName, postCount: self.post.count)
+                self.userMyProfileView.postTableview.reloadData()
+            }
+            return
+        }
+    }
+    
     
 
     // MARK: - prirperties
@@ -48,6 +71,7 @@ final class UserMyProfileViewController: UIViewController {
 private extension UserMyProfileViewController {
   
     func allSetting() {
+        
         buttonTapped()
         setCustomBackButton()
         tableViewSetting()
@@ -80,27 +104,7 @@ private extension UserMyProfileViewController {
     }
     
     func profileIsNil() {
-        if DataManager.shared.profile?.nickName == nil {
-            let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
-            userMyProfileUpdateVC.modalPresentationStyle = .overCurrentContext
-            present(userMyProfileUpdateVC, animated: true)
-            return
-        } else {
-            getProfile {
-                if self.userUid == Auth.auth().currentUser?.uid {
-                    guard let url = self.url else {return}
-                    DataManager.shared.profile = Profile(image: url, nickName: self.nickName)
-                }
-                self.userMyProfileView.profileImageView.kf.setImage(with: self.url)
-                self.userMyProfileView.nickName.text = self.nickName
-            }
-            getPost {
-                guard let gymName = DataManager.shared.realGymInfo?.gymName, let nickName = DataManager.shared.profile?.nickName else { return }
-                self.userMyProfileView.dataSetting(gym: gymName, nick: nickName, postCount: self.post.count)
-                self.userMyProfileView.postTableview.reloadData()
-            }
-            return
-        }
+        
     }
 }
 
@@ -148,11 +152,10 @@ private extension UserMyProfileViewController {
 extension UserMyProfileViewController {
     
     @objc private func updateButtonButtoned() {
-//        let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
-//        userMyProfileUpdateVC.modalPresentationStyle = .fullScreen
-//        present(userMyProfileUpdateVC, animated: true)
         let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
-        navigationController?.pushViewController(userMyProfileUpdateVC, animated: true)
+        userMyProfileUpdateVC.delegate = self
+        userMyProfileUpdateVC.modalPresentationStyle = .overFullScreen
+        present(userMyProfileUpdateVC, animated: true)
     }
     @objc private func banButtonButtoned() {
             let alert = UIAlertController(title: "차단", message: "사용자를 차단하시겠습니까?", preferredStyle: .alert)
