@@ -25,6 +25,7 @@ class UserMyPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         userMyPageView.tableView.myPageDelegate = self
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
