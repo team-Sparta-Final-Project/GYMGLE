@@ -61,6 +61,9 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
             dismiss(animated: true) {
                 let vc = InitialViewController()
                 vc.modalPresentationStyle = .fullScreen
+                DataManager.shared.profile = nil
+                DataManager.shared.userInfo = nil
+                DataManager.shared.realGymInfo = nil
                 self.present(vc, animated: true)
             }
             break

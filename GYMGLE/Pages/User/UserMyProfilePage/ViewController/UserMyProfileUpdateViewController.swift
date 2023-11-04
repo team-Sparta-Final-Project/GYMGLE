@@ -74,7 +74,7 @@ private extension UserMyProfileUpdateViewController {
         let metaData = StorageMetadata()
         metaData.contentType = "image/jpeg"
         
-        let imageName = Auth.auth().currentUser!.uid + String(Date().timeIntervalSince1970)
+        let imageName = Auth.auth().currentUser!.uid
         
         let firebaseReference = Storage.storage().reference().child("profiles").child("\(imageName)")
         firebaseReference.putData(imageData, metadata: metaData) { metaData, error in
