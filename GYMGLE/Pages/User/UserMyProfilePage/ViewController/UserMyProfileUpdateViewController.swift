@@ -20,7 +20,6 @@ final class UserMyProfileUpdateViewController: UIViewController {
 
     // MARK: - pripertise
     let userMyprofileUpdateView = UserMyProfileUpdateView()
-    weak var delegate: SendUpdatedDataProtocol?
     // MARK: - life cycle
     override func loadView() {
         view = userMyprofileUpdateView
@@ -34,13 +33,12 @@ final class UserMyProfileUpdateViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        viewDisappearEvent()
-    }
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
         self.view.endEditing(true)
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("sendUpdatedProfile"), object: nil)
     }
 }
 
@@ -107,8 +105,7 @@ private extension UserMyProfileUpdateViewController {
         self.uploadImage(image: self.userMyprofileUpdateView.profileImageView.image!) { url in
             if let url = url, let nickName = self.userMyprofileUpdateView.nickNameTextField.text {
                 let myProfile = Profile(image: url, nickName: nickName)
-                self.delegate?.updatedProfileData(viewController: self, updatedData: myProfile)
-                DataManager.shared.profile = myProfile
+                NotificationCenter.default.post(name: NSNotification.Name("sendUpdatedProfile"), object: nil, userInfo: ["profile" : myProfile])
             }
         }
     }
@@ -127,6 +124,7 @@ extension UserMyProfileUpdateViewController {
     @objc private func successedButtonTapped() {
         nickNameDuplicateCheck(completion: { isDuplicated in
             if !isDuplicated || DataManager.shared.profile?.nickName == self.userMyprofileUpdateView.nickNameTextField.text {
+                self.viewDisappearEvent()
                 self.presentingViewController?.dismiss(animated: true)
             } else {
                 DispatchQueue.main.async {

@@ -37,6 +37,9 @@ final class UserMyProfileViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
         allSetting()
     }
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("sendUpdatedProfile"), object: nil)
+    }
 }
 
 // MARK: - private extension custom func
@@ -44,6 +47,7 @@ final class UserMyProfileViewController: UIViewController {
 private extension UserMyProfileViewController {
   
     func allSetting() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updatedProfile), name: NSNotification.Name("sendUpdatedProfile"), object: nil)
         buttonTapped()
         setCustomBackButton()
         tableViewSetting()
@@ -80,7 +84,6 @@ private extension UserMyProfileViewController {
         if DataManager.shared.profile?.nickName == nil {
             let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
             userMyProfileUpdateVC.modalPresentationStyle = .overFullScreen
-            userMyProfileUpdateVC.delegate = self
             present(userMyProfileUpdateVC, animated: true)
             return
         }
@@ -91,7 +94,7 @@ private extension UserMyProfileViewController {
             guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
             guard let nickName = DataManager.shared.profile?.nickName else { return }
             guard let url = DataManager.shared.profile?.image else { return }
-            userMyProfileView.dataSetting(gym: gymName, name: nickName, imageUrl: url)
+            userMyProfileView.dataSetting(gym: gymName, name: nickName, postCount: self.post.count,imageUrl: url)
             getPost {
                 self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
                 self.userMyProfileView.postTableview.reloadData()
@@ -100,8 +103,8 @@ private extension UserMyProfileViewController {
             getProfile {
                 guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
                 guard let url = self.url else { return }
-                self.userMyProfileView.dataSetting(gym: gymName, name: self.nickName, imageUrl: url)
-                self.getPost { 
+                self.userMyProfileView.dataSetting(gym: gymName, name: self.nickName, postCount: self.post.count, imageUrl: url)
+                self.getPost {
                     self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
                     self.userMyProfileView.postTableview.reloadData()
                 }
@@ -158,8 +161,7 @@ extension UserMyProfileViewController {
     
     @objc private func updateButtonButtoned() {
         let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
-        userMyProfileUpdateVC.delegate = self
-        userMyProfileUpdateVC.modalPresentationStyle = .overFullScreen
+        userMyProfileUpdateVC.modalPresentationStyle = .currentContext
         present(userMyProfileUpdateVC, animated: true)
     }
     @objc private func banButtonButtoned() {
@@ -173,6 +175,24 @@ extension UserMyProfileViewController {
             alert.addAction(ok)
             alert.addAction(cancel)
             self.present(alert, animated: true, completion: nil)
+    }
+    @objc func updatedProfile(notification: Notification) {
+        guard let updatedProfile = notification.userInfo?["profile"] as? Profile else {return}
+        guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
+        DispatchQueue.main.async {
+            self.userMyProfileView.dataSetting(gym: gymName, name: updatedProfile.nickName, postCount: self.post.count, imageUrl: updatedProfile.image)
+        }
+        DataManager.shared.profile = updatedProfile
+        let newProfile = Profile(image: updatedProfile.image, nickName: updatedProfile.nickName)
+        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/profile")
+        do {
+            let profileData = try JSONEncoder().encode(newProfile)
+            let profileJSON = try JSONSerialization.jsonObject(with: profileData, options: [])
+            ref.setValue(profileJSON)
+            
+        } catch {
+            print("테스트 - error")
+        }
     }
 }
 
@@ -204,20 +224,3 @@ extension UserMyProfileViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - SendUpdatedDataProtocol
-
-extension UserMyProfileViewController: SendUpdatedDataProtocol {
-    func updatedProfileData(viewController: UserMyProfileUpdateViewController, updatedData: Profile) {
-        guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
-            self.userMyProfileView.dataSetting(gym: gymName, name: updatedData.nickName, postCount: self.post.count, imageUrl: updatedData.image)
-        let newProfile = Profile(image: updatedData.image, nickName: updatedData.nickName)
-        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/profile")
-        do {
-            let profileData = try JSONEncoder().encode(newProfile)
-            let profileJSON = try JSONSerialization.jsonObject(with: profileData, options: [])
-            ref.setValue(profileJSON)
-        } catch {
-            print("테스트 - error")
-        }
-    }
-}
