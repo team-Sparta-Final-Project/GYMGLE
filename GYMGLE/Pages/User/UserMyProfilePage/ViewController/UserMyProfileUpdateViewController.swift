@@ -81,11 +81,9 @@ private extension UserMyProfileUpdateViewController {
     }
     //닉네임 중복 검사 (서버에서 검사하기)
     func nickNameDuplicateCheck(completion: @escaping (Bool) -> Void) {
-        let userID = Auth.auth().currentUser?.uid
         let ref = Database.database().reference().child("accounts")
         let target = userMyprofileUpdateView.nickNameTextField.text
         ref.queryOrdered(byChild: "profile/nickName").queryEqual(toValue: target).observeSingleEvent(of: .value) { snapshot in
-            guard let value = snapshot.value else { return }
             if snapshot.exists() {
                 completion(true)
                 return
