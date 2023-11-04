@@ -12,6 +12,7 @@ class BoardDetailCommentSection:UIView {
     let profileSize:CGFloat = 24.0
     
     let profileImage = UIImageView().then{
+        $0.clipsToBounds = true
         $0.sizeToFit()
         $0.backgroundColor = .systemPink
         $0.image = UIImage(systemName: "star.fill")
@@ -27,7 +28,9 @@ class BoardDetailCommentSection:UIView {
         super .init(frame: frame)
         
         self.backgroundColor = UIColor(red: 0.896, green: 0.896, blue: 0.896, alpha: 1)
-        
+
+        self.profileImage.kf.setImage(with: DataManager.shared.profile?.image)
+            
         self.addSubview(profileImage)
         profileImage.snp.makeConstraints{
             $0.top.bottom.left.equalToSuperview().inset(20)
