@@ -20,7 +20,6 @@ final class UserMyProfileUpdateViewController: UIViewController {
 
     // MARK: - pripertise
     let userMyprofileUpdateView = UserMyProfileUpdateView()
-    weak var delegate: SendUpdatedDataProtocol?
     // MARK: - life cycle
     override func loadView() {
         view = userMyprofileUpdateView
@@ -33,13 +32,10 @@ final class UserMyProfileUpdateViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        viewDisappearEvent()
-    }
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
 }
@@ -87,29 +83,35 @@ private extension UserMyProfileUpdateViewController {
     func nickNameDuplicateCheck(completion: @escaping (Bool) -> Void) {
         let ref = Database.database().reference().child("accounts")
         let target = userMyprofileUpdateView.nickNameTextField.text
-        ref.observeSingleEvent(of: .value) { (snapshot) in
-            if let data = snapshot.value as? [String: Any] {
-                for (_, accountData) in data {
-                    if let account = accountData as? [String: Any],
-                       let accountInfo = account["profile"] as? [String: Any],
-                       let nickName = accountInfo["nickName"] as? String {
-                        if nickName == target {
-                            completion(true)
-                            return
-                        }
-                    }
-                }
-                completion(false)
+        ref.queryOrdered(byChild: "profile/nickName").queryEqual(toValue: target).observeSingleEvent(of: .value) { snapshot in
+            if snapshot.exists() {
+                completion(true)
+                return
             }
+            completion(false)
         }
+        
     }
     func viewDisappearEvent() {
         self.uploadImage(image: self.userMyprofileUpdateView.profileImageView.image!) { url in
-            if let url = url, let nickName = self.userMyprofileUpdateView.nickNameTextField.text {
-                let myProfile = Profile(image: url, nickName: nickName)
-                self.delegate?.updatedProfileData(viewController: self, updatedData: myProfile)
-                DataManager.shared.profile = myProfile
+            guard let url = url, let nickName = self.userMyprofileUpdateView.nickNameTextField.text else { return }
+            let myProfile = Profile(image: url, nickName: nickName)
+            DataManager.shared.profile = myProfile
+            self.saveProfile(newProfile: myProfile) {
+                self.dismiss(animated: true)
             }
+        }
+    }
+    func saveProfile(newProfile: Profile, completion: @escaping () -> Void) {
+        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/profile")
+        do {
+            let profileData = try JSONEncoder().encode(newProfile)
+            let profileJSON = try JSONSerialization.jsonObject(with: profileData, options: [])
+            ref.setValue(profileJSON)
+            completion()
+        } catch {
+            print("테스트 - error")
+            completion()
         }
     }
 }
@@ -127,7 +129,8 @@ extension UserMyProfileUpdateViewController {
     @objc private func successedButtonTapped() {
         nickNameDuplicateCheck(completion: { isDuplicated in
             if !isDuplicated || DataManager.shared.profile?.nickName == self.userMyprofileUpdateView.nickNameTextField.text {
-                self.presentingViewController?.dismiss(animated: true)
+                self.viewDisappearEvent()
+                
             } else {
                 DispatchQueue.main.async {
                     let alert = UIAlertController(title: "닉네임 중복",

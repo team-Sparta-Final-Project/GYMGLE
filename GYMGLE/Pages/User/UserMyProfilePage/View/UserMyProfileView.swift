@@ -160,10 +160,4 @@ extension UserMyProfileView {
         postCountLabel.text = "작성한 글 \(postCount)개"
         profileImageView.kf.setImage(with: imageUrl)
     }
-    func dataSetting(gym: String, name: String, imageUrl: URL) {
-        gymName.text = gym
-        nickName.text = name
-        profileImageView.kf.setImage(with: imageUrl)
-    }
-
 }
