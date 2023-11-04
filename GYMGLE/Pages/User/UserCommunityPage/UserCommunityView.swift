@@ -80,7 +80,9 @@ class UserCommunityView: UIView,UITableViewDelegate {
         appTableView.dataSource = self
         appTableView.delegate = self
         appTableView.register(CommunityCell.self, forCellReuseIdentifier: "Cell")
-        decodeData()
+        decodeData {
+            self.appTableView.reloadData()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -101,7 +103,8 @@ class UserCommunityView: UIView,UITableViewDelegate {
             }
         }
     }
-    func decodeData() {
+    
+    func decodeData(completion: @escaping () -> Void) {
         let databaseRef = Database.database().reference().child("boards")
 
         let numberOfPostsToRetrieve = 30  // 가져올 게시물 개수 (원하는 개수로 수정)
@@ -125,9 +128,9 @@ class UserCommunityView: UIView,UITableViewDelegate {
                         }
                     }
                 }
-                
+                completion()
                 // 테이블 뷰에 업데이트된 순서대로 표시
-                self.appTableView.reloadData()
+//                self.appTableView.reloadData()
             }
     }
 
