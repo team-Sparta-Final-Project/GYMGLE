@@ -9,6 +9,12 @@ import UIKit
 
 class UserCommunityWriteView: UIView, UITextViewDelegate {
     
+    lazy var backButton: UIButton = {
+        let button = UIButton()
+        button.buttonImageMakeUI(backgroundColor: UIColor.clear, image: "xmark", color: ColorGuide.black, cornerRadius: 0.0, borderWidth: 0.0, borderColor: UIColor.white.cgColor)
+        return button
+    }()
+    
     private lazy var GymgleName = UILabel().then {
         $0.textColor = ColorGuide.main
         $0.font = FontGuide.size26Bold
@@ -60,6 +66,14 @@ class UserCommunityWriteView: UIView, UITextViewDelegate {
         addSubview(mirrorPlace)
         addSubview(addButton)
         addSubview(countNumberLabel)
+        addSubview(backButton)
+        
+        backButton.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(20)
+            $0.top.equalTo(safeAreaLayoutGuide)
+            $0.width.equalTo(20)
+            $0.height.equalTo(20)
+        }
         
         GymgleName.snp.makeConstraints {
             $0.top.equalToSuperview().offset(90)
