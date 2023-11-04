@@ -41,7 +41,7 @@ final class UserMyProfileView: UIView {
         return label
     }()
     
-    private lazy var postCountLabel: UILabel = {
+    lazy var postCountLabel: UILabel = {
         let label = UILabel()
         label.labelMakeUI(textColor: ColorGuide.textHint, font: FontGuide.size14, textAligment: .center)
         return label
@@ -158,6 +158,11 @@ extension UserMyProfileView {
         gymName.text = gym
         nickName.text = name
         postCountLabel.text = "작성한 글 \(postCount)개"
+        profileImageView.kf.setImage(with: imageUrl)
+    }
+    func dataSetting(gym: String, name: String, imageUrl: URL) {
+        gymName.text = gym
+        nickName.text = name
         profileImageView.kf.setImage(with: imageUrl)
     }
 

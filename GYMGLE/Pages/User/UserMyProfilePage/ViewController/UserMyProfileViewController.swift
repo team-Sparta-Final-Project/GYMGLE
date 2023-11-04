@@ -30,7 +30,6 @@ final class UserMyProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("테스트 - \(post.count)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,20 +89,23 @@ private extension UserMyProfileViewController {
     func dataSetting() {
         //자기가 들어오는 거면 싱글톤으로 보여주기
         if userUid == Auth.auth().currentUser?.uid {
+            guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
+            guard let nickName = DataManager.shared.profile?.nickName else { return }
+            guard let url = DataManager.shared.profile?.image else { return }
+            userMyProfileView.dataSetting(gym: gymName, name: nickName, imageUrl: url)
             getPost {
-                guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
-                guard let nickName = DataManager.shared.profile?.nickName else { return }
-                guard let url = DataManager.shared.profile?.image else { return }
-                self.userMyProfileView.dataSetting(gym: gymName, name: nickName, postCount: self.post.count, imageUrl: url)
+                self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
                 self.userMyProfileView.postTableview.reloadData()
             }
-            
         } else { // 다른 사람이 들어오는거면 싱글톤이 아닌 uid를 사용해 서버를 통해서 보여주기
             getProfile {
                 guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
                 guard let url = self.url else { return }
-                self.userMyProfileView.dataSetting(gym: gymName, name: self.nickName, postCount: self.post.count, imageUrl: url)
-                self.getPost { self.userMyProfileView.postTableview.reloadData() }
+                self.userMyProfileView.dataSetting(gym: gymName, name: self.nickName, imageUrl: url)
+                self.getPost { 
+                    self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
+                    self.userMyProfileView.postTableview.reloadData()
+                }
             }
         }
     }
@@ -132,6 +134,7 @@ private extension UserMyProfileViewController {
     }
     // 포스트 얻기 위해 사용
     func getPost(completion: @escaping () -> Void) {
+        self.post.removeAll()
         let ref = Database.database().reference().child("boards")
         let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)")
         query.observeSingleEvent(of: .value) { dataSnapshot in
@@ -140,8 +143,7 @@ private extension UserMyProfileViewController {
                 let jsonArray = value.values.compactMap { $0 as [String: Any] }
                 let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
                 let posts = try JSONDecoder().decode([Board].self, from: jsonData)
-                self.post = posts
-                print("테스트 - \(self.post)")
+                self.post.append(contentsOf: posts)
                 completion()
             } catch let error {
                 print("테스트 - \(error)")
@@ -208,17 +210,15 @@ extension UserMyProfileViewController: UITableViewDelegate {
 extension UserMyProfileViewController: SendUpdatedDataProtocol {
     func updatedProfileData(viewController: UserMyProfileUpdateViewController, updatedData: Profile) {
         guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
-        DispatchQueue.main.async {
             self.userMyProfileView.dataSetting(gym: gymName, name: updatedData.nickName, postCount: self.post.count, imageUrl: updatedData.image)
-        }
-        let newProfile = Profile(image: updatedData.image, nickName: updatedData.nickName)
-        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/profile")
-        do {
-            let profileData = try JSONEncoder().encode(newProfile)
-            let profileJSON = try JSONSerialization.jsonObject(with: profileData, options: [])
-            ref.setValue(profileJSON)
-        } catch {
-            print("테스트 - error")
-        }
+//        let newProfile = Profile(image: updatedData.image, nickName: updatedData.nickName)
+//        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/profile")
+//        do {
+//            let profileData = try JSONEncoder().encode(newProfile)
+//            let profileJSON = try JSONSerialization.jsonObject(with: profileData, options: [])
+//            ref.setValue(profileJSON)
+//        } catch {
+//            print("테스트 - error")
+//        }
     }
 }
