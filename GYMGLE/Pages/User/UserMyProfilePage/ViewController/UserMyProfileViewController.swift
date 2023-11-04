@@ -48,7 +48,6 @@ private extension UserMyProfileViewController {
         tableViewSetting()
         profileIsNil()
         buttonSetting()
-        dataSetting()
     }
     
     func viewWillAppearSetting() {
@@ -84,7 +83,7 @@ private extension UserMyProfileViewController {
     func profileIsNil() {
         if DataManager.shared.profile?.nickName == nil {
             let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
-            userMyProfileUpdateVC.modalPresentationStyle = .overFullScreen
+            userMyProfileUpdateVC.modalPresentationStyle = .currentContext
             present(userMyProfileUpdateVC, animated: true)
             return
         }
@@ -92,10 +91,12 @@ private extension UserMyProfileViewController {
     func dataSetting() {
         //자기가 들어오는 거면 싱글톤으로 보여주기
         if userUid == Auth.auth().currentUser?.uid {
-            guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
-            guard let nickName = DataManager.shared.profile?.nickName else { return }
-            guard let url = DataManager.shared.profile?.image else { return }
-            userMyProfileView.dataSetting(gym: gymName, name: nickName, postCount: self.post.count,imageUrl: url)
+            DispatchQueue.main.async {
+                guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
+                guard let nickName = DataManager.shared.profile?.nickName else { return }
+                guard let url = DataManager.shared.profile?.image else { return }
+                self.userMyProfileView.dataSetting(gym: gymName, name: nickName, postCount: self.post.count,imageUrl: url)
+            }
             getPost {
                 self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
                 self.userMyProfileView.postTableview.reloadData()

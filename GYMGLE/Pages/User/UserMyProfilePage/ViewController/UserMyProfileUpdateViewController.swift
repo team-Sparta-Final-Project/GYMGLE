@@ -32,6 +32,7 @@ final class UserMyProfileUpdateViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
+        
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -80,23 +81,18 @@ private extension UserMyProfileUpdateViewController {
     }
     //닉네임 중복 검사 (서버에서 검사하기)
     func nickNameDuplicateCheck(completion: @escaping (Bool) -> Void) {
+        let userID = Auth.auth().currentUser?.uid
         let ref = Database.database().reference().child("accounts")
         let target = userMyprofileUpdateView.nickNameTextField.text
-        ref.observeSingleEvent(of: .value) { (snapshot) in
-            if let data = snapshot.value as? [String: Any] {
-                for (_, accountData) in data {
-                    if let account = accountData as? [String: Any],
-                       let accountInfo = account["profile"] as? [String: Any],
-                       let nickName = accountInfo["nickName"] as? String {
-                        if nickName == target {
-                            completion(true)
-                            return
-                        }
-                    }
-                }
-                completion(false)
+        ref.queryOrdered(byChild: "profile/nickName").queryEqual(toValue: target).observeSingleEvent(of: .value) { snapshot in
+            guard let value = snapshot.value else { return }
+            if snapshot.exists() {
+                completion(true)
+                return
             }
+            completion(false)
         }
+        
     }
     func viewDisappearEvent() {
         self.uploadImage(image: self.userMyprofileUpdateView.profileImageView.image!) { url in
@@ -104,7 +100,7 @@ private extension UserMyProfileUpdateViewController {
             let myProfile = Profile(image: url, nickName: nickName)
             DataManager.shared.profile = myProfile
             self.saveProfile(newProfile: myProfile) {
-                self.presentingViewController?.dismiss(animated: true)
+                self.dismiss(animated: true)
             }
         }
     }
@@ -136,6 +132,7 @@ extension UserMyProfileUpdateViewController {
         nickNameDuplicateCheck(completion: { isDuplicated in
             if !isDuplicated || DataManager.shared.profile?.nickName == self.userMyprofileUpdateView.nickNameTextField.text {
                 self.viewDisappearEvent()
+                
             } else {
                 DispatchQueue.main.async {
                     let alert = UIAlertController(title: "닉네임 중복",
