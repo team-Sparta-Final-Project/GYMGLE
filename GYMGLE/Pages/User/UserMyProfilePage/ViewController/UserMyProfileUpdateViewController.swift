@@ -111,13 +111,6 @@ private extension UserMyProfileUpdateViewController {
                 DataManager.shared.profile = myProfile
             }
         }
-       
-//        if let nickName = self.userMyprofileUpdateView.nickNameTextField.text {
-//            let myProfile = Profile(image: url, nickName: nickName)
-//            self.delegate?.updatedProfileData(viewController: self, updatedData: myProfile)
-//            DataManager.shared.profile = myProfile
-//        }
-        
     }
 }
 

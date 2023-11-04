@@ -11,7 +11,6 @@ import FirebaseCore
 import FirebaseDatabase
 import FirebaseStorage
 import Firebase
-import Kingfisher
 
 final class UserMyProfileViewController: UIViewController {
 
@@ -211,14 +210,14 @@ extension UserMyProfileViewController: SendUpdatedDataProtocol {
     func updatedProfileData(viewController: UserMyProfileUpdateViewController, updatedData: Profile) {
         guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
             self.userMyProfileView.dataSetting(gym: gymName, name: updatedData.nickName, postCount: self.post.count, imageUrl: updatedData.image)
-//        let newProfile = Profile(image: updatedData.image, nickName: updatedData.nickName)
-//        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/profile")
-//        do {
-//            let profileData = try JSONEncoder().encode(newProfile)
-//            let profileJSON = try JSONSerialization.jsonObject(with: profileData, options: [])
-//            ref.setValue(profileJSON)
-//        } catch {
-//            print("테스트 - error")
-//        }
+        let newProfile = Profile(image: updatedData.image, nickName: updatedData.nickName)
+        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/profile")
+        do {
+            let profileData = try JSONEncoder().encode(newProfile)
+            let profileJSON = try JSONSerialization.jsonObject(with: profileData, options: [])
+            ref.setValue(profileJSON)
+        } catch {
+            print("테스트 - error")
+        }
     }
 }

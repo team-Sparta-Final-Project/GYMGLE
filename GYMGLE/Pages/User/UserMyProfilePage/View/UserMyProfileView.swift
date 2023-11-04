@@ -141,7 +141,7 @@ private extension UserMyProfileView {
         NSLayoutConstraint.activate([
             labelStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0),
             labelStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 4),
-            labelStackView.widthAnchor.constraint(equalToConstant: 180),
+            labelStackView.widthAnchor.constraint(equalToConstant: 240),
             
             postTableview.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             postTableview.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
