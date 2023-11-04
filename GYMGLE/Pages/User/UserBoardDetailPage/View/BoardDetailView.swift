@@ -4,7 +4,6 @@ import SnapKit
 class BoardDetailView: UIView {
     
     let tableView = BoardDetailTableView()
-//    let contentView = BoardDetailContentView()
     let commentSection = BoardDetailCommentSection()
         
     override init(frame: CGRect) {
@@ -28,39 +27,6 @@ class BoardDetailView: UIView {
             $0.left.right.equalToSuperview()
         }
         
-    }
-    
-    //MARK: - 업데이트 뷰
-    
-//    override func updateConstraints() {
-//
-//    }
-    
-    
-    //MARK: - 키보드
-    
-    func addKeyboardNotification(){
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    func removeKeyboardNotification(){
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    @objc func keyboardWillAppear(_ noti: NSNotification){
-        print("테스트 - up")
-    }
-    @objc func keyboardWillDisappear(_ noti: NSNotification){
-        print("테스트 - down")
-    }
-    
-
-    
-    
-    deinit{
-        removeKeyboardNotification()
     }
     
     required init?(coder: NSCoder) {

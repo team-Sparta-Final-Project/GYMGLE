@@ -2,16 +2,24 @@ import UIKit
 import SnapKit
 
 protocol BoardProfileInfoButtonDelegate {
-    func infoButtonTapped(nickName:String)
+    func infoButtonTapped(isBoard:Bool,commentUid:String)
 }
 
 class BoardProfileLine:UIView {
     
     var infoDelegate:BoardProfileInfoButtonDelegate?
+    
+    
+    
+    var uidContainer = ""
+    var isBoard = false
         
     let profileSize:CGFloat = 24.0
     
+    
+    
     let profileImage = UIImageView().then{
+        $0.clipsToBounds = true
         $0.sizeToFit()
         $0.backgroundColor = .systemPink
         $0.image = UIImage(systemName: "star.fill")
@@ -39,7 +47,8 @@ class BoardProfileLine:UIView {
         super .init(frame: frame)
         
         infoButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
-                
+        
+        
         self.addSubview(profileImage)
         profileImage.snp.makeConstraints{
             $0.top.left.bottom.equalToSuperview()
@@ -72,8 +81,7 @@ class BoardProfileLine:UIView {
     }
     
     @objc func infoButtonTapped(){
-        self.infoDelegate?.infoButtonTapped(nickName: self.writerLabel.text!)
+        self.infoDelegate?.infoButtonTapped(isBoard: isBoard,commentUid: uidContainer)
     }
-
-    
+        
 }
