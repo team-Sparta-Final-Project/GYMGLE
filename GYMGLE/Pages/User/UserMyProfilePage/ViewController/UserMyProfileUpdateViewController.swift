@@ -37,9 +37,6 @@ final class UserMyProfileUpdateViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: Notification.Name("sendUpdatedProfile"), object: nil)
-    }
 }
 
 
@@ -103,10 +100,24 @@ private extension UserMyProfileUpdateViewController {
     }
     func viewDisappearEvent() {
         self.uploadImage(image: self.userMyprofileUpdateView.profileImageView.image!) { url in
-            if let url = url, let nickName = self.userMyprofileUpdateView.nickNameTextField.text {
-                let myProfile = Profile(image: url, nickName: nickName)
-                NotificationCenter.default.post(name: NSNotification.Name("sendUpdatedProfile"), object: nil, userInfo: ["profile" : myProfile])
+            guard let url = url, let nickName = self.userMyprofileUpdateView.nickNameTextField.text else { return }
+            let myProfile = Profile(image: url, nickName: nickName)
+            DataManager.shared.profile = myProfile
+            self.saveProfile(newProfile: myProfile) {
+                self.presentingViewController?.dismiss(animated: true)
             }
+        }
+    }
+    func saveProfile(newProfile: Profile, completion: @escaping () -> Void) {
+        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/profile")
+        do {
+            let profileData = try JSONEncoder().encode(newProfile)
+            let profileJSON = try JSONSerialization.jsonObject(with: profileData, options: [])
+            ref.setValue(profileJSON)
+            completion()
+        } catch {
+            print("테스트 - error")
+            completion()
         }
     }
 }
@@ -125,7 +136,6 @@ extension UserMyProfileUpdateViewController {
         nickNameDuplicateCheck(completion: { isDuplicated in
             if !isDuplicated || DataManager.shared.profile?.nickName == self.userMyprofileUpdateView.nickNameTextField.text {
                 self.viewDisappearEvent()
-                self.presentingViewController?.dismiss(animated: true)
             } else {
                 DispatchQueue.main.async {
                     let alert = UIAlertController(title: "닉네임 중복",

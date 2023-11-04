@@ -29,16 +29,12 @@ final class UserMyProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewDidLoadSetting()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = false
-        tabBarController?.tabBar.isHidden = true
-        allSetting()
-    }
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: Notification.Name("sendUpdatedProfile"), object: nil)
+        viewWillAppearSetting()
     }
 }
 
@@ -46,13 +42,18 @@ final class UserMyProfileViewController: UIViewController {
 
 private extension UserMyProfileViewController {
   
-    func allSetting() {
-        NotificationCenter.default.addObserver(self, selector: #selector(updatedProfile), name: NSNotification.Name("sendUpdatedProfile"), object: nil)
+    func viewDidLoadSetting() {
         buttonTapped()
         setCustomBackButton()
         tableViewSetting()
         profileIsNil()
         buttonSetting()
+        dataSetting()
+    }
+    
+    func viewWillAppearSetting() {
+        navigationController?.navigationBar.isHidden = false
+        tabBarController?.tabBar.isHidden = true
         dataSetting()
     }
     
@@ -153,6 +154,7 @@ private extension UserMyProfileViewController {
             }
         }
     }
+    
 }
 
 // MARK: - extension @objc func
@@ -175,24 +177,6 @@ extension UserMyProfileViewController {
             alert.addAction(ok)
             alert.addAction(cancel)
             self.present(alert, animated: true, completion: nil)
-    }
-    @objc func updatedProfile(notification: Notification) {
-        guard let updatedProfile = notification.userInfo?["profile"] as? Profile else {return}
-        guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
-        DispatchQueue.main.async {
-            self.userMyProfileView.dataSetting(gym: gymName, name: updatedProfile.nickName, postCount: self.post.count, imageUrl: updatedProfile.image)
-        }
-        DataManager.shared.profile = updatedProfile
-        let newProfile = Profile(image: updatedProfile.image, nickName: updatedProfile.nickName)
-        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/profile")
-        do {
-            let profileData = try JSONEncoder().encode(newProfile)
-            let profileJSON = try JSONSerialization.jsonObject(with: profileData, options: [])
-            ref.setValue(profileJSON)
-            
-        } catch {
-            print("테스트 - error")
-        }
     }
 }
 
