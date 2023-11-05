@@ -13,6 +13,7 @@ class BoardDetailViewController: UIViewController {
     var board: Board?
     var comment: Comment?
     var boardUid: String?
+    var liked: Bool = false
     
     let viewConfigure = BoardDetailView()
     
@@ -36,6 +37,11 @@ class BoardDetailViewController: UIViewController {
         
         let endEditGesture = UITapGestureRecognizer(target: self, action: #selector(endEdit))
         viewConfigure.tableView.addGestureRecognizer(endEditGesture)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchLiked()
     }
     
     override func viewDidLoad() {
@@ -84,6 +90,7 @@ extension BoardDetailViewController: UITableViewDataSource {
             let cell = BoardDetailContentCell()
             cell.selectionStyle = .none
             cell.profileLine.infoDelegate = self
+            cell.likeDelegate = self
             
             cell.profileLine.isBoard = true
             cell.profileLine.writerLabel.text = profile.nickName
@@ -91,10 +98,15 @@ extension BoardDetailViewController: UITableViewDataSource {
             cell.profileLine.profileImage.kf.setImage(with: profile.image, for: .normal)
             cell.profileLine.profileImage.addTarget(self, action: #selector(profileImageTappedAtBoard), for: .touchUpInside)
             
-            
             cell.contentLabel.text = content.content
             cell.likeCount.text = "좋아요 \(content.likeCount)개"
             cell.commentCount.text = "댓글 \(tableData.count - 1)개"
+            
+            if liked {
+                cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            } else {
+                cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            }
             
             return cell
         } else if tableData[indexPath.row] is (key: String, value: Comment) {
@@ -273,3 +285,29 @@ extension BoardDetailViewController {
     }
 }
 
+extension BoardDetailViewController: BoardProfilelikeButtonDelegate {
+    func likeButtonTapped(like: Bool) {
+        fetchLiked()
+        if liked {
+            self.addLikes()
+        } else {
+            self.removeLikes()
+        }
+    }
+    
+    func addLikes() {
+        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes")
+        ref.updateChildValues([boardUid!: true])
+    }
+    
+    func removeLikes() {
+        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes")
+        ref.updateChildValues([boardUid!: false])
+    }
+    
+    func fetchLiked() {
+        if let liked = UserDefaults.standard.value(forKey: "liked") as? Bool {
+            self.liked = liked
+        }
+    }
+}
