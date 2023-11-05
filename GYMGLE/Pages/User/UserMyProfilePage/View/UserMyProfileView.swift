@@ -18,9 +18,9 @@ final class UserMyProfileView: UIView {
         return view
     }()
     
-    lazy var profileImageView: UIImageView = {
+    private lazy var profileImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(systemName: "person.fill")?.resized(to: CGSize(width: 80, height: 80)).withRenderingMode(.alwaysOriginal)
+        //image.image = UIImage(systemName: "goforward")?.withRenderingMode(.alwaysOriginal)
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
         image.layer.borderWidth = 1.2
@@ -31,21 +31,18 @@ final class UserMyProfileView: UIView {
     
     private lazy var gymName: UILabel = {
         let label = UILabel()
-        label.text = "만나짐"
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size14, textAligment: .center)
         return label
     }()
     
-    lazy var nickName: UILabel = {
+    private lazy var nickName: UILabel = {
         let label = UILabel()
-        label.text = "안녕"
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size19Bold, textAligment: .center)
         return label
     }()
     
-    private lazy var postCountLabel: UILabel = {
+    lazy var postCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "작성한 글 0개"
         label.labelMakeUI(textColor: ColorGuide.textHint, font: FontGuide.size14, textAligment: .center)
         return label
     }()
@@ -63,6 +60,8 @@ final class UserMyProfileView: UIView {
     lazy var postTableview: UITableView = {
         let table = UITableView()
         table.backgroundColor = ColorGuide.userBackGround
+        table.separatorStyle = .none
+        table.showsVerticalScrollIndicator = false
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
@@ -142,7 +141,7 @@ private extension UserMyProfileView {
         NSLayoutConstraint.activate([
             labelStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0),
             labelStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 4),
-            labelStackView.widthAnchor.constraint(equalToConstant: 180),
+            labelStackView.widthAnchor.constraint(equalToConstant: 240),
             
             postTableview.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             postTableview.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
@@ -155,26 +154,10 @@ private extension UserMyProfileView {
 
 extension UserMyProfileView {
     
-    func dataSetting(gym: String, nick: String, postCount: Int) {
+    func dataSetting(gym: String, name: String, postCount: Int, imageUrl: URL) {
         gymName.text = gym
-        nickName.text = nick
+        nickName.text = name
         postCountLabel.text = "작성한 글 \(postCount)개"
-    }
-    
-    func downloadImage(imageView: UIImageView) {
-        guard let url = DataManager.shared.profile?.image else  {return}
-        Storage.storage().reference(forURL: "\(url)").downloadURL { url, error  in
-            URLSession.shared.dataTask(with: url!) { data, response, error in
-                if let error = error {
-                    print("오류 - \(error.localizedDescription)")
-                    return
-                }
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        imageView.image = image
-                    }
-                }
-            }.resume()
-        }
+        profileImageView.kf.setImage(with: imageUrl)
     }
 }

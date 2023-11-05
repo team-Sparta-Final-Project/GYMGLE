@@ -18,3 +18,4 @@ protocol AdminTableViewDelegate: AnyObject {
 protocol CommunityTableViewDelegate: AnyObject {
     func didSelectCell(at indexPath: IndexPath)
 }
+

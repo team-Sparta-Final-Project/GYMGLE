@@ -1,4 +1,5 @@
 import UIKit
+import FirebaseDatabase
 import Firebase
 
 class BoardDetailViewController: UIViewController {

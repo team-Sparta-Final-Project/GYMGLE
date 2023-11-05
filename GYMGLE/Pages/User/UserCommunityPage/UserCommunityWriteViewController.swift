@@ -41,7 +41,9 @@ class UserCommunityWriteViewController: UIViewController {
         first.addButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(        createBoardButtonTapped)))
         first.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 extension UserCommunityWriteViewController {
     @objc func backButtonTapped() {
