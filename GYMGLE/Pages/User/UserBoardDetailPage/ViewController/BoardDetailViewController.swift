@@ -1,5 +1,6 @@
 import UIKit
 import Firebase
+import FirebaseAuth
 
 class BoardDetailViewController: UIViewController {
     
@@ -13,7 +14,7 @@ class BoardDetailViewController: UIViewController {
     
     var keyList:[String] = []
     
-    var boardUid: String = "-NiIHSztswt9jfzt-AhJ"
+//    var boardUid: String = "-NiIHSztswt9jfzt-AhJ"
 //    var boardUid: String = "-NiIHXxC9JORJ6D5Fl78"
     
     var board: Board?
