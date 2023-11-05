@@ -232,7 +232,7 @@ extension BoardDetailViewController {
                 let temp = i as! (key: String, value: Comment)
                 ref.child("accounts/\(temp.value.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot  in
                     do {
-                        let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value)
+                        let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
                         let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
                         self.profileData.append(profile)
                         count -= 1

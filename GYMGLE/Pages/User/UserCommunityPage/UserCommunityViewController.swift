@@ -39,7 +39,9 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         decodeData {
-            self.first.appTableView.reloadData()
+            self.downloadProfiles {
+                self.first.appTableView.reloadData()
+            }
         }
     }
     
@@ -68,7 +70,7 @@ extension UserCommunityViewController {
                             let dataInfoJSON = try JSONSerialization.data(withJSONObject: data, options: [])
                             let dataInfo = try JSONDecoder().decode(Board.self, from: dataInfoJSON)
                             self.first.posts.insert(dataInfo, at: 0) // 가장 최근 게시물을 맨 위에 추가
-                            self.first.keys.append(key)
+                            self.first.keys.insert(key, at: 0)
                         } catch {
                             print("디코딩 에러")
                         }
@@ -78,5 +80,41 @@ extension UserCommunityViewController {
                 // 테이블 뷰에 업데이트된 순서대로 표시
 //                self.appTableView.reloadData()
             }
+    }
+    
+    func downloadProfiles( complition: @escaping () -> () ){
+        self.first.profiles.removeAll()
+        var count = self.first.posts.count {
+            didSet(oldVal){
+                if count == 0 {
+                    for i in self.first.profiles {
+                        print("테스트 - \(i.nickName) 서버에 보낸 뒤 받아온 닉네임 순서")
+                    }
+                    complition()
+                }
+            }
+        }
+        
+        let ref = Database.database().reference()
+//        var temp:[Any] = []
+//        for i in self.first.posts {
+//            temp.append(i.uid)
+//        }
+        for i in self.first.posts {
+            print("테스트 - \(i.profile.nickName) 서버에 보내기 직전 닉네임 순서")
+            ref.child("accounts/\(i.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot    in
+                do {
+                    let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
+                    let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
+                    self.first.profiles.insert(profile, at: 0)
+//                    temp[temp.firstIndex(of: i.uid)] = profile
+                    count -= 1
+                }catch {
+                    print("테스트 - fail - 커뮤니티뷰 프로필 불러오기 실패")
+                }
+                
+            }
+            
+        }
     }
 }

@@ -16,6 +16,11 @@ import FirebaseDatabase
 class UserCommunityView: UIView,UITableViewDelegate {
     var posts: [Board] = [] // 게시물 데이터를 저장할 배열
     var keys: [String] = []
+    //MARK: - 프로필 저장 배열
+    
+    var profiles:[Profile] = []
+    
+    //MARK: - 프로필 저장 배열
     var filteredPost: [Board] = []
     let first = CommunityCell()
     
@@ -80,9 +85,13 @@ class UserCommunityView: UIView,UITableViewDelegate {
         appTableView.dataSource = self
         appTableView.delegate = self
         appTableView.register(CommunityCell.self, forCellReuseIdentifier: "Cell")
+        
         decodeData {
-            self.appTableView.reloadData()
+            self.downloadProfiles {
+                self.appTableView.reloadData()
+            }
         }
+
     }
     
     required init?(coder: NSCoder) {
@@ -132,6 +141,33 @@ class UserCommunityView: UIView,UITableViewDelegate {
                 // 테이블 뷰에 업데이트된 순서대로 표시
 //                self.appTableView.reloadData()
             }
+    }
+    
+    func downloadProfiles( complition: @escaping () -> () ){
+        self.profiles.removeAll()
+        var count = self.posts.count {
+            didSet(oldVal){
+                if count == 0 {
+                    complition()
+                }
+            }
+        }
+
+        let ref = Database.database().reference()
+        for i in self.posts {
+            ref.child("accounts/\(i.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot  in
+                do {
+                    let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
+                    let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
+                    self.profiles.insert(profile, at: 0)
+                    count -= 1
+                }catch {
+                    print("테스트 - fail - 커뮤니티뷰 프로필 불러오기 실패")
+                }
+                
+            }
+            
+        }
     }
 
     func setupUI(){
@@ -196,12 +232,16 @@ extension UserCommunityView:UITableViewDataSource{
         if appNoticePlace.text?.isEmpty == true {
             if indexPath.row < posts.count {
                 let data = posts[indexPath.row]
+                let profile = profiles[indexPath.row] // 프로필 불러오기 수정된 부분
                 cell.configure(with: data)
+                cell.profileConfigure(with: profile) // 프로필 불러오기 수정된 부분
             }
         } else {
             if indexPath.row < filteredPost.count {
                 let data = filteredPost[indexPath.row]
+                let profile = profiles[indexPath.row] // 필터 안한 프로필이라 버그가 예상됩니다. 임시로 해놨습니다.
                 cell.configure(with: data)
+                cell.profileConfigure(with: profile) // 필터 안한 프로필이라 버그가 예상됩니다. 임시로 해놨습니다.
             }
         }
         return cell
