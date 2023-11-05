@@ -1,6 +1,7 @@
 import UIKit
 import FirebaseDatabase
 import Firebase
+import Kingfisher
 
 class BoardDetailViewController: UIViewController {
     
@@ -10,6 +11,7 @@ class BoardDetailViewController: UIViewController {
     var profileData:[Profile] = []
         
     var board: Board?
+    var comment: Comment?
     var boardUid: String?
     
     let viewConfigure = BoardDetailView()
@@ -86,7 +88,9 @@ extension BoardDetailViewController: UITableViewDataSource {
             cell.profileLine.isBoard = true
             cell.profileLine.writerLabel.text = profile.nickName
             cell.profileLine.timeLabel.text = content.date.timeAgo()
-            cell.profileLine.profileImage.kf.setImage(with: profile.image)
+            cell.profileLine.profileImage.kf.setImage(with: profile.image, for: .normal)
+            cell.profileLine.profileImage.addTarget(self, action: #selector(profileImageTappedAtBoard), for: .touchUpInside)
+            
             
             cell.contentLabel.text = content.content
             cell.likeCount.text = "좋아요 \(content.likeCount)개"
@@ -103,10 +107,13 @@ extension BoardDetailViewController: UITableViewDataSource {
             
             cell.profileLine.writerLabel.text = profile.nickName
             cell.profileLine.timeLabel.text = comment.date.timeAgo()
-            cell.profileLine.profileImage.kf.setImage(with: profile.image)
+            cell.profileLine.profileImage.kf.setImage(with: profile.image, for: .normal)
+            cell.profileLine.profileImage.addTarget(self, action: #selector(profileImageTappedAtComment), for: .touchUpInside)
             cell.profileLine.uidContainer = dic.key
             
             cell.contentLabel.text = comment.comment
+            
+            self.comment = comment
             
             return cell
         }else {
@@ -115,6 +122,22 @@ extension BoardDetailViewController: UITableViewDataSource {
             print("테스트 - \n\n\n\(type(of:tableData[indexPath.row]))\n\n\n")
             return cell
         }
+    }
+    
+    @objc func profileImageTappedAtBoard() {
+        let vc = UserMyProfileViewController()
+        vc.userUid = board?.uid
+        let naviVC = UINavigationController(rootViewController: vc)
+        
+        self.present(naviVC, animated: true)
+    }
+    
+    @objc func profileImageTappedAtComment() {
+        let vc = UserMyProfileViewController()
+        vc.userUid = comment?.uid
+        let naviVC = UINavigationController(rootViewController: vc)
+        
+        self.present(naviVC, animated: true)
     }
 }
 
