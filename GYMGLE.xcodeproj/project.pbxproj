@@ -66,6 +66,7 @@
 		63163E6D2AE11EF200186315 /* QRcodeCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */; };
 		63163E6F2AE11F0700186315 /* QRcodeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */; };
 		632E7F182AF1201E00490C59 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E7F172AF1201E00490C59 /* Board.swift */; };
+		638748512AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638748502AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift */; };
 		63B5A2252AEB627900105AB5 /* Extension_UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
@@ -163,6 +164,7 @@
 		63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckViewController.swift; sourceTree = "<group>"; };
 		63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckView.swift; sourceTree = "<group>"; };
 		632E7F172AF1201E00490C59 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		638748502AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyProfileBoardTableViewCell.swift; sourceTree = "<group>"; };
 		63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIImage.swift; sourceTree = "<group>"; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
@@ -695,6 +697,7 @@
 			children = (
 				63F777D02AF137EC00A3DF2B /* UserMyProfileView.swift */,
 				63F777D22AF13F0E00A3DF2B /* UserMyProfileUpdateView.swift */,
+				638748502AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -920,6 +923,7 @@
 				630CE1622ADD62AD001EC547 /* DataManager.swift in Sources */,
 				D1E0187E2ADCEE0000D1C53D /* EmptyCell.swift in Sources */,
 				630CE14D2ADD5C8A001EC547 /* User.swift in Sources */,
+				638748512AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift in Sources */,
 				D161421F2AF2258E00628295 /* BlockView.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
 				2782A4B82AEA46BB00B110F9 /* BottomSheetView.swift in Sources */,

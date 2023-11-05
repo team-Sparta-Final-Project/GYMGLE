@@ -59,7 +59,7 @@ private extension UserMyProfileViewController {
     func tableViewSetting() {
         userMyProfileView.postTableview.dataSource = self
         userMyProfileView.postTableview.delegate = self
-        userMyProfileView.postTableview.register(CommunityCell.self, forCellReuseIdentifier: "CommunityCell")
+        userMyProfileView.postTableview.register(UserMyProfileBoardTableViewCell.self, forCellReuseIdentifier: UserMyProfileBoardTableViewCell.identifier)
     }
     
     func buttonTapped() {
@@ -190,8 +190,9 @@ extension UserMyProfileViewController: UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommunityCell", for: indexPath) as! CommunityCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: UserMyProfileBoardTableViewCell.identifier, for: indexPath) as! UserMyProfileBoardTableViewCell
         
+        cell.board = post[indexPath.row]
         
         cell.selectionStyle = .none
         return cell
