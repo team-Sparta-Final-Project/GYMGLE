@@ -25,13 +25,14 @@ class UserMyPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         userMyPageView.tableView.myPageDelegate = self
-       
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         tabBarController?.tabBar.isHidden = false
+        userMyPageView.tableView.reloadRows(at: [IndexPath.init(row: 0, section: 0)], with: .none)
     }
    
 }
@@ -61,6 +62,9 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
             dismiss(animated: true) {
                 let vc = InitialViewController()
                 vc.modalPresentationStyle = .fullScreen
+                DataManager.shared.profile = nil
+                DataManager.shared.userInfo = nil
+                DataManager.shared.realGymInfo = nil
                 self.present(vc, animated: true)
             }
             break

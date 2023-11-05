@@ -1,4 +1,5 @@
 import UIKit
+import FirebaseDatabase
 import Firebase
 import FirebaseAuth
 
@@ -7,6 +8,7 @@ class BoardDetailViewController: UIViewController {
     let ref = Database.database().reference()
         
     var tableData:[Any] = []
+    var profileData:[Profile] = []
         
     var board: Board?
     var boardUid: String?
@@ -14,15 +16,15 @@ class BoardDetailViewController: UIViewController {
     let viewConfigure = BoardDetailView()
     
     var imageTapGesture = UITapGestureRecognizer()
-    
-    
-    
+        
     var reloadClosure = {}
+    var profileDownloadClosure = {}
     
     override func loadView() {
         reloadClosure = { self.viewConfigure.tableView.reloadData() }
+        profileDownloadClosure = { self.downloadProfiles(complition: self.reloadClosure) }
         
-        downloadComments(complition: reloadClosure)
+        downloadComments(complition: profileDownloadClosure)
         
         viewConfigure.tableView.dataSource = self
         viewConfigure.tableView.delegate = self
@@ -45,6 +47,7 @@ extension BoardDetailViewController {
     
     @objc func endEdit(_ sender: UITapGestureRecognizer){
         self.view.endEditing(true)
+        downloadComments(complition: profileDownloadClosure)
     }
     
     @objc func profileImageClicked(_ sender: UITapGestureRecognizer){
@@ -76,14 +79,15 @@ extension BoardDetailViewController: UITableViewDataSource {
         
         if tableData[indexPath.row] is Board {
             let content = tableData[indexPath.row] as! Board
+            let profile = profileData[indexPath.row]
             let cell = BoardDetailContentCell()
             cell.selectionStyle = .none
             cell.profileLine.infoDelegate = self
             
             cell.profileLine.isBoard = true
-            cell.profileLine.writerLabel.text = content.profile.nickName
+            cell.profileLine.writerLabel.text = profile.nickName
             cell.profileLine.timeLabel.text = content.date.timeAgo()
-            cell.profileLine.profileImage.kf.setImage(with: content.profile.image)
+            cell.profileLine.profileImage.kf.setImage(with: profile.image)
             
             cell.contentLabel.text = content.content
             cell.likeCount.text = "좋아요 \(content.likeCount)개"
@@ -92,16 +96,15 @@ extension BoardDetailViewController: UITableViewDataSource {
             return cell
         } else if tableData[indexPath.row] is (key: String, value: Comment) {
             let dic = tableData[indexPath.row] as! (key: String, value: Comment)
+            let profile = profileData[indexPath.row]
             let comment = dic.value
-            // TODO: 셀 클릭해서 (길게클릭해서 댓글메뉴 불러오는거) 삭제수정 만들어놓으면 인덱스 이용해서 뭐 할 수 있을듯 점점점 버튼 없어도 될 것 같음
-            // TODO: 아니면 프로필라인(뷰)에 uid가지고 있게 해서 처리
             let cell = BoardDetailCommentCell()
             cell.profileLine.infoDelegate = self
             
             
-            cell.profileLine.writerLabel.text = comment.profile.nickName
+            cell.profileLine.writerLabel.text = profile.nickName
             cell.profileLine.timeLabel.text = comment.date.timeAgo()
-            cell.profileLine.profileImage.kf.setImage(with: comment.profile.image)
+            cell.profileLine.profileImage.kf.setImage(with: profile.image)
             cell.profileLine.uidContainer = dic.key
             
             cell.contentLabel.text = comment.comment
@@ -167,13 +170,13 @@ extension BoardDetailViewController {
         } catch let error {
             print("테스트 - \(error)")
         }
-        downloadComments(complition: reloadClosure)
+        downloadComments(complition: profileDownloadClosure)
 
     }
     
     func deleteComment(_ commentUid:String){
         ref.child("boards/\(boardUid!)/comments").child("\(commentUid)").setValue(nil)
-        downloadComments(complition: reloadClosure)
+        downloadComments(complition: profileDownloadClosure)
     }
 
     
@@ -201,7 +204,45 @@ extension BoardDetailViewController {
             complition()
 
         }
+    }
+    //MARK: - 프로필데이터
+    func downloadProfiles( complition: @escaping () -> () ){
+        profileData.removeAll()
+        var count = tableData.count {
+            didSet(oldVal){
+                if count == 0 {
+                    complition()
+                }
+            }
+        }
         
+        for i in tableData {
+            if i is Board {
+                let temp = i as? Board
+                ref.child("accounts/\(temp!.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot  in
+                    do {
+                        let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value)
+                        let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
+                        self.profileData.append(profile)
+                        count -= 1
+                    }catch {
+                        print("테스트 - faili")
+                    }
+                }
+            }else {
+                let temp = i as! (key: String, value: Comment)
+                ref.child("accounts/\(temp.value.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot  in
+                    do {
+                        let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value)
+                        let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
+                        self.profileData.append(profile)
+                        count -= 1
+                    }catch {
+                        print("테스트 - faili")
+                    }
+                }
+            }
+        }
     }
     
     func deleteBoard(){
@@ -209,3 +250,4 @@ extension BoardDetailViewController {
         navigationController?.popViewController(animated: true)
     }
 }
+

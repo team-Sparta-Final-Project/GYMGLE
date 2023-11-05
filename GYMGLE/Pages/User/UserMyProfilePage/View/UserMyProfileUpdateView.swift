@@ -65,7 +65,7 @@ final class UserMyProfileUpdateView: UIView {
         return label
     }()
     
-    lazy var nickNameTextField: UITextField = {
+     lazy var nickNameTextField: UITextField = {
         let textField = UITextField()
         textField.layer.cornerRadius = 8.0
         textField.layer.borderColor = ColorGuide.textHint.cgColor
@@ -181,5 +181,19 @@ private extension UserMyProfileUpdateView {
     func addLeftPadding() {
         nickNameTextField.leftView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 12.0, height: 0.0))
         nickNameTextField.leftViewMode = .always
+    }
+}
+
+// MARK: - extension func
+
+extension UserMyProfileUpdateView {
+    
+    func dataSetting(nickName: String, imageUrl: URL) {
+        profileImageView.kf.setImage(with: imageUrl)
+        nickNameTextField.text = nickName
+    }
+    
+    func profileImageViewSetting(image: UIImage) {
+        profileImageView.image = image
     }
 }
