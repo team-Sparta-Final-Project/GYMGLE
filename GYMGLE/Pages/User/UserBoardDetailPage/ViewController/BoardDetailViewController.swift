@@ -41,7 +41,6 @@ class BoardDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchLiked()
     }
     
     override func viewDidLoad() {
@@ -102,10 +101,13 @@ extension BoardDetailViewController: UITableViewDataSource {
             cell.likeCount.text = "좋아요 \(content.likeCount)개"
             cell.commentCount.text = "댓글 \(tableData.count - 1)개"
             
-            if liked {
-                cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            } else {
-                cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes/\(boardUid!)")
+            ref.observeSingleEvent(of: .value) { (snapshot) in
+                if snapshot.exists() {
+                    cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                } else {
+                    cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+                }
             }
             
             return cell
@@ -286,14 +288,29 @@ extension BoardDetailViewController {
 }
 
 extension BoardDetailViewController: BoardProfilelikeButtonDelegate {
-    func likeButtonTapped(like: Bool) {
-        fetchLiked()
-        if liked {
-            self.addLikes()
-        } else {
-            self.removeLikes()
+    func likeButtonTapped(button: UIButton) {
+        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes/\(boardUid!)")
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            if snapshot.exists() {
+                self.removeLikes()
+                button.setImage(UIImage(systemName: "heart"), for: .normal)
+            } else {
+                self.addLikes()
+                button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            }
         }
     }
+    
+//    func likeButtonTapped() {
+//        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes/\(boardUid!)")
+//        ref.observeSingleEvent(of: .value) { (snapshot) in
+//            if snapshot.exists() {
+//                self.removeLikes()
+//            } else {
+//                self.addLikes()
+//            }
+//        }
+//    }
     
     func addLikes() {
         let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes")
@@ -301,13 +318,7 @@ extension BoardDetailViewController: BoardProfilelikeButtonDelegate {
     }
     
     func removeLikes() {
-        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes")
-        ref.updateChildValues([boardUid!: false])
-    }
-    
-    func fetchLiked() {
-        if let liked = UserDefaults.standard.value(forKey: "liked") as? Bool {
-            self.liked = liked
-        }
+        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes/\(boardUid!)")
+        ref.removeValue()
     }
 }

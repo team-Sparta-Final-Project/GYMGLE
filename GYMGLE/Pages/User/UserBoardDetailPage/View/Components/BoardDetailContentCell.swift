@@ -4,7 +4,7 @@ import Then
 import Firebase
 
 protocol BoardProfilelikeButtonDelegate {
-    func likeButtonTapped(like: Bool)
+    func likeButtonTapped(button: UIButton)
 }
 
 class BoardDetailContentCell: UITableViewCell {
@@ -48,7 +48,6 @@ class BoardDetailContentCell: UITableViewCell {
         super .init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
         likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
-        fetchLiked()
         configure()
     }
     
@@ -90,20 +89,6 @@ class BoardDetailContentCell: UITableViewCell {
     }
     
     @objc func likeButtonTapped(){
-        if liked {
-            self.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
-            liked = false
-        } else {
-            self.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            liked = true
-        }
-        UserDefaults.standard.set(liked, forKey: "liked")
-        self.likeDelegate?.likeButtonTapped(like: liked)
-    }
-    
-    func fetchLiked() {
-        if let liked = UserDefaults.standard.value(forKey: "liked") as? Bool {
-            self.liked = liked
-        }
+        self.likeDelegate?.likeButtonTapped(button: likeButton)
     }
 }
