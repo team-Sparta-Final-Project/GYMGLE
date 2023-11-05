@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseDatabase
 
 class UserCommunityViewController: UIViewController, CommunityTableViewDelegate {
     
