@@ -17,6 +17,7 @@ final class UserMyProfileBoardTableViewCell: UITableViewCell {
             contentLabel.text = board.content
             likeCountLabel.text = "좋아요 \(board.likeCount)개"
             commentCountLabel.text = "답글 개"
+            timeLabel.text = "\(board.date.timeAgo())"
         }
     }
     // MARK: - UIProperties
@@ -44,7 +45,7 @@ final class UserMyProfileBoardTableViewCell: UITableViewCell {
     
     private lazy var countLabelStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [likeCountLabel, commentCountLabel])
-        stack.spacing = 5
+        stack.spacing = 10
         stack.axis = .horizontal
         stack.distribution = .fill
         stack.alignment = .fill
