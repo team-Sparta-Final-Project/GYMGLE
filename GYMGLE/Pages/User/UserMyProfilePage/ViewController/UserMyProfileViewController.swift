@@ -18,6 +18,7 @@ final class UserMyProfileViewController: UIViewController {
     let userMyProfileView = UserMyProfileView()
     var userUid: String? //❗️ 전페이지에서 uid를 받아와 이걸로 검색을 해 정보들을 가져와야 함⭐️⭐️⭐️⭐️⭐️
     var post: [Board] = [] // 셀 나타내기
+    var keys: [String] = []
     var commentCount: [Int] = []
     var nickName: String = ""
     var url: URL?
@@ -32,7 +33,6 @@ final class UserMyProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewDidLoadSetting()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,11 +46,10 @@ final class UserMyProfileViewController: UIViewController {
 private extension UserMyProfileViewController {
   
     func viewDidLoadSetting() {
-        buttonTapped()
-        setCustomBackButton()
         tableViewSetting()
         profileIsNil()
         buttonSetting()
+        setCustomBackButton()
     }
     
     func viewWillAppearSetting() {
@@ -66,22 +65,20 @@ private extension UserMyProfileViewController {
         userMyProfileView.postTableview.rowHeight = 110
     }
     
-    func buttonTapped() {
-        userMyProfileView.updateButton.addTarget(self, action: #selector(updateButtonButtoned), for: .touchUpInside)
-        userMyProfileView.banButton.addTarget(self, action: #selector(banButtonButtoned), for: .touchUpInside)
-    }
     func buttonSetting() {
         if userUid == Auth.auth().currentUser?.uid { // 내 프로필 진입 시
-            userMyProfileView.banButton.isHidden = true
-            userMyProfileView.updateButton.isHidden = false
+            userMyProfileView.updateButton.addTarget(self, action: #selector(updateButtonButtoned), for: .touchUpInside)
+            userMyProfileView.updateButton.titleLabel?.text = "프로필 수정"
         } else { //다른 사람 프로필 진입 시
-            userMyProfileView.banButton.isHidden = false
-            userMyProfileView.updateButton.isHidden = true
+            userMyProfileView.updateButton.setTitle("사용자 차단", for: .normal)
+            userMyProfileView.updateButton.addTarget(self, action: #selector(banButtonButtoned), for: .touchUpInside)
         }
     }
     func setCustomBackButton() {
-        navigationController?.navigationBar.topItem?.title = "마이페이지"
-        navigationController?.navigationBar.tintColor = .black
+        if userUid == Auth.auth().currentUser?.uid {
+            navigationController?.navigationBar.topItem?.title = "마이페이지"
+            navigationController?.navigationBar.tintColor = .black
+        }
     }
     
     func profileIsNil() {
@@ -95,22 +92,25 @@ private extension UserMyProfileViewController {
     func dataSetting() {
         //자기가 들어오는 거면 싱글톤으로 보여주기
         if userUid == Auth.auth().currentUser?.uid {
+            getBoardKeys{
+            }
             DispatchQueue.main.async {
                 guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
                 guard let nickName = DataManager.shared.profile?.nickName else { return }
                 guard let url = DataManager.shared.profile?.image else { return }
                 self.userMyProfileView.dataSetting(gym: "\(gymName)", name: nickName, postCount: self.post.count,imageUrl: url)
             }
-            getPost {
-                self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
-                self.getCommentCount {
-                    self.userMyProfileView.postTableview.reloadData()
-                }
+            self.getPost {
+                    self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
+                    self.getCommentCount {
+                        self.userMyProfileView.postTableview.reloadData()
+                    }
             }
         } else { // 다른 사람이 들어오는거면 싱글톤이 아닌 uid를 사용해 서버를 통해서 보여주기
             getProfile {
+                self.getBoardKeys {
+                }
                 self.getGymName {
-                    print("테스트 - \(self.gymName)")
                     guard let url = self.url else { return }
                     self.userMyProfileView.dataSetting(gym: "\(self.gymName)", name: self.nickName, postCount: self.post.count, imageUrl: url)
                     self.getPost {
@@ -172,10 +172,8 @@ private extension UserMyProfileViewController {
                 for (_, boardData) in value {
                     if let board = boardData as? [String: Any],
                         let comments = board["comments"] as? [String: Any] {
-                        self.commentCount.append(comments.count)
-                        self.userMyProfileView.postTableview.reloadData()
+                        self.commentCount.insert(comments.count, at: 0)
                         completion()
-                        
                     }
                 }
             }
@@ -195,6 +193,20 @@ private extension UserMyProfileViewController {
             }
         }
     }
+    func getBoardKeys(completion: @escaping () -> Void) {
+        self.keys.removeAll()
+        let ref = Database.database().reference().child("boards")
+        let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)")
+        query.observeSingleEvent(of: .value) { dataSnapshot, arg  in
+            for childSnapshot in dataSnapshot.children {
+                if let snapshot = childSnapshot as? DataSnapshot,
+                   let key = snapshot.key as? String {
+                    self.keys.insert(key, at: 0)
+                    completion()
+                }
+            }
+        }
+    }
 }
 
 // MARK: - extension @objc func
@@ -207,10 +219,11 @@ extension UserMyProfileViewController {
         present(userMyProfileUpdateVC, animated: true)
     }
     @objc private func banButtonButtoned() {
+        if userUid != Auth.auth().currentUser?.uid {
             let alert = UIAlertController(title: "차단", message: "사용자를 차단하시겠습니까?", preferredStyle: .alert)
             let ok = UIAlertAction(title: "확인", style: .default) { _ in
                 self.block()
-                self.userMyProfileView.banButton.setTitle("차단됨", for: .normal)
+                self.userMyProfileView.updateButton.setTitle("차단됨", for: .normal)
             }
             let cancel = UIAlertAction(title: "취소", style: .cancel) { cancelAction in
                 print("취소")
@@ -218,6 +231,7 @@ extension UserMyProfileViewController {
             alert.addAction(ok)
             alert.addAction(cancel)
             self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func block() {
@@ -255,6 +269,8 @@ extension UserMyProfileViewController: UITableViewDataSource  {
 extension UserMyProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let boardDetailVC = BoardDetailViewController()
+        boardDetailVC.boardUid = keys[indexPath.section]
+        boardDetailVC.board = post[indexPath.section]
         navigationController?.pushViewController(boardDetailVC, animated: true)
     }
     

@@ -24,7 +24,7 @@ final class UserMyProfileBoardTableViewCell: UITableViewCell {
 
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16Bold, textAligment: .left)
+        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size19, textAligment: .left)
         label.numberOfLines = 3
         return label
     }()

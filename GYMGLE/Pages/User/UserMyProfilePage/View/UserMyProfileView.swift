@@ -20,7 +20,6 @@ final class UserMyProfileView: UIView {
     
     private lazy var profileImageView: UIImageView = {
         let image = UIImageView()
-        //image.image = UIImage(systemName: "goforward")?.withRenderingMode(.alwaysOriginal)
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -70,12 +69,6 @@ final class UserMyProfileView: UIView {
         return button
     }()
     
-    lazy var banButton: UIButton = {
-        let button = UIButton()
-        button.buttonMakeUI(backgroundColor: ColorGuide.background, cornerRadius: 14.0, borderWidth: 0.0, borderColor: UIColor.clear.cgColor, setTitle: "차단", font: FontGuide.size14, setTitleColor: ColorGuide.black)
-        return button
-    }()
-    
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -100,18 +93,7 @@ private extension UserMyProfileView {
     
     func configureView() {
         containerViewSetting()
-        viewSetting()
         self.backgroundColor = ColorGuide.profileBackground
-    }
-    
-    func viewSetting() {
-        self.addSubviews(banButton)
-        NSLayoutConstraint.activate([
-            banButton.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 90),
-            banButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            banButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 148),
-            banButton.bottomAnchor.constraint(equalTo: containerView.topAnchor, constant: -6)
-        ])
     }
     
     func containerViewSetting() {
@@ -130,13 +112,13 @@ private extension UserMyProfileView {
             
             profileImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: -50),
             profileImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            profileImageView.widthAnchor.constraint(equalToConstant: 80),
-            profileImageView.heightAnchor.constraint(equalToConstant: 80)
+            profileImageView.widthAnchor.constraint(equalToConstant: 90),
+            profileImageView.heightAnchor.constraint(equalToConstant: 90)
         ])
         
         NSLayoutConstraint.activate([
             labelStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0),
-            labelStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 4),
+            labelStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 8),
             labelStackView.widthAnchor.constraint(equalToConstant: 240),
             
             updateButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
@@ -144,8 +126,8 @@ private extension UserMyProfileView {
             updateButton.topAnchor.constraint(equalTo: self.labelStackView.bottomAnchor, constant: 10),
            
             postCountLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            postCountLabel.topAnchor.constraint(equalTo: self.updateButton.bottomAnchor, constant: 40),
-            postCountLabel.bottomAnchor.constraint(equalTo: self.postTableview.topAnchor, constant: -2),
+            postCountLabel.topAnchor.constraint(equalTo: self.updateButton.bottomAnchor, constant: 30),
+            postCountLabel.bottomAnchor.constraint(equalTo: self.postTableview.topAnchor, constant: 0),
             
             postTableview.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             postTableview.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
