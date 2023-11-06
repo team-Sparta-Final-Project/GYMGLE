@@ -16,7 +16,7 @@ final class UserMyProfileBoardTableViewCell: UITableViewCell {
             guard let board = board else {return}
             contentLabel.text = board.content
             likeCountLabel.text = "좋아요 \(board.likeCount)개"
-            commentCountLabel.text = "답글 개"
+            //commentCountLabel.text = "답글 개"
             timeLabel.text = "\(board.date.timeAgo())"
         }
     }
@@ -36,7 +36,7 @@ final class UserMyProfileBoardTableViewCell: UITableViewCell {
         return label
     }()
     
-    private lazy var commentCountLabel: UILabel = {
+    lazy var commentCountLabel: UILabel = {
         let label = UILabel()
         label.labelMakeUI(textColor: ColorGuide.textHint, font: FontGuide.size14, textAligment: .left)
         label.text = "답글 12개"
@@ -69,6 +69,10 @@ final class UserMyProfileBoardTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+    }
 }
 
 private extension UserMyProfileBoardTableViewCell {
@@ -90,7 +94,7 @@ private extension UserMyProfileBoardTableViewCell {
         
         NSLayoutConstraint.activate([
             contentLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
-            contentLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 14),
+            contentLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 4),
             contentLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -70),
             
             countLabelStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),

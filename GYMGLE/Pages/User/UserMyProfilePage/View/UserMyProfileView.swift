@@ -85,6 +85,8 @@ final class UserMyProfileView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+   
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
@@ -143,7 +145,7 @@ private extension UserMyProfileView {
            
             postCountLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             postCountLabel.topAnchor.constraint(equalTo: self.updateButton.bottomAnchor, constant: 40),
-            postCountLabel.bottomAnchor.constraint(equalTo: self.postTableview.topAnchor, constant: -12),
+            postCountLabel.bottomAnchor.constraint(equalTo: self.postTableview.topAnchor, constant: -2),
             
             postTableview.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             postTableview.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),

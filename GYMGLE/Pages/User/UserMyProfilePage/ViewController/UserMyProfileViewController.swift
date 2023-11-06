@@ -18,8 +18,10 @@ final class UserMyProfileViewController: UIViewController {
     let userMyProfileView = UserMyProfileView()
     var userUid: String? //❗️ 전페이지에서 uid를 받아와 이걸로 검색을 해 정보들을 가져와야 함⭐️⭐️⭐️⭐️⭐️
     var post: [Board] = [] // 셀 나타내기
+    var commentCount: [Int] = []
     var nickName: String = ""
     var url: URL?
+    var gymName: String = ""
     
     // MARK: - life cycle
 
@@ -30,6 +32,7 @@ final class UserMyProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewDidLoadSetting()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,6 +63,7 @@ private extension UserMyProfileViewController {
         userMyProfileView.postTableview.dataSource = self
         userMyProfileView.postTableview.delegate = self
         userMyProfileView.postTableview.register(UserMyProfileBoardTableViewCell.self, forCellReuseIdentifier: UserMyProfileBoardTableViewCell.identifier)
+        userMyProfileView.postTableview.rowHeight = 110
     }
     
     func buttonTapped() {
@@ -99,13 +103,15 @@ private extension UserMyProfileViewController {
             }
             getPost {
                 self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
-                self.userMyProfileView.postTableview.reloadData()
+                self.getCommentCount {
+                    self.userMyProfileView.postTableview.reloadData()
+                }
             }
         } else { // 다른 사람이 들어오는거면 싱글톤이 아닌 uid를 사용해 서버를 통해서 보여주기
             getProfile {
-                guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
+                self.getGymName()
                 guard let url = self.url else { return }
-                self.userMyProfileView.dataSetting(gym: gymName, name: self.nickName, postCount: self.post.count, imageUrl: url)
+                self.userMyProfileView.dataSetting(gym: self.gymName, name: self.nickName, postCount: self.post.count, imageUrl: url)
                 self.getPost {
                     self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
                     self.userMyProfileView.postTableview.reloadData()
@@ -155,7 +161,37 @@ private extension UserMyProfileViewController {
             }
         }
     }
-    
+    func getCommentCount(completion: @escaping () -> Void) {
+        self.commentCount.removeAll()
+        let ref = Database.database().reference().child("boards")
+        let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)")
+        query.observeSingleEvent(of: .value) { dataSnapshot, arg  in
+            if let value = dataSnapshot.value as? [String: [String: Any]] {
+                for (_, boardData) in value {
+                    if let board = boardData as? [String: Any],
+                        let comments = board["comments"] as? [String: Any] {
+                        self.commentCount.append(comments.count)
+                        self.userMyProfileView.postTableview.reloadData()
+                        completion()
+                        
+                    }
+                }
+            }
+        }
+    }
+    func getGymName() {
+        let ref = Database.database().reference().child("accounts").child("\(userUid!)").child("adminUid")
+        ref.observeSingleEvent(of: .value) { dataSnapshot in
+            if let adminUid = dataSnapshot.value as? String {
+                let gymRef = Database.database().reference().child("users").child("\(adminUid)").child("gymInfo/gymName")
+                gymRef.observeSingleEvent(of: .value) { DataSnapshot in
+                    if let gymName = DataSnapshot.value as? String {
+                        self.gymName = gymName
+                    }
+                }
+            }
+        }
+    }
 }
 
 // MARK: - extension @objc func
@@ -186,19 +222,22 @@ extension UserMyProfileViewController {
 extension UserMyProfileViewController: UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.post.count //❗️
+        return 1
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.post.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserMyProfileBoardTableViewCell.identifier, for: indexPath) as! UserMyProfileBoardTableViewCell
         
-        cell.board = post[indexPath.row]
-        
+        cell.board = post.sorted{$0.date > $1.date}[indexPath.section]
+        cell.commentCountLabel.text = "답글 \(commentCount[indexPath.section])개"
         cell.selectionStyle = .none
         return cell
     }
 }
-
 
 
 // MARK: - UITableViewDelegate
@@ -207,6 +246,16 @@ extension UserMyProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let boardDetailVC = BoardDetailViewController()
         navigationController?.pushViewController(boardDetailVC, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let spacingView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 0.2))
+        spacingView.backgroundColor = .clear
+        return spacingView
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.2
     }
 }
 
