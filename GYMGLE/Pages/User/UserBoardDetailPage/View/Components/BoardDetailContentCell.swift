@@ -4,7 +4,7 @@ import Then
 import Firebase
 
 protocol BoardProfilelikeButtonDelegate {
-    func likeButtonTapped(button: UIButton)
+    func likeButtonTapped(button: UIButton, count: UILabel)
 }
 
 class BoardDetailContentCell: UITableViewCell {
@@ -89,6 +89,6 @@ class BoardDetailContentCell: UITableViewCell {
     }
     
     @objc func likeButtonTapped(){
-        self.likeDelegate?.likeButtonTapped(button: likeButton)
+        self.likeDelegate?.likeButtonTapped(button: likeButton, count: likeCount)
     }
 }

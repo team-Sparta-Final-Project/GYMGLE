@@ -40,11 +40,10 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
-        //        decodeData {
-        //            self.first.appTableView.reloadData()
-        //        }
+        
         fetchPosts {
-            self.first.appTableView.reloadData()
+                self.first.appTableView.reloadData()
+                print("\(self.first.posts[0])")
         }
     }
     
@@ -70,6 +69,7 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
                         .queryLimited(toLast: UInt(numberOfPostsToRetrieve))
                         .observeSingleEvent(of: .value) { snapshot in
                             self.first.posts.removeAll() // 데이터를 새로 받을 때 배열 비우기
+                            self.first.keys.removeAll()
                             for childSnapshot in snapshot.children {
                                 if let snapshot = childSnapshot as? DataSnapshot,
                                    let data = snapshot.value as? [String: Any],
@@ -84,13 +84,14 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
                                             self.first.posts.insert(dataInfo, at: 0) 
                                             self.first.keys.append(key)
                                         } catch {
-                                            print("디코딩 에러")
+                                            print("디코딩 에러2")
                                         }
                                     }
                                 }
                             }
                             completion()
                         }
+//                    completion()
                 }
             }
         }

@@ -13,7 +13,6 @@ class BoardDetailViewController: UIViewController {
     var board: Board?
     var comment: Comment?
     var boardUid: String?
-    var liked: Bool = false
     
     let viewConfigure = BoardDetailView()
     
@@ -288,29 +287,37 @@ extension BoardDetailViewController {
 }
 
 extension BoardDetailViewController: BoardProfilelikeButtonDelegate {
-    func likeButtonTapped(button: UIButton) {
+    
+    func likeButtonTapped(button: UIButton, count: UILabel) {
         let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes/\(boardUid!)")
         ref.observeSingleEvent(of: .value) { (snapshot) in
             if snapshot.exists() {
                 self.removeLikes()
                 button.setImage(UIImage(systemName: "heart"), for: .normal)
+                
+                let database = self.ref.child("boards/\(self.boardUid!)/likeCount")
+                database.observeSingleEvent(of: .value) { snapshot in
+                    if let likeCount = snapshot.value as? Int {
+                        let newLikeCount = max(likeCount - 1, 0)
+                        database.setValue(newLikeCount)
+                        count.text = "좋아요 \(newLikeCount)개"
+                    }
+                }
             } else {
                 self.addLikes()
                 button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                
+                let database = self.ref.child("boards/\(self.boardUid!)/likeCount")
+                database.observeSingleEvent(of: .value) { snapshot in
+                    if let likeCount = snapshot.value as? Int {
+                        let newLikeCount = likeCount + 1
+                        database.setValue(newLikeCount)
+                        count.text = "좋아요 \(newLikeCount)개"
+                    }
+                }
             }
         }
     }
-    
-//    func likeButtonTapped() {
-//        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes/\(boardUid!)")
-//        ref.observeSingleEvent(of: .value) { (snapshot) in
-//            if snapshot.exists() {
-//                self.removeLikes()
-//            } else {
-//                self.addLikes()
-//            }
-//        }
-//    }
     
     func addLikes() {
         let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes")
