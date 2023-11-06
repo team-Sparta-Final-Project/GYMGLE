@@ -43,13 +43,6 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         
-        getBlockedUserList {
-            self.decodeData {
-                self.downloadProfiles {
-                    self.first.appTableView.reloadData()
-                }
-            }
-        }
         observeFirebaseDataChanges()
     }
     
