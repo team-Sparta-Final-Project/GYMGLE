@@ -124,6 +124,7 @@ extension BoardDetailViewController: UITableViewDataSource {
             cell.profileLine.profileImage.kf.setImage(with: profile.image, for: .normal)
             cell.profileLine.profileImage.addTarget(self, action: #selector(profileImageTappedAtComment), for: .touchUpInside)
             cell.profileLine.uidContainer = dic.key
+            cell.profileLine.writerUid = comment.uid
             
             cell.contentLabel.text = comment.comment
             
@@ -157,24 +158,31 @@ extension BoardDetailViewController: UITableViewDataSource {
 
 //MARK: - 인포버튼 델리겟
 extension BoardDetailViewController:BoardProfileInfoButtonDelegate {
-    func infoButtonTapped(isBoard:Bool,commentUid:String) {
+    func infoButtonTapped(isBoard:Bool,commentUid:String,writerUid:String) {
         
         let alert = UIAlertController(title: "확인", message: "메세지", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "아니오", style: .cancel))
-        
-        
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
         if isBoard {
-            alert.message = "게시글을 삭제하시겠습니까?"
-            alert.addAction(UIAlertAction(title: "네", style: .destructive, handler: {_ in
-                self.deleteBoard()
-            }))
-            
+            if board?.uid == Auth.auth().currentUser?.uid {
+                alert.message = "게시글을 삭제하시겠습니까?"
+                alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: {_ in
+                    self.deleteBoard()
+                }))
+            }else {
+                alert.message = "작성자만 삭제할 수 있습니다."
+            }
         }else{
-            alert.message = "댓글을 삭제하시겠습니까?"
-            alert.addAction(UIAlertAction(title: "네", style: .destructive, handler: {_ in
-                self.deleteComment(commentUid)
-            }))
+            if writerUid == Auth.auth().currentUser?.uid {
+                alert.message = "댓글을 삭제하시겠습니까?"
+                alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: {_ in
+                    self.deleteComment(commentUid)
+                }))
+            }else {
+                alert.message = "작성자만 삭제할 수 있습니다."
+            }
         }
+        
+
         present(alert,animated: true)
     }
 }
@@ -196,7 +204,6 @@ extension BoardDetailViewController:CommentButtonDelegate {
 extension BoardDetailViewController {
     
     func uploadComment(_ comment:Comment){
-        
         do {
             let commentData = try JSONEncoder().encode(comment)
             let commentJSON = try JSONSerialization.jsonObject(with: commentData)
