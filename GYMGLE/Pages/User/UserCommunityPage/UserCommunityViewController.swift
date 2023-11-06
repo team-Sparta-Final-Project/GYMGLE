@@ -156,4 +156,21 @@ extension UserCommunityViewController {
         }
     }
     
+    func getCommentCountForBoard(boardUid: String, completion: @escaping (Int) -> Void) {
+        let databaseRef = Database.database().reference()
+        let boardRef = databaseRef.child("boards").child(boardUid)
+        
+        boardRef.observeSingleEvent(of: .value) { snapshot in
+            if let boardData = snapshot.value as? [String: Any] {
+                if let commentCount = boardData["commentCount"] as? Int {
+                    completion(commentCount)
+                } else {
+                    completion(0)
+                }
+            } else {
+                completion(0)
+            }
+        }
+    }
+    
 }

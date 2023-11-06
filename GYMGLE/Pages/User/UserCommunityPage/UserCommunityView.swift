@@ -34,7 +34,7 @@ class UserCommunityView: UIView,UITableViewDelegate {
     var gymInfo: GymInfo?
     var userName: User?
     
-    private lazy var GymgleName = UILabel().then {
+    private(set) lazy var GymgleName = UILabel().then {
         $0.textColor = ColorGuide.main
         $0.font = FontGuide.size26Bold
         $0.text = "GYMGLE"

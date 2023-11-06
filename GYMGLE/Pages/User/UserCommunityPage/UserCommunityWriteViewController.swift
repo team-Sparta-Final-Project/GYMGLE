@@ -102,7 +102,7 @@ extension UserCommunityWriteViewController: UITextViewDelegate {
             // 이 부분에서 DataManager.shared.profile을 사용하여 프로필 정보를 가져옵니다.
             if let profile = DataManager.shared.profile {
                 // 게시물을 생성하고 DataManager.shared.profile을 할당합니다.
-                let newBoard = Board(uid: uid, content: boardText, date: currentDate, isUpdated: false, likeCount: 0, profile: profile)
+                let newBoard = Board(uid: uid, content: boardText, date: currentDate, isUpdated: false, likeCount: 0, commentCount: 0, profile: profile)
                 
                 // Firebase에 게시물을 저장합니다.
                 let ref = Database.database().reference().child("boards").childByAutoId()

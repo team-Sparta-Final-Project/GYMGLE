@@ -13,6 +13,7 @@ struct Board: Codable {
     var date: Date
     var isUpdated: Bool
     var likeCount: Int
+    var commentCount: Int
     var profile: Profile
 }
 
