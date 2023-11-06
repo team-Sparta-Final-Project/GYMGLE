@@ -87,27 +87,25 @@ extension UserCommunityViewController {
         var count = self.first.posts.count {
             didSet(oldVal){
                 if count == 0 {
-                    for i in self.first.profiles {
-                        print("테스트 - \(i.nickName) 서버에 보낸 뒤 받아온 닉네임 순서")
+                    
+                    for i in temp {
+                        self.first.profiles.append(tempProfiles[i]!)
                     }
                     complition()
                 }
             }
         }
-        
+
         let ref = Database.database().reference()
-//        var temp:[Any] = []
-//        for i in self.first.posts {
-//            temp.append(i.uid)
-//        }
+        var temp:[String] = []
+        var tempProfiles:[String:Profile] = [:]
         for i in self.first.posts {
-            print("테스트 - \(i.profile.nickName) 서버에 보내기 직전 닉네임 순서")
+            temp.append(i.uid)
             ref.child("accounts/\(i.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot    in
                 do {
                     let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
                     let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
-                    self.first.profiles.insert(profile, at: 0)
-//                    temp[temp.firstIndex(of: i.uid)] = profile
+                    tempProfiles.updateValue(profile, forKey: i.uid)
                     count -= 1
                 }catch {
                     print("테스트 - fail - 커뮤니티뷰 프로필 불러오기 실패")
@@ -116,5 +114,6 @@ extension UserCommunityViewController {
             }
             
         }
+
     }
 }

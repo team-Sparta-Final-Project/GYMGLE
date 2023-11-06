@@ -148,18 +148,25 @@ class UserCommunityView: UIView,UITableViewDelegate {
         var count = self.posts.count {
             didSet(oldVal){
                 if count == 0 {
+                    
+                    for i in temp {
+                        self.profiles.append(tempProfiles[i]!)
+                    }
                     complition()
                 }
             }
         }
 
         let ref = Database.database().reference()
+        var temp:[String] = []
+        var tempProfiles:[String:Profile] = [:]
         for i in self.posts {
-            ref.child("accounts/\(i.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot  in
+            temp.append(i.uid)
+            ref.child("accounts/\(i.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot    in
                 do {
                     let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
                     let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
-                    self.profiles.insert(profile, at: 0)
+                    tempProfiles.updateValue(profile, forKey: i.uid)
                     count -= 1
                 }catch {
                     print("테스트 - fail - 커뮤니티뷰 프로필 불러오기 실패")
@@ -168,6 +175,7 @@ class UserCommunityView: UIView,UITableViewDelegate {
             }
             
         }
+
     }
 
     func setupUI(){
