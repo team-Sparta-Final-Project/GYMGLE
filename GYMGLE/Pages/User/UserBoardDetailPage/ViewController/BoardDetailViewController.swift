@@ -210,19 +210,27 @@ extension BoardDetailViewController {
         var count = tableData.count {
             didSet(oldVal){
                 if count == 0 {
+                    
+                    for i in tempOrder {
+                        self.profileData.append(tempProfiles[i]!)
+                    }
+                    
                     complition()
                 }
             }
         }
-        
+        var tempOrder:[String] = []
+        var tempProfiles:[String:Profile] = [:]
+
         for i in tableData {
             if i is Board {
-                let temp = i as? Board
-                ref.child("accounts/\(temp!.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot  in
+                let temp = i as! Board
+                tempOrder.append(temp.uid)
+                ref.child("accounts/\(temp.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot  in
                     do {
-                        let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value)
+                        let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
                         let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
-                        self.profileData.append(profile)
+                        tempProfiles.updateValue(profile, forKey: temp.uid)
                         count -= 1
                     }catch {
                         print("테스트 - faili")
@@ -230,11 +238,12 @@ extension BoardDetailViewController {
                 }
             }else {
                 let temp = i as! (key: String, value: Comment)
+                tempOrder.append(temp.key)
                 ref.child("accounts/\(temp.value.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot  in
                     do {
-                        let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value)
+                        let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
                         let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
-                        self.profileData.append(profile)
+                        tempProfiles.updateValue(profile, forKey: temp.key)
                         count -= 1
                     }catch {
                         print("테스트 - faili")
