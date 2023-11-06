@@ -133,7 +133,7 @@ class UserCommunityView: UIView,UITableViewDelegate {
                           self.keys.insert(key, at: 0)
                             // 키값은 역순으로 저장되어서 바꿨습니다.
                         } catch {
-                            print("디코딩 에러")
+//                            print("디코딩 에러")
                         }
                     }
                 }
