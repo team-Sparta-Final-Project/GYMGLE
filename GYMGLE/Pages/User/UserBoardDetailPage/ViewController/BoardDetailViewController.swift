@@ -1,4 +1,5 @@
 import UIKit
+import MessageUI
 import FirebaseDatabase
 import Firebase
 import Kingfisher
@@ -45,6 +46,7 @@ class BoardDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("테스트 - ga")
     }
     
     override func viewDidLoad() {
@@ -119,7 +121,6 @@ extension BoardDetailViewController: UITableViewDataSource {
             cell.profileLine.writerLabel.text = profile.nickName
             cell.profileLine.timeLabel.text = comment.date.timeAgo()
             cell.profileLine.profileImage.kf.setImage(with: profile.image, for: .normal)
-//            cell.profileLine.profileImage.addTarget(self, action: #selector(profileImageTappedAtComment), for: .touchUpInside)
             cell.profileLine.commentUid = dic.key
             cell.profileLine.writerUid = comment.uid
             
@@ -150,25 +151,34 @@ extension BoardDetailViewController:BoardProfileInfoButtonDelegate {
     
     func infoButtonTapped(isBoard:Bool,commentUid:String,writerUid:String) {
         
-        let alert = UIAlertController(title: "확인", message: "메세지", preferredStyle: .alert)
+        let alert = UIAlertController(title: "메뉴", message: "확인", preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel))
         if isBoard {
             if board?.uid == Auth.auth().currentUser?.uid {
-                alert.message = "게시글을 삭제하시겠습니까?"
+                alert.addAction(UIAlertAction(title: "수정", style: .default, handler: {_ in
+                    self.updateBoard()
+                }))
                 alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: {_ in
                     self.deleteBoard()
                 }))
+
             }else {
-                alert.message = "작성자만 삭제할 수 있습니다."
+                alert.addAction(UIAlertAction(title: "신고하기", style: .destructive, handler: {_ in
+                    self.reportContent(content: self.board!)
+                }))
             }
         }else{
             if writerUid == Auth.auth().currentUser?.uid {
-                alert.message = "댓글을 삭제하시겠습니까?"
+                alert.addAction(UIAlertAction(title: "댓글수정은없어요", style: .default, handler: {_ in
+                    
+                }))
                 alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: {_ in
                     self.deleteComment(commentUid)
                 }))
             }else {
-                alert.message = "작성자만 삭제할 수 있습니다."
+                alert.addAction(UIAlertAction(title: "신고하기", style: .destructive, handler: {_ in
+                    self.reportContent(content: [commentUid,writerUid] )
+                }))
             }
         }
         
@@ -191,7 +201,41 @@ extension BoardDetailViewController:CommentButtonDelegate {
 
 //MARK: - 파이어베이스
 
-extension BoardDetailViewController {
+extension BoardDetailViewController : MFMailComposeViewControllerDelegate {
+    
+    func reportContent(content:Any){
+        var body = ""
+        if content is Board {
+            let boardTemp = content as! Board
+            body = "유효한 신고접수를 위해서 UID와 Content를 삭제하거나 수정하지 마십시오.\n\nUID: \(boardTemp.uid)\nContent: \(boardTemp.content)"
+        } else {
+            let commentTemp = content as! [String]
+            body = "유효한 신고접수를 위해서 UID와 Content를 삭제하거나 수정하지 마십시오.\n\nCommentUID: \(commentTemp[0])\nUID: \(commentTemp[1])"
+        }
+        if MFMailComposeViewController.canSendMail() {
+            let vc = MFMailComposeViewController()
+            vc.mailComposeDelegate = self
+            vc.setToRecipients(["gymgle7@gmail.com"])
+            vc.setSubject("신고")
+            vc.setMessageBody(body, isHTML: false)
+            
+            present(vc, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "이메일 전송 오류",
+                                          message: "이메일을 보낼 수 없습니다. 메일앱에 계정을 등록해주세요.",
+                                          preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                guard let emailURL = URL(string: "mailto:gymgle7@gmail.com") else { return }
+                
+                if UIApplication.shared.canOpenURL(emailURL) {
+                    UIApplication.shared.open(emailURL)
+                }
+                
+            }))
+            present(alert, animated: true, completion: nil)
+        }
+    }
     
     func uploadComment(_ comment: Comment) {
         do {
@@ -229,6 +273,11 @@ extension BoardDetailViewController {
     
     
     func deleteComment(_ commentUid:String){
+        ref.child("boards/\(boardUid!)/comments").child("\(commentUid)").setValue(nil)
+        downloadComments(complition: profileDownloadClosure)
+    }
+    
+    func updateComment(_ commentUid:String){
         ref.child("boards/\(boardUid!)/comments").child("\(commentUid)").setValue(nil)
         downloadComments(complition: profileDownloadClosure)
     }
@@ -311,6 +360,15 @@ extension BoardDetailViewController {
     func deleteBoard(){
         ref.child("boards/\(boardUid!)").setValue(nil)
         navigationController?.popViewController(animated: true)
+    }
+    func updateBoard(){
+        let userCommunityWriteViewController = UserCommunityWriteViewController()
+        userCommunityWriteViewController.isUpdate = true
+        userCommunityWriteViewController.fromBoardClosure = {self.downloadComments(complition: self.profileDownloadClosure)}
+        userCommunityWriteViewController.boardContent = board?.content
+        userCommunityWriteViewController.boardUid = boardUid
+        userCommunityWriteViewController.modalPresentationStyle = .fullScreen
+        self.present(userCommunityWriteViewController, animated: true)
     }
 }
 

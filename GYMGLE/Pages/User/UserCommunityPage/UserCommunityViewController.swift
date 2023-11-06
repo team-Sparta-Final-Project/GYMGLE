@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import FirebaseDatabase
 
 class UserCommunityViewController: UIViewController, CommunityTableViewDelegate {
     
@@ -97,7 +98,7 @@ extension UserCommunityViewController {
                                 self.first.posts.insert(dataInfo, at: 0)
                                 self.first.keys.insert(key, at: 0)
                             } catch {
-                                print("디코딩 에러2")
+//                                print("디코딩 에러2")
                             }
                         }
                     }
