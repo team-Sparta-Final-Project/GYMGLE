@@ -12,7 +12,8 @@ class CommunityCell: UITableViewCell {
     func configure(with data: Board) {
         mainTextLabel.text = data.content
         timeLabel.text = data.date.timeAgo()
-        LikeLabel.text = "좋아요 \(data.likeCount)개"
+        likeLabel.text = "좋아요 \(data.likeCount)개"
+        replyLabel.text = "댓글 \(data.commentCount)개"
 //        nameLabel.text = data.profile.nickName
 //        imageView1.kf.setImage(with: data.profile.image)
     }
@@ -100,7 +101,7 @@ class CommunityCell: UITableViewCell {
         return label
     }()
     
-    let LikeLabel: UILabel = {
+    let likeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -135,12 +136,12 @@ class CommunityCell: UITableViewCell {
         replyLabel.font = FontGuide.size14
         replyLabel.textColor = ColorGuide.textHint
         
-        allView.addSubview(LikeLabel)
-        LikeLabel.trailingAnchor.constraint(equalTo: replyLabel.leadingAnchor, constant: -8).isActive = true
-        LikeLabel.bottomAnchor.constraint(equalTo: allView.bottomAnchor, constant: -10).isActive = true
-        LikeLabel.text = "좋아요 2330개"
-        LikeLabel.font = FontGuide.size14
-        LikeLabel.textColor = ColorGuide.textHint
+        allView.addSubview(likeLabel)
+        likeLabel.trailingAnchor.constraint(equalTo: replyLabel.leadingAnchor, constant: -8).isActive = true
+        likeLabel.bottomAnchor.constraint(equalTo: allView.bottomAnchor, constant: -10).isActive = true
+        likeLabel.text = "좋아요 2330개"
+        likeLabel.font = FontGuide.size14
+        likeLabel.textColor = ColorGuide.textHint
     }
     
     
