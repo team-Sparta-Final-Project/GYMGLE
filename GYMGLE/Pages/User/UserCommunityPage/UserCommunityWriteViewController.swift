@@ -19,6 +19,10 @@ class UserCommunityWriteViewController: UIViewController {
     let first = UserCommunityWriteView()
 //    let second = UserCommunityView()
 
+    var isUpdate = false
+    var fromBoardClosure = {}
+    var boardContent:String?
+    var boardUid:String?
     
     var posts: [Board]?
     
@@ -40,6 +44,10 @@ class UserCommunityWriteViewController: UIViewController {
         
         first.addButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(        createBoardButtonTapped)))
         first.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        
+        if isUpdate {
+            self.first.writePlace.text = boardContent!
+        }
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -95,30 +103,38 @@ extension UserCommunityWriteViewController: UITextViewDelegate {
     
     func createdBoard() {
         if let user = Auth.auth().currentUser {
-            let uid = user.uid
-            guard let boardText = first.writePlace.text else { return }
-            let currentDate = Date()
-
+          let uid = user.uid
+          guard let boardText = first.writePlace.text else { return }
+          let currentDate = Date()
+          if isUpdate {
+            let ref = Database.database().reference().child("boards/\(boardUid!)")
+            do {
+              ref.updateChildValues(["content":boardText])
+              ref.updateChildValues(["isUpdated":true])
+            } catch {
+              print("게시물을 저장하는 동안 오류 발생: \(error)")
+            }
+          } else {
             // 이 부분에서 DataManager.shared.profile을 사용하여 프로필 정보를 가져옵니다.
             if let profile = DataManager.shared.profile {
-                // 게시물을 생성하고 DataManager.shared.profile을 할당합니다.
-                let newBoard = Board(uid: uid, content: boardText, date: currentDate, isUpdated: false, likeCount: 0, profile: profile)
-                
-                // Firebase에 게시물을 저장합니다.
-                let ref = Database.database().reference().child("boards").childByAutoId()
-                do {
-                    let boardData = try JSONEncoder().encode(newBoard)
-                    let boardJSON = try JSONSerialization.jsonObject(with: boardData, options: [])
-                    ref.setValue(boardJSON)
-//                    second.appTableView.reloadData()
-                } catch {
-                    print("게시물을 저장하는 동안 오류 발생: \(error)")
-                }
+              // 게시물을 생성하고 DataManager.shared.profile을 할당합니다.
+                let newBoard = Board(uid: uid, content: boardText, date: currentDate, isUpdated: false, likeCount: 0, commentCount: 0, profile: profile)
+              // Firebase에 게시물을 저장합니다.
+              let ref = Database.database().reference().child("boards").childByAutoId()
+              do {
+                let boardData = try JSONEncoder().encode(newBoard)
+                let boardJSON = try JSONSerialization.jsonObject(with: boardData, options: [])
+                ref.setValue(boardJSON)
+                //          second.appTableView.reloadData()
+              } catch {
+                print("게시물을 저장하는 동안 오류 발생: \(error)")
+              }
             } else {
-                print("프로필 정보가 없습니다.")
+              print("프로필 정보가 없습니다.")
             }
+          }
         }
-    }
+      }
 //    func setupDatabaseObserver() {
 //        let databaseRef = Database.database().reference().child("boards")
 //
@@ -182,3 +198,5 @@ extension UserCommunityWriteViewController: UITextViewDelegate {
         }
     }
 }
+
+

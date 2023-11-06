@@ -16,7 +16,7 @@ final class UserMyProfileBoardTableViewCell: UITableViewCell {
             guard let board = board else {return}
             contentLabel.text = board.content
             likeCountLabel.text = "좋아요 \(board.likeCount)개"
-            //commentCountLabel.text = "답글 개"
+            commentCountLabel.text = "답글 \(board.commentCount)개"
             timeLabel.text = "\(board.date.timeAgo())"
         }
     }
@@ -24,7 +24,7 @@ final class UserMyProfileBoardTableViewCell: UITableViewCell {
 
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size19, textAligment: .left)
+        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16Bold, textAligment: .left)
         label.numberOfLines = 3
         return label
     }()

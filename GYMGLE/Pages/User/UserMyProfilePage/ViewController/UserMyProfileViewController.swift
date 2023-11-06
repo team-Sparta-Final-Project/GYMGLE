@@ -19,7 +19,6 @@ final class UserMyProfileViewController: UIViewController {
     var userUid: String? //❗️ 전페이지에서 uid를 받아와 이걸로 검색을 해 정보들을 가져와야 함⭐️⭐️⭐️⭐️⭐️
     var post: [Board] = [] // 셀 나타내기
     var keys: [String] = []
-    var commentCount: [Int] = []
     var nickName: String = ""
     var url: URL?
     var gymName: String = ""
@@ -101,8 +100,7 @@ private extension UserMyProfileViewController {
     func dataSetting() {
         //자기가 들어오는 거면 싱글톤으로 보여주기
         if userUid == Auth.auth().currentUser?.uid {
-            getBoardKeys{
-            }
+            getBoardKeys{}
             DispatchQueue.main.async {
                 guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
                 guard let nickName = DataManager.shared.profile?.nickName else { return }
@@ -110,10 +108,9 @@ private extension UserMyProfileViewController {
                 self.userMyProfileView.dataSetting(gym: "\(gymName)", name: nickName, postCount: self.post.count,imageUrl: url)
             }
             self.getPost {
-                    self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
-                    self.getCommentCount {
-                        self.userMyProfileView.postTableview.reloadData()
-                    }
+                self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
+                print("테스트 - \(self.post)")
+                self.userMyProfileView.postTableview.reloadData()
             }
         } else { // 다른 사람이 들어오는거면 싱글톤이 아닌 uid를 사용해 서버를 통해서 보여주기
             getProfile {
@@ -172,22 +169,6 @@ private extension UserMyProfileViewController {
             }
         }
     }
-    func getCommentCount(completion: @escaping () -> Void) {
-        self.commentCount.removeAll()
-        let ref = Database.database().reference().child("boards")
-        let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)")
-        query.observeSingleEvent(of: .value) { dataSnapshot, arg  in
-            if let value = dataSnapshot.value as? [String: [String: Any]] {
-                for (_, boardData) in value {
-                    if let board = boardData as? [String: Any],
-                        let comments = board["comments"] as? [String: Any] {
-                        self.commentCount.insert(comments.count, at: 0)
-                        completion()
-                    }
-                }
-            }
-        }
-    }
     func getGymName(completion: @escaping () -> Void) {
         let ref = Database.database().reference().child("accounts").child("\(userUid!)").child("adminUid")
         ref.observeSingleEvent(of: .value) { dataSnapshot in
@@ -210,7 +191,6 @@ private extension UserMyProfileViewController {
             for childSnapshot in dataSnapshot.children {
                 if let snapshot = childSnapshot as? DataSnapshot,
                    let key = snapshot.key as? String  {
-                    
                     self.keys.insert(key, at: 0)
                     completion()
                 }

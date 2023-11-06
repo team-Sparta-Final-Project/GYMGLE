@@ -43,13 +43,6 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         
-        getBlockedUserList {
-            self.decodeData {
-                self.downloadProfiles {
-                    self.first.appTableView.reloadData()
-                }
-            }
-        }
         observeFirebaseDataChanges()
     }
     
@@ -98,7 +91,7 @@ extension UserCommunityViewController {
                                 self.first.posts.insert(dataInfo, at: 0)
                                 self.first.keys.insert(key, at: 0)
                             } catch {
-                                print("디코딩 에러2")
+//                                print("디코딩 에러2")
                             }
                         }
                     }
@@ -153,6 +146,23 @@ extension UserCommunityViewController {
                         self.first.appTableView.reloadData()
                     }
                 }
+            }
+        }
+    }
+    
+    func getCommentCountForBoard(boardUid: String, completion: @escaping (Int) -> Void) {
+        let databaseRef = Database.database().reference()
+        let boardRef = databaseRef.child("boards").child(boardUid)
+        
+        boardRef.observeSingleEvent(of: .value) { snapshot in
+            if let boardData = snapshot.value as? [String: Any] {
+                if let commentCount = boardData["commentCount"] as? Int {
+                    completion(commentCount)
+                } else {
+                    completion(0)
+                }
+            } else {
+                completion(0)
             }
         }
     }

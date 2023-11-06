@@ -96,6 +96,7 @@ class CommunityCell: UITableViewCell {
     let replyLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "답글 7개"
         return label
     }()
     
@@ -131,7 +132,6 @@ class CommunityCell: UITableViewCell {
         allView.addSubview(replyLabel)
         replyLabel.trailingAnchor.constraint(equalTo: allView.trailingAnchor, constant: -20).isActive = true
         replyLabel.bottomAnchor.constraint(equalTo: allView.bottomAnchor, constant: -10).isActive = true
-        replyLabel.text = "답글 7개"
         replyLabel.font = FontGuide.size14
         replyLabel.textColor = ColorGuide.textHint
         

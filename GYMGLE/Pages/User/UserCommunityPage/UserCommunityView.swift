@@ -34,7 +34,7 @@ class UserCommunityView: UIView,UITableViewDelegate {
     var gymInfo: GymInfo?
     var userName: User?
     
-    private lazy var GymgleName = UILabel().then {
+    private(set) lazy var GymgleName = UILabel().then {
         $0.textColor = ColorGuide.main
         $0.font = FontGuide.size26Bold
         $0.text = "GYMGLE"
@@ -133,7 +133,7 @@ class UserCommunityView: UIView,UITableViewDelegate {
                           self.keys.insert(key, at: 0)
                             // 키값은 역순으로 저장되어서 바꿨습니다.
                         } catch {
-                            print("디코딩 에러")
+//                            print("디코딩 에러")
                         }
                     }
                 }

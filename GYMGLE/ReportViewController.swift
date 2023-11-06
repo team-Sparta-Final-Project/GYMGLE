@@ -26,7 +26,7 @@ class ReportViewController: UIViewController {
     }
 }
 
-private extension ReportViewController {
+extension ReportViewController {
     func setButton() {
         reportView.reportButton.addTarget(self, action: #selector(reportButtonTapped), for: .touchUpInside)
     }
