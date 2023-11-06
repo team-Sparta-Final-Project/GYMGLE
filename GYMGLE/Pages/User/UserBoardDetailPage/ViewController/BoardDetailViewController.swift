@@ -253,27 +253,25 @@ extension BoardDetailViewController : MFMailComposeViewControllerDelegate {
                 let updatedCommentCount = commentCount + 1
                 let boardRef = ref.child("boards/\(boardUid!)")
                 boardRef.updateChildValues(["commentCount": updatedCommentCount])
-                
-                DispatchQueue.main.async {
-                    // 업데이트된 commentCount를 UI에 표시
-                    self.second.replyLabel.text = "댓글 \(updatedCommentCount)개"
-                    self.first.GymgleName.text = "테스트"
-                    print("dsdfs")
-                }
             }
         } catch let error {
             print("오류 발생: \(error)")
         }
         downloadComments(complition: profileDownloadClosure)
         
-        DispatchQueue.main.async {
-            self.first.appTableView.reloadData()
-        }
     }
     
     
     func deleteComment(_ commentUid:String){
         ref.child("boards/\(boardUid!)/comments").child("\(commentUid)").setValue(nil)
+        
+        // Firebase에서 현재 commentCount를 가져옴
+        userCommunityViewController.getCommentCountForBoard(boardUid: boardUid!) { [self] commentCount in
+            // commentCount를 1 감소시키고 Firebase에 업데이트
+            let updatedCommentCount = commentCount - 1
+            let boardRef = ref.child("boards/\(boardUid!)")
+            boardRef.updateChildValues(["commentCount": updatedCommentCount])
+        }
         downloadComments(complition: profileDownloadClosure)
     }
     
