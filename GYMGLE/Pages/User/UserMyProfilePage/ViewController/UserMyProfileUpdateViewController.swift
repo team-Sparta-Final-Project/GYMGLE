@@ -73,11 +73,15 @@ private extension UserMyProfileUpdateViewController {
         let imageName = Auth.auth().currentUser!.uid
         
         let firebaseReference = Storage.storage().reference().child("profiles").child("\(imageName)")
-        firebaseReference.putData(imageData, metadata: metaData) { metaData, error in
+        let uploadTask = firebaseReference.putData(imageData, metadata: metaData) { metaData, error in
             firebaseReference.downloadURL { url, _ in
                 completion(url)
             }
         }
+//        uploadTask.observe(.progress) { snapshot in
+//            let percentComplete = 100.0 * Double(snapshot.progress!.completedUnitCount) / Double(snapshot.progress!.totalUnitCount)
+//            print("업로드 진행률: \(percentComplete)%")
+//        }
     }
     //닉네임 중복 검사 (서버에서 검사하기)
     func nickNameDuplicateCheck(completion: @escaping (Bool) -> Void) {
@@ -114,6 +118,24 @@ private extension UserMyProfileUpdateViewController {
             completion()
         }
     }
+    func showToast(message: String) {
+        let toastView = ToastView()
+        toastView.configure()
+        toastView.text = message
+        view.addSubview(toastView)
+        toastView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -300),
+            toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
+            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
+        ])
+        UIView.animate(withDuration: 2.5, delay: 0.2) { //2.5초
+            toastView.alpha = 0
+        } completion: { _ in
+            toastView.removeFromSuperview()
+        }
+    }
 }
 
 // MARK: - extension @objc func
@@ -128,10 +150,20 @@ extension UserMyProfileUpdateViewController {
     }
     @objc private func successedButtonTapped() {
         nickNameDuplicateCheck(completion: { isDuplicated in
-            if !isDuplicated || DataManager.shared.profile?.nickName == self.userMyprofileUpdateView.nickNameTextField.text {
-                self.viewDisappearEvent()
-                
+            if !isDuplicated || DataManager.shared.profile?.nickName == self.userMyprofileUpdateView.nickNameTextField.text  {
+                if self.userMyprofileUpdateView.nickNameTextField.text?.isEmpty == true {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "닉네임 칸이 비었습니다.",
+                                                      message: "다시 입력해주세요.",
+                                                      preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                } else {
+                    self.viewDisappearEvent()
+                }
             } else {
+                
                 DispatchQueue.main.async {
                     let alert = UIAlertController(title: "닉네임 중복",
                                                   message: "닉네임 중복입니다. 다시 입력해주세요.",
@@ -147,9 +179,23 @@ extension UserMyProfileUpdateViewController {
 // MARK: - UITextFieldDelegate
 extension UserMyProfileUpdateViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+       
         let maxLength = 20
         let currentString: NSString = (textField.text ?? "") as NSString
         let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+        let allowedCharacter = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣㅔㅐㅖㅒ")
+        let replacementString = CharacterSet(charactersIn: string)
+    
+        if string == " " {
+            showToast(message: "띄어쓰기는 할 수 없습니다.")
+            return false
+        }
+        if !allowedCharacter.isSuperset(of: replacementString) {
+            showToast(message: "입력할 수 없는 문자입니다.")
+            return false
+        }
+        
         return newString.length <= maxLength
     }
 }
@@ -160,7 +206,7 @@ extension UserMyProfileUpdateViewController {
     
     private func setupImagePicker() {
         var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = 0
+        configuration.selectionLimit = 1
         configuration.filter = .any(of: [.images])
         
         let picker = PHPickerViewController(configuration: configuration)
