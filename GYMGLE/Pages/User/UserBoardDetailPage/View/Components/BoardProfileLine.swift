@@ -3,11 +3,12 @@ import SnapKit
 
 protocol BoardProfileInfoButtonDelegate {
     func infoButtonTapped(isBoard:Bool, commentUid:String, writerUid:String)
+    func profileImageTappedAtComment(writerUid: String)
 }
 
 class BoardProfileLine:UIView {
     
-    var infoDelegate:BoardProfileInfoButtonDelegate?
+    var profileDelegate:BoardProfileInfoButtonDelegate?
         
     var commentUid = ""
     var writerUid = ""
@@ -43,6 +44,7 @@ class BoardProfileLine:UIView {
         super .init(frame: frame)
         
         infoButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
+        profileImage.addTarget(self, action: #selector(profileImageTappedAtComment), for: .touchUpInside)
         
         
         self.addSubview(profileImage)
@@ -77,7 +79,12 @@ class BoardProfileLine:UIView {
     }
     
     @objc func infoButtonTapped(){
-        self.infoDelegate?.infoButtonTapped(isBoard: isBoard, commentUid: commentUid, writerUid: writerUid)
+        self.profileDelegate?.infoButtonTapped(isBoard: isBoard, commentUid: commentUid, writerUid: writerUid)
     }
+    
+    @objc func profileImageTappedAtComment(){
+        self.profileDelegate?.profileImageTappedAtComment(writerUid: writerUid)
+    }
+
         
 }

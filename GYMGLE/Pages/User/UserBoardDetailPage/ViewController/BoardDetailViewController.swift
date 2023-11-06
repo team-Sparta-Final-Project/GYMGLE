@@ -55,13 +55,6 @@ extension BoardDetailViewController {
         self.view.endEditing(true)
         downloadComments(complition: profileDownloadClosure)
     }
-    
-    @objc func profileImageClicked(_ sender: UITapGestureRecognizer){
-        print("테스트 - \(sender)")
-    }
-
-
-    
 }
 
 
@@ -88,14 +81,14 @@ extension BoardDetailViewController: UITableViewDataSource {
             let profile = profileData[indexPath.row]
             let cell = BoardDetailContentCell()
             cell.selectionStyle = .none
-            cell.profileLine.infoDelegate = self
+            cell.profileLine.profileDelegate = self
             cell.likeDelegate = self
             
             cell.profileLine.isBoard = true
             cell.profileLine.writerLabel.text = profile.nickName
             cell.profileLine.timeLabel.text = content.date.timeAgo()
             cell.profileLine.profileImage.kf.setImage(with: profile.image, for: .normal)
-            cell.profileLine.profileImage.addTarget(self, action: #selector(profileImageTappedAtBoard), for: .touchUpInside)
+            cell.profileLine.writerUid = board!.uid
             
             cell.contentLabel.text = content.content
             cell.likeCount.text = "좋아요 \(content.likeCount)개"
@@ -116,14 +109,14 @@ extension BoardDetailViewController: UITableViewDataSource {
             let profile = profileData[indexPath.row]
             let comment = dic.value
             let cell = BoardDetailCommentCell()
-            cell.profileLine.infoDelegate = self
+            cell.profileLine.profileDelegate = self
             
             
             cell.profileLine.writerLabel.text = profile.nickName
             cell.profileLine.timeLabel.text = comment.date.timeAgo()
             cell.profileLine.profileImage.kf.setImage(with: profile.image, for: .normal)
-            cell.profileLine.profileImage.addTarget(self, action: #selector(profileImageTappedAtComment), for: .touchUpInside)
-            cell.profileLine.uidContainer = dic.key
+//            cell.profileLine.profileImage.addTarget(self, action: #selector(profileImageTappedAtComment), for: .touchUpInside)
+            cell.profileLine.commentUid = dic.key
             cell.profileLine.writerUid = comment.uid
             
             cell.contentLabel.text = comment.comment
@@ -133,31 +126,24 @@ extension BoardDetailViewController: UITableViewDataSource {
             return cell
         }else {
             let cell = BoardDetailCommentCell()
-            cell.profileLine.infoDelegate = self
+            cell.profileLine.profileDelegate = self
             print("테스트 - \n\n\n\(type(of:tableData[indexPath.row]))\n\n\n")
             return cell
         }
     }
     
-    @objc func profileImageTappedAtBoard() {
+}
+
+//MARK: - 인포버튼 델리겟
+extension BoardDetailViewController:BoardProfileInfoButtonDelegate {
+    func profileImageTappedAtComment(writerUid: String) {
         let vc = UserMyProfileViewController()
-        vc.userUid = board?.uid
+        vc.userUid = writerUid
         let naviVC = UINavigationController(rootViewController: vc)
         
         self.present(naviVC, animated: true)
     }
     
-    @objc func profileImageTappedAtComment() {
-        let vc = UserMyProfileViewController()
-        vc.userUid = comment?.uid
-        let naviVC = UINavigationController(rootViewController: vc)
-        
-        self.present(naviVC, animated: true)
-    }
-}
-
-//MARK: - 인포버튼 델리겟
-extension BoardDetailViewController:BoardProfileInfoButtonDelegate {
     func infoButtonTapped(isBoard:Bool,commentUid:String,writerUid:String) {
         
         let alert = UIAlertController(title: "확인", message: "메세지", preferredStyle: .alert)

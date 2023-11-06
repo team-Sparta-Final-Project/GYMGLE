@@ -57,7 +57,7 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
         self.present(userCommunityWriteViewController, animated: true)
     }
     
-    func fetchPosts(completion: @escaping () -> Void) {
+    func fetchPosts(completion: @escaping () -> ()) {
         let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/blockedUserList")
         ref.observeSingleEvent(of: .value) { (snapshot) in
             if snapshot.exists() {
