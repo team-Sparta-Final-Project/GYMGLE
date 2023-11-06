@@ -16,13 +16,10 @@ class BoardProfileLine:UIView {
         
     let profileSize:CGFloat = 24.0
     
-    
-    
-    let profileImage = UIImageView().then{
+    lazy var profileImage = UIButton().then{
         $0.clipsToBounds = true
         $0.sizeToFit()
-        $0.backgroundColor = .systemPink
-        $0.image = UIImage(systemName: "star.fill")
+        $0.setImage(UIImage(systemName: "star.fill"), for: .normal)
     }
     
     let writerLabel = UILabel().then{
