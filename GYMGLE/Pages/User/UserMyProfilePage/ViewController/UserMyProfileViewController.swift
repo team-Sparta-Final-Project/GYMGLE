@@ -37,7 +37,10 @@ final class UserMyProfileViewController: UIViewController {
         let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)")
         query.observeSingleEvent(of: .value) { dataSnapshot in
             guard let value = dataSnapshot.value as? [String: [String: Any]] else { return }
-            print("테스트 - \(value)")
+            guard let comment = value.values as? [String: [String: Any]] else { return }
+            for i in comment {
+                print("테스트 - \(i)")
+            }
         }
     }
     
