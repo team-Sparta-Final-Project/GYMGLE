@@ -2,16 +2,15 @@ import UIKit
 import SnapKit
 
 protocol BoardProfileInfoButtonDelegate {
-    func infoButtonTapped(isBoard:Bool,commentUid:String)
+    func infoButtonTapped(isBoard:Bool, commentUid:String, writerUid:String)
 }
 
 class BoardProfileLine:UIView {
     
     var infoDelegate:BoardProfileInfoButtonDelegate?
-    
-    
-    
-    var uidContainer = ""
+        
+    var commentUid = ""
+    var writerUid = ""
     var isBoard = false
         
     let profileSize:CGFloat = 24.0
@@ -81,7 +80,7 @@ class BoardProfileLine:UIView {
     }
     
     @objc func infoButtonTapped(){
-        self.infoDelegate?.infoButtonTapped(isBoard: isBoard,commentUid: uidContainer)
+        self.infoDelegate?.infoButtonTapped(isBoard: isBoard, commentUid: commentUid, writerUid: writerUid)
     }
         
 }
