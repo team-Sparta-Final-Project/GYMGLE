@@ -7,6 +7,10 @@ import FirebaseAuth
 
 class BoardDetailViewController: UIViewController {
     
+    let first = UserCommunityView()
+    
+    let userCommunityViewController = UserCommunityViewController()
+    let second = CommunityCell()
     let ref = Database.database().reference()
         
     var tableData:[Any] = []
@@ -233,19 +237,40 @@ extension BoardDetailViewController : MFMailComposeViewControllerDelegate {
         }
     }
     
-    func uploadComment(_ comment:Comment){
+    func uploadComment(_ comment: Comment) {
         do {
             let commentData = try JSONEncoder().encode(comment)
             let commentJSON = try JSONSerialization.jsonObject(with: commentData)
             
-            ref.child("boards/\(boardUid!)/comments").childByAutoId().setValue(commentJSON)
+            // Firebase에 새 댓글 추가
+            let commentsRef = ref.child("boards/\(boardUid!)/comments")
+            let newCommentRef = commentsRef.childByAutoId()
+            newCommentRef.setValue(commentJSON)
             
+            // Firebase에서 현재 commentCount를 가져옴
+            userCommunityViewController.getCommentCountForBoard(boardUid: boardUid!) { [self] commentCount in
+                // commentCount를 1 증가시키고 Firebase에 업데이트
+                let updatedCommentCount = commentCount + 1
+                let boardRef = ref.child("boards/\(boardUid!)")
+                boardRef.updateChildValues(["commentCount": updatedCommentCount])
+                
+                DispatchQueue.main.async {
+                    // 업데이트된 commentCount를 UI에 표시
+                    self.second.replyLabel.text = "댓글 \(updatedCommentCount)개"
+                    self.first.GymgleName.text = "테스트"
+                    print("dsdfs")
+                }
+            }
         } catch let error {
-            print("테스트 - \(error)")
+            print("오류 발생: \(error)")
         }
         downloadComments(complition: profileDownloadClosure)
-
+        
+        DispatchQueue.main.async {
+            self.first.appTableView.reloadData()
+        }
     }
+    
     
     func deleteComment(_ commentUid:String){
         ref.child("boards/\(boardUid!)/comments").child("\(commentUid)").setValue(nil)
