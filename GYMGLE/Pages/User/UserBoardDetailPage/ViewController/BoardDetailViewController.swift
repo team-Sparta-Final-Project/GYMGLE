@@ -2,6 +2,7 @@ import UIKit
 import FirebaseDatabase
 import Firebase
 import Kingfisher
+import FirebaseAuth
 
 class BoardDetailViewController: UIViewController {
     
