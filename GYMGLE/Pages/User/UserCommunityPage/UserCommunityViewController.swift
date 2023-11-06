@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 
 class UserCommunityViewController: UIViewController, CommunityTableViewDelegate {
     
@@ -46,6 +47,7 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
                 self.first.appTableView.reloadData()
             }
         }
+        observeFirebaseDataChanges()
     }
     
     @objc func writePlaceTap() {
@@ -162,4 +164,16 @@ extension UserCommunityViewController {
         }
 
     }
+    func observeFirebaseDataChanges() {
+        let databaseRef = Database.database().reference().child("boards")
+
+        databaseRef.observe(.value) { snapshot in
+            self.decodeData {
+                self.downloadProfiles {
+                    self.first.appTableView.reloadData()
+                }
+            }
+        }
+    }
+
 }
