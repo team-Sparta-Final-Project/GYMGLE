@@ -119,7 +119,12 @@ extension UserCommunityViewController {
                             let dataInfo = try JSONDecoder().decode(Board.self, from: dataInfoJSON)
                             self.first.posts.insert(dataInfo, at: 0) // 가장 최근 게시물을 맨 위에 추가
                             self.first.keys.insert(key, at: 0)
-                            print("테스트 - \(data["comments"])")
+
+                            let commentData:[String:Any] = ["comments":data["comments"] as Any]
+                            let commentJSON = try JSONSerialization.data(withJSONObject: commentData, options: [])
+//                            let comments = try JSONDecoder().decode(Comment.self, from: commentJSON)
+                            print("테스트 - \(commentData)")
+                            
                         } catch {
                             print("디코딩 에러")
                         }

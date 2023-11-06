@@ -115,7 +115,6 @@ extension BoardDetailViewController: UITableViewDataSource {
             cell.profileLine.writerLabel.text = profile.nickName
             cell.profileLine.timeLabel.text = comment.date.timeAgo()
             cell.profileLine.profileImage.kf.setImage(with: profile.image, for: .normal)
-//            cell.profileLine.profileImage.addTarget(self, action: #selector(profileImageTappedAtComment), for: .touchUpInside)
             cell.profileLine.commentUid = dic.key
             cell.profileLine.writerUid = comment.uid
             
