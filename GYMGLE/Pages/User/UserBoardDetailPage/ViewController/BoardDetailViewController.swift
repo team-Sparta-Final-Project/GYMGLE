@@ -1,7 +1,7 @@
 import UIKit
 import FirebaseDatabase
 import Firebase
-import FirebaseAuth
+import Kingfisher
 
 class BoardDetailViewController: UIViewController {
     
@@ -11,6 +11,7 @@ class BoardDetailViewController: UIViewController {
     var profileData:[Profile] = []
         
     var board: Board?
+    var comment: Comment?
     var boardUid: String?
     
     let viewConfigure = BoardDetailView()
@@ -35,6 +36,10 @@ class BoardDetailViewController: UIViewController {
         
         let endEditGesture = UITapGestureRecognizer(target: self, action: #selector(endEdit))
         viewConfigure.tableView.addGestureRecognizer(endEditGesture)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     override func viewDidLoad() {
@@ -83,15 +88,26 @@ extension BoardDetailViewController: UITableViewDataSource {
             let cell = BoardDetailContentCell()
             cell.selectionStyle = .none
             cell.profileLine.infoDelegate = self
+            cell.likeDelegate = self
             
             cell.profileLine.isBoard = true
             cell.profileLine.writerLabel.text = profile.nickName
             cell.profileLine.timeLabel.text = content.date.timeAgo()
-            cell.profileLine.profileImage.kf.setImage(with: profile.image)
+            cell.profileLine.profileImage.kf.setImage(with: profile.image, for: .normal)
+            cell.profileLine.profileImage.addTarget(self, action: #selector(profileImageTappedAtBoard), for: .touchUpInside)
             
             cell.contentLabel.text = content.content
             cell.likeCount.text = "좋아요 \(content.likeCount)개"
             cell.commentCount.text = "댓글 \(tableData.count - 1)개"
+            
+            let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes/\(boardUid!)")
+            ref.observeSingleEvent(of: .value) { (snapshot) in
+                if snapshot.exists() {
+                    cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                } else {
+                    cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+                }
+            }
             
             return cell
         } else if tableData[indexPath.row] is (key: String, value: Comment) {
@@ -104,10 +120,13 @@ extension BoardDetailViewController: UITableViewDataSource {
             
             cell.profileLine.writerLabel.text = profile.nickName
             cell.profileLine.timeLabel.text = comment.date.timeAgo()
-            cell.profileLine.profileImage.kf.setImage(with: profile.image)
+            cell.profileLine.profileImage.kf.setImage(with: profile.image, for: .normal)
+            cell.profileLine.profileImage.addTarget(self, action: #selector(profileImageTappedAtComment), for: .touchUpInside)
             cell.profileLine.uidContainer = dic.key
             
             cell.contentLabel.text = comment.comment
+            
+            self.comment = comment
             
             return cell
         }else {
@@ -116,6 +135,22 @@ extension BoardDetailViewController: UITableViewDataSource {
             print("테스트 - \n\n\n\(type(of:tableData[indexPath.row]))\n\n\n")
             return cell
         }
+    }
+    
+    @objc func profileImageTappedAtBoard() {
+        let vc = UserMyProfileViewController()
+        vc.userUid = board?.uid
+        let naviVC = UINavigationController(rootViewController: vc)
+        
+        self.present(naviVC, animated: true)
+    }
+    
+    @objc func profileImageTappedAtComment() {
+        let vc = UserMyProfileViewController()
+        vc.userUid = comment?.uid
+        let naviVC = UINavigationController(rootViewController: vc)
+        
+        self.present(naviVC, animated: true)
     }
 }
 
@@ -260,3 +295,46 @@ extension BoardDetailViewController {
     }
 }
 
+extension BoardDetailViewController: BoardProfilelikeButtonDelegate {
+    
+    func likeButtonTapped(button: UIButton, count: UILabel) {
+        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes/\(boardUid!)")
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            if snapshot.exists() {
+                self.removeLikes()
+                button.setImage(UIImage(systemName: "heart"), for: .normal)
+                
+                let database = self.ref.child("boards/\(self.boardUid!)/likeCount")
+                database.observeSingleEvent(of: .value) { snapshot in
+                    if let likeCount = snapshot.value as? Int {
+                        let newLikeCount = max(likeCount - 1, 0)
+                        database.setValue(newLikeCount)
+                        count.text = "좋아요 \(newLikeCount)개"
+                    }
+                }
+            } else {
+                self.addLikes()
+                button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                
+                let database = self.ref.child("boards/\(self.boardUid!)/likeCount")
+                database.observeSingleEvent(of: .value) { snapshot in
+                    if let likeCount = snapshot.value as? Int {
+                        let newLikeCount = likeCount + 1
+                        database.setValue(newLikeCount)
+                        count.text = "좋아요 \(newLikeCount)개"
+                    }
+                }
+            }
+        }
+    }
+    
+    func addLikes() {
+        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes")
+        ref.updateChildValues([boardUid!: true])
+    }
+    
+    func removeLikes() {
+        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes/\(boardUid!)")
+        ref.removeValue()
+    }
+}
