@@ -33,6 +33,12 @@ final class UserMyProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewDidLoadSetting()
+        let ref = Database.database().reference().child("boards")
+        let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)")
+        query.observeSingleEvent(of: .value) { dataSnapshot in
+            guard let value = dataSnapshot.value as? [String: [String: Any]] else { return }
+            print("테스트 - \(value)")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -200,7 +206,8 @@ private extension UserMyProfileViewController {
         query.observeSingleEvent(of: .value) { dataSnapshot, arg  in
             for childSnapshot in dataSnapshot.children {
                 if let snapshot = childSnapshot as? DataSnapshot,
-                   let key = snapshot.key as? String {
+                   let key = snapshot.key as? String  {
+                    
                     self.keys.insert(key, at: 0)
                     completion()
                 }
