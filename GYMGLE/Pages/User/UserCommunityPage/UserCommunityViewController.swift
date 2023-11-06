@@ -11,6 +11,13 @@ import FirebaseAuth
 
 class UserCommunityViewController: UIViewController, CommunityTableViewDelegate {
     
+    let ref = Database.database().reference()
+    var tableData:[Any] = []
+
+    var board: Board?
+    var comment: Comment?
+    var boardUid: String?
+    
     func didSelectCell(at indexPath: IndexPath) {
         let destinationViewController = BoardDetailViewController()
         let data = first.posts[indexPath.row]
@@ -36,6 +43,7 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
         first.writePlace.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(writePlaceTap)))
         first.delegate = self
         self.view = first
+        commentGiveMe()
     }
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
@@ -175,5 +183,24 @@ extension UserCommunityViewController {
             }
         }
     }
+    
+    func getCommentCount(forPostWithID boardUid: String, completion: @escaping (Int) -> Void) {
+        let databaseRef = Database.database().reference().child("boards/\(boardUid)/comments")
+        databaseRef.observeSingleEvent(of: .value) { snapshot in
+            let commentCount = Int(snapshot.childrenCount)
+            completion(commentCount)
+        }
+    }
+    func commentGiveMe(){
+        if let boardUid = boardUid {
+            getCommentCount(forPostWithID: boardUid) { commentCount in
+                self.second.replyLabel.text = "\(commentCount) 댓글"
+                print("fuck")
+            }
+        } else {
+            second.replyLabel.text = "99"
+            print("board Uid is nil")
+        }
 
+    }
 }
