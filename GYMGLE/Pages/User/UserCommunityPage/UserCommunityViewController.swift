@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 import FirebaseDatabase
 
 class UserCommunityViewController: UIViewController, CommunityTableViewDelegate {
@@ -24,7 +25,9 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     
     let first = UserCommunityView()
     let second = CommunityCell()
-
+    
+    var blockedUsers: [String] = [] // 차단한 유저
+    
     override func loadView() {
         view = first
         
@@ -39,45 +42,119 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
-        decodeData {
-            self.first.appTableView.reloadData()
+        
+        getBlockedUserList {
+            self.decodeData {
+                self.downloadProfiles {
+                    self.first.appTableView.reloadData()
+                }
+            }
         }
+        observeFirebaseDataChanges()
     }
     
     @objc func writePlaceTap() {
         let userCommunityWriteViewController = UserCommunityWriteViewController()
-//        navigationController?.pushViewController(userCommunityWriteViewController, animated: true)
+        //        navigationController?.pushViewController(userCommunityWriteViewController, animated: true)
         userCommunityWriteViewController.modalPresentationStyle = .fullScreen
         self.present(userCommunityWriteViewController, animated: true)
+    }
+    
+    func getBlockedUserList(completion: @escaping () -> ()) {
+        let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/blockedUserList")
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            if snapshot.exists() {
+                if let blockedUserData = snapshot.value as? [String: Bool] {
+                    // 차단 유저 리스트 배열로 저장
+                    self.blockedUsers = Array(blockedUserData.keys)
+                }
+            }
+            completion()
+        }
     }
 }
 
 extension UserCommunityViewController {
     func decodeData(completion: @escaping () -> Void) {
         let databaseRef = Database.database().reference().child("boards")
-
+        
         let numberOfPostsToRetrieve = 30  // 가져올 게시물 개수 (원하는 개수로 수정)
         databaseRef.queryOrdered(byChild: "date")
             .queryLimited(toLast: UInt(numberOfPostsToRetrieve))
             .observeSingleEvent(of: .value) { snapshot in
                 self.first.posts.removeAll() // 데이터를 새로 받을 때 배열 비우기
+                self.first.keys.removeAll()
                 for childSnapshot in snapshot.children {
                     if let snapshot = childSnapshot as? DataSnapshot,
-                        let data = snapshot.value as? [String: Any],
-                        let key = snapshot.key as? String {
-                        do {
-                            let dataInfoJSON = try JSONSerialization.data(withJSONObject: data, options: [])
-                            let dataInfo = try JSONDecoder().decode(Board.self, from: dataInfoJSON)
-                            self.first.posts.insert(dataInfo, at: 0) // 가장 최근 게시물을 맨 위에 추가
-                            self.first.keys.append(key)
-                        } catch {
-                            print("디코딩 에러")
+                       let data = snapshot.value as? [String: Any],
+                       let key = snapshot.key as? String,
+                       let uid = data["uid"] as? String {
+                        
+                        // 차단한 유저인지 확인
+                        if !self.blockedUsers.contains(uid) {
+                            do {
+                                let dataInfoJSON = try JSONSerialization.data(withJSONObject: data, options: [])
+                                let dataInfo = try JSONDecoder().decode(Board.self, from: dataInfoJSON)
+                                self.first.posts.insert(dataInfo, at: 0)
+                                self.first.keys.insert(key, at: 0)
+                            } catch {
+                                print("디코딩 에러2")
+                            }
                         }
                     }
                 }
                 completion()
                 // 테이블 뷰에 업데이트된 순서대로 표시
-//                self.appTableView.reloadData()
+                //                self.appTableView.reloadData()
             }
     }
+    
+    func downloadProfiles( complition: @escaping () -> () ){
+        self.first.profiles.removeAll()
+        var count = self.first.posts.count {
+            didSet(oldVal){
+                if count == 0 {
+                    
+                    for i in temp {
+                        self.first.profiles.append(tempProfiles[i]!)
+                    }
+                    complition()
+                }
+            }
+        }
+        
+        let ref = Database.database().reference()
+        var temp:[String] = []
+        var tempProfiles:[String:Profile] = [:]
+        for i in self.first.posts {
+            temp.append(i.uid)
+            ref.child("accounts/\(i.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot    in
+                do {
+                    let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
+                    let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
+                    tempProfiles.updateValue(profile, forKey: i.uid)
+                    count -= 1
+                }catch {
+                    print("테스트 - fail - 커뮤니티뷰 프로필 불러오기 실패")
+                }
+                
+            }
+            
+        }
+        
+    }
+    func observeFirebaseDataChanges() {
+        let databaseRef = Database.database().reference().child("boards")
+        
+        databaseRef.observe(.value) { snapshot in
+            self.getBlockedUserList {
+                self.decodeData {
+                    self.downloadProfiles {
+                        self.first.appTableView.reloadData()
+                    }
+                }
+            }
+        }
+    }
+    
 }

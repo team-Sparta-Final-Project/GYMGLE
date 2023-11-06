@@ -99,7 +99,7 @@ private extension UserMyProfileViewController {
                 guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
                 guard let nickName = DataManager.shared.profile?.nickName else { return }
                 guard let url = DataManager.shared.profile?.image else { return }
-                self.userMyProfileView.dataSetting(gym: gymName, name: nickName, postCount: self.post.count,imageUrl: url)
+                self.userMyProfileView.dataSetting(gym: "\(gymName)", name: nickName, postCount: self.post.count,imageUrl: url)
             }
             getPost {
                 self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
@@ -109,12 +109,14 @@ private extension UserMyProfileViewController {
             }
         } else { // 다른 사람이 들어오는거면 싱글톤이 아닌 uid를 사용해 서버를 통해서 보여주기
             getProfile {
-                self.getGymName()
-                guard let url = self.url else { return }
-                self.userMyProfileView.dataSetting(gym: self.gymName, name: self.nickName, postCount: self.post.count, imageUrl: url)
-                self.getPost {
-                    self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
-                    self.userMyProfileView.postTableview.reloadData()
+                self.getGymName {
+                    print("테스트 - \(self.gymName)")
+                    guard let url = self.url else { return }
+                    self.userMyProfileView.dataSetting(gym: "\(self.gymName)", name: self.nickName, postCount: self.post.count, imageUrl: url)
+                    self.getPost {
+                        self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
+                        self.userMyProfileView.postTableview.reloadData()
+                    }
                 }
             }
         }
@@ -179,7 +181,7 @@ private extension UserMyProfileViewController {
             }
         }
     }
-    func getGymName() {
+    func getGymName(completion: @escaping () -> Void) {
         let ref = Database.database().reference().child("accounts").child("\(userUid!)").child("adminUid")
         ref.observeSingleEvent(of: .value) { dataSnapshot in
             if let adminUid = dataSnapshot.value as? String {
@@ -187,6 +189,7 @@ private extension UserMyProfileViewController {
                 gymRef.observeSingleEvent(of: .value) { DataSnapshot in
                     if let gymName = DataSnapshot.value as? String {
                         self.gymName = gymName
+                        completion()
                     }
                 }
             }
@@ -205,8 +208,9 @@ extension UserMyProfileViewController {
     }
     @objc private func banButtonButtoned() {
             let alert = UIAlertController(title: "차단", message: "사용자를 차단하시겠습니까?", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "확인", style: .default) { okAction in
-                print("확인")
+            let ok = UIAlertAction(title: "확인", style: .default) { _ in
+                self.block()
+                self.userMyProfileView.banButton.setTitle("차단됨", for: .normal)
             }
             let cancel = UIAlertAction(title: "취소", style: .cancel) { cancelAction in
                 print("취소")
@@ -214,6 +218,12 @@ extension UserMyProfileViewController {
             alert.addAction(ok)
             alert.addAction(cancel)
             self.present(alert, animated: true, completion: nil)
+    }
+    
+    func block() {
+        let userRef = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/blockedUserList")
+        let blockedUserUid = userUid
+        userRef.child("\(blockedUserUid!)").setValue(true)
     }
 }
 
@@ -233,7 +243,7 @@ extension UserMyProfileViewController: UITableViewDataSource  {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserMyProfileBoardTableViewCell.identifier, for: indexPath) as! UserMyProfileBoardTableViewCell
         
         cell.board = post.sorted{$0.date > $1.date}[indexPath.section]
-        cell.commentCountLabel.text = "답글 \(commentCount[indexPath.section])개"
+        //cell.commentCountLabel.text = "답글 \(commentCount[indexPath.section])개"
         cell.selectionStyle = .none
         return cell
     }
