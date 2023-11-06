@@ -169,8 +169,9 @@ extension UserMyProfileViewController {
     }
     @objc private func banButtonButtoned() {
             let alert = UIAlertController(title: "차단", message: "사용자를 차단하시겠습니까?", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "확인", style: .default) { okAction in
-                print("확인")
+            let ok = UIAlertAction(title: "확인", style: .default) { _ in
+                self.block()
+                self.userMyProfileView.banButton.setTitle("차단됨", for: .normal)
             }
             let cancel = UIAlertAction(title: "취소", style: .cancel) { cancelAction in
                 print("취소")
@@ -178,6 +179,12 @@ extension UserMyProfileViewController {
             alert.addAction(ok)
             alert.addAction(cancel)
             self.present(alert, animated: true, completion: nil)
+    }
+    
+    func block() {
+        let userRef = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/blockedUserList")
+        let blockedUserUid = userUid
+        userRef.child("\(blockedUserUid!)").setValue(true)
     }
 }
 
