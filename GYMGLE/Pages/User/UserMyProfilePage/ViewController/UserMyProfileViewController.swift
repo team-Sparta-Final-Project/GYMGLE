@@ -32,15 +32,6 @@ final class UserMyProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewDidLoadSetting()
-        let ref = Database.database().reference().child("boards")
-        let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)")
-        query.observeSingleEvent(of: .value) { dataSnapshot in
-            guard let value = dataSnapshot.value as? [String: [String: Any]] else { return }
-            guard let comment = value.values as? [String: [String: Any]] else { return }
-            for i in comment {
-                print("테스트 - \(i)")
-            }
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,7 +99,6 @@ private extension UserMyProfileViewController {
             }
             self.getPost {
                 self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
-                print("테스트 - \(self.post)")
                 self.userMyProfileView.postTableview.reloadData()
             }
         } else { // 다른 사람이 들어오는거면 싱글톤이 아닌 uid를 사용해 서버를 통해서 보여주기
@@ -168,6 +158,8 @@ private extension UserMyProfileViewController {
             }
         }
     }
+    
+  
     func getGymName(completion: @escaping () -> Void) {
         let ref = Database.database().reference().child("accounts").child("\(userUid!)").child("adminUid")
         ref.observeSingleEvent(of: .value) { dataSnapshot in
@@ -185,7 +177,7 @@ private extension UserMyProfileViewController {
     func getBoardKeys(completion: @escaping () -> Void) {
         self.keys.removeAll()
         let ref = Database.database().reference().child("boards")
-        let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)")
+        let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)").queryLimited(toLast: 10)
         query.observeSingleEvent(of: .value) { dataSnapshot, arg  in
             for childSnapshot in dataSnapshot.children {
                 if let snapshot = childSnapshot as? DataSnapshot,
@@ -245,7 +237,7 @@ extension UserMyProfileViewController: UITableViewDataSource  {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserMyProfileBoardTableViewCell.identifier, for: indexPath) as! UserMyProfileBoardTableViewCell
         
-        cell.board = post[indexPath.section]
+        cell.board = post.sorted(by: {$0.date > $1.date})[indexPath.section]
         cell.selectionStyle = .none
         return cell
     }
@@ -272,11 +264,8 @@ extension UserMyProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let boardDetailVC = BoardDetailViewController()
         boardDetailVC.boardUid = keys[indexPath.section]
-        boardDetailVC.board = post[indexPath.section]
+        boardDetailVC.board = post.sorted(by: {$0.date > $1.date})[indexPath.section]
         navigationController?.pushViewController(boardDetailVC, animated: true)
     }
-
-
- 
-}
+ }
 
