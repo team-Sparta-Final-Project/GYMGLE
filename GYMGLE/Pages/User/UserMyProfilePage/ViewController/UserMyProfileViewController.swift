@@ -70,7 +70,6 @@ private extension UserMyProfileViewController {
         userMyProfileView.postTableview.dataSource = self
         userMyProfileView.postTableview.delegate = self
         userMyProfileView.postTableview.register(UserMyProfileBoardTableViewCell.self, forCellReuseIdentifier: UserMyProfileBoardTableViewCell.identifier)
-        userMyProfileView.postTableview.rowHeight = 110
     }
     
     func buttonSetting() {
@@ -246,10 +245,23 @@ extension UserMyProfileViewController: UITableViewDataSource  {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserMyProfileBoardTableViewCell.identifier, for: indexPath) as! UserMyProfileBoardTableViewCell
         
-        cell.board = post.sorted{$0.date > $1.date}[indexPath.section]
-        //cell.commentCountLabel.text = "답글 \(commentCount[indexPath.section])개"
+        cell.board = post[indexPath.section]
         cell.selectionStyle = .none
         return cell
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 1 // 섹션 간의 간격 설정
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView()
+        header.isUserInteractionEnabled = false
+        header.backgroundColor = UIColor.clear
+        header.frame.size.height = 1
+        return header
     }
 }
 
@@ -263,15 +275,8 @@ extension UserMyProfileViewController: UITableViewDelegate {
         boardDetailVC.board = post[indexPath.section]
         navigationController?.pushViewController(boardDetailVC, animated: true)
     }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let spacingView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 0.2))
-        spacingView.backgroundColor = .clear
-        return spacingView
-    }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0.2
-    }
+
+ 
 }
 
