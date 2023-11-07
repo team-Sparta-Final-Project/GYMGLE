@@ -71,15 +71,15 @@ class BoardDetailContentCell: UITableViewCell {
             $0.left.right.equalToSuperview().inset(20)
         }
         
-        self.contentView.addSubviews(commentCount,likeCount,likeButton)
-        commentCount.snp.makeConstraints{
+        self.contentView.addSubviews(likeCount,commentCount,likeButton)
+        likeCount.snp.makeConstraints{
             $0.left.equalTo(profileLine.snp.left)
             $0.top.equalTo(contentLabel.snp.bottom).offset(20)
             $0.bottom.equalToSuperview().inset(10)
         }
-        likeCount.snp.makeConstraints{
-            $0.left.equalTo(commentCount.snp.right).offset(8)
-            $0.centerY.equalTo(commentCount.snp.centerY)
+        commentCount.snp.makeConstraints{
+            $0.left.equalTo(likeCount.snp.right).offset(8)
+            $0.centerY.equalTo(likeCount.snp.centerY)
         }
         likeButton.snp.makeConstraints{
             $0.centerY.equalTo(commentCount.snp.centerY)
