@@ -26,6 +26,8 @@ final class AdminNoticeView: UIView {
     lazy var noticeTableView: UITableView = {
         let table = UITableView()
         table.backgroundColor = ColorGuide.background
+        table.sectionHeaderTopPadding = 0
+        table.separatorStyle = .none
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
@@ -57,9 +59,9 @@ private extension AdminNoticeView {
             noticeCreateButton.heightAnchor.constraint(equalToConstant: 46),
             noticeCreateButton.widthAnchor.constraint(equalToConstant: 46),
             
-            noticeTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
-            noticeTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -0),
-            noticeTableView.topAnchor.constraint(equalTo: self.pageTitleLabel.bottomAnchor, constant: 48),
+            noticeTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
+            noticeTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
+            noticeTableView.topAnchor.constraint(equalTo: self.pageTitleLabel.bottomAnchor, constant: 40),
             noticeTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -0),
         ])
     }
