@@ -167,10 +167,14 @@ extension AdminNoticeDetailViewController {
         }
     }
     @objc private func deletedButtonTapped() {
-        deletedNotice {
-            self.navigationController?.popViewController(animated: true)
-        }
-        
+        let alert = UIAlertController(title: "공지사항 삭제",
+                                      message: "삭제하시겠습니까?",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+            self.deletedNotice { self.navigationController?.popViewController(animated: true) }
+        }))
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        present(alert, animated: true, completion: nil)
     }
 }
 

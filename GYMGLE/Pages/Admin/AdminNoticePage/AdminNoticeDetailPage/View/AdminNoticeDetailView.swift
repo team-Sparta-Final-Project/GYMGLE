@@ -71,7 +71,7 @@ private extension AdminNoticeDetailView {
         NSLayoutConstraint.activate([
             pageTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 28),
             pageTitleLabel.bottomAnchor.constraint(equalTo: self.contentTextView.topAnchor, constant: -20),
-            pageTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 100),
+            pageTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 120),
             
             deletedButton.centerYAnchor.constraint(equalTo: self.pageTitleLabel.centerYAnchor, constant: 0),
             deletedButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -28),
@@ -86,10 +86,10 @@ private extension AdminNoticeDetailView {
             
         ])
         createButton.snp.makeConstraints{
-            $0.bottom.equalTo(self.keyboardLayoutGuide.snp.top).offset(-14)
+            $0.bottom.equalTo(self.keyboardLayoutGuide.snp.top).offset(-16)
             $0.left.equalTo(self.snp.left).offset(22)
             $0.right.equalTo(self.snp.right).offset(-22)
-            $0.height.equalTo(40)
+            $0.height.equalTo(48)
         }
     }
 }

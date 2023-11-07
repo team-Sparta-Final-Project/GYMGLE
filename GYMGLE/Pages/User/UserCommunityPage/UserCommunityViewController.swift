@@ -52,6 +52,10 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
         self.first.appTableView.reloadData()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        first.endEditing(true)
+    }
+    
     @objc func writePlaceTap() {
         let userCommunityWriteViewController = UserCommunityWriteViewController()
         //        navigationController?.pushViewController(userCommunityWriteViewController, animated: true)

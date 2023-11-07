@@ -23,6 +23,7 @@ class MyPageTableView: UITableView {
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         self.separatorStyle = .none
+        self.isScrollEnabled = false
         self.dataSource = self
         self.delegate = self
         self.register(MyPageTableViewCell.self, forCellReuseIdentifier: "MyPageCell")

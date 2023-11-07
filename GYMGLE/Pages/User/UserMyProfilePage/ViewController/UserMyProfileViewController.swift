@@ -255,9 +255,8 @@ extension UserMyProfileViewController: UITableViewDelegate {
         navigationController?.pushViewController(boardDetailVC, animated: true)
     }    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10 // 섹션 간의 간격 설정
+        return 10
     }
-    
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView()
