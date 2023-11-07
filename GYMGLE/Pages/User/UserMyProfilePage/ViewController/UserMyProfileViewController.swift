@@ -177,7 +177,7 @@ private extension UserMyProfileViewController {
     func getBoardKeys(completion: @escaping () -> Void) {
         self.keys.removeAll()
         let ref = Database.database().reference().child("boards")
-        let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)").queryLimited(toLast: 10)
+        let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)").queryLimited(toLast: 500)
         query.observeSingleEvent(of: .value) { dataSnapshot, arg  in
             for childSnapshot in dataSnapshot.children {
                 if let snapshot = childSnapshot as? DataSnapshot,
