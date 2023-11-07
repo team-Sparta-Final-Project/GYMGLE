@@ -241,20 +241,7 @@ extension UserMyProfileViewController: UITableViewDataSource  {
         cell.selectionStyle = .none
         return cell
     }
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 1 // 섹션 간의 간격 설정
-    }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100.0
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = UIView()
-        header.isUserInteractionEnabled = false
-        header.backgroundColor = UIColor.clear
-        header.frame.size.height = 1
-        return header
-    }
+
 }
 
 
@@ -266,6 +253,20 @@ extension UserMyProfileViewController: UITableViewDelegate {
         boardDetailVC.boardUid = keys[indexPath.section]
         boardDetailVC.board = post.sorted(by: {$0.date > $1.date})[indexPath.section]
         navigationController?.pushViewController(boardDetailVC, animated: true)
+    }    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10 // 섹션 간의 간격 설정
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView()
+        header.isUserInteractionEnabled = false
+        header.backgroundColor = UIColor.clear
+        header.frame.size.height = 1
+        return header
     }
  }
 
