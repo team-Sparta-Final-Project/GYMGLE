@@ -86,12 +86,6 @@ class UserCommunityView: UIView,UITableViewDelegate {
         appTableView.delegate = self
         appTableView.register(CommunityCell.self, forCellReuseIdentifier: "Cell")
         
-//        downloadProfiles {
-//            self.decodeData {
-//                self.appTableView.reloadData()
-//            }
-//        }
-
     }
     
     required init?(coder: NSCoder) {
@@ -240,9 +234,15 @@ extension UserCommunityView:UITableViewDataSource{
         if appNoticePlace.text?.isEmpty == true {
             if indexPath.row < posts.count {
                 let data = posts[indexPath.row]
-                let profile = profiles[indexPath.row] // 프로필 불러오기 수정된 부분
-                cell.configure(with: data)
-                cell.profileConfigure(with: profile) // 프로필 불러오기 수정된 부분
+                if indexPath.row < profiles.count {
+                    let profile = profiles[indexPath.row] // 프로필 불러오기 수정된 부분
+                    cell.configure(with: data)
+                    cell.profileConfigure(with: profile)
+                } else {
+                    let profile = Profile(image: URL(fileURLWithPath: ""), nickName: "")
+                    cell.configure(with: data)
+                    cell.profileConfigure(with: profile) // 프로필 불러오기 수정된 부분
+                }
             }
         } else {
             if indexPath.row < filteredPost.count {

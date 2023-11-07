@@ -37,13 +37,12 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
         first.writePlace.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(writePlaceTap)))
         first.delegate = self
         self.view = first
+        observeFirebaseDataChanges()
     }
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
-        
-        observeFirebaseDataChanges()
     }
     
     @objc func writePlaceTap() {
