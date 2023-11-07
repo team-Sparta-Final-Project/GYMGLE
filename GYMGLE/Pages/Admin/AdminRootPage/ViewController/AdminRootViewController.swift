@@ -52,12 +52,19 @@ private extension AdminRootViewController {
 extension AdminRootViewController {
     //로그아웃 버튼
     @objc private func gymSettingButtonTapped() {
-        signOut()
-        dismiss(animated: true) {
-            let vc = AdminLoginViewController()
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true)
-        }
+        let alert = UIAlertController(title: "로그 아웃",
+                                      message: "로그 아웃을 하시겠습니까?",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+            self.signOut()
+            self.dismiss(animated: true) {
+                let vc = AdminLoginViewController()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -150,7 +157,14 @@ extension AdminRootViewController: AdminTableViewDelegate {
             if isAdmin == false {
                 showToast(message: "이 아이디는 탈퇴할 수 없습니다!")
             } else {
-                deleteAccount()
+                let alert = UIAlertController(title: "계정 탈퇴",
+                                              message: "정말로 계정 탈퇴를 하시겠습니까?",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                    self.deleteAccount()
+                }))
+                alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+                present(alert, animated: true, completion: nil)
             }
             break
         default:

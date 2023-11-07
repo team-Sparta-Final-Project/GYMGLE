@@ -59,6 +59,7 @@ final class UserMyProfileView: UIView {
         table.backgroundColor = ColorGuide.userBackGround
         table.separatorStyle = .none
         table.showsVerticalScrollIndicator = false
+        table.sectionHeaderTopPadding = 0
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()

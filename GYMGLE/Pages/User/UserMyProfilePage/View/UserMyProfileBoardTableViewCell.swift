@@ -24,7 +24,7 @@ final class UserMyProfileBoardTableViewCell: UITableViewCell {
 
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16Bold, textAligment: .left)
+        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .left)
         label.numberOfLines = 3
         return label
     }()
@@ -94,13 +94,13 @@ private extension UserMyProfileBoardTableViewCell {
         }
         
         NSLayoutConstraint.activate([
-            contentLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
-            contentLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 14),
-            contentLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -70),
+            contentLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 14),
+            contentLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 12),
+            contentLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -60),
             
-            countLabelStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
+            countLabelStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 14),
             countLabelStackView.topAnchor.constraint(equalTo: self.contentLabel.bottomAnchor, constant: 8),
-            countLabelStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -14),
+            countLabelStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -12),
             
             timeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -14),
             timeLabel.centerYAnchor.constraint(equalTo: self.countLabelStackView.centerYAnchor, constant: 0)
