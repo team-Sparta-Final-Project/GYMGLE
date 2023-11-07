@@ -80,6 +80,7 @@ class UserRootView: UIView {
 이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
 
 """
+
     }
     private lazy var yesterUserPlace = UIView().then {
         $0.backgroundColor = ColorGuide.white
@@ -201,12 +202,17 @@ class UserRootView: UIView {
                 }
             } else {
                 UIView.animate(withDuration: 0.3) {
-                    self.noticePlace.snp.updateConstraints { make in
-                        make.height.equalTo(300)
+//                    self.noticePlace.snp.updateConstraints { make in
+//                        make.height.equalTo(300)
+//                        self.noticeText.numberOfLines = 0
+//
+//                        // 다른 제약을 변경하려면 여기에 추가
+//                    }
                         self.noticeText.numberOfLines = 0
-
-                        // 다른 제약을 변경하려면 여기에 추가
-                    }
+                        self.noticeText.sizeToFit()
+                        self.noticePlace.snp.updateConstraints { make in
+                            make.height.equalTo(36 + self.noticeText.frame.height)
+                        }
                 }
             }
             isNoticePlaceExpanded.toggle()
