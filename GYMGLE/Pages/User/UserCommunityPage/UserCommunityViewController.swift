@@ -147,8 +147,11 @@ extension UserCommunityViewController {
         
         databaseRef.observe(.value) { snapshot in
             self.getBlockedUserList {
+                print("테스트 - a")
                 self.decodeData {
+                    print("테스트 - b")
                     self.downloadProfiles {
+                        print("테스트 - c")
                         self.first.appTableView.reloadData()
                     }
                 }

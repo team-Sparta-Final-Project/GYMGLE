@@ -86,11 +86,6 @@ class UserCommunityView: UIView,UITableViewDelegate {
         appTableView.delegate = self
         appTableView.register(CommunityCell.self, forCellReuseIdentifier: "Cell")
         
-//        decodeData {
-//            self.downloadProfiles {
-//                self.appTableView.reloadData()
-//            }
-//        }
     }
     
     required init?(coder: NSCoder) {

@@ -73,6 +73,7 @@ final class UserMyProfileBoardTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
     }
+    
 }
 
 private extension UserMyProfileBoardTableViewCell {
@@ -94,7 +95,7 @@ private extension UserMyProfileBoardTableViewCell {
         
         NSLayoutConstraint.activate([
             contentLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
-            contentLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 4),
+            contentLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 14),
             contentLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -70),
             
             countLabelStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
