@@ -8,7 +8,7 @@ final class UserRegisterViewController: UIViewController {
     
     let cells = ["이름","전화번호","등록일","마감일","추가 정보"]
     let labelCells = ["등록일","마감일","추가 정보"]
-    let buttonText = ["날짜","날짜","성별"]
+    let buttonText = ["날짜","날짜"]
     
     var emptyUser = User(account: Account(id: "", password: "", accountType: 2), name: "", number: "", startSubscriptionDate: Date(), endSubscriptionDate: Date(), userInfo: "", isInGym: false, adminUid: DataManager.shared.gymUid!)
     
@@ -21,6 +21,7 @@ final class UserRegisterViewController: UIViewController {
     var endCell:LabelCell = LabelCell()
     
     private var isCellEmpty = true
+    private var isEndDateEmpty = true
     
     var startDate = Date()
     var endDate = Date(timeIntervalSinceNow: 60*60*24*30)
@@ -87,6 +88,8 @@ private extension UserRegisterViewController {
             endCell.label.text = "등록일 : " + emptyUser.endSubscriptionDate.formatted(date:.complete, time: .omitted)
             
             self.viewConfigure.textView.text = emptyUser.userInfo
+        }else {
+            startCell.label.text = "등록일 : " + emptyUser.startSubscriptionDate.formatted(date:.complete, time: .omitted)
         }
     }
     func showToast(message: String) {
@@ -111,6 +114,8 @@ private extension UserRegisterViewController {
     func userDataUpdate(completion: @escaping() -> Void) {
         if isCellEmpty {
             showToast(message: "작성 안된 곳이 있습니다.")
+        }else if isEndDateEmpty {
+            showToast(message: "등록 마감 날짜가 지정되어 있지 않습니다.")
         }
         else {
 
@@ -221,6 +226,7 @@ extension UserRegisterViewController: BottomSheetControllerDelegate {
         } else {
             endCell.label.text = "등록 기간 : " + date.formatted(date:.complete, time: .omitted)
             self.endDate = date
+            self.isEndDateEmpty = false
         }
     }
     

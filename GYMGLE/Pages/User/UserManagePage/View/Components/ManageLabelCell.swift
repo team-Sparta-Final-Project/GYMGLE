@@ -4,7 +4,7 @@ class ManageLabelCell:UITableViewCell {
     
     lazy var name = UILabel()
     lazy var phone = UILabel()
-    lazy var gender = UILabel()
+    lazy var subDate = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super .init(style: style, reuseIdentifier: reuseIdentifier)
@@ -13,8 +13,8 @@ class ManageLabelCell:UITableViewCell {
         name.font = FontGuide.size14Bold
         phone.textColor = ColorGuide.textHint
         phone.font = FontGuide.size14
-        gender.textColor = ColorGuide.textHint
-        gender.font = FontGuide.size14
+        subDate.textColor = ColorGuide.textHint
+        subDate.font = FontGuide.size14
 
 
         
@@ -24,7 +24,7 @@ class ManageLabelCell:UITableViewCell {
         self.contentView.clipsToBounds = true
         self.contentView.addSubview(name)
         self.contentView.addSubview(phone)
-        self.contentView.addSubview(gender)
+        self.contentView.addSubview(subDate)
         
         name.snp.makeConstraints{
             $0.left.equalToSuperview()
@@ -33,7 +33,7 @@ class ManageLabelCell:UITableViewCell {
         phone.snp.makeConstraints{
             $0.center.equalToSuperview()
         }
-        gender.snp.makeConstraints{
+        subDate.snp.makeConstraints{
             $0.right.equalToSuperview()
             $0.centerY.equalToSuperview()
         }

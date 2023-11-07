@@ -68,6 +68,9 @@ class UserRegisterView: UIView {
         textView.layer.borderWidth = 2
         textView.layer.borderColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1).cgColor
         textView.layer.cornerRadius = 10
+        textView.font = FontGuide.size16
+        textView.textColor = ColorGuide.black
+        
         self.addSubview(textView)
         
         
