@@ -30,9 +30,7 @@ final class AdminNoticeDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = false
     }
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         adminNoticeDetailView.endEditing(true)
     }
@@ -40,17 +38,11 @@ final class AdminNoticeDetailViewController: UIViewController {
 // MARK: - extension custom func
 private extension AdminNoticeDetailViewController {
     func viewConfigure() {
-        
         viewSetting()
         adminNoticeDetailView.contentTextView.delegate = self
-        registerForKeyboardNotifications()
         buttonTapped()
     }
-    func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
+
     func viewSetting() {
         if let noticeInfo = self.noticeInfo {
             adminNoticeDetailView.contentTextView.text = noticeInfo.content
@@ -168,24 +160,7 @@ private extension AdminNoticeDetailViewController {
 }
 // MARK: - @objc func
 extension AdminNoticeDetailViewController {
-    @objc private func keyboardWillShow(_ notification: Notification) {
-        if let userInfo = notification.userInfo,
-           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            let keyboardHeight = keyboardFrame.height
-            
-            var createButtonFrame = adminNoticeDetailView.createButton.frame
-            createButtonFrame.origin.y = view.frame.height - keyboardHeight - createButtonFrame.height - 10
-            self.adminNoticeDetailView.createButton.frame = createButtonFrame
-        }
-    }
-    
-    @objc private func keyboardWillHide(_ notification: Notification) {
-        let realCreateButtonFrame = self.view.frame.size.height - 88 - self.adminNoticeDetailView.createButton.frame.size.height
-        var createButtonFrame = adminNoticeDetailView.createButton.frame
-        createButtonFrame.origin.y = realCreateButtonFrame
-        self.adminNoticeDetailView.createButton.frame = createButtonFrame
-        
-    }
+
     @objc private func createButtonTapped() {
         createdAndUpatedContent {
             self.navigationController?.popViewController(animated: true)

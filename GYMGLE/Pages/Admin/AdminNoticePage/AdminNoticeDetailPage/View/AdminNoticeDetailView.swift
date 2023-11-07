@@ -30,9 +30,9 @@ final class AdminNoticeDetailView: UIView {
         textView.clipsToBounds = true
         textView.layer.cornerRadius = 30
         textView.textContainerInset = UIEdgeInsets(top: 18, left: 18, bottom: 18, right: 18)
-        textView.autocapitalizationType = .none // 자동으로 맨 앞을 대문자로 할건지
-        textView.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
-        textView.spellCheckingType = .no //스펠링 체크
+        textView.autocapitalizationType = .none
+        textView.autocorrectionType = .no
+        textView.spellCheckingType = .no
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
@@ -64,7 +64,7 @@ final class AdminNoticeDetailView: UIView {
 // MARK: - extension
 private extension AdminNoticeDetailView {
     func viewMakeUI() {
-        let views = [pageTitleLabel, deletedButton, contentTextView, contentNumberLabel, createButton]
+        let views = [pageTitleLabel, deletedButton, contentTextView, contentNumberLabel,createButton]
         for view in views {
             self.addSubview(view)
         }
@@ -82,12 +82,14 @@ private extension AdminNoticeDetailView {
             
             contentNumberLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -36),
             contentNumberLabel.topAnchor.constraint(equalTo: self.contentTextView.bottomAnchor, constant: 10),
-            contentNumberLabel.bottomAnchor.constraint(equalTo: self.createButton.topAnchor, constant: -132),
+            contentNumberLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -240),
             
-            createButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            createButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            createButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -78),
-            createButton.heightAnchor.constraint(equalToConstant: 44)
         ])
+        createButton.snp.makeConstraints{
+            $0.bottom.equalTo(self.keyboardLayoutGuide.snp.top).offset(-14)
+            $0.left.equalTo(self.snp.left).offset(22)
+            $0.right.equalTo(self.snp.right).offset(-22)
+            $0.height.equalTo(40)
+        }
     }
 }
