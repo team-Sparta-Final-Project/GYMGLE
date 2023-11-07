@@ -89,8 +89,16 @@ final class UserMyProfileUpdateView: UIView {
         return label
     }()
     
-
-    
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        indicator.center = self.center
+        indicator.color = ColorGuide.main
+        indicator.hidesWhenStopped = true
+        indicator.style = .medium
+        indicator.stopAnimating()
+        return indicator
+    }()
     
     // MARK: - init
     override init(frame: CGRect) {
