@@ -19,6 +19,10 @@ class UserCommunityView: UIView,UITableViewDelegate {
     //MARK: - 프로필 저장 배열
     
     var profiles:[Profile] = []
+    var profilesWithKey:[String:Profile] = [:]
+    var filteredProfiles:[Profile] = []
+    var filteredKeys:[String] = []
+    var nowSearching:Bool = false
     
     //MARK: - 프로필 저장 배열
     var filteredPost: [Board] = []
@@ -142,9 +146,9 @@ class UserCommunityView: UIView,UITableViewDelegate {
         var count = self.posts.count {
             didSet(oldVal){
                 if count == 0 {
-                    
+                    print("테스트 - \(profilesWithKey) dsadsasad")
                     for i in temp {
-                        self.profiles.append(tempProfiles[i]!)
+                        self.profiles.append(profilesWithKey[i]!)
                     }
                     complition()
                 }
@@ -153,14 +157,14 @@ class UserCommunityView: UIView,UITableViewDelegate {
 
         let ref = Database.database().reference()
         var temp:[String] = []
-        var tempProfiles:[String:Profile] = [:]
+        profilesWithKey = [:]
         for i in self.posts {
             temp.append(i.uid)
             ref.child("accounts/\(i.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot    in
                 do {
                     let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
                     let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
-                    tempProfiles.updateValue(profile, forKey: i.uid)
+                    self.profilesWithKey.updateValue(profile, forKey: i.uid)
                     count -= 1
                 }catch {
                     print("테스트 - fail - 커뮤니티뷰 프로필 불러오기 실패")
@@ -247,7 +251,7 @@ extension UserCommunityView:UITableViewDataSource{
         } else {
             if indexPath.row < filteredPost.count {
                 let data = filteredPost[indexPath.row]
-                let profile = profiles[indexPath.row] // 필터 안한 프로필이라 버그가 예상됩니다. 임시로 해놨습니다.
+                let profile = filteredProfiles[indexPath.row] // 필터 안한 프로필이라 버그가 예상됩니다. 임시로 해놨습니다.
                 cell.configure(with: data)
                 cell.profileConfigure(with: profile) // 필터 안한 프로필이라 버그가 예상됩니다. 임시로 해놨습니다.
             }
@@ -265,11 +269,26 @@ extension UserCommunityView:UITableViewDataSource{
 
 extension UserCommunityView: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            nowSearching = false
+        }else{
+            nowSearching = true
+        }
+        
         let searchQuery = searchText.lowercased()
         
         filteredPost = posts.filter { post in
             return post.content.lowercased().contains(searchQuery) || post.profile.nickName.lowercased().contains(searchQuery)
         }
+        
+        var temp:[Profile] = []
+        var tempKey:[String] = []
+        for i in filteredPost {
+            temp.append(profilesWithKey[i.uid]!)
+            tempKey.append(i.uid)
+        }
+        filteredProfiles = temp
+        filteredKeys = tempKey
         appTableView.reloadData()
     }
 }

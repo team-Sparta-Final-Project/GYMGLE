@@ -14,11 +14,18 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     
     func didSelectCell(at indexPath: IndexPath) {
         let destinationViewController = BoardDetailViewController()
-        let data = first.posts[indexPath.row]
-        let key = first.keys[indexPath.row]
-        destinationViewController.board = data
-        destinationViewController.boardUid = key
-        
+        if first.nowSearching {
+            let data = first.filteredPost[indexPath.row]
+            let key = first.filteredKeys[indexPath.row]
+            destinationViewController.board = data
+            destinationViewController.boardUid = key
+
+        }else {
+            let data = first.posts[indexPath.row]
+            let key = first.keys[indexPath.row]
+            destinationViewController.board = data
+            destinationViewController.boardUid = key
+        }
         
         navigationController?.pushViewController(destinationViewController, animated: true)
     }
@@ -132,6 +139,7 @@ extension UserCommunityViewController {
                     let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
                     let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
                     tempProfiles.updateValue(profile, forKey: i.uid)
+                    self.first.profilesWithKey.updateValue(profile, forKey: i.uid)
                     count -= 1
                 }catch {
                     print("테스트 - fail - 커뮤니티뷰 프로필 불러오기 실패")
