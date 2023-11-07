@@ -12,6 +12,7 @@ class UserCommunityWriteView: UIView, UITextViewDelegate {
     lazy var backButton: UIButton = {
         let button = UIButton()
         button.buttonImageMakeUI(backgroundColor: UIColor.clear, image: "xmark", color: ColorGuide.black, cornerRadius: 0.0, borderWidth: 0.0, borderColor: UIColor.white.cgColor)
+        button.isHidden = true
         return button
     }()
     

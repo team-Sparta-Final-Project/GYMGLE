@@ -365,7 +365,7 @@ extension BoardDetailViewController : MFMailComposeViewControllerDelegate {
         userCommunityWriteViewController.fromBoardClosure = {self.downloadComments(complition: self.profileDownloadClosure)}
         userCommunityWriteViewController.boardContent = board?.content
         userCommunityWriteViewController.boardUid = boardUid
-        userCommunityWriteViewController.modalPresentationStyle = .fullScreen
+//        userCommunityWriteViewController.modalPresentationStyle = .fullScreen
         self.present(userCommunityWriteViewController, animated: true)
     }
 }
