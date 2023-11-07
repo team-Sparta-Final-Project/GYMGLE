@@ -32,6 +32,12 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
         view = first
         
     }
+    
+    deinit{
+        removeAllObserve()
+        print("테스트 - deinit removeObserve")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         first.writePlace.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(writePlaceTap)))
@@ -43,12 +49,13 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
+        self.first.appTableView.reloadData()
     }
     
     @objc func writePlaceTap() {
         let userCommunityWriteViewController = UserCommunityWriteViewController()
         //        navigationController?.pushViewController(userCommunityWriteViewController, animated: true)
-        userCommunityWriteViewController.modalPresentationStyle = .fullScreen
+//        userCommunityWriteViewController.modalPresentationStyle = .fullScreen
         self.present(userCommunityWriteViewController, animated: true)
     }
     
@@ -148,6 +155,12 @@ extension UserCommunityViewController {
             }
         }
     }
+    
+    func removeAllObserve() {
+        let databaseRef = Database.database().reference().child("boards")
+        databaseRef.removeAllObservers()
+    }
+
     
     func getCommentCountForBoard(boardUid: String, completion: @escaping (Int) -> Void) {
         let databaseRef = Database.database().reference()
