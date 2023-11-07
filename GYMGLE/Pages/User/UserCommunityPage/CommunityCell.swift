@@ -12,9 +12,15 @@ class CommunityCell: UITableViewCell {
     func configure(with data: Board) {
         mainTextLabel.text = data.content
         timeLabel.text = data.date.timeAgo()
-        LikeLabel.text = "좋아요 \(data.likeCount)개"
-        nameLabel.text = data.profile.nickName
-        imageView1.kf.setImage(with: data.profile.image)
+        likeLabel.text = "좋아요 \(data.likeCount)개"
+        replyLabel.text = "댓글 \(data.commentCount)개"
+//        nameLabel.text = data.profile.nickName
+//        imageView1.kf.setImage(with: data.profile.image)
+    }
+    
+    func profileConfigure(with profile:Profile){
+        nameLabel.text = profile.nickName
+        imageView1.kf.setImage(with: profile.image)
     }
     
     //    lazy의 역할 찾아볼것
@@ -91,10 +97,11 @@ class CommunityCell: UITableViewCell {
     let replyLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "답글 7개"
         return label
     }()
     
-    let LikeLabel: UILabel = {
+    let likeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -126,16 +133,15 @@ class CommunityCell: UITableViewCell {
         allView.addSubview(replyLabel)
         replyLabel.trailingAnchor.constraint(equalTo: allView.trailingAnchor, constant: -20).isActive = true
         replyLabel.bottomAnchor.constraint(equalTo: allView.bottomAnchor, constant: -10).isActive = true
-        replyLabel.text = "답글 7개"
         replyLabel.font = FontGuide.size14
         replyLabel.textColor = ColorGuide.textHint
         
-        allView.addSubview(LikeLabel)
-        LikeLabel.trailingAnchor.constraint(equalTo: replyLabel.leadingAnchor, constant: -8).isActive = true
-        LikeLabel.bottomAnchor.constraint(equalTo: allView.bottomAnchor, constant: -10).isActive = true
-        LikeLabel.text = "좋아요 2330개"
-        LikeLabel.font = FontGuide.size14
-        LikeLabel.textColor = ColorGuide.textHint
+        allView.addSubview(likeLabel)
+        likeLabel.trailingAnchor.constraint(equalTo: replyLabel.leadingAnchor, constant: -8).isActive = true
+        likeLabel.bottomAnchor.constraint(equalTo: allView.bottomAnchor, constant: -10).isActive = true
+        likeLabel.text = "좋아요 2330개"
+        likeLabel.font = FontGuide.size14
+        likeLabel.textColor = ColorGuide.textHint
     }
     
     

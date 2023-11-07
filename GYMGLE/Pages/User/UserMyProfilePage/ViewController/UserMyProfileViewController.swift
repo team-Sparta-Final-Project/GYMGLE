@@ -18,8 +18,10 @@ final class UserMyProfileViewController: UIViewController {
     let userMyProfileView = UserMyProfileView()
     var userUid: String? //❗️ 전페이지에서 uid를 받아와 이걸로 검색을 해 정보들을 가져와야 함⭐️⭐️⭐️⭐️⭐️
     var post: [Board] = [] // 셀 나타내기
+    var keys: [String] = []
     var nickName: String = ""
     var url: URL?
+    var gymName: String = ""
     
     // MARK: - life cycle
 
@@ -43,11 +45,10 @@ final class UserMyProfileViewController: UIViewController {
 private extension UserMyProfileViewController {
   
     func viewDidLoadSetting() {
-        buttonTapped()
-        setCustomBackButton()
         tableViewSetting()
         profileIsNil()
         buttonSetting()
+        setCustomBackButton()
     }
     
     func viewWillAppearSetting() {
@@ -59,25 +60,23 @@ private extension UserMyProfileViewController {
     func tableViewSetting() {
         userMyProfileView.postTableview.dataSource = self
         userMyProfileView.postTableview.delegate = self
-        userMyProfileView.postTableview.register(CommunityCell.self, forCellReuseIdentifier: "CommunityCell")
+        userMyProfileView.postTableview.register(UserMyProfileBoardTableViewCell.self, forCellReuseIdentifier: UserMyProfileBoardTableViewCell.identifier)
     }
     
-    func buttonTapped() {
-        userMyProfileView.updateButton.addTarget(self, action: #selector(updateButtonButtoned), for: .touchUpInside)
-        userMyProfileView.banButton.addTarget(self, action: #selector(banButtonButtoned), for: .touchUpInside)
-    }
     func buttonSetting() {
         if userUid == Auth.auth().currentUser?.uid { // 내 프로필 진입 시
-            userMyProfileView.banButton.isHidden = true
-            userMyProfileView.updateButton.isHidden = false
+            userMyProfileView.updateButton.addTarget(self, action: #selector(updateButtonButtoned), for: .touchUpInside)
+            userMyProfileView.updateButton.titleLabel?.text = "프로필 수정"
         } else { //다른 사람 프로필 진입 시
-            userMyProfileView.banButton.isHidden = false
-            userMyProfileView.updateButton.isHidden = true
+            userMyProfileView.updateButton.setTitle("사용자 차단", for: .normal)
+            userMyProfileView.updateButton.addTarget(self, action: #selector(banButtonButtoned), for: .touchUpInside)
         }
     }
     func setCustomBackButton() {
-        navigationController?.navigationBar.topItem?.title = "마이페이지"
-        navigationController?.navigationBar.tintColor = .black
+        if userUid == Auth.auth().currentUser?.uid {
+            navigationController?.navigationBar.topItem?.title = "마이페이지"
+            navigationController?.navigationBar.tintColor = .black
+        }
     }
     
     func profileIsNil() {
@@ -91,24 +90,28 @@ private extension UserMyProfileViewController {
     func dataSetting() {
         //자기가 들어오는 거면 싱글톤으로 보여주기
         if userUid == Auth.auth().currentUser?.uid {
+            getBoardKeys{}
             DispatchQueue.main.async {
                 guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
                 guard let nickName = DataManager.shared.profile?.nickName else { return }
                 guard let url = DataManager.shared.profile?.image else { return }
-                self.userMyProfileView.dataSetting(gym: gymName, name: nickName, postCount: self.post.count,imageUrl: url)
+                self.userMyProfileView.dataSetting(gym: "\(gymName)", name: nickName, postCount: self.post.count,imageUrl: url)
             }
-            getPost {
+            self.getPost {
                 self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
                 self.userMyProfileView.postTableview.reloadData()
             }
         } else { // 다른 사람이 들어오는거면 싱글톤이 아닌 uid를 사용해 서버를 통해서 보여주기
             getProfile {
-                guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
-                guard let url = self.url else { return }
-                self.userMyProfileView.dataSetting(gym: gymName, name: self.nickName, postCount: self.post.count, imageUrl: url)
-                self.getPost {
-                    self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
-                    self.userMyProfileView.postTableview.reloadData()
+                self.getBoardKeys {
+                }
+                self.getGymName {
+                    guard let url = self.url else { return }
+                    self.userMyProfileView.dataSetting(gym: "\(self.gymName)", name: self.nickName, postCount: self.post.count, imageUrl: url)
+                    self.getPost {
+                        self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.post.count)개"
+                        self.userMyProfileView.postTableview.reloadData()
+                    }
                 }
             }
         }
@@ -156,6 +159,35 @@ private extension UserMyProfileViewController {
         }
     }
     
+  
+    func getGymName(completion: @escaping () -> Void) {
+        let ref = Database.database().reference().child("accounts").child("\(userUid!)").child("adminUid")
+        ref.observeSingleEvent(of: .value) { dataSnapshot in
+            if let adminUid = dataSnapshot.value as? String {
+                let gymRef = Database.database().reference().child("users").child("\(adminUid)").child("gymInfo/gymName")
+                gymRef.observeSingleEvent(of: .value) { DataSnapshot in
+                    if let gymName = DataSnapshot.value as? String {
+                        self.gymName = gymName
+                        completion()
+                    }
+                }
+            }
+        }
+    }
+    func getBoardKeys(completion: @escaping () -> Void) {
+        self.keys.removeAll()
+        let ref = Database.database().reference().child("boards")
+        let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)").queryLimited(toLast: 500)
+        query.observeSingleEvent(of: .value) { dataSnapshot, arg  in
+            for childSnapshot in dataSnapshot.children {
+                if let snapshot = childSnapshot as? DataSnapshot,
+                   let key = snapshot.key as? String  {
+                    self.keys.insert(key, at: 0)
+                    completion()
+                }
+            }
+        }
+    }
 }
 
 // MARK: - extension @objc func
@@ -168,9 +200,11 @@ extension UserMyProfileViewController {
         present(userMyProfileUpdateVC, animated: true)
     }
     @objc private func banButtonButtoned() {
+        if userUid != Auth.auth().currentUser?.uid {
             let alert = UIAlertController(title: "차단", message: "사용자를 차단하시겠습니까?", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "확인", style: .default) { okAction in
-                print("확인")
+            let ok = UIAlertAction(title: "확인", style: .default) { _ in
+                self.block()
+                self.userMyProfileView.updateButton.setTitle("차단됨", for: .normal)
             }
             let cancel = UIAlertAction(title: "취소", style: .cancel) { cancelAction in
                 print("취소")
@@ -178,6 +212,13 @@ extension UserMyProfileViewController {
             alert.addAction(ok)
             alert.addAction(cancel)
             self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func block() {
+        let userRef = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/blockedUserList")
+        let blockedUserUid = userUid
+        userRef.child("\(blockedUserUid!)").setValue(true)
     }
 }
 
@@ -186,18 +227,35 @@ extension UserMyProfileViewController {
 extension UserMyProfileViewController: UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.post.count //❗️
+        return 1
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.post.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommunityCell", for: indexPath) as! CommunityCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: UserMyProfileBoardTableViewCell.identifier, for: indexPath) as! UserMyProfileBoardTableViewCell
         
-        
+        cell.board = post.sorted(by: {$0.date > $1.date})[indexPath.section]
         cell.selectionStyle = .none
         return cell
     }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 1 // 섹션 간의 간격 설정
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView()
+        header.isUserInteractionEnabled = false
+        header.backgroundColor = UIColor.clear
+        header.frame.size.height = 1
+        return header
+    }
 }
-
 
 
 // MARK: - UITableViewDelegate
@@ -205,7 +263,9 @@ extension UserMyProfileViewController: UITableViewDataSource  {
 extension UserMyProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let boardDetailVC = BoardDetailViewController()
+        boardDetailVC.boardUid = keys[indexPath.section]
+        boardDetailVC.board = post.sorted(by: {$0.date > $1.date})[indexPath.section]
         navigationController?.pushViewController(boardDetailVC, animated: true)
     }
-}
+ }
 

@@ -90,7 +90,7 @@ extension BlockViewController {
                                     
                                     self.posts.append(postInfo)
                                 } catch {
-                                    print("디코딩 에러")
+//                                    print("디코딩 에러")
                                 }
                             }
                         }

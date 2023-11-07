@@ -16,6 +16,11 @@ import FirebaseDatabase
 class UserCommunityView: UIView,UITableViewDelegate {
     var posts: [Board] = [] // 게시물 데이터를 저장할 배열
     var keys: [String] = []
+    //MARK: - 프로필 저장 배열
+    
+    var profiles:[Profile] = []
+    
+    //MARK: - 프로필 저장 배열
     var filteredPost: [Board] = []
     let first = CommunityCell()
     
@@ -29,7 +34,7 @@ class UserCommunityView: UIView,UITableViewDelegate {
     var gymInfo: GymInfo?
     var userName: User?
     
-    private lazy var GymgleName = UILabel().then {
+    private(set) lazy var GymgleName = UILabel().then {
         $0.textColor = ColorGuide.main
         $0.font = FontGuide.size26Bold
         $0.text = "GYMGLE"
@@ -80,9 +85,7 @@ class UserCommunityView: UIView,UITableViewDelegate {
         appTableView.dataSource = self
         appTableView.delegate = self
         appTableView.register(CommunityCell.self, forCellReuseIdentifier: "Cell")
-        decodeData {
-            self.appTableView.reloadData()
-        }
+        
     }
     
     required init?(coder: NSCoder) {
@@ -124,7 +127,7 @@ class UserCommunityView: UIView,UITableViewDelegate {
                           self.keys.insert(key, at: 0)
                             // 키값은 역순으로 저장되어서 바꿨습니다.
                         } catch {
-                            print("디코딩 에러")
+//                            print("디코딩 에러")
                         }
                     }
                 }
@@ -132,6 +135,41 @@ class UserCommunityView: UIView,UITableViewDelegate {
                 // 테이블 뷰에 업데이트된 순서대로 표시
 //                self.appTableView.reloadData()
             }
+    }
+    
+    func downloadProfiles( complition: @escaping () -> () ){
+        self.profiles.removeAll()
+        var count = self.posts.count {
+            didSet(oldVal){
+                if count == 0 {
+                    
+                    for i in temp {
+                        self.profiles.append(tempProfiles[i]!)
+                    }
+                    complition()
+                }
+            }
+        }
+
+        let ref = Database.database().reference()
+        var temp:[String] = []
+        var tempProfiles:[String:Profile] = [:]
+        for i in self.posts {
+            temp.append(i.uid)
+            ref.child("accounts/\(i.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot    in
+                do {
+                    let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
+                    let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
+                    tempProfiles.updateValue(profile, forKey: i.uid)
+                    count -= 1
+                }catch {
+                    print("테스트 - fail - 커뮤니티뷰 프로필 불러오기 실패")
+                }
+                
+            }
+            
+        }
+
     }
 
     func setupUI(){
@@ -196,12 +234,22 @@ extension UserCommunityView:UITableViewDataSource{
         if appNoticePlace.text?.isEmpty == true {
             if indexPath.row < posts.count {
                 let data = posts[indexPath.row]
-                cell.configure(with: data)
+                if indexPath.row < profiles.count {
+                    let profile = profiles[indexPath.row] // 프로필 불러오기 수정된 부분
+                    cell.configure(with: data)
+                    cell.profileConfigure(with: profile)
+                } else {
+                    let profile = Profile(image: URL(fileURLWithPath: ""), nickName: "")
+                    cell.configure(with: data)
+                    cell.profileConfigure(with: profile) // 프로필 불러오기 수정된 부분
+                }
             }
         } else {
             if indexPath.row < filteredPost.count {
                 let data = filteredPost[indexPath.row]
+                let profile = profiles[indexPath.row] // 필터 안한 프로필이라 버그가 예상됩니다. 임시로 해놨습니다.
                 cell.configure(with: data)
+                cell.profileConfigure(with: profile) // 필터 안한 프로필이라 버그가 예상됩니다. 임시로 해놨습니다.
             }
         }
         return cell
