@@ -46,7 +46,7 @@ class UserRootViewController: UIViewController {
             make.bottom.equalTo(first.outBtn.snp.bottom).offset(20)
             
         }
-        
+        firebaseObserveDataChange()
     }
     
     
@@ -94,8 +94,7 @@ class UserRootViewController: UIViewController {
                 }
             }
         }
-        
-        let timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(gogogo), userInfo: nil, repeats: true)
+//        let timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(gogogo), userInfo: nil, repeats: true)
         //공지사항 읽어옴
         noticeRead {
             self.first.noticeText.text = DataManager.shared.noticeList[0].content
@@ -103,12 +102,11 @@ class UserRootViewController: UIViewController {
     }
     
     
-    @objc func gogogo(){
-        getWorkingUser {
-            self.first.nowUserNumber.text = "\(self.num)"
-            
-        }
-    }
+//    @objc func gogogo(){
+//        getWorkingUser {
+//            self.first.nowUserNumber.text = "\(self.num)"
+//        }
+//    }
     
     @objc func inButtonClick() {
         let QrCodeViewController = QrCodeViewController()
@@ -227,9 +225,12 @@ class UserRootViewController: UIViewController {
     func getWorkingUser( completion: @escaping () -> () ){
         let refDateNow = Date().timeIntervalSinceReferenceDate
         
-        databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").queryOrdered(byChild: "outTime").queryStarting(afterValue: refDateNow ).observeSingleEvent(of: .value) { DataSnapshot in
-            guard let value = DataSnapshot.value as? [String:Any] else { return }
-            self.num = value.values.count
+        databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").queryOrdered(byChild: "outTime").queryStarting(atValue: refDateNow).observeSingleEvent(of: .value) { DataSnapshot in
+            if let value = DataSnapshot.value as? [String:Any] {
+                self.num = value.values.count
+            } else {
+                self.num = 0
+            }
             completion()
         }
     }
@@ -442,6 +443,18 @@ class UserRootViewController: UIViewController {
     }
 }
 
+// MARK: FirebaseObserve
+
+extension UserRootViewController {
+    func firebaseObserveDataChange() {
+        let ref = Database.database().reference().child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog")
+        ref.observe(.value) { snapshot in
+            self.getWorkingUser {
+                self.first.nowUserNumber.text = "\(self.num)"
+            }
+        }
+    }
+}
 //#if DEBUG
 //
 //struct ViewControllerRepresentable: UIViewControllerRepresentable{

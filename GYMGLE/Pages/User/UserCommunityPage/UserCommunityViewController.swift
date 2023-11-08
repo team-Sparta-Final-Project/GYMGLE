@@ -60,6 +60,7 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
         first.appTableView.refreshControl = first.refreshController
         self.getBlockedUserList {
             self.decodeData {
+                print("테스트 - \(self.first.posts)")
                 self.downloadProfiles {
                     self.first.appTableView.reloadData()
                 }
@@ -131,11 +132,12 @@ extension UserCommunityViewController {
                                 self.first.posts.insert(dataInfo, at: 0)
                                 self.first.keys.insert(key, at: 0)
                             } catch {
-//                                print("디코딩 에러2")
+                                print("디코딩 에러2")
                             }
                         }
                     }
                 }
+                
                 completion()
                 // 테이블 뷰에 업데이트된 순서대로 표시
                 //                self.appTableView.reloadData()
@@ -147,7 +149,7 @@ extension UserCommunityViewController {
         var count = self.first.posts.count {
             didSet(oldVal){
                 if count == 0 {
-                    
+                    print("테스트ㅁㄴㅇ - \(tempProfiles)")
                     for i in temp {
                         self.first.profiles.append(tempProfiles[i]!)
                     }
@@ -159,22 +161,32 @@ extension UserCommunityViewController {
         let ref = Database.database().reference()
         var temp:[String] = []
         var tempProfiles:[String:Profile] = [:]
+        var url = URL(staticString: "http://www.ribboncafe.co.kr/shopimages/ribboncafe/mobile/0/95970_represent?1379957408")
+        let emptyProfile = Profile(image: url, nickName: "탈퇴한 회원")
         for i in self.first.posts {
             temp.append(i.uid)
             ref.child("accounts/\(i.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot    in
                 do {
-                    let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
-                    let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
-                    tempProfiles.updateValue(profile, forKey: i.uid)
-                    self.first.profilesWithKey.updateValue(profile, forKey: i.uid)
-                    count -= 1
+                    if DataSnapshot.value! is NSNull {
+                        tempProfiles.updateValue(emptyProfile, forKey: i.uid)
+                        self.first.profilesWithKey.updateValue(emptyProfile, forKey: i.uid)
+                        count -= 1
+                    }else {
+                        let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
+                        let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
+                        tempProfiles.updateValue(profile, forKey: i.uid)
+                        self.first.profilesWithKey.updateValue(profile, forKey: i.uid)
+                        count -= 1
+                    }
                 }catch {
                     print("테스트 - fail - 커뮤니티뷰 프로필 불러오기 실패")
+                    self.first.profilesWithKey.updateValue(emptyProfile, forKey: i.uid)
                 }
                 
             }
             
         }
+        
         
     }
     func removeAllObserve() {
@@ -217,5 +229,11 @@ extension UserCommunityViewController {
         } completion: { _ in
             toastView.removeFromSuperview()
         }
+    }
+}
+
+extension URL {
+    init(staticString: StaticString) {
+        self.init(string: "\(staticString)")!
     }
 }
