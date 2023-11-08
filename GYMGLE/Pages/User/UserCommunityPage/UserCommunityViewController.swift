@@ -77,8 +77,7 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
             self.showToast(message: "프로필 설정 후 게시글 작성을 이용해주세요.")
         } else {
             let userCommunityWriteViewController = UserCommunityWriteViewController()
-    //        navigationController?.pushViewController(userCommunityWriteViewController, animated: true)
-    //        userCommunityWriteViewController.modalPresentationStyle = .fullScreen
+            userCommunityWriteViewController.modalPresentationStyle = .fullScreen
             self.present(userCommunityWriteViewController, animated: true)
         }
     }
