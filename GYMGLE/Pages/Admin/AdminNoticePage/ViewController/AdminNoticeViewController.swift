@@ -35,7 +35,7 @@ final class AdminNoticeViewController: UIViewController {
         setCustomBackButton()
         dataReadSetting() {
             self.adminNoticeView.noticeTableView.reloadData()
-            self.adminNoticeView.pageTitleLabel.text = "개수: \(DataManager.shared.noticeList.count)"
+            self.adminNoticeView.pageTitleLabel.text = "공지사항 \(DataManager.shared.noticeList.count)"
         }
     }
 }
@@ -138,7 +138,7 @@ extension AdminNoticeViewController: UITableViewDelegate {
         navigationController?.pushViewController(adminNoticeDetailVC, animated: true)
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
+        return 0
     }    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView()
