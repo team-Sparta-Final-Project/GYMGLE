@@ -160,8 +160,7 @@ extension UserCommunityViewController {
         let ref = Database.database().reference()
         var temp:[String] = []
         var tempProfiles:[String:Profile] = [:]
-        var url = URL(staticString: "http://www.ribboncafe.co.kr/shopimages/ribboncafe/mobile/0/95970_represent?1379957408")
-        let emptyProfile = Profile(image: url, nickName: "탈퇴한 회원")
+        let emptyProfile = Profile(image: URL(fileURLWithPath: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F2513B53E55DB206927"), nickName: "탈퇴한 회원")
         for i in self.first.posts {
             temp.append(i.uid)
             ref.child("accounts/\(i.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot    in

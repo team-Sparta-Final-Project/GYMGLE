@@ -334,10 +334,9 @@ extension BoardDetailViewController : MFMailComposeViewControllerDelegate {
         var tempOrder:[String] = []
         var tempProfiles:[String:Profile] = [:]
         
-        var url = URL(staticString: "http://www.ribboncafe.co.kr/shopimages/ribboncafe/mobile/0/95970_represent?1379957408")
-        
+        let emptyProfile = Profile(image: URL(fileURLWithPath: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F2513B53E55DB206927"), nickName: "탈퇴한 회원")
         for i in tableData {
-            var profile = Profile(image: url, nickName: "탈퇴한 회원")
+            var profile = emptyProfile
             if i is Board {
                 let temp = i as! Board
                 tempOrder.append(temp.uid)
