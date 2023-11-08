@@ -14,7 +14,7 @@ class BoardProfileLine:UIView {
     var writerUid = ""
     var isBoard = false
         
-    let profileSize:CGFloat = 24.0
+    let profileSize:CGFloat = 26.0
     
     lazy var profileImage = UIButton().then{
         $0.clipsToBounds = true
@@ -23,7 +23,7 @@ class BoardProfileLine:UIView {
     }
     
     let writerLabel = UILabel().then{
-        $0.font = FontGuide.size14
+        $0.font = FontGuide.size16
         $0.text = "말티즈국밥"
     }
     
@@ -63,7 +63,7 @@ class BoardProfileLine:UIView {
         self.addSubview(timeLabel)
         timeLabel.snp.makeConstraints{
             $0.centerY.equalTo(profileImage)
-            $0.left.equalTo(writerLabel.snp.right).offset(4)
+            $0.left.equalTo(writerLabel.snp.right).offset(8)
         }
 
         self.addSubview(infoButton)

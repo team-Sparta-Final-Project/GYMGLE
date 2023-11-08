@@ -109,8 +109,7 @@ extension UserCommunityWriteViewController: UITextViewDelegate {
           if isUpdate {
             let ref = Database.database().reference().child("boards/\(boardUid!)")
             do {
-              ref.updateChildValues(["content":boardText])
-              ref.updateChildValues(["isUpdated":true])
+              ref.updateChildValues(["content":boardText,"isUpdated":true])
             } catch {
               print("게시물을 저장하는 동안 오류 발생: \(error)")
             }

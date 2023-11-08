@@ -16,6 +16,7 @@ class MyPageTableView: UITableView {
     // MARK: - Properties
     
     lazy var cellContents = ["프로필을 설정해주세요.", "공지사항", "로그아웃", "탈퇴하기"]
+    lazy var secondOfCellContents = ["개인정보 처리방침", "서비스 이용약관", "앱 버전 1.0.0"]
     weak var myPageDelegate: MyPageTableViewDelegate?
     
     // MARK: - Initialization
@@ -23,6 +24,7 @@ class MyPageTableView: UITableView {
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         self.separatorStyle = .none
+        self.isScrollEnabled = false
         self.dataSource = self
         self.delegate = self
         self.register(MyPageTableViewCell.self, forCellReuseIdentifier: "MyPageCell")
@@ -48,9 +50,9 @@ extension MyPageTableView: UITableViewDelegate {
         }
     }
     
-//    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-//        return indexPath.row != 0
-//    }
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section != 1 || indexPath.row != 2
+    }
     
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
         UIView.animate(withDuration: 0.2) {
@@ -63,44 +65,65 @@ extension MyPageTableView: UITableViewDelegate {
 
 extension MyPageTableView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        cellContents.count
+        if section == 0 {
+            return cellContents.count
+        } else {
+            return secondOfCellContents.count
+        }
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyPageCell", for: indexPath) as! MyPageTableViewCell
-        cell.label.text = cellContents[indexPath.row]
+        
         cell.selectionStyle = .none
         
-        if indexPath.row == 0 {
-            let imageView = UIImageView()
-            if DataManager.shared.profile != nil {
-                cell.label.text = DataManager.shared.profile?.nickName
-                imageView.kf.setImage(with: DataManager.shared.profile?.image)
+        if indexPath.section == 0 {
+            cell.label.text = cellContents[indexPath.row]
+            if indexPath.row == 0 {
+                let imageView = UIImageView()
+                if DataManager.shared.profile != nil {
+                    cell.label.text = DataManager.shared.profile?.nickName
+                    imageView.kf.setImage(with: DataManager.shared.profile?.image)
+                } else {
+                    imageView.image = UIImage(systemName: "person.fill")?.resized(to: CGSize(width: 36, height: 36))
+                }
+                
+                imageView.layer.cornerRadius = 17
+                imageView.backgroundColor = .gray
+                imageView.clipsToBounds = true
+                
+                
+                cell.addSubview(imageView)
+                
+                imageView.snp.makeConstraints {
+                    $0.left.equalToSuperview().offset(20)
+                    $0.centerY.equalToSuperview()
+                    $0.height.width.equalTo(36)
+                }
+                
+                cell.label.snp.makeConstraints {
+                    $0.left.equalTo(imageView.snp.right).offset(10)
+                    $0.centerY.equalToSuperview()
+                }
             } else {
-                imageView.image = UIImage(systemName: "person.fill")?.resized(to: CGSize(width: 36, height: 36))
+                cell.label.snp.makeConstraints {
+                    $0.left.equalToSuperview().offset(20)
+                    $0.centerY.equalToSuperview()
+                }
             }
+        } else if indexPath.section == 1 {
+            cell.label.text = secondOfCellContents[indexPath.row]
             
-            imageView.layer.cornerRadius = 17
-            imageView.backgroundColor = .gray
-            imageView.clipsToBounds = true
-
-            
-            cell.addSubview(imageView)
-            
-            imageView.snp.makeConstraints {
-                $0.left.equalToSuperview().offset(20)
-                $0.centerY.equalToSuperview()
-                $0.height.width.equalTo(36)
-            }
-            
-            cell.label.snp.makeConstraints {
-                $0.left.equalTo(imageView.snp.right).offset(10)
-                $0.centerY.equalToSuperview()
-            }
-        } else {
             cell.label.snp.makeConstraints {
                 $0.left.equalToSuperview().offset(20)
                 $0.centerY.equalToSuperview()
+            }
+            if indexPath.row == 2 {
+                cell.arrowImageView.isHidden = true
             }
         }
         return cell
@@ -108,5 +131,21 @@ extension MyPageTableView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         60
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0
+        } else {
+            return 80
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView()
+        header.isUserInteractionEnabled = false
+        header.backgroundColor = ColorGuide.background
+        header.frame.size.height = 1
+        return header
     }
 }

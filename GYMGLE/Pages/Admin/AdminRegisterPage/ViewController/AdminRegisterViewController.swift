@@ -392,7 +392,7 @@ extension AdminRegisterViewController {
                                 userInfo: "default",
                                 isInGym: false,
                                 adminUid: "default")
-        let noticeList = Notice(date: Date(), content: "default")
+        let noticeList = Notice(date: Date(), content: "GYMGLE을 사용해주셔서 감사합니다. 처음 글 작성 후 이 글을 삭제해주세요.")
         let gymInAndOutLog = InAndOut(id: "default", inTime: Date(), outTime: Date(), sinceInAndOutTime: 0)
         Auth.auth().createUser(withEmail: id, password: pw) { result, error in
             if let error = error {

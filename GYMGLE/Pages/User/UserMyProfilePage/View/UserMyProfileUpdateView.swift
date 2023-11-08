@@ -89,8 +89,15 @@ final class UserMyProfileUpdateView: UIView {
         return label
     }()
     
-
-    
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.color = ColorGuide.main
+        indicator.hidesWhenStopped = true
+        indicator.style = .large
+        indicator.stopAnimating()
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
     
     // MARK: - init
     override init(frame: CGRect) {
@@ -121,7 +128,7 @@ private extension UserMyProfileUpdateView {
     }
     
     func topViewSetting() {
-        let views = [backButton, pageLabel, successedButton, dividerView]
+        let views = [backButton, pageLabel, successedButton, dividerView, activityIndicator]
         for view in views { self.addSubview(view) }
         
         NSLayoutConstraint.activate([
@@ -139,7 +146,10 @@ private extension UserMyProfileUpdateView {
             dividerView.heightAnchor.constraint(equalToConstant: 1.2),
             dividerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             dividerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-            dividerView.topAnchor.constraint(equalTo: pageLabel.bottomAnchor, constant: 12)
+            dividerView.topAnchor.constraint(equalTo: pageLabel.bottomAnchor, constant: 12),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
+            activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0),
         ])
     }
     
@@ -159,7 +169,7 @@ private extension UserMyProfileUpdateView {
     }
     
     func bottomViewSetting() {
-        let views = [nickNameLabel, nickNameTextField, nickNameHintLabel]
+        let views = [nickNameLabel, nickNameTextField, nickNameHintLabel, activityIndicator]
         for view in views { self.addSubview(view) }
         
         NSLayoutConstraint.activate([

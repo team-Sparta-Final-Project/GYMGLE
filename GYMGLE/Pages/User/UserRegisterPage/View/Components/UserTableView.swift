@@ -66,9 +66,13 @@ extension UserTableView: UITableViewDataSource {
                 cell.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
             }
             cell.label.text = cellData[indexPath.row]
-            cell.CheckButton.setTitle(buttonText.first, for: .normal)
-            myDelegate?.dateButtonTarget(cell: cell, text: cellData[indexPath.row])
-            buttonText.remove(at: 0)
+            if buttonText.count != 0 {
+                cell.CheckButton.setTitle(buttonText.first, for: .normal)
+                myDelegate?.dateButtonTarget(cell: cell, text: cellData[indexPath.row])
+                buttonText.remove(at: 0)
+            }else {
+                cell.CheckButton.isHidden = true
+            }
             
             
             

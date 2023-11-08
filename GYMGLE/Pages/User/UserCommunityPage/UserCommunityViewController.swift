@@ -14,11 +14,18 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     
     func didSelectCell(at indexPath: IndexPath) {
         let destinationViewController = BoardDetailViewController()
-        let data = first.posts[indexPath.row]
-        let key = first.keys[indexPath.row]
-        destinationViewController.board = data
-        destinationViewController.boardUid = key
-        
+        if first.nowSearching {
+            let data = first.filteredPost[indexPath.row]
+            let key = first.filteredKeys[indexPath.row]
+            destinationViewController.board = data
+            destinationViewController.boardUid = key
+
+        }else {
+            let data = first.posts[indexPath.row]
+            let key = first.keys[indexPath.row]
+            destinationViewController.board = data
+            destinationViewController.boardUid = key
+        }
         
         navigationController?.pushViewController(destinationViewController, animated: true)
     }
@@ -32,17 +39,34 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
         view = first
         
     }
+    
+    deinit{
+        removeAllObserve()
+        print("테스트 - deinit removeObserve")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         first.writePlace.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(writePlaceTap)))
         first.delegate = self
         self.view = first
-        observeFirebaseDataChanges()
     }
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
+        
+        getBlockedUserList {
+            self.decodeData {
+                self.downloadProfiles {
+                    self.first.appTableView.reloadData()
+                }
+            }
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        first.endEditing(true)
     }
     
     @objc func writePlaceTap() {
@@ -125,6 +149,7 @@ extension UserCommunityViewController {
                     let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
                     let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
                     tempProfiles.updateValue(profile, forKey: i.uid)
+                    self.first.profilesWithKey.updateValue(profile, forKey: i.uid)
                     count -= 1
                 }catch {
                     print("테스트 - fail - 커뮤니티뷰 프로필 불러오기 실패")
@@ -135,19 +160,12 @@ extension UserCommunityViewController {
         }
         
     }
-    func observeFirebaseDataChanges() {
+    
+    func removeAllObserve() {
         let databaseRef = Database.database().reference().child("boards")
-        
-        databaseRef.observe(.value) { snapshot in
-            self.getBlockedUserList {
-                self.decodeData {
-                    self.downloadProfiles {
-                        self.first.appTableView.reloadData()
-                    }
-                }
-            }
-        }
+        databaseRef.removeAllObservers()
     }
+
     
     func getCommentCountForBoard(boardUid: String, completion: @escaping (Int) -> Void) {
         let databaseRef = Database.database().reference()

@@ -48,7 +48,7 @@ final class AdminRootView: UIView {
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = ColorGuide.background
+        adminTableView.sectionHeaderTopPadding = 0
         viewMakeUI()
     }
     required init?(coder: NSCoder) {
@@ -64,6 +64,7 @@ final class AdminRootView: UIView {
 // MARK: - extension
 private extension AdminRootView {
     func viewMakeUI() {
+        self.backgroundColor = ColorGuide.background
         topMakeUI()
     }
     func topMakeUI() {
@@ -78,19 +79,18 @@ private extension AdminRootView {
             pageTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
             
             gymLabelStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            gymLabelStackView.topAnchor.constraint(equalTo: self.pageTitleLabel.bottomAnchor, constant: 40),
+            gymLabelStackView.topAnchor.constraint(equalTo: self.pageTitleLabel.bottomAnchor, constant: 20),
             gymLabelStackView.trailingAnchor.constraint(equalTo: self.gymSettingButton.leadingAnchor, constant: 0),
             
             gymSettingButton.centerYAnchor.constraint(equalTo: self.gymLabelStackView.centerYAnchor),
             gymSettingButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
             gymSettingButton.widthAnchor.constraint(equalToConstant: 85),
-            gymSettingButton.heightAnchor.constraint(equalToConstant: 34),
-
+            gymSettingButton.heightAnchor.constraint(equalToConstant: 34)
         ])
         adminTableView.snp.makeConstraints {
-            $0.top.equalTo(gymLabelStackView.snp.bottom).offset(40)
+            $0.top.equalTo(gymLabelStackView.snp.bottom).offset(14)
             $0.left.right.equalToSuperview()
-            $0.height.equalTo(60*6)
+            $0.height.equalTo(60*10 - 30)
         }
     }
    
