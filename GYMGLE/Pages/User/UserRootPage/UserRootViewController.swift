@@ -20,16 +20,18 @@ class UserRootViewController: UIViewController {
         scrollView.alwaysBounceVertical = true
         return scrollView
     }()
-
+    
     
     let first = UserRootView()
     var num = 0
     var totalExerciseForUser: Double = 0
     var totalExercise: Double = 0
     var totalUserCount: Double = 0
+    var roundedTimes: Double = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setChartPlace()
         first.inBtn.addTarget(self, action: #selector(inButtonClick), for: .touchUpInside)
         first.outBtn.addTarget(self, action: #selector(outButtonClick), for: .touchUpInside)
         getLastWeekUserNumber()
@@ -44,7 +46,7 @@ class UserRootViewController: UIViewController {
             make.bottom.equalTo(first.outBtn.snp.bottom).offset(20)
             
         }
-        
+        firebaseObserveDataChange()
     }
     
     
@@ -59,15 +61,40 @@ class UserRootViewController: UIViewController {
                     let roundedTimes = times.rounded()
                     if roundedTimes >= 0 {
                         self.first.chartMidText.text = String("평균보다 \(roundedTimes)% 많습니다!")
+                        switch roundedTimes {
+                        case 0..<20:
+                            self.borderAnimation(color: .systemBrown) // 브론즈
+                            self.first.chartMidText.textColor = .systemBrown
+                            self.roundedTimes = roundedTimes
+                        case 20..<40:
+                            self.borderAnimation(color: .lightGray) // 실버
+                            self.first.chartMidText.textColor = .lightGray
+                            self.roundedTimes = roundedTimes
+                        case 40..<60:
+                            self.borderAnimation(color: UIColor(red: 200/255, green: 155/255, blue: 60/255, alpha: 1)) // 골드
+                            self.first.chartMidText.textColor = UIColor(red: 200/255, green: 155/255, blue: 60/255, alpha: 1)
+                            self.roundedTimes = roundedTimes
+                        case 60..<80:
+                            self.borderAnimation(color: .systemGreen) // 플레
+                            self.first.chartMidText.textColor = .systemGreen
+                            self.roundedTimes = roundedTimes
+                        case 80...:
+                            self.borderAnimation(color: .systemBlue) // 다이아
+                            self.first.chartMidText.textColor = .systemBlue
+                            self.roundedTimes = roundedTimes
+                        default:
+                            break
+                        }
                     } else {
                         self.first.chartMidText.text = String("평균보다 \(abs(roundedTimes))% 적습니다.")
+                        self.first.chartMidText.textColor = .black
                         self.first.chartBottomText.text = "꾸준함이 중요하죠!"
+                        self.borderAnimation(color: .black) // 아이언
                     }
                 }
             }
         }
-        
-        let timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(gogogo), userInfo: nil, repeats: true)
+//        let timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(gogogo), userInfo: nil, repeats: true)
         //공지사항 읽어옴
         noticeRead {
             self.first.noticeText.text = DataManager.shared.noticeList[0].content
@@ -75,12 +102,11 @@ class UserRootViewController: UIViewController {
     }
     
     
-    @objc func gogogo(){
-        getWorkingUser {
-            self.first.nowUserNumber.text = "\(self.num)"
-            
-        }
-    }
+//    @objc func gogogo(){
+//        getWorkingUser {
+//            self.first.nowUserNumber.text = "\(self.num)"
+//        }
+//    }
     
     @objc func inButtonClick() {
         let QrCodeViewController = QrCodeViewController()
@@ -126,7 +152,8 @@ class UserRootViewController: UIViewController {
     }
     // 등록기간 만료시 accountType 변경
     func checkEndSub() {
-        if DataManager.shared.userInfo!.endSubscriptionDate < Date() {
+        guard let endSubscription = DataManager.shared.userInfo?.endSubscriptionDate else { return }
+        if endSubscription < Date() {
             let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/account")
             
             ref.updateChildValues(["accountType": 3])
@@ -199,9 +226,12 @@ class UserRootViewController: UIViewController {
     func getWorkingUser( completion: @escaping () -> () ){
         let refDateNow = Date().timeIntervalSinceReferenceDate
         
-        databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").queryOrdered(byChild: "outTime").queryStarting(afterValue: refDateNow ).observeSingleEvent(of: .value) { DataSnapshot in
-            guard let value = DataSnapshot.value as? [String:Any] else { return }
-            self.num = value.values.count
+        databaseRef.child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog").queryOrdered(byChild: "outTime").queryStarting(atValue: refDateNow).observeSingleEvent(of: .value) { DataSnapshot in
+            if let value = DataSnapshot.value as? [String:Any] {
+                self.num = value.values.count
+            } else {
+                self.num = 0
+            }
             completion()
         }
     }
@@ -270,8 +300,162 @@ class UserRootViewController: UIViewController {
             completion()
         }
     }
+    
+    func borderAnimation(color: UIColor) {
+        let path = UIBezierPath()
+        let rect = self.first.chartPlace.bounds
+        path.move(to: CGPoint(x: rect.minX + 176, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.minX + 20, y: rect.maxY))
+        path.addArc(
+            withCenter: CGPoint(x: rect.minX + 20, y: rect.maxY - 20),
+            radius: 20,
+            startAngle: CGFloat.pi / 2,
+            endAngle: CGFloat.pi,
+            clockwise: true
+        )
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + 20))
+        path.addArc(
+            withCenter: CGPoint(x: rect.minX + 20, y: rect.minY + 20),
+            radius: 20,
+            startAngle: CGFloat.pi,
+            endAngle: -CGFloat.pi / 2,
+            clockwise: true
+        )
+        path.addLine(to: CGPoint(x: rect.maxX - 20, y: rect.minY))
+        path.addArc(
+            withCenter: CGPoint(x: rect.maxX - 20, y: rect.minY + 20),
+            radius: 20,
+            startAngle: -CGFloat.pi / 2,
+            endAngle: 0,
+            clockwise: true
+        )
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - 20))
+        path.addArc(
+            withCenter: CGPoint(x: rect.maxX - 20, y: rect.maxY - 20),
+            radius: 20,
+            startAngle: 0,
+            endAngle: CGFloat.pi / 2,
+            clockwise: true
+        )
+        path.close()
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.strokeColor = color.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.lineWidth = 2.0 // 보더 두께
+        
+        // 애니메이션 설정
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.fromValue = 0
+        animation.toValue = 1
+        animation.duration = 2.0 // 애니메이션 시간 (초)
+        
+        // 애니메이션을 shapeLayer에 추가
+        shapeLayer.add(animation, forKey: "borderFillAnimation")
+        // 뷰에 레이어 추가
+        self.first.chartPlace.layer.addSublayer(shapeLayer)
+    }
+    
+    func clearBorder() {
+        let path = UIBezierPath()
+        let rect = self.first.chartPlace.bounds
+        path.move(to: CGPoint(x: rect.minX + 176, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.minX + 20, y: rect.maxY))
+        path.addArc(
+            withCenter: CGPoint(x: rect.minX + 20, y: rect.maxY - 20),
+            radius: 20,
+            startAngle: CGFloat.pi / 2,
+            endAngle: CGFloat.pi,
+            clockwise: true
+        )
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + 20))
+        path.addArc(
+            withCenter: CGPoint(x: rect.minX + 20, y: rect.minY + 20),
+            radius: 20,
+            startAngle: CGFloat.pi,
+            endAngle: -CGFloat.pi / 2,
+            clockwise: true
+        )
+        path.addLine(to: CGPoint(x: rect.maxX - 20, y: rect.minY))
+        path.addArc(
+            withCenter: CGPoint(x: rect.maxX - 20, y: rect.minY + 20),
+            radius: 20,
+            startAngle: -CGFloat.pi / 2,
+            endAngle: 0,
+            clockwise: true
+        )
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - 20))
+        path.addArc(
+            withCenter: CGPoint(x: rect.maxX - 20, y: rect.maxY - 20),
+            radius: 20,
+            startAngle: 0,
+            endAngle: CGFloat.pi / 2,
+            clockwise: true
+        )
+        path.close()
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.strokeColor = UIColor.white.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.lineWidth = 2.0 // 보더 두께
+        
+        self.first.chartPlace.layer.addSublayer(shapeLayer)
+    }
+    
+    func setChartPlace() {
+        self.first.chartPlace.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(chartPlaceTapped)))
+    }
+    
+    @objc func chartPlaceTapped() {
+        if roundedTimes >= 0 {
+            switch roundedTimes {
+            case 0..<20:
+                self.clearBorder()
+                self.borderAnimation(color: .systemBrown) // 브론즈
+                first.chartMidText.textColor = .systemBrown
+            case 20..<40:
+                self.clearBorder()
+                self.borderAnimation(color: .lightGray) // 실버
+                first.chartMidText.textColor = .lightGray
+
+            case 40..<60:
+                self.clearBorder()
+                self.borderAnimation(color: UIColor(red: 200/255, green: 155/255, blue: 60/255, alpha: 1)) // 골드
+                first.chartMidText.textColor = UIColor(red: 200/255, green: 155/255, blue: 60/255, alpha: 1)
+            case 60..<80:
+                self.clearBorder()
+                self.borderAnimation(color: .systemGreen) // 플레
+                first.chartMidText.textColor = .systemGreen
+
+            case 80...:
+                self.clearBorder()
+                self.borderAnimation(color: .systemBlue) // 다이아
+                first.chartMidText.textColor = .systemBlue
+
+            default:
+                break
+            }
+        } else {
+            self.clearBorder()
+            self.borderAnimation(color: .black) // 아이언
+        }
+    }
 }
 
+// MARK: FirebaseObserve
+
+extension UserRootViewController {
+    func firebaseObserveDataChange() {
+        let ref = Database.database().reference().child("users/\(DataManager.shared.gymUid!)/gymInAndOutLog")
+        ref.observe(.value) { snapshot in
+            self.getWorkingUser {
+                self.first.nowUserNumber.text = "\(self.num)"
+            }
+        }
+    }
+}
 //#if DEBUG
 //
 //struct ViewControllerRepresentable: UIViewControllerRepresentable{

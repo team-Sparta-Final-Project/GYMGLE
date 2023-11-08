@@ -10,6 +10,7 @@ final class DataManager {
     var userInfo: User?
     var id: String?
     var pw: String?
+    var profile: Profile?
     
     var userList:[User] = []
     var noticeList:[Notice] = []

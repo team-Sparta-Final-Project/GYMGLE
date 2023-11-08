@@ -35,7 +35,7 @@ final class AdminNoticeViewController: UIViewController {
         setCustomBackButton()
         dataReadSetting() {
             self.adminNoticeView.noticeTableView.reloadData()
-            self.adminNoticeView.pageTitleLabel.text = "개수: \(DataManager.shared.noticeList.count)"
+            self.adminNoticeView.pageTitleLabel.text = "공지사항"
         }
     }
 }
@@ -109,6 +109,10 @@ extension AdminNoticeViewController {
 // MARK: - UITableViewDataSource
 extension AdminNoticeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return DataManager.shared.noticeList.count
     }
     
@@ -116,12 +120,10 @@ extension AdminNoticeViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: AdminNoticeTableViewCell.identifier, for: indexPath) as! AdminNoticeTableViewCell
 
         cell.nameLabel.text = DataManager.shared.realGymInfo?.gymName
-        cell.contentLabel.text = DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.row].content
-        cell.dateLabel.text = self.dateToString(date: DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.row].date)
-        
+        cell.contentLabel.text = DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.section].content
+        cell.dateLabel.text = self.dateToString(date: DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.section].date)
         
         cell.selectionStyle = .none
-        tableView.separatorStyle = .none
         return cell
     }
     
@@ -132,8 +134,21 @@ extension AdminNoticeViewController: UITableViewDelegate {
         
         let adminNoticeDetailVC = AdminNoticeDetailViewController()
         adminNoticeDetailVC.isUser = isAdmin
-        adminNoticeDetailVC.noticeInfo = DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.row]
+        adminNoticeDetailVC.noticeInfo = DataManager.shared.noticeList.sorted{ $0.date > $1.date }[indexPath.section]
         navigationController?.pushViewController(adminNoticeDetailVC, animated: true)
     }
-
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10
+    }    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView()
+        header.isUserInteractionEnabled = false
+        header.backgroundColor = UIColor.clear
+        header.frame.size.height = 1
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
 }

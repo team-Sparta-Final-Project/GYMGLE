@@ -120,11 +120,11 @@ extension UserManageViewController: UITableViewDataSource {
         if isFiltering() {
             cell.name.text = filteredUserList[indexPath.row].name
             cell.phone.text = filteredUserList[indexPath.row].number
-            cell.gender.text = "남"
+            cell.subDate.text = String(describing: filteredUserList[indexPath.row].startSubscriptionDate.formatted(date: .numeric, time: .omitted))
         } else {
             cell.name.text = cells[indexPath.row].name
             cell.phone.text = cells[indexPath.row].number
-            cell.gender.text = "남"
+            cell.subDate.text = String(describing: cells[indexPath.row].startSubscriptionDate.formatted(date: .numeric, time: .omitted))
         }
         cell.contentView.layer.addBorder([.top], color: ColorGuide.shadowBorder, width: 1.0)
         

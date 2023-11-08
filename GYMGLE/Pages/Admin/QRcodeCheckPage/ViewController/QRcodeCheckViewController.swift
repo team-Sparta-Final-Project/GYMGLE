@@ -7,7 +7,6 @@
 
 import UIKit
 import AVFoundation
-//import QRCodeReader
 import FirebaseDatabase
 import FirebaseAuth
 
@@ -55,7 +54,10 @@ private extension QRcodeCheckViewController {
             setGuideCrossLineView()
            
             // input 에서 output 으로의 데이터 흐름을 시작
-            captureSession.startRunning()
+            DispatchQueue.main.async {
+                self.captureSession.startRunning()
+            }
+            
         }
         catch {
         }

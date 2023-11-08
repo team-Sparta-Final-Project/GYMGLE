@@ -6,14 +6,39 @@
 //
 
 import UIKit
+import FirebaseStorage
+import Firebase
+import FirebaseAuth
+import FirebaseCore
+import FirebaseDatabase
+
 
 class UserCommunityView: UIView,UITableViewDelegate {
+    var posts: [Board] = [] // 게시물 데이터를 저장할 배열
+    var keys: [String] = []
+    //MARK: - 프로필 저장 배열
+    
+    var profiles:[Profile] = []
+    var profilesWithKey:[String:Profile] = [:]
+    var filteredProfiles:[Profile] = []
+    var filteredKeys:[String] = []
+    var nowSearching:Bool = false
+    
+    //MARK: - 프로필 저장 배열
+    var filteredPost: [Board] = []
+    let first = CommunityCell()
+    
+    weak var delegate: CommunityTableViewDelegate?
+    
+    func userDidSelectRow(at indexPath: IndexPath) {
+        delegate?.didSelectCell(at: indexPath)
+    }
     
     private let dummyDataManager = DataManager.shared
     var gymInfo: GymInfo?
     var userName: User?
-        
-    private lazy var GymgleName = UILabel().then {
+    
+    private(set) lazy var GymgleName = UILabel().then {
         $0.textColor = ColorGuide.main
         $0.font = FontGuide.size26Bold
         $0.text = "GYMGLE"
@@ -25,60 +50,45 @@ class UserCommunityView: UIView,UITableViewDelegate {
         $0.isHidden = true
     }
     private(set) lazy var writePlace = UIButton().then {
-        $0.backgroundColor = ColorGuide.white
+        $0.backgroundColor = ColorGuide.main
         $0.setImage(UIImage(systemName: "pencil"), for: .normal)
-        $0.layer.cornerRadius = 16
-        $0.tintColor = ColorGuide.black
-//        let pp = UserCommunityWriteViewController()
+        $0.layer.cornerRadius = 30
+        $0.tintColor = ColorGuide.white
+        $0.layer.shadowColor = ColorGuide.black.cgColor
+        $0.layer.shadowOpacity = 0.25
+        $0.layer.shadowRadius = 4
+        $0.layer.shadowOffset = CGSize(width: 0, height: 2)
     }
-    private lazy var mirrorPlace = UIButton().then {
-        $0.backgroundColor = ColorGuide.white
-        $0.setImage(UIImage(systemName: "circle.grid.2x1.left.filled"), for: .normal)
-        $0.tintColor = ColorGuide.black
-        $0.layer.cornerRadius = 16
-        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(mirrorPlaceTap)))
-    }
-    private lazy var appNoticePlace = UIView().then {
-        $0.backgroundColor = ColorGuide.white
+    //    private lazy var mirrorPlace = UIButton().then {
+    //        $0.backgroundColor = ColorGuide.white
+    //        $0.setImage(UIImage(systemName: "circle.grid.2x1.left.filled"), for: .normal)
+    //        $0.tintColor = ColorGuide.black
+    //        $0.layer.cornerRadius = 16
+    ////        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(mirrorPlaceTap)))
+    //    }
+    private lazy var appNoticePlace = UISearchBar().then {
         $0.layer.cornerRadius = 20
-        $0.tintColor = .white
-        $0.layer.shadowColor = ColorGuide.main.cgColor
-    }
-    private lazy var appNoticeBell = UIImageView().then {
-        $0.image = UIImage(systemName: "bell.fill")
-        $0.tintColor = ColorGuide.main
-    }
-    private lazy var appNoticeText = UILabel().then {
-        $0.textColor = ColorGuide.black
-        $0.font = FontGuide.size14Bold
-        $0.text = """
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-
-"""
-    }
-    private lazy var myNoticeText = UILabel().then {
-        $0.textColor = ColorGuide.black
-        $0.font = FontGuide.size14Bold
-        $0.text = """
-이번 주 토요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-이번 주 일요일 휴무입니다! 즐거운 휴일 되세요~
-
-"""
-        $0.isHidden = true
+        $0.searchTextField.placeholder = "검색"
+        $0.searchTextField.textColor = ColorGuide.textHint
+        $0.searchTextField.clearButtonMode = .whileEditing
+        $0.searchTextField.layer.borderWidth = 0
+        $0.searchTextField.layer.cornerRadius = 10
+        $0.searchTextField.layer.borderColor = ColorGuide.textHint.cgColor
+        $0.searchBarStyle = .minimal
+        $0.delegate = self
+        
     }
     private(set) lazy var appTableView = UITableView().then {
         $0.backgroundColor = .clear
-//        $0.layer.cornerRadius = 20
-//        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(noticePlaceTapped)))
         $0.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     }
+    
+    let refreshController: UIRefreshControl = {
+        let refresh = UIRefreshControl()
+        refresh.tintColor = ColorGuide.main
+        refresh.translatesAutoresizingMaskIntoConstraints = false
+        return refresh
+    }()
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -86,54 +96,103 @@ class UserCommunityView: UIView,UITableViewDelegate {
         appTableView.dataSource = self
         appTableView.delegate = self
         appTableView.register(CommunityCell.self, forCellReuseIdentifier: "Cell")
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-//    @objc func writePlaceTap() {
-//        let userCommunityWriteViewController = UserCommunityWriteViewController()
-//
-//        self.present(userCommunityWriteViewController, animated: true)
-//    }
-    
-    @objc func mirrorPlaceTap() {
-//        let com = CommunityCell()
-        print("asdasfa")
-        if mirrorPlace.isSelected == true {
-                print("선택됨")
-            GymgleName.isHidden = false
-            appNoticeText.isHidden = false
-            healthName.isHidden = true
-            myNoticeText.isHidden = true
-//            com.myallView.isHidden = false
-//            com.allView.isHidden = true
-            mirrorPlace.isSelected = false
-        } else if mirrorPlace.isSelected == false{
-            print("선택안됨")
-            GymgleName.isHidden = true
-            appNoticeText.isHidden = true
-            healthName.isHidden = false
-            myNoticeText.isHidden = false
-//            com.myallView.isHidden = true
-//            com.allView.isHidden = false
-            mirrorPlace.isSelected = true
+    func fetchProfileData(forUserID userID: String, completion: @escaping (Profile?) -> Void) {
+        let profileRef = Database.database().reference().child("profiles").child(userID)
+        
+        profileRef.observeSingleEvent(of: .value) { snapshot in
+            if let profileData = snapshot.value as? [String: Any],
+               let imageString = profileData["image"] as? String,
+               let imageURL = URL(string: imageString),
+               let nickName = profileData["nickName"] as? String {
+                let profile = Profile(image: imageURL, nickName: nickName)
+                completion(profile)
+            } else {
+                completion(nil)
+            }
         }
+    }
+    
+    func decodeData(completion: @escaping () -> Void) {
+        let databaseRef = Database.database().reference().child("boards")
+
+        let numberOfPostsToRetrieve = 30  // 가져올 게시물 개수 (원하는 개수로 수정)
+        databaseRef.queryOrdered(byChild: "date")
+            .queryLimited(toLast: UInt(numberOfPostsToRetrieve))
+            .observeSingleEvent(of: .value) { snapshot in
+                self.posts.removeAll() // 데이터를 새로 받을 때 배열 비우기
+                self.keys.removeAll()
+                for childSnapshot in snapshot.children {
+                    if let snapshot = childSnapshot as? DataSnapshot,
+                        let data = snapshot.value as? [String: Any],
+                        let key = snapshot.key as? String {
+                        do {
+                            let dataInfoJSON = try JSONSerialization.data(withJSONObject: data, options: [])
+                            let dataInfo = try JSONDecoder().decode(Board.self, from: dataInfoJSON)
+                            self.posts.insert(dataInfo, at: 0) // 가장 최근 게시물을 맨 위에 추가
+                          self.keys.insert(key, at: 0)
+                            // 키값은 역순으로 저장되어서 바꿨습니다.
+                        } catch {
+//                            print("디코딩 에러")
+                        }
+                    }
+                }
+                completion()
+                // 테이블 뷰에 업데이트된 순서대로 표시
+//                self.appTableView.reloadData()
+            }
+    }
+    
+    func downloadProfiles( complition: @escaping () -> () ){
+        self.profiles.removeAll()
+        var count = self.posts.count {
+            didSet(oldVal){
+                if count == 0 {
+                    print("테스트 - \(profilesWithKey) dsadsasad")
+                    for i in temp {
+                        self.profiles.append(profilesWithKey[i]!)
+                    }
+                    complition()
+                }
+            }
+        }
+
+        let ref = Database.database().reference()
+        var temp:[String] = []
+        profilesWithKey = [:]
+        for i in self.posts {
+            temp.append(i.uid)
+            ref.child("accounts/\(i.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot    in
+                do {
+                    let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
+                    let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
+                    self.profilesWithKey.updateValue(profile, forKey: i.uid)
+                    count -= 1
+                }catch {
+                    print("테스트 - fail - 커뮤니티뷰 프로필 불러오기 실패")
+                }
+                
+            }
+            
+        }
+
     }
 
     func setupUI(){
         self.backgroundColor = ColorGuide.userBackGround
         addSubview(GymgleName)
         addSubview(healthName)
-        addSubview(writePlace)
-        addSubview(mirrorPlace)
+        //        addSubview(mirrorPlace)
         addSubview(appNoticePlace)
-        addSubview(appNoticeBell)
-        addSubview(appNoticeText)
-        addSubview(myNoticeText)
         addSubview(appTableView)
+        addSubview(writePlace)
+        
+        //        writePlace.addSubview(yourTableView)
+        //        appTableView.addSubview(yourTableView)
         
         GymgleName.snp.makeConstraints {
             $0.top.equalToSuperview().offset(90)
@@ -144,39 +203,25 @@ class UserCommunityView: UIView,UITableViewDelegate {
             $0.leading.equalToSuperview().offset(20)
         }
         writePlace.snp.makeConstraints {
-            $0.centerY.equalTo(GymgleName.snp.centerY)
+            $0.bottom.equalToSuperview().offset(-122)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.width.equalTo(32)
-            $0.height.equalTo(32)
+            $0.width.equalTo(60)
+            $0.height.equalTo(60)
         }
-        mirrorPlace.snp.makeConstraints {
-            $0.centerY.equalTo(GymgleName.snp.centerY)
-            $0.trailing.equalTo(writePlace.snp.leading).offset(-6)
-            $0.width.equalTo(32)
-            $0.height.equalTo(32)
-        }
+        //        mirrorPlace.snp.makeConstraints {
+        //            $0.centerY.equalTo(GymgleName.snp.centerY)
+        //            $0.trailing.equalTo(writePlace.snp.leading).offset(-6)
+        //            $0.width.equalTo(32)
+        //            $0.height.equalTo(32)
+        //        }
         appNoticePlace.snp.makeConstraints {
-            $0.top.equalTo(GymgleName.snp.bottom).offset(12)
+            $0.top.equalTo(GymgleName.snp.bottom).offset(4)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(50)
         }
-        appNoticeBell.snp.makeConstraints {
-            $0.top.equalTo(appNoticePlace.snp.top).offset(18)
-            $0.leading.equalTo(appNoticePlace.snp.leading).offset(16)
-            $0.height.equalTo(16)
-            $0.width.equalTo(16)
-        }
-        appNoticeText.snp.makeConstraints {
-            $0.top.equalTo(appNoticePlace.snp.top).offset(18)
-            $0.leading.equalTo(appNoticePlace.snp.leading).offset(42)
-        }
-        myNoticeText.snp.makeConstraints {
-            $0.top.equalTo(appNoticePlace.snp.top).offset(18)
-            $0.leading.equalTo(appNoticePlace.snp.leading).offset(42)
-        }
         appTableView.snp.makeConstraints {
-            $0.top.equalTo(appNoticePlace.snp.bottom).offset(8)
+            $0.top.equalTo(appNoticePlace.snp.bottom).offset(0)
             $0.centerX.equalToSuperview()
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
@@ -184,35 +229,72 @@ class UserCommunityView: UIView,UITableViewDelegate {
         }
         
     }
-
+    
 }
 extension UserCommunityView:UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0 // TODO: 데이터모델 공사중입니다
+        return appNoticePlace.text?.isEmpty == true ? posts.count : filteredPost.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CommunityCell
         cell.selectionStyle = .none
-//        var date = dateToString(date: dummyDataManager.gymInfo.noticeList[indexPath.row].date)
-//        cell.nameLabel.text = dummyDataManager.gymInfo.gymName
-//        cell.ctextLabel.text = dummyDataManager.gymInfo.noticeList[indexPath.row].content
-//        cell.dateLabel.text = date
+        if appNoticePlace.text?.isEmpty == true {
+            if indexPath.row < posts.count {
+                let data = posts[indexPath.row]
+                if indexPath.row < profiles.count {
+                    let profile = profiles[indexPath.row] // 프로필 불러오기 수정된 부분
+                    cell.configure(with: data)
+                    cell.profileConfigure(with: profile)
+                } else {
+                    let profile = Profile(image: URL(fileURLWithPath: ""), nickName: "")
+                    cell.configure(with: data)
+                    cell.profileConfigure(with: profile) // 프로필 불러오기 수정된 부분
+                }
+            }
+        } else {
+            if indexPath.row < filteredPost.count {
+                let data = filteredPost[indexPath.row]
+                let profile = filteredProfiles[indexPath.row] // 필터 안한 프로필이라 버그가 예상됩니다. 임시로 해놨습니다.
+                cell.configure(with: data)
+                cell.profileConfigure(with: profile) // 필터 안한 프로필이라 버그가 예상됩니다. 임시로 해놨습니다.
+            }
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension // 셀의 높이 (예: 100)에 간격 (예: 12)을 더해 설정
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            // 셀을 클릭했을 때 호출됩니다.
-            let pp = UserCommunityViewController()
-        
-         let adminNoticeDetailVC = AdminNoticeDetailViewController()
-//         adminNoticeDetailVC.noticeInfo = dummyDataManager.gymInfo.noticeList[indexPath.row] 데이터모델 공사중입니다
-            // 새로운 뷰를 모달로 표시합니다.
-//            self.present(pp, animated: true, completion: nil)
-        }
+        userDidSelectRow(at: indexPath)
+    }
+    
+}
 
+extension UserCommunityView: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            nowSearching = false
+        }else{
+            nowSearching = true
+        }
+        
+        let searchQuery = searchText.lowercased()
+        
+        filteredPost = posts.filter { post in
+            return post.content.lowercased().contains(searchQuery) || profilesWithKey[post.uid]!.nickName.contains(searchQuery)
+        }
+        
+        var temp:[Profile] = []
+        var tempKey:[String] = []
+        for i in filteredPost {
+            temp.append(profilesWithKey[i.uid]!)
+            tempKey.append(i.uid)
+        }
+        filteredProfiles = temp
+        filteredKeys = tempKey
+       
+    }
 }

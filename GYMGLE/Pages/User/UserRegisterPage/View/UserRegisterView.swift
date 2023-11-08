@@ -2,10 +2,10 @@ import UIKit
 
 class UserRegisterView: UIView {
     //MARK: - UI 컴포넌트 선언부
-    lazy var label = UILabel()
     lazy var tableView = UserTableView()
     lazy var button:UIButton = UIButton.GYMGLEButtonPreset("버튼 타이틀")
-    lazy var textView = UITextView()
+    lazy var textView = CustomTextView()
+    lazy var scrollView = UIScrollView()
     
     let items = ["회원", "트레이너"]
     lazy var segmented = UISegmentedControl(items: items)
@@ -23,32 +23,14 @@ class UserRegisterView: UIView {
     private func configure(){
         self.backgroundColor = ColorGuide.background
         
-//        topLabel()
         bottomButton()
         centerTableView()
-        addTextView()
+//        addTextView()
         
         segmentedConfigure()
         
         
     }
-    //MARK: - 테이블뷰 configure
-    func heightConfigure(cellHeight:Int, emptyCellHeight:Int){
-        tableView.cellHeight = cellHeight
-        tableView.emptyCellHeight = emptyCellHeight
-    }
-    
-    func dataSourceConfigure(cells:[String],labels:[String],buttons:[String],buttonText:[String]){
-        
-        let maped = cells.map{ [$0] }
-        let joined = Array(maped.joined(separator: [""]))
-        
-        tableView.cellData = joined
-        tableView.labelCellData = labels
-        tableView.buttonCellData = buttons
-        tableView.buttonText = buttonText
-    }
-    
     //MARK: - 세그먼티드 컨트롤
     
     private func segmentedConfigure(){
@@ -70,28 +52,16 @@ class UserRegisterView: UIView {
     
     
     
-    //MARK: - 탑레이블
-    private func topLabel(){
-        
-        label.text = "페이지 타이틀 레이블"
-        label.font = FontGuide.customFont(size: 32, lineHeight: 40, isBold: true)
-        
-        self.addSubview(label)
-        
-        label.snp.makeConstraints{
-            $0.top.equalToSuperview().inset(88)
-            $0.left.equalToSuperview().inset(22)
-            $0.height.equalTo(34)
-        }
-    }
     //MARK: - 센터 테이블 뷰
     private func centerTableView(){
+        
+        tableView.clipsToBounds = true
         
         self.addSubview(tableView)
         tableView.snp.makeConstraints{
             $0.top.equalToSuperview().inset(132)
             $0.left.right.equalToSuperview().inset(24)
-            $0.bottom.equalTo(button.snp.top).inset(-280)
+            $0.bottom.equalTo(button.snp.top).inset(-24)
         }
     }
     //MARK: - 텍스트 뷰
@@ -101,13 +71,16 @@ class UserRegisterView: UIView {
         textView.layer.borderWidth = 2
         textView.layer.borderColor = UIColor(red: 0.894, green: 0.894, blue: 0.894, alpha: 1).cgColor
         textView.layer.cornerRadius = 10
+        textView.font = FontGuide.size16
+        textView.textColor = ColorGuide.black
+        
         self.addSubview(textView)
         
         
         textView.snp.makeConstraints{
             $0.left.right.equalToSuperview().inset(24)
             $0.top.equalTo(tableView.snp.bottom).inset(10)
-            $0.bottom.equalTo(button.snp.top).offset(-150)
+            $0.bottom.equalTo(button.snp.top).offset(-50)
         }
     }
     
@@ -119,7 +92,8 @@ class UserRegisterView: UIView {
         self.addSubview(button)
         
         button.snp.makeConstraints{
-            $0.bottom.equalToSuperview().inset(40)
+//            $0.bottom.equalToSuperview().inset(40)
+            $0.bottom.equalTo(keyboardLayoutGuide.snp.top).inset(-40)
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(44)
         }

@@ -9,6 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseCore
 import FirebaseDatabase
+import SafariServices
 
 final class AdminRootViewController: UIViewController {
     // MARK: - properties
@@ -52,12 +53,19 @@ private extension AdminRootViewController {
 extension AdminRootViewController {
     //로그아웃 버튼
     @objc private func gymSettingButtonTapped() {
-        signOut()
-        dismiss(animated: true) {
-            let vc = AdminLoginViewController()
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true)
-        }
+        let alert = UIAlertController(title: "로그아웃",
+                                      message: "로그아웃 하시겠습니까?",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+            self.signOut()
+            self.dismiss(animated: true) {
+                let vc = AdminLoginViewController()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -122,39 +130,61 @@ private extension AdminRootViewController {
 
 extension AdminRootViewController: AdminTableViewDelegate {
     func didSelectCell(at indexPath: IndexPath) {
-        switch indexPath.row {
-        case 0:
+        switch (indexPath.section, indexPath.row) {
+        case (0, 0):
             // 공지사항을 선택한 경우
             let adminNoticeVC = AdminNoticeViewController()
             self.navigationController?.pushViewController(adminNoticeVC, animated: true)
             break
-        case 1:
+        case (0, 1):
             // 회원등록 선택한 경우
             self.navigationController?.pushViewController(UserRegisterViewController(), animated: true)
             break
-        case 2:
+        case (0, 2):
             // 회원관리를 선택한 경우
             self.navigationController?.pushViewController(UserManageViewController(), animated: true)
             break
-        case 3:
+        case (0, 3):
             // QR스캐너를 선택한 경우
             self.navigationController?.pushViewController(QRcodeCheckViewController(), animated: true)
             break
-        case 4:
+        case (0, 4):
             // 정보변경을 선택한 경우
             let adminRegisterVC = AdminRegisterViewController()
             adminRegisterVC.gymInfo = DataManager.shared.realGymInfo
             self.navigationController?.pushViewController(adminRegisterVC, animated: true)
             break
-        case 5:
+        case (0, 5):
             if isAdmin == false {
                 showToast(message: "이 아이디는 탈퇴할 수 없습니다!")
             } else {
-                deleteAccount()
+                let alert = UIAlertController(title: "계정 탈퇴",
+                                              message: "정말로 계정 탈퇴를 하시겠습니까?",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                    self.deleteAccount()
+                }))
+                alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+                present(alert, animated: true, completion: nil)
             }
+            break
+        case (1, 0):
+            guard let appleUrl = URL(string: "https://difficult-shock-122.notion.site/e56d3be418464be0b3262bff1afaeaca?pvs=4")   else { return }
+            let safariViewController = SFSafariViewController(url: appleUrl)
+            safariViewController.delegate = self
+            safariViewController.modalPresentationStyle = .fullScreen
+            self.present(safariViewController, animated: true, completion: nil)
+            break
+        case (1, 1):
+            guard let appleUrl = URL(string: "https://difficult-shock-122.notion.site/f5ff3433117749c5a8bdc527eff556d1")   else { return }
+            let safariViewController = SFSafariViewController(url: appleUrl)
+            safariViewController.delegate = self
+            safariViewController.modalPresentationStyle = .fullScreen
+            self.present(safariViewController, animated: true, completion: nil)
             break
         default:
             break
         }
     }
 }
+extension AdminRootViewController: SFSafariViewControllerDelegate {}

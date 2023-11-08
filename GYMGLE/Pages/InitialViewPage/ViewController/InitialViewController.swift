@@ -148,6 +148,17 @@ private extension InitialViewController {
                     }
                 }
             }
+            userRef2.child("profile").observeSingleEvent(of: .value) { (snapshot) in
+                if let profileData = snapshot.value as? [String: Any] {
+                    do {
+                        let profileInfoData = try JSONSerialization.data(withJSONObject: profileData, options: [])
+                        let profileInfo = try JSONDecoder().decode(Profile.self, from: profileInfoData)
+                        DataManager.shared.profile = profileInfo
+                    } catch {
+                        print("Decoding error: \(error.localizedDescription)")
+                    }
+                }
+            }
         }
     }
 }
@@ -225,6 +236,18 @@ extension InitialViewController {
                                                               preferredStyle: .alert)
                                 alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
                                 self.present(alert, animated: true, completion: nil)
+                            }
+                        }
+                    }
+                    
+                    userRef.child("profile").observeSingleEvent(of: .value) { (snapshot) in
+                        if let profileData = snapshot.value as? [String: Any] {
+                            do {
+                                let profileInfoData = try JSONSerialization.data(withJSONObject: profileData, options: [])
+                                let profileInfo = try JSONDecoder().decode(Profile.self, from: profileInfoData)
+                                DataManager.shared.profile = profileInfo
+                            } catch {
+                                print("Decoding error: \(error.localizedDescription)")
                             }
                         }
                     }
