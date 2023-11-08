@@ -50,20 +50,19 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
         first.writePlace.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(writePlaceTap)))
         first.delegate = self
         self.view = first
-        observeFirebaseDataChanges()
     }
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
-//        if DataManager.shared.profile == nil {
-//            let userMyProfileVC = UserMyProfileViewController()
-//            present(userMyProfileVC, animated: true) {
-//                
-//            }
-//        }
         
-        self.first.appTableView.reloadData()
+        getBlockedUserList {
+            self.decodeData {
+                self.downloadProfiles {
+                    self.first.appTableView.reloadData()
+                }
+            }
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -73,7 +72,7 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     @objc func writePlaceTap() {
         let userCommunityWriteViewController = UserCommunityWriteViewController()
         //        navigationController?.pushViewController(userCommunityWriteViewController, animated: true)
-//        userCommunityWriteViewController.modalPresentationStyle = .fullScreen
+        userCommunityWriteViewController.modalPresentationStyle = .fullScreen
         self.present(userCommunityWriteViewController, animated: true)
     }
     
@@ -160,19 +159,6 @@ extension UserCommunityViewController {
             
         }
         
-    }
-    func observeFirebaseDataChanges() {
-        let databaseRef = Database.database().reference().child("boards")
-        
-        databaseRef.observe(.value) { snapshot in
-            self.getBlockedUserList {
-                self.decodeData {
-                    self.downloadProfiles {
-                        self.first.appTableView.reloadData()
-                    }
-                }
-            }
-        }
     }
     
     func removeAllObserve() {
