@@ -12,10 +12,10 @@ class BoardDetailViewController: UIViewController {
     let userCommunityViewController = UserCommunityViewController()
     let second = CommunityCell()
     let ref = Database.database().reference()
-        
+    
     var tableData:[Any] = []
     var profileData:[Profile] = []
-        
+    
     var board: Board?
     var comment: Comment?
     var boardUid: String?
@@ -23,7 +23,7 @@ class BoardDetailViewController: UIViewController {
     let viewConfigure = BoardDetailView()
     
     var imageTapGesture = UITapGestureRecognizer()
-        
+    
     var reloadClosure = {}
     var profileDownloadClosure = {}
     
@@ -161,7 +161,7 @@ extension BoardDetailViewController:BoardProfileInfoButtonDelegate {
                 alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: {_ in
                     self.deleteBoard()
                 }))
-
+                
             }else {
                 alert.addAction(UIAlertAction(title: "신고하기", style: .destructive, handler: {_ in
                     self.reportContent(content: self.board!)
@@ -182,7 +182,7 @@ extension BoardDetailViewController:BoardProfileInfoButtonDelegate {
             }
         }
         
-
+        
         present(alert,animated: true)
     }
 }
@@ -279,7 +279,7 @@ extension BoardDetailViewController : MFMailComposeViewControllerDelegate {
         ref.child("boards/\(boardUid!)/comments").child("\(commentUid)").setValue(nil)
         downloadComments(complition: profileDownloadClosure)
     }
-
+    
     
     func downloadComments( complition: @escaping () -> () ){
         
@@ -303,7 +303,7 @@ extension BoardDetailViewController : MFMailComposeViewControllerDelegate {
             self.tableData += temp.sorted(by: { $0.1.date < $1.1.date })
             
             complition()
-
+            
         }
     }
     //MARK: - 프로필데이터
@@ -323,15 +323,20 @@ extension BoardDetailViewController : MFMailComposeViewControllerDelegate {
         }
         var tempOrder:[String] = []
         var tempProfiles:[String:Profile] = [:]
-
+        
+        var url = URL(staticString: "http://www.ribboncafe.co.kr/shopimages/ribboncafe/mobile/0/95970_represent?1379957408")
+        
         for i in tableData {
+            var profile = Profile(image: url, nickName: "탈퇴한 회원")
             if i is Board {
                 let temp = i as! Board
                 tempOrder.append(temp.uid)
-                ref.child("accounts/\(temp.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot  in
+                ref.child("accounts/\(temp.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot    in
                     do {
-                        let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
-                        let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
+                        if !(DataSnapshot.value! is NSNull) {
+                            let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
+                            profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
+                        }
                         tempProfiles.updateValue(profile, forKey: temp.uid)
                         count -= 1
                     }catch {
@@ -343,8 +348,10 @@ extension BoardDetailViewController : MFMailComposeViewControllerDelegate {
                 tempOrder.append(temp.key)
                 ref.child("accounts/\(temp.value.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot  in
                     do {
-                        let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
-                        let profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
+                        if !(DataSnapshot.value! is NSNull) {
+                            let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
+                            profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
+                        }
                         tempProfiles.updateValue(profile, forKey: temp.key)
                         count -= 1
                     }catch {
@@ -365,7 +372,7 @@ extension BoardDetailViewController : MFMailComposeViewControllerDelegate {
         userCommunityWriteViewController.fromBoardClosure = {self.downloadComments(complition: self.profileDownloadClosure)}
         userCommunityWriteViewController.boardContent = board?.content
         userCommunityWriteViewController.boardUid = boardUid
-//        userCommunityWriteViewController.modalPresentationStyle = .fullScreen
+        //        userCommunityWriteViewController.modalPresentationStyle = .fullScreen
         self.present(userCommunityWriteViewController, animated: true)
     }
 }
