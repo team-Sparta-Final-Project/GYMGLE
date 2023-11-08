@@ -210,6 +210,8 @@ private extension AdminRegisterViewController {
                     }
                 }
                 completion(false)
+            }else {
+                completion(false)
             }
             
         }

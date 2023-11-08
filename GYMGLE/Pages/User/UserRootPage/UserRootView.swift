@@ -316,6 +316,7 @@ class UserRootView: UIView {
         noticeText.snp.makeConstraints {
             $0.top.equalTo(noticePlace.snp.top).offset(18)
             $0.leading.equalTo(noticePlace.snp.leading).offset(42)
+            $0.trailing.equalTo(noticePlace.snp.trailing).offset(-16)
         }
         yesterUserPlace.snp.makeConstraints {
             $0.leading.equalTo(noticePlace.snp.leading).offset(0)
