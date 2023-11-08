@@ -42,7 +42,6 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     
     deinit{
         removeAllObserve()
-        print("테스트 - deinit removeObserve")
     }
     
     override func viewDidLoad() {
