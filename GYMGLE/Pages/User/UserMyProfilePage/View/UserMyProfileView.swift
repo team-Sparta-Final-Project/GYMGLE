@@ -113,8 +113,8 @@ private extension UserMyProfileView {
             
             profileImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: -50),
             profileImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            profileImageView.widthAnchor.constraint(equalToConstant: 90),
-            profileImageView.heightAnchor.constraint(equalToConstant: 90)
+            profileImageView.widthAnchor.constraint(equalToConstant: 100),
+            profileImageView.heightAnchor.constraint(equalToConstant: 100)
         ])
         
         NSLayoutConstraint.activate([

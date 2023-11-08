@@ -56,6 +56,13 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
+//        if DataManager.shared.profile == nil {
+//            let userMyProfileVC = UserMyProfileViewController()
+//            present(userMyProfileVC, animated: true) {
+//                
+//            }
+//        }
+        
         self.first.appTableView.reloadData()
     }
     

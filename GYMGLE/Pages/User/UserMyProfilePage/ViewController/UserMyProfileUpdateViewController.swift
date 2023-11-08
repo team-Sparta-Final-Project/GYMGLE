@@ -102,6 +102,7 @@ private extension UserMyProfileUpdateViewController {
             let myProfile = Profile(image: url, nickName: nickName)
             DataManager.shared.profile = myProfile
             self.saveProfile(newProfile: myProfile) {
+                self.userMyprofileUpdateView.activityIndicator.stopAnimating()
                 self.dismiss(animated: true)
             }
         }
@@ -160,6 +161,7 @@ extension UserMyProfileUpdateViewController {
                         self.present(alert, animated: true, completion: nil)
                     }
                 } else {
+                    self.userMyprofileUpdateView.activityIndicator.startAnimating()
                     self.viewDisappearEvent()
                 }
             } else {
