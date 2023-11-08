@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UserMyPageView: UIView {
+final class UserMyPageView: UIView {
     
     // MARK: - Properties
     
@@ -24,9 +24,20 @@ class UserMyPageView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = ColorGuide.background
+        viewSetting()
         tableView.sectionHeaderTopPadding = 0
-        addSubviews(myPageLabel, tableView)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+private extension UserMyPageView {
+    
+    func viewSetting() {
+        self.backgroundColor = ColorGuide.background
+        self.addSubviews(myPageLabel, tableView)
         
         myPageLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(90)
@@ -34,13 +45,9 @@ class UserMyPageView: UIView {
         }
         
         tableView.snp.makeConstraints {
-            $0.top.equalTo(myPageLabel.snp.bottom).offset(60)
+            $0.top.equalTo(myPageLabel.snp.bottom).offset(48)
             $0.left.right.equalToSuperview()
-            $0.height.equalTo(60*8 + 20)
+            $0.height.equalTo(52*7 + 20)
         }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

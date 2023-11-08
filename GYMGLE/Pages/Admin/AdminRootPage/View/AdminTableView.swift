@@ -34,7 +34,7 @@ extension AdminTableView: UITableViewDelegate {
             let cell = tableView.cellForRow(at: indexPath)
             cell?.transform = CGAffineTransform(scaleX: 0.95, y: 0.90)
             cell?.backgroundColor = ColorGuide.shadowBorder
-            cell?.layer.cornerRadius = 30.0
+            cell?.layer.cornerRadius = 26.0
         }
     }
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
@@ -86,15 +86,11 @@ extension AdminTableView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        60
+        return 52
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 0
-        } else {
-            return 30
-        }
+        return (section == 0) ? 0 : 20
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

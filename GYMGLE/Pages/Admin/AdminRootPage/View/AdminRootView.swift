@@ -11,6 +11,23 @@ import SnapKit
 final class AdminRootView: UIView {
     
     // MARK: - UIProperties
+    
+    private lazy var scrollView: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.isScrollEnabled = true
+        scroll.showsVerticalScrollIndicator = false
+        scroll.backgroundColor = ColorGuide.background
+        scroll.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        return scroll
+    }()
+    
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     private lazy var pageTitleLabel: UILabel = {
         let label = UILabel()
         label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size36Bold, textAligment: .left)
@@ -64,33 +81,46 @@ final class AdminRootView: UIView {
 // MARK: - extension
 private extension AdminRootView {
     func viewMakeUI() {
-        self.backgroundColor = ColorGuide.background
+        
         topMakeUI()
     }
     func topMakeUI() {
-
+        self.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
         let allView = [pageTitleLabel, gymLabelStackView, gymSettingButton, adminTableView]
         for view in allView {
-            self.addSubview(view)
+            self.contentView.addSubview(view)
         }
         NSLayoutConstraint.activate([
-            pageTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            pageTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 108),
-            pageTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
+            scrollView.leadingAnchor.constraint(equalTo:  self.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: self.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
-            gymLabelStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
+            contentView.leadingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            contentView.trailingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            contentView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 0),
+            contentView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor, constant: 0),
+            contentView.heightAnchor.constraint(equalToConstant: 700),
+            
+            pageTitleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 22),
+            pageTitleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 90),
+            pageTitleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -22),
+            
+            gymLabelStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 22),
             gymLabelStackView.topAnchor.constraint(equalTo: self.pageTitleLabel.bottomAnchor, constant: 20),
             gymLabelStackView.trailingAnchor.constraint(equalTo: self.gymSettingButton.leadingAnchor, constant: 0),
             
             gymSettingButton.centerYAnchor.constraint(equalTo: self.gymLabelStackView.centerYAnchor),
-            gymSettingButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
+            gymSettingButton.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -22),
             gymSettingButton.widthAnchor.constraint(equalToConstant: 85),
             gymSettingButton.heightAnchor.constraint(equalToConstant: 34)
         ])
         adminTableView.snp.makeConstraints {
             $0.top.equalTo(gymLabelStackView.snp.bottom).offset(14)
             $0.left.right.equalToSuperview()
-            $0.height.equalTo(60*10 - 30)
+            $0.height.equalTo(52*9 + 20)
         }
     }
    

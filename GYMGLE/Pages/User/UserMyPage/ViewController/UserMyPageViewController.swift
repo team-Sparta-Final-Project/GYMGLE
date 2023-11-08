@@ -55,7 +55,6 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
             adminNoticeVC.isAdmin = false
             let vc = UINavigationController(rootViewController: adminNoticeVC)
             present(vc, animated: true)
-
             break
         case (0, 2):
             // 로그아웃
