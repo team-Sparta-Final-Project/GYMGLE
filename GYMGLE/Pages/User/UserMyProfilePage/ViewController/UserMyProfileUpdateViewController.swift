@@ -32,7 +32,7 @@ final class UserMyProfileUpdateViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-        
+  
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -56,14 +56,15 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
-//        if DataManager.shared.profile == nil {
-//            let userMyProfileVC = UserMyProfileViewController()
-//            present(userMyProfileVC, animated: true) {
-//                
-//            }
-//        }
-        
-        self.first.appTableView.reloadData()
+        first.refreshController.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        first.appTableView.refreshControl = first.refreshController
+        self.getBlockedUserList {
+            self.decodeData {
+                self.downloadProfiles {
+                    self.first.appTableView.reloadData()
+                }
+            }
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -71,12 +72,29 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     }
     
     @objc func writePlaceTap() {
-        let userCommunityWriteViewController = UserCommunityWriteViewController()
-        //        navigationController?.pushViewController(userCommunityWriteViewController, animated: true)
-//        userCommunityWriteViewController.modalPresentationStyle = .fullScreen
-        self.present(userCommunityWriteViewController, animated: true)
+        if DataManager.shared.profile == nil {
+            self.showToast(message: "프로필 설정 후 게시글 작성을 이용해주세요.")
+        } else {
+            let userCommunityWriteViewController = UserCommunityWriteViewController()
+    //        navigationController?.pushViewController(userCommunityWriteViewController, animated: true)
+    //        userCommunityWriteViewController.modalPresentationStyle = .fullScreen
+            self.present(userCommunityWriteViewController, animated: true)
+        }
+            
+        
     }
-    
+    @objc private func refreshData() {
+        self.getBlockedUserList {
+            self.decodeData {
+                self.downloadProfiles {
+                    DispatchQueue.main.async {
+                        self.first.refreshController.endRefreshing()
+                        self.first.appTableView.reloadData()
+                    }
+                }
+            }
+        }
+    }
     func getBlockedUserList(completion: @escaping () -> ()) {
         let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/blockedUserList")
         ref.observeSingleEvent(of: .value) { (snapshot) in
@@ -162,17 +180,17 @@ extension UserCommunityViewController {
         
     }
     func observeFirebaseDataChanges() {
-        let databaseRef = Database.database().reference().child("boards")
-        
-        databaseRef.observe(.value) { snapshot in
-            self.getBlockedUserList {
-                self.decodeData {
-                    self.downloadProfiles {
-                        self.first.appTableView.reloadData()
-                    }
-                }
-            }
-        }
+//        let databaseRef = Database.database().reference().child("boards")
+//        
+//        databaseRef.observe(.value) { snapshot in
+//            self.getBlockedUserList {
+//                self.decodeData {
+//                    self.downloadProfiles {
+//                        self.first.appTableView.reloadData()
+//                    }
+//                }
+//            }
+//        }
     }
     
     func removeAllObserve() {
@@ -198,4 +216,22 @@ extension UserCommunityViewController {
         }
     }
     
+    func showToast(message: String) {
+        let toastView = ToastView()
+        toastView.configure()
+        toastView.text = message
+        view.addSubview(toastView)
+        toastView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -124),
+            toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
+            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
+        ])
+        UIView.animate(withDuration: 2.5, delay: 0.2) { //2.5초
+            toastView.alpha = 0
+        } completion: { _ in
+            toastView.removeFromSuperview()
+        }
+    }
 }

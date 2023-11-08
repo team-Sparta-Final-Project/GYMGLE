@@ -83,13 +83,19 @@ class UserCommunityView: UIView,UITableViewDelegate {
         $0.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     }
     
+    let refreshController: UIRefreshControl = {
+        let refresh = UIRefreshControl()
+        refresh.tintColor = ColorGuide.main
+        refresh.translatesAutoresizingMaskIntoConstraints = false
+        return refresh
+    }()
+    
     override init(frame: CGRect){
         super.init(frame: frame)
         setupUI()
         appTableView.dataSource = self
         appTableView.delegate = self
         appTableView.register(CommunityCell.self, forCellReuseIdentifier: "Cell")
-        
     }
     
     required init?(coder: NSCoder) {
@@ -289,6 +295,6 @@ extension UserCommunityView: UISearchBarDelegate {
         }
         filteredProfiles = temp
         filteredKeys = tempKey
-        appTableView.reloadData()
+       
     }
 }
