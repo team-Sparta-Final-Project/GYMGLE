@@ -82,14 +82,14 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
             present(alert, animated: true, completion: nil)
             break
         case (1, 0):
-            guard let appleUrl = URL(string: "https://www.apple.com")   else { return }
+            guard let appleUrl = URL(string: "https://difficult-shock-122.notion.site/e56d3be418464be0b3262bff1afaeaca?pvs=4")   else { return }
             let safariViewController = SFSafariViewController(url: appleUrl)
             safariViewController.delegate = self
             safariViewController.modalPresentationStyle = .fullScreen
             self.present(safariViewController, animated: true, completion: nil)
             break
         case (1, 1):
-            guard let appleUrl = URL(string: "https://www.apple.com")   else { return }
+            guard let appleUrl = URL(string: "https://difficult-shock-122.notion.site/f5ff3433117749c5a8bdc527eff556d1")   else { return }
             let safariViewController = SFSafariViewController(url: appleUrl)
             safariViewController.delegate = self
             safariViewController.modalPresentationStyle = .fullScreen
