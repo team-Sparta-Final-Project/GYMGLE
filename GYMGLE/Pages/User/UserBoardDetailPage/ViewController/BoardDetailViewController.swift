@@ -28,7 +28,14 @@ class BoardDetailViewController: UIViewController {
     var profileDownloadClosure = {}
     
     override func loadView() {
-        reloadClosure = { self.viewConfigure.tableView.reloadData() }
+        reloadClosure = {
+            if self.profileData[0].nickName == "탈퇴한 회원"{
+                self.viewConfigure.commentSection.textField.placeholder = "탈퇴한 회원의 글입니다."
+                self.viewConfigure.commentSection.textField.isEnabled = false
+                self.viewConfigure.commentSection.button.isHidden = true
+            }
+            self.viewConfigure.tableView.reloadData()
+        }
         profileDownloadClosure = { self.downloadProfiles(complition: self.reloadClosure) }
         
         downloadComments(complition: profileDownloadClosure)
@@ -121,6 +128,9 @@ extension BoardDetailViewController: UITableViewDataSource {
             cell.profileLine.writerLabel.text = profile.nickName
             cell.profileLine.timeLabel.text = comment.date.timeAgo()
             cell.profileLine.profileImage.kf.setImage(with: profile.image, for: .normal)
+            if profile.nickName == "탈퇴한 회원" {
+                cell.profileLine.profileImage.backgroundColor = .gray
+            }
             cell.profileLine.commentUid = dic.key
             cell.profileLine.writerUid = comment.uid
             
