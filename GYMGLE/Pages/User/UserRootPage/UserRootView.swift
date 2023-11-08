@@ -147,9 +147,10 @@ class UserRootView: UIView {
     }
     
     lazy var chartMidText = UILabel().then {
-//        $0.textColor = ColorGuide.goldTier
+        $0.textColor = ColorGuide.main
         $0.font = FontGuide.size24Bold
         $0.text = "상위 4% 에요!"
+        
     }
     lazy var chartBottomText = UILabel().then {
         $0.textColor = ColorGuide.main

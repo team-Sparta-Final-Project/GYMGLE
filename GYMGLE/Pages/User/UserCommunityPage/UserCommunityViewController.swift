@@ -50,12 +50,12 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
         first.writePlace.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(writePlaceTap)))
         first.delegate = self
         self.view = first
-        observeFirebaseDataChanges()
     }
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
+
         first.refreshController.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         first.appTableView.refreshControl = first.refreshController
         self.getBlockedUserList {
@@ -80,8 +80,6 @@ class UserCommunityViewController: UIViewController, CommunityTableViewDelegate 
     //        userCommunityWriteViewController.modalPresentationStyle = .fullScreen
             self.present(userCommunityWriteViewController, animated: true)
         }
-            
-        
     }
     @objc private func refreshData() {
         self.getBlockedUserList {
@@ -179,20 +177,6 @@ extension UserCommunityViewController {
         }
         
     }
-    func observeFirebaseDataChanges() {
-//        let databaseRef = Database.database().reference().child("boards")
-//        
-//        databaseRef.observe(.value) { snapshot in
-//            self.getBlockedUserList {
-//                self.decodeData {
-//                    self.downloadProfiles {
-//                        self.first.appTableView.reloadData()
-//                    }
-//                }
-//            }
-//        }
-    }
-    
     func removeAllObserve() {
         let databaseRef = Database.database().reference().child("boards")
         databaseRef.removeAllObservers()
