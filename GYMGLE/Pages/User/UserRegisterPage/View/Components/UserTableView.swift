@@ -27,7 +27,7 @@ class UserTableView: UITableView {
     
         self.delegate = self
         self.dataSource = self
-        self.isScrollEnabled = false
+        self.isScrollEnabled = true
         self.allowsSelection = false
 
         self.separatorStyle = .none
@@ -79,19 +79,25 @@ extension UserTableView: UITableViewDataSource {
             return cell
 
         }
-        else {
+        else if cellData[indexPath.row] == "textView" {
+            let cell = CustomTextCell()
+            return cell
+        }else {
             let cell = TextFieldCell()
             cell.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
             cell.placeHolderLabel.text = cellData[indexPath.row]
             
             myDelegate?.textFieldTarget(cell: cell)
             return cell
+
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if cellData[indexPath.row] == "" {
             return CGFloat(emptyCellHeight)
+        } else if cellData[indexPath.row] == "textView" {
+            return CGFloat(100.0)
         } else {
             return CGFloat(cellHeight)
         }
