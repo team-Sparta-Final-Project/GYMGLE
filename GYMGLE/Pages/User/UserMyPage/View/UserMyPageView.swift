@@ -25,7 +25,7 @@ class UserMyPageView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = ColorGuide.background
-        
+        tableView.sectionHeaderTopPadding = 0
         addSubviews(myPageLabel, tableView)
         
         myPageLabel.snp.makeConstraints {
@@ -34,9 +34,9 @@ class UserMyPageView: UIView {
         }
         
         tableView.snp.makeConstraints {
-            $0.top.equalTo(myPageLabel.snp.bottom).offset(20)
+            $0.top.equalTo(myPageLabel.snp.bottom).offset(60)
             $0.left.right.equalToSuperview()
-            $0.height.equalTo(60*4)
+            $0.height.equalTo(60*8 + 20)
         }
     }
     

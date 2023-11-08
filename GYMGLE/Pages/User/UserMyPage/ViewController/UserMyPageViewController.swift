@@ -9,6 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseCore
 import FirebaseDatabase
+import SafariServices
 
 class UserMyPageViewController: UIViewController {
     
@@ -42,13 +43,13 @@ class UserMyPageViewController: UIViewController {
 extension UserMyPageViewController: MyPageTableViewDelegate {
     
     func didSelectCell(at indexPath: IndexPath) {
-        switch indexPath.row {
-        case 0:
+        switch (indexPath.section, indexPath.row) {
+        case (0, 0):
             let userMyProfileVC = UserMyProfileViewController()
             userMyProfileVC.userUid = Auth.auth().currentUser?.uid
             self.navigationController?.pushViewController(userMyProfileVC, animated: true)
             break
-        case 1:
+        case (0, 1):
             // 공지사항을 선택한 경우
             let adminNoticeVC = AdminNoticeViewController()
             adminNoticeVC.isAdmin = false
@@ -56,7 +57,7 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
             present(vc, animated: true)
 
             break
-        case 2:
+        case (0, 2):
             // 로그아웃
             signOut()
             dismiss(animated: true) {
@@ -68,7 +69,7 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
                 self.present(vc, animated: true)
             }
             break
-        case 3:
+        case (0, 3):
             // 탈퇴하기
             let alert = UIAlertController(title: "탈퇴하기",
                                           message: "정말로 탈퇴하시겠습니까?",
@@ -79,6 +80,20 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
             }))
             alert.addAction(UIAlertAction(title: "취소", style: .cancel))
             present(alert, animated: true, completion: nil)
+            break
+        case (1, 0):
+            guard let appleUrl = URL(string: "https://www.apple.com")   else { return }
+            let safariViewController = SFSafariViewController(url: appleUrl)
+            safariViewController.delegate = self
+            safariViewController.modalPresentationStyle = .fullScreen
+            self.present(safariViewController, animated: true, completion: nil)
+            break
+        case (1, 1):
+            guard let appleUrl = URL(string: "https://www.apple.com")   else { return }
+            let safariViewController = SFSafariViewController(url: appleUrl)
+            safariViewController.delegate = self
+            safariViewController.modalPresentationStyle = .fullScreen
+            self.present(safariViewController, animated: true, completion: nil)
             break
         default:
             break
@@ -125,3 +140,4 @@ extension UserMyPageViewController {
         }
     }
 }
+extension UserMyPageViewController: SFSafariViewControllerDelegate {}
