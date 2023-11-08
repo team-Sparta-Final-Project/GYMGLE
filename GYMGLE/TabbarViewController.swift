@@ -50,6 +50,7 @@ final class TabbarViewController: UITabBarController {
         
         self.tabBar.layer.borderWidth = 1
         self.tabBar.layer.borderColor = ColorGuide.userBackGround.cgColor
+        self.tabBar.backgroundColor = ColorGuide.background
 
         self.tabBar.tintColor = ColorGuide.main //탭바 아이템 색
         
