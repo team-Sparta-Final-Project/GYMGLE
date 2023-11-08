@@ -412,18 +412,26 @@ class UserRootViewController: UIViewController {
             case 0..<20:
                 self.clearBorder()
                 self.borderAnimation(color: .systemBrown) // 브론즈
+                first.chartMidText.textColor = .systemBrown
             case 20..<40:
                 self.clearBorder()
                 self.borderAnimation(color: .lightGray) // 실버
+                first.chartMidText.textColor = .lightGray
+
             case 40..<60:
                 self.clearBorder()
                 self.borderAnimation(color: UIColor(red: 200/255, green: 155/255, blue: 60/255, alpha: 1)) // 골드
+                first.chartMidText.textColor = UIColor(red: 200/255, green: 155/255, blue: 60/255, alpha: 1)
             case 60..<80:
                 self.clearBorder()
                 self.borderAnimation(color: .systemGreen) // 플레
+                first.chartMidText.textColor = .systemGreen
+
             case 80...:
                 self.clearBorder()
                 self.borderAnimation(color: .systemBlue) // 다이아
+                first.chartMidText.textColor = .systemBlue
+
             default:
                 break
             }
