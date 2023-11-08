@@ -52,7 +52,8 @@ final class TabbarViewController: UITabBarController {
         self.tabBar.layer.borderColor = ColorGuide.userBackGround.cgColor
 
         self.tabBar.tintColor = ColorGuide.main //탭바 아이템 색
-        
+        self.tabBar.backgroundColor = ColorGuide.userBackGround
+
         
         self.tabBar.items![0].imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         self.tabBar.items![0].image = UIImage(systemName: "house")?.withRenderingMode(.alwaysOriginal).withTintColor(ColorGuide.textHint)
