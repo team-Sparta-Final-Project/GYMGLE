@@ -152,7 +152,8 @@ class UserRootViewController: UIViewController {
     }
     // 등록기간 만료시 accountType 변경
     func checkEndSub() {
-        if DataManager.shared.userInfo!.endSubscriptionDate < Date() {
+        guard let endSubscription = DataManager.shared.userInfo?.endSubscriptionDate else { return }
+        if endSubscription < Date() {
             let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/account")
             
             ref.updateChildValues(["accountType": 3])

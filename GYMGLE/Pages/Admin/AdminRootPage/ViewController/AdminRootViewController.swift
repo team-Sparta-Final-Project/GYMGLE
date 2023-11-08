@@ -53,8 +53,8 @@ private extension AdminRootViewController {
 extension AdminRootViewController {
     //로그아웃 버튼
     @objc private func gymSettingButtonTapped() {
-        let alert = UIAlertController(title: "로그 아웃",
-                                      message: "로그 아웃을 하시겠습니까?",
+        let alert = UIAlertController(title: "로그아웃",
+                                      message: "로그아웃 하시겠습니까?",
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
             self.signOut()
