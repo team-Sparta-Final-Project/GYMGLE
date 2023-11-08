@@ -4,7 +4,8 @@ class UserRegisterView: UIView {
     //MARK: - UI 컴포넌트 선언부
     lazy var tableView = UserTableView()
     lazy var button:UIButton = UIButton.GYMGLEButtonPreset("버튼 타이틀")
-    lazy var textView = UITextView()
+    lazy var textView = CustomTextView()
+    lazy var scrollView = UIScrollView()
     
     let items = ["회원", "트레이너"]
     lazy var segmented = UISegmentedControl(items: items)
@@ -24,7 +25,7 @@ class UserRegisterView: UIView {
         
         bottomButton()
         centerTableView()
-        addTextView()
+//        addTextView()
         
         segmentedConfigure()
         
@@ -54,11 +55,13 @@ class UserRegisterView: UIView {
     //MARK: - 센터 테이블 뷰
     private func centerTableView(){
         
+        tableView.clipsToBounds = true
+        
         self.addSubview(tableView)
         tableView.snp.makeConstraints{
             $0.top.equalToSuperview().inset(132)
             $0.left.right.equalToSuperview().inset(24)
-            $0.bottom.equalTo(button.snp.top).inset(-280)
+            $0.bottom.equalTo(button.snp.top).inset(-24)
         }
     }
     //MARK: - 텍스트 뷰
@@ -77,7 +80,7 @@ class UserRegisterView: UIView {
         textView.snp.makeConstraints{
             $0.left.right.equalToSuperview().inset(24)
             $0.top.equalTo(tableView.snp.bottom).inset(10)
-            $0.bottom.equalTo(button.snp.top).offset(-150)
+            $0.bottom.equalTo(button.snp.top).offset(-50)
         }
     }
     
@@ -89,7 +92,8 @@ class UserRegisterView: UIView {
         self.addSubview(button)
         
         button.snp.makeConstraints{
-            $0.bottom.equalToSuperview().inset(40)
+//            $0.bottom.equalToSuperview().inset(40)
+            $0.bottom.equalTo(keyboardLayoutGuide.snp.top).inset(-40)
             $0.left.right.equalToSuperview().inset(24)
             $0.height.equalTo(44)
         }

@@ -37,6 +37,9 @@ final class UserRegisterViewController: UIViewController {
         viewConfigure.tableView.myDelegate = self
         
         view = viewConfigure
+        
+        viewConfigure.tableView.cellData.append("")
+        viewConfigure.tableView.cellData.append("textView")
     }
     
     override func viewDidLoad() {
