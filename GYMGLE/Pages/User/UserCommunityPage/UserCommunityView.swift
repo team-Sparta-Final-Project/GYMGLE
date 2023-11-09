@@ -284,7 +284,7 @@ extension UserCommunityView: UISearchBarDelegate {
         let searchQuery = searchText.lowercased()
         
         filteredPost = posts.filter { post in
-            return post.content.lowercased().contains(searchQuery) || profilesWithKey[post.uid]!.nickName.contains(searchQuery)
+            return post.content.lowercased().contains(searchQuery) || profilesWithKey[post.uid]!.nickName.lowercased().contains(searchQuery)
         }
         
         var temp:[Profile] = []
@@ -295,6 +295,8 @@ extension UserCommunityView: UISearchBarDelegate {
         }
         filteredProfiles = temp
         filteredKeys = tempKey
+        
+        appTableView.reloadData()
        
     }
 }
