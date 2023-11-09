@@ -187,6 +187,10 @@ extension UserRegisterViewIDPWController {
 
 //UserRegisterViewIDPWController
 extension UserRegisterViewIDPWController: UserTableViewDelegate {
+    func textViewTarget(cell: CustomTextCell) {
+        
+    }
+    
     func textFieldTarget(cell: TextFieldCell) {
         if cell.placeHolderLabel.text == "회원 이메일" {
             idCell = cell

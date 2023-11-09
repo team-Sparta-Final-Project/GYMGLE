@@ -19,6 +19,7 @@ final class UserRegisterViewController: UIViewController {
     var phoneCell:TextFieldCell = TextFieldCell()
     var startCell:LabelCell = LabelCell()
     var endCell:LabelCell = LabelCell()
+    var textViewCell:CustomTextCell = CustomTextCell()
     
     private var isCellEmpty = true
     private var isEndDateEmpty = true
@@ -90,7 +91,8 @@ private extension UserRegisterViewController {
             startCell.label.text = "등록일 : " + emptyUser.startSubscriptionDate.formatted(date:.complete, time: .omitted)
             endCell.label.text = "등록일 : " + emptyUser.endSubscriptionDate.formatted(date:.complete, time: .omitted)
             
-            self.viewConfigure.textView.text = emptyUser.userInfo
+//            self.viewConfigure.textView.text = emptyUser.userInfo
+            self.textViewCell.textView.text = emptyUser.userInfo
         }else {
             startCell.label.text = "등록일 : " + emptyUser.startSubscriptionDate.formatted(date:.complete, time: .omitted)
         }
@@ -122,7 +124,8 @@ private extension UserRegisterViewController {
         }
         else {
 
-            let info = self.viewConfigure.textView.text
+//            let info = self.viewConfigure.textView.text
+            let info = self.textViewCell.textView.text
             if nowEdit {
                 emptyUser.name = nameCell.textField.text ?? ""
                 emptyUser.number = phoneCell.textField.text ?? ""
@@ -242,6 +245,10 @@ extension UserRegisterViewController: UserTableViewDelegate {
         }else if cell.placeHolderLabel.text == "전화번호"{
             phoneCell = cell
         }
+    }
+    
+    func textViewTarget(cell: CustomTextCell) {
+        self.textViewCell = cell
     }
     
     func dateButtonTarget(cell: LabelCell, text:String) {
