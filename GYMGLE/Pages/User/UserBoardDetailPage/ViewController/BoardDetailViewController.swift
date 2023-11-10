@@ -4,8 +4,13 @@ import FirebaseDatabase
 import Firebase
 import Kingfisher
 import FirebaseAuth
+import Combine
 
 class BoardDetailViewController: UIViewController {
+    
+    var viewModel:BoardDetailViewModel = BoardDetailViewModel()
+    
+    var disposableBag = Set<AnyCancellable>()
     
     let first = UserCommunityView()
     
@@ -16,9 +21,17 @@ class BoardDetailViewController: UIViewController {
     var tableData:[Any] = []
     var profileData:[Profile] = []
     
-    var board: Board?
+    var board: Board? {
+        didSet{
+            self.viewModel.board = board
+        }
+    }
     var comment: Comment?
-    var boardUid: String?
+    var boardUid: String? {
+        didSet{
+            self.viewModel.boardUid = boardUid
+        }
+    }
     
     let viewConfigure = BoardDetailView()
     
@@ -26,6 +39,12 @@ class BoardDetailViewController: UIViewController {
     
     var reloadClosure = {}
     var profileDownloadClosure = {}
+    
+    private func setBindings(){
+        self.viewModel.$tableData.sink{
+            self.tableData = $0
+        }.store(in: &disposableBag)
+    }
     
     override func loadView() {
         reloadClosure = {
