@@ -88,7 +88,7 @@ extension AdminRootViewController: AdminRootViewModelDelegate {
     }
     func deleteGym() {
         if isAdmin == false {
-            viewModel?.showToast(message: "이 아이디는 탈퇴할 수 없습니다!", view: self.view)
+            showToast(message: "이 아이디는 탈퇴할 수 없습니다!", view: self.view, bottomAnchor: -120, widthAnchor: 220, heightAnchor: 30)
         } else {
             let alert = UIAlertController(title: "계정 탈퇴",
                                           message: "정말로 계정 탈퇴를 하시겠습니까?",
