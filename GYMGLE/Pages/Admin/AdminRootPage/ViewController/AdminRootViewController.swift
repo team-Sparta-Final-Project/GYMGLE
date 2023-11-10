@@ -151,7 +151,7 @@ extension AdminRootViewController: AdminTableViewDelegate {
         case (0, 4):
             // 정보변경을 선택한 경우
             let adminRegisterVC = AdminRegisterViewController()
-            adminRegisterVC.gymInfo = DataManager.shared.realGymInfo
+            adminRegisterVC.viewModel.gymInfo = DataManager.shared.realGymInfo
             self.navigationController?.pushViewController(adminRegisterVC, animated: true)
             break
         case (0, 5):
