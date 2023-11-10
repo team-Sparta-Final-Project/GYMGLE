@@ -35,7 +35,6 @@ final class AdminNoticeViewController: UIViewController {
         setCustomBackButton()
         dataReadSetting() {
             self.adminNoticeView.noticeTableView.reloadData()
-            self.adminNoticeView.pageTitleLabel.text = "공지사항"
         }
     }
 }
@@ -62,6 +61,7 @@ private extension AdminNoticeViewController {
     }
     func allSetting() {
         adminNoticeView.backgroundColor = ColorGuide.background
+        self.adminNoticeView.pageTitleLabel.text = "공지사항"
         buttonTappedSetting()
         tableSetting()
     }

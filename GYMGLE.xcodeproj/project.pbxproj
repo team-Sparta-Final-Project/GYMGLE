@@ -68,6 +68,7 @@
 		632E7F182AF1201E00490C59 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E7F172AF1201E00490C59 /* Board.swift */; };
 		638748512AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638748502AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift */; };
 		63B5A2252AEB627900105AB5 /* Extension_UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */; };
+		63B777362AFE04FD00094D85 /* AdminRootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B777352AFE04FD00094D85 /* AdminRootViewModel.swift */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
@@ -167,6 +168,7 @@
 		632E7F172AF1201E00490C59 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		638748502AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyProfileBoardTableViewCell.swift; sourceTree = "<group>"; };
 		63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIImage.swift; sourceTree = "<group>"; };
+		63B777352AFE04FD00094D85 /* AdminRootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminRootViewModel.swift; sourceTree = "<group>"; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 		2730BC382AD8083B00BFA23C /* AdminRootPage */ = {
 			isa = PBXGroup;
 			children = (
+				63B777342AFE04E200094D85 /* ViewModel */,
 				630A0BE82AD9262900525A6E /* View */,
 				630A0BE72AD9261800525A6E /* ViewController */,
 			);
@@ -644,6 +647,14 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		63B777342AFE04E200094D85 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				63B777352AFE04FD00094D85 /* AdminRootViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		63D855EE2AD81261008429BC /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -887,6 +898,7 @@
 				63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */,
 				2730BC882ADC1DC500BFA23C /* UserManageController.swift in Sources */,
 				63F777D52AF13F1D00A3DF2B /* UserMyProfileUpdateViewController.swift in Sources */,
+				63B777362AFE04FD00094D85 /* AdminRootViewModel.swift in Sources */,
 				D16D42772AF4B09A0083EB17 /* Extension_Date.swift in Sources */,
 				630CE1532ADD5CB8001EC547 /* Account.swift in Sources */,
 				63B5A2252AEB627900105AB5 /* Extension_UIImage.swift in Sources */,
