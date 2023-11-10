@@ -1,12 +1,10 @@
 import UIKit
-import FirebaseAuth
-import FirebaseCore
-import FirebaseDatabase
+import Firebase
 
 class InitialViewController: UIViewController {
     
     private let initialView = InitialView()
-    private var viewModel: InitialViewModel!
+    private var viewModel: LoginViewModel!
     
     // MARK: - Life Cycles
     
@@ -16,7 +14,7 @@ class InitialViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = InitialViewModel()
+        viewModel = LoginViewModel()
         viewModel.delegate = self
         addButtonMethod()
         configureNav()
@@ -59,7 +57,7 @@ private extension InitialViewController {
     }
 }
 
-extension InitialViewController: InitialViewModelDelegate {
+extension InitialViewController: LoginViewModelDelegate {
     func loginFailure() {
         let alert = UIAlertController(title: "로그인 실패",
                                       message: "유효한 계정이 아닙니다.",

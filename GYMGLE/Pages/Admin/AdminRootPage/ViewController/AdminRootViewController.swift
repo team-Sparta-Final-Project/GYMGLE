@@ -98,6 +98,7 @@ extension AdminRootViewController: AdminRootViewModelDelegate {
             }))
             alert.addAction(UIAlertAction(title: "취소", style: .cancel))
             present(alert, animated: true, completion: nil)
+
         }
     }
 }
