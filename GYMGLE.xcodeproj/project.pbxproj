@@ -90,7 +90,8 @@
 		D16920A92ADFBBAE00BE1A2B /* UserMyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */; };
 		D16D42752AF3C90E0083EB17 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D16D42742AF3C90E0083EB17 /* Kingfisher */; };
 		D16D42772AF4B09A0083EB17 /* Extension_Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D42762AF4B09A0083EB17 /* Extension_Date.swift */; };
-		D17A82322AFC6CDA00FDE8C4 /* InitialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17A82312AFC6CDA00FDE8C4 /* InitialViewModel.swift */; };
+		D17A82322AFC6CDA00FDE8C4 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17A82312AFC6CDA00FDE8C4 /* LoginViewModel.swift */; };
+		D18CDD022AFDC1B8001BA91C /* AdminRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18CDD012AFDC1B8001BA91C /* AdminRegisterViewModel.swift */; };
 		D1E0185F2ADCEB6700D1C53D /* AdminNoticeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E0185E2ADCEB6700D1C53D /* AdminNoticeDetailView.swift */; };
 		D1E018612ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E018602ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift */; };
 		D1E018632ADCEBE000D1C53D /* AdminNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E018622ADCEBE000D1C53D /* AdminNoticeView.swift */; };
@@ -186,7 +187,8 @@
 		D16920A62ADFBB9F00BE1A2B /* UserMyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageView.swift; sourceTree = "<group>"; };
 		D16920A82ADFBBAE00BE1A2B /* UserMyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyPageViewController.swift; sourceTree = "<group>"; };
 		D16D42762AF4B09A0083EB17 /* Extension_Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_Date.swift; sourceTree = "<group>"; };
-		D17A82312AFC6CDA00FDE8C4 /* InitialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewModel.swift; sourceTree = "<group>"; };
+		D17A82312AFC6CDA00FDE8C4 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		D18CDD012AFDC1B8001BA91C /* AdminRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminRegisterViewModel.swift; sourceTree = "<group>"; };
 		D1E0185E2ADCEB6700D1C53D /* AdminNoticeDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdminNoticeDetailView.swift; path = GYMGLE/Pages/Admin/AdminNoticePage/AdminNoticeDetailPage/View/AdminNoticeDetailView.swift; sourceTree = SOURCE_ROOT; };
 		D1E018602ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AdminNoticeDetailViewController.swift; path = GYMGLE/Pages/Admin/AdminNoticePage/AdminNoticeDetailPage/ViewController/AdminNoticeDetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		D1E018622ADCEBE000D1C53D /* AdminNoticeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminNoticeView.swift; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 		2730BC332AD8060300BFA23C /* AdminRegisterPage */ = {
 			isa = PBXGroup;
 			children = (
+				D18CDD002AFDC17E001BA91C /* ViewModel */,
 				2730BC452AD8D09800BFA23C /* ViewController */,
 				2730BC442AD8D09400BFA23C /* View */,
 			);
@@ -759,7 +762,15 @@
 		D17A82302AFC6CCB00FDE8C4 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				D17A82312AFC6CDA00FDE8C4 /* InitialViewModel.swift */,
+				D17A82312AFC6CDA00FDE8C4 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D18CDD002AFDC17E001BA91C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D18CDD012AFDC1B8001BA91C /* AdminRegisterViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -858,6 +869,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D14ECB442AD917D600FF7853 /* Extension_UIView.swift in Sources */,
+				D18CDD022AFDC1B8001BA91C /* AdminRegisterViewModel.swift in Sources */,
 				2730BC7A2AD9577C00BFA23C /* UserRegisterViewController.swift in Sources */,
 				D1E018672ADCEC0C00D1C53D /* AdminRootView.swift in Sources */,
 				D1E018632ADCEBE000D1C53D /* AdminNoticeView.swift in Sources */,
@@ -925,7 +937,7 @@
 				2730BC352AD8065900BFA23C /* InitialViewController.swift in Sources */,
 				275A12E32AF1FF9F00CC72EE /* BoardDetailTableView.swift in Sources */,
 				D1E018612ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift in Sources */,
-				D17A82322AFC6CDA00FDE8C4 /* InitialViewModel.swift in Sources */,
+				D17A82322AFC6CDA00FDE8C4 /* LoginViewModel.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
 				D1E0187F2ADCEE0000D1C53D /* TextFieldCell.swift in Sources */,
 				D16142212AF225A100628295 /* BlockViewController.swift in Sources */,
