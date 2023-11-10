@@ -273,4 +273,26 @@ class LoginViewModel {
             }
         }
     }
+    
+    // MARK: - 회원탈퇴
+    
+    func deleteAccount(completion: @escaping () -> ()) {
+        // 계정 삭제
+        if let user = Auth.auth().currentUser {
+            user.delete { error in
+                if let error = error {
+                    print("delete Error : ", error)
+                } else {
+                    self.signOut()
+                    // 데이터베이스에서 삭제
+                    let userRef = Database.database().reference().child("accounts").child(user.uid)
+                    userRef.removeValue()
+                    completion()
+                }
+            }
+        } else {
+            print("로그인 정보가 존재하지 않습니다.")
+        }
+    }
+
 }

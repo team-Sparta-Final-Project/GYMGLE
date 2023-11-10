@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Firebase
 import Combine
 
 class AdminRegisterViewController: UIViewController {

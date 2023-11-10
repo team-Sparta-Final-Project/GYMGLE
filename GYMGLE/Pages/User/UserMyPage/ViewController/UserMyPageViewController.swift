@@ -6,9 +6,7 @@
 //
 
 import UIKit
-import FirebaseAuth
-import FirebaseCore
-import FirebaseDatabase
+import Firebase
 import SafariServices
 
 class UserMyPageViewController: UIViewController {
@@ -16,6 +14,7 @@ class UserMyPageViewController: UIViewController {
     // MARK: - Properties
     
     private let userMyPageView = UserMyPageView()
+    private var viewModel: LoginViewModel = LoginViewModel()
     
     // MARK: - LifeCycles
     
@@ -58,7 +57,7 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
             break
         case (0, 2):
             // 로그아웃
-            signOut()
+            self.viewModel.signOut()
             dismiss(animated: true) {
                 let vc = InitialViewController()
                 vc.modalPresentationStyle = .fullScreen
@@ -73,7 +72,11 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
                                           preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-                self.deleteAccount()
+                self.viewModel.deleteAccount() {
+                    let vc = UINavigationController(rootViewController: InitialViewController())
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                }
             }))
             alert.addAction(UIAlertAction(title: "취소", style: .cancel))
             present(alert, animated: true, completion: nil)
@@ -98,43 +101,4 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
     }
 }
 
-
-// MARK: - Firebase Auth
-
-extension UserMyPageViewController {
-    
-    // MARK: - 로그아웃
-    
-    func signOut() {
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
-        }
-    }
-    
-    // MARK: - 회원탈퇴
-    
-    func deleteAccount() {
-        // 계정 삭제
-        if let user = Auth.auth().currentUser {
-            user.delete { error in
-                if let error = error {
-                    print("delete Error : ", error)
-                } else {
-                    self.signOut()
-                    let vc = UINavigationController(rootViewController: InitialViewController())
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true)
-                    // 데이터베이스에서 삭제
-                    let userRef = Database.database().reference().child("accounts").child(user.uid)
-                    userRef.removeValue()
-                }
-            }
-        } else {
-            print("로그인 정보가 존재하지 않습니다.")
-        }
-    }
-}
 extension UserMyPageViewController: SFSafariViewControllerDelegate {}
