@@ -11,13 +11,8 @@ import FirebaseDatabase
 
 final class AdminNoticeDetailViewModel {
     
-    private var dataManager: DataManager
     private let ref = Database.database().reference()
     private let userID = Auth.auth().currentUser?.uid
-    
-    init(dataManager: DataManager = DataManager.shared) {
-        self.dataManager = dataManager
-    }
     
     func createdNoticeData(notice: Notice, completion: @escaping () -> Void) {
         do {
