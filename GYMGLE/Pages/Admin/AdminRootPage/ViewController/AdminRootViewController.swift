@@ -39,7 +39,7 @@ private extension AdminRootViewController {
         navigationController?.navigationBar.isHidden = true
         adminRootView.adminTableView.adminRootDelegate = self
         viewModel?.delegate = self
-        guard let gymName = DataManager.shared.realGymInfo?.gymName, let gymPhoneNumber = DataManager.shared.realGymInfo?.gymPhoneNumber else { return }
+        guard let gymName = viewModel.dataManager.realGymInfo?.gymName, let gymPhoneNumber = viewModel.dataManager.realGymInfo?.gymPhoneNumber else { return }
         adminRootView.dataSetting("\(gymName)", "\(gymPhoneNumber)")
         allButtonTapped()
     }
@@ -98,7 +98,6 @@ extension AdminRootViewController: AdminRootViewModelDelegate {
             }))
             alert.addAction(UIAlertAction(title: "취소", style: .cancel))
             present(alert, animated: true, completion: nil)
-
         }
     }
 }

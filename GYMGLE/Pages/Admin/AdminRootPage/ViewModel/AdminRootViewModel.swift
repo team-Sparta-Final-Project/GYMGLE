@@ -20,11 +20,17 @@ final class AdminRootViewModel {
     
     weak var delegate: AdminRootViewModelDelegate?
     
+    var dataManager: DataManager
+    
+    init(dataManager: DataManager = DataManager.shared) {
+        self.dataManager = dataManager
+    }
+    
     func signOut() {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
-            DataManager.shared.realGymInfo = nil
+            dataManager.realGymInfo = nil
         } catch _ as NSError { }
     }
     
@@ -39,7 +45,7 @@ final class AdminRootViewModel {
             }
             //탈퇴한 헬스장의 유저들 삭제
             let ref = Database.database().reference()
-            let query = ref.child("accounts").queryOrdered(byChild: "adminUid").queryEqual(toValue: DataManager.shared.gymUid!)
+            let query = ref.child("accounts").queryOrdered(byChild: "adminUid").queryEqual(toValue: dataManager.gymUid!)
             query.observeSingleEvent(of: .value) { snapshot in
                 for child in snapshot.children {
                     if let snapshot = child as? DataSnapshot {
@@ -85,26 +91,6 @@ final class AdminRootViewModel {
             break
         default:
             break
-        }
-    }
-    
-    func showToast(message: String, view: UIView) {
-        let toastView = ToastView()
-        toastView.configure()
-        toastView.text = message
-        toastView.font = FontGuide.size16Bold
-        view.addSubview(toastView)
-        toastView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
-            toastView.widthAnchor.constraint(equalToConstant: (view.frame.size.width / 2) + 40),
-            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 24),
-        ])
-        UIView.animate(withDuration: 2.0, delay: 0.2) { //2.5초
-            toastView.alpha = 0
-        } completion: { _ in
-            toastView.removeFromSuperview()
         }
     }
 }
