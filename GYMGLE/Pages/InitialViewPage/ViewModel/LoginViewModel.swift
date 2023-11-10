@@ -8,27 +8,43 @@
 import Foundation
 import Firebase
 
-protocol InitialViewModelDelegate: AnyObject {
+protocol LoginViewModelDelegate: AnyObject {
     func adminLogin()
     func userLogin()
     func trainerLogin()
     func loginFailure()
 }
 
-class InitialViewModel {
+class LoginViewModel {
     
-    weak var delegate: InitialViewModelDelegate?
+    weak var delegate: LoginViewModelDelegate?
     
     // MARK: - 로그인
     func signIn(id: String, password: String) {
         Auth.auth().signIn(withEmail: id, password: password) { [weak self] result, error in
             guard let self else { return }
             if let error = error {
+                print(error)
                 self.delegate?.loginFailure()
             } else if let user = result?.user {
                 self.handleLoginSuccess(user)
             }
         }
+    }
+    
+    func AdminSignIn(id: String, password: String) {
+        Auth.auth().signIn(withEmail: id, password: password) { [weak self] result, error in
+            guard let self else { return }
+            if let error = error {
+                print(error)
+                self.delegate?.loginFailure()
+            } else if let user = result?.user {
+                self.handleAdminLoginSuccess(user)
+                DataManager.shared.id = id
+                DataManager.shared.pw = password
+            }
+        }
+
     }
     
     private func handleLoginSuccess(_ user: FirebaseAuth.User) {
@@ -89,6 +105,59 @@ class InitialViewModel {
                     DataManager.shared.profile = profileInfo
                 } catch {
                     print("Decoding error: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    private func handleAdminLoginSuccess(_ user: FirebaseAuth.User) {
+        let userRef = Database.database().reference().child("users").child(user.uid)
+        let userRef2 = Database.database().reference().child("accounts").child(user.uid)
+        
+        userRef.observeSingleEvent(of: .value) { (snapshot)  in
+            if let userData = snapshot.value as? [String: Any],
+               let gymInfoJSON = userData["gymInfo"] as? [String: Any],
+               let gymAccount = gymInfoJSON["gymAccount"] as? [String: Any],
+               let accountType = gymAccount["accountType"] as? Int {
+                if accountType == 0 {
+                    do {
+                        let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
+                        let gymInfo = try JSONDecoder().decode(GymInfo.self, from: gymInfoData)
+                        DataManager.shared.realGymInfo = gymInfo
+                    } catch {
+                        print("Decoding error: \(error.localizedDescription)")
+                    }
+                    self.delegate?.adminLogin()
+                    DataManager.shared.gymUid = user.uid
+                }
+            }
+        }
+        
+        userRef2.observeSingleEvent(of: .value) { (snapshot)  in
+            if let userData = snapshot.value as? [String: Any],
+               let account = userData["account"] as? [String: Any],
+               let adminUid = userData["adminUid"] as? String,
+               let accountType = account["accountType"] as? Int {
+                // 트레이너 일때
+                if accountType == 1 {
+                    Database.database().reference().child("users").child(adminUid).observeSingleEvent(of: .value) { (snapshot)  in
+                        if let userData = snapshot.value as? [String: Any],
+                           let gymInfoJSON = userData["gymInfo"] as? [String: Any] {
+                            do {
+                                let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
+                                let gymInfo = try JSONDecoder().decode(GymInfo.self, from: gymInfoData)
+                                DataManager.shared.realGymInfo = gymInfo
+                            } catch {
+                                print("Decoding error: \(error.localizedDescription)")
+                            }
+                            self.delegate?.trainerLogin()
+                            DataManager.shared.gymUid = adminUid
+                        }
+                    }
+                    // 회원 일때
+                } else if accountType == 2 {
+                    self.delegate?.loginFailure()
+                    self.signOut()
                 }
             }
         }
