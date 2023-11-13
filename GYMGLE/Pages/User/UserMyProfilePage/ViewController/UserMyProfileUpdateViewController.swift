@@ -20,11 +20,11 @@ final class UserMyProfileUpdateViewController: UIViewController {
 
     // MARK: - pripertise
     let userMyprofileUpdateView = UserMyProfileUpdateView()
+    var viewModel: UserMyProfileUpdateViewModel = UserMyProfileUpdateViewModel()
     // MARK: - life cycle
     override func loadView() {
         view = userMyprofileUpdateView
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
@@ -32,14 +32,11 @@ final class UserMyProfileUpdateViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
-  
     }
-
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
 }
-
 
 // MARK: - private extension custom func
 
@@ -94,14 +91,14 @@ private extension UserMyProfileUpdateViewController {
             }
             completion(false)
         }
-        
     }
+    
     func viewDisappearEvent() {
         self.uploadImage(image: self.userMyprofileUpdateView.profileImageView.image!) { url in
             guard let url = url, let nickName = self.userMyprofileUpdateView.nickNameTextField.text else { return }
             let myProfile = Profile(image: url, nickName: nickName)
             DataManager.shared.profile = myProfile
-            self.saveProfile(newProfile: myProfile) {
+            self.viewModel.saveProfile(newProfile: myProfile) {
                 self.userMyprofileUpdateView.activityIndicator.stopAnimating()
                 self.dismiss(animated: true)
             }
@@ -117,24 +114,6 @@ private extension UserMyProfileUpdateViewController {
         } catch {
             print("테스트 - error")
             completion()
-        }
-    }
-    func showToast(message: String) {
-        let toastView = ToastView()
-        toastView.configure()
-        toastView.text = message
-        view.addSubview(toastView)
-        toastView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -300),
-            toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
-            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
-        ])
-        UIView.animate(withDuration: 2.5, delay: 0.2) { //2.5초
-            toastView.alpha = 0
-        } completion: { _ in
-            toastView.removeFromSuperview()
         }
     }
 }
@@ -165,7 +144,6 @@ extension UserMyProfileUpdateViewController {
                     self.viewDisappearEvent()
                 }
             } else {
-                
                 DispatchQueue.main.async {
                     let alert = UIAlertController(title: "닉네임 중복",
                                                   message: "닉네임 중복입니다. 다시 입력해주세요.",
@@ -182,7 +160,6 @@ extension UserMyProfileUpdateViewController {
 extension UserMyProfileUpdateViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-       
         let maxLength = 20
         let currentString: NSString = (textField.text ?? "") as NSString
         let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
@@ -190,14 +167,13 @@ extension UserMyProfileUpdateViewController: UITextFieldDelegate {
         let replacementString = CharacterSet(charactersIn: string)
     
         if string == " " {
-            showToast(message: "띄어쓰기는 할 수 없습니다.")
+            showToast(message: "띄어쓰기는 할 수 없습니다.", view: self.view, bottomAnchor: -300, widthAnchor: 200, heightAnchor: 40)
             return false
         }
         if !allowedCharacter.isSuperset(of: replacementString) {
-            showToast(message: "입력할 수 없는 문자입니다.")
+            showToast(message: "입력할 수 없는 문자입니다.", view: self.view, bottomAnchor: -300, widthAnchor: 200, heightAnchor: 40)
             return false
         }
-        
         return newString.length <= maxLength
     }
 }
@@ -216,8 +192,6 @@ extension UserMyProfileUpdateViewController {
         self.present(picker, animated: true, completion: nil)
     }
 }
-
-
 extension UserMyProfileUpdateViewController: PHPickerViewControllerDelegate {
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
