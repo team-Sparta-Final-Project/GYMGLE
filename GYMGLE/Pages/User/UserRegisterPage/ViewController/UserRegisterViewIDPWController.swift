@@ -5,6 +5,8 @@ import FirebaseDatabase
 
 class UserRegisterViewIDPWController: UIViewController {
     
+    let viewModel = UserRegisterViewModel()
+    
     let buttonTitle = "회원가입"
     
     let cells = ["회원 이메일","회원 비밀번호"]
