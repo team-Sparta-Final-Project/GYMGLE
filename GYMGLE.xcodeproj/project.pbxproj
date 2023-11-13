@@ -66,6 +66,8 @@
 		63163E6D2AE11EF200186315 /* QRcodeCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */; };
 		63163E6F2AE11F0700186315 /* QRcodeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */; };
 		632E7F182AF1201E00490C59 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E7F172AF1201E00490C59 /* Board.swift */; };
+		636C64552B00C30D00919E45 /* UserMyProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636C64542B00C30D00919E45 /* UserMyProfileViewModel.swift */; };
+		636C64572B00C33B00919E45 /* UserMyProfileUpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636C64562B00C33B00919E45 /* UserMyProfileUpdateViewModel.swift */; };
 		638748512AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638748502AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift */; };
 		63B5A2252AEB627900105AB5 /* Extension_UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */; };
 		63B777362AFE04FD00094D85 /* AdminRootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B777352AFE04FD00094D85 /* AdminRootViewModel.swift */; };
@@ -170,6 +172,8 @@
 		63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckViewController.swift; sourceTree = "<group>"; };
 		63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckView.swift; sourceTree = "<group>"; };
 		632E7F172AF1201E00490C59 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		636C64542B00C30D00919E45 /* UserMyProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyProfileViewModel.swift; sourceTree = "<group>"; };
+		636C64562B00C33B00919E45 /* UserMyProfileUpdateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyProfileUpdateViewModel.swift; sourceTree = "<group>"; };
 		638748502AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyProfileBoardTableViewCell.swift; sourceTree = "<group>"; };
 		63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIImage.swift; sourceTree = "<group>"; };
 		63B777352AFE04FD00094D85 /* AdminRootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminRootViewModel.swift; sourceTree = "<group>"; };
@@ -625,6 +629,15 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		636C64532B00C2F400919E45 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				636C64542B00C30D00919E45 /* UserMyProfileViewModel.swift */,
+				636C64562B00C33B00919E45 /* UserMyProfileUpdateViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		63879E442ADA7A6700FA23BD /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -719,6 +732,7 @@
 		63F777CB2AF1375800A3DF2B /* UserMyProfilePage */ = {
 			isa = PBXGroup;
 			children = (
+				636C64532B00C2F400919E45 /* ViewModel */,
 				63F777CD2AF137A600A3DF2B /* View */,
 				63F777CC2AF1379200A3DF2B /* ViewController */,
 			);
@@ -907,6 +921,7 @@
 				D14ECB442AD917D600FF7853 /* Extension_UIView.swift in Sources */,
 				D18CDD022AFDC1B8001BA91C /* AdminRegisterViewModel.swift in Sources */,
 				2730BC7A2AD9577C00BFA23C /* UserRegisterViewController.swift in Sources */,
+				636C64552B00C30D00919E45 /* UserMyProfileViewModel.swift in Sources */,
 				D1E018672ADCEC0C00D1C53D /* AdminRootView.swift in Sources */,
 				D1E018632ADCEBE000D1C53D /* AdminNoticeView.swift in Sources */,
 				0744286D2ADD0B1B00EB7D05 /* QrCodeViewController.swift in Sources */,
@@ -977,6 +992,7 @@
 				D1E018612ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift in Sources */,
 				D17A82322AFC6CDA00FDE8C4 /* LoginViewModel.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
+				636C64572B00C33B00919E45 /* UserMyProfileUpdateViewModel.swift in Sources */,
 				63B7773B2AFE81D900094D85 /* AdminNoticeViewModel.swift in Sources */,
 				D1E0187F2ADCEE0000D1C53D /* TextFieldCell.swift in Sources */,
 				D16142212AF225A100628295 /* BlockViewController.swift in Sources */,

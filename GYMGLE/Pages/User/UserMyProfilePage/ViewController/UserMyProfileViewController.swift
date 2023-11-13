@@ -16,12 +16,13 @@ final class UserMyProfileViewController: UIViewController {
 
     // MARK: - prirperties
     let userMyProfileView = UserMyProfileView()
-    var userUid: String? //❗️ 전페이지에서 uid를 받아와 이걸로 검색을 해 정보들을 가져와야 함⭐️⭐️⭐️⭐️⭐️
+    var userUid: String?
     var post: [Board] = [] // 셀 나타내기
     var keys: [String] = []
     var nickName: String = ""
     var url: URL?
     var gymName: String = ""
+    var viewModel: UserMyProfileViewModel!
     
     // MARK: - life cycle
 
@@ -32,6 +33,7 @@ final class UserMyProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewDidLoadSetting()
+        viewModel = UserMyProfileViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -227,7 +229,7 @@ extension UserMyProfileViewController {
 extension UserMyProfileViewController: UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return viewModel.numberOfRowsInSection
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -237,7 +239,7 @@ extension UserMyProfileViewController: UITableViewDataSource  {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserMyProfileBoardTableViewCell.identifier, for: indexPath) as! UserMyProfileBoardTableViewCell
         
-        cell.board = post.sorted(by: {$0.date > $1.date})[indexPath.section]
+        cell.board = self.post.sorted(by: {$0.date > $1.date})[indexPath.section]
         cell.selectionStyle = .none
         return cell
     }
