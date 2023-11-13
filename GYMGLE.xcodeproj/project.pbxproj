@@ -19,6 +19,7 @@
 		07997FF52AD84390002ACFCB /* UserRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07997FF42AD84390002ACFCB /* UserRootView.swift */; };
 		07997FF72AD843A5002ACFCB /* UserRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07997FF62AD843A5002ACFCB /* UserRootViewController.swift */; };
 		07997FF92AD843BD002ACFCB /* UserRootModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07997FF82AD843BD002ACFCB /* UserRootModel.swift */; };
+		07E23F6D2B01A9DB00406FFD /* UserRootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E23F6C2B01A9DB00406FFD /* UserRootViewModel.swift */; };
 		2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBB72AD6668200BFA23C /* AppDelegate.swift */; };
 		2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBB92AD6668200BFA23C /* SceneDelegate.swift */; };
 		2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBBB2AD6668200BFA23C /* ViewController.swift */; };
@@ -66,8 +67,14 @@
 		63163E6D2AE11EF200186315 /* QRcodeCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */; };
 		63163E6F2AE11F0700186315 /* QRcodeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */; };
 		632E7F182AF1201E00490C59 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E7F172AF1201E00490C59 /* Board.swift */; };
+		636C64552B00C30D00919E45 /* UserMyProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636C64542B00C30D00919E45 /* UserMyProfileViewModel.swift */; };
+		636C64572B00C33B00919E45 /* UserMyProfileUpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636C64562B00C33B00919E45 /* UserMyProfileUpdateViewModel.swift */; };
 		638748512AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638748502AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift */; };
 		63B5A2252AEB627900105AB5 /* Extension_UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */; };
+		63B777362AFE04FD00094D85 /* AdminRootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B777352AFE04FD00094D85 /* AdminRootViewModel.swift */; };
+		63B777382AFE6A2B00094D85 /* Extension_UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B777372AFE6A2B00094D85 /* Extension_UIViewController.swift */; };
+		63B7773B2AFE81D900094D85 /* AdminNoticeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B7773A2AFE81D900094D85 /* AdminNoticeViewModel.swift */; };
+		63B7773E2AFEA22000094D85 /* AdminNoticeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B7773D2AFEA22000094D85 /* AdminNoticeDetailViewModel.swift */; };
 		63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F12AD812A0008429BC /* ColorGuide.swift */; };
 		63D855F42AD812C3008429BC /* FontGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F32AD812C3008429BC /* FontGuide.swift */; };
 		63D855F62AD81BBA008429BC /* Extension_UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D855F52AD81BBA008429BC /* Extension_UIButton.swift */; };
@@ -126,6 +133,7 @@
 		07997FF42AD84390002ACFCB /* UserRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootView.swift; path = GYMGLE/Pages/User/UserRootPage/UserRootView.swift; sourceTree = SOURCE_ROOT; };
 		07997FF62AD843A5002ACFCB /* UserRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootViewController.swift; path = GYMGLE/Pages/User/UserRootPage/UserRootViewController.swift; sourceTree = SOURCE_ROOT; };
 		07997FF82AD843BD002ACFCB /* UserRootModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootModel.swift; path = GYMGLE/Pages/User/UserRootPage/UserRootModel.swift; sourceTree = SOURCE_ROOT; };
+		07E23F6C2B01A9DB00406FFD /* UserRootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRootViewModel.swift; sourceTree = "<group>"; };
 		2730BBB42AD6668200BFA23C /* GYMGLE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GYMGLE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2730BBB72AD6668200BFA23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2730BBB92AD6668200BFA23C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -166,8 +174,14 @@
 		63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckViewController.swift; sourceTree = "<group>"; };
 		63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckView.swift; sourceTree = "<group>"; };
 		632E7F172AF1201E00490C59 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		636C64542B00C30D00919E45 /* UserMyProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyProfileViewModel.swift; sourceTree = "<group>"; };
+		636C64562B00C33B00919E45 /* UserMyProfileUpdateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyProfileUpdateViewModel.swift; sourceTree = "<group>"; };
 		638748502AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyProfileBoardTableViewCell.swift; sourceTree = "<group>"; };
 		63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIImage.swift; sourceTree = "<group>"; };
+		63B777352AFE04FD00094D85 /* AdminRootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminRootViewModel.swift; sourceTree = "<group>"; };
+		63B777372AFE6A2B00094D85 /* Extension_UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIViewController.swift; sourceTree = "<group>"; };
+		63B7773A2AFE81D900094D85 /* AdminNoticeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminNoticeViewModel.swift; sourceTree = "<group>"; };
+		63B7773D2AFEA22000094D85 /* AdminNoticeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminNoticeDetailViewModel.swift; sourceTree = "<group>"; };
 		63D855F12AD812A0008429BC /* ColorGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGuide.swift; sourceTree = "<group>"; };
 		63D855F32AD812C3008429BC /* FontGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontGuide.swift; sourceTree = "<group>"; };
 		63D855F52AD81BBA008429BC /* Extension_UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIButton.swift; sourceTree = "<group>"; };
@@ -365,6 +379,7 @@
 		2730BC382AD8083B00BFA23C /* AdminRootPage */ = {
 			isa = PBXGroup;
 			children = (
+				63B777342AFE04E200094D85 /* ViewModel */,
 				630A0BE82AD9262900525A6E /* View */,
 				630A0BE72AD9261800525A6E /* ViewController */,
 			);
@@ -374,6 +389,7 @@
 		2730BC392AD8084600BFA23C /* UserRootPage */ = {
 			isa = PBXGroup;
 			children = (
+				07E23F6C2B01A9DB00406FFD /* UserRootViewModel.swift */,
 				07997FF42AD84390002ACFCB /* UserRootView.swift */,
 				07997FF82AD843BD002ACFCB /* UserRootModel.swift */,
 				07997FF62AD843A5002ACFCB /* UserRootViewController.swift */,
@@ -404,6 +420,7 @@
 		2730BC3D2AD8102400BFA23C /* AdminNoticePage */ = {
 			isa = PBXGroup;
 			children = (
+				63B777392AFE81C200094D85 /* ViewModel */,
 				63879E452ADA7A6F00FA23BD /* ViewController */,
 				63879E442ADA7A6700FA23BD /* View */,
 			);
@@ -449,6 +466,7 @@
 		2730BC412AD8109100BFA23C /* AdminNoticeDetailPage */ = {
 			isa = PBXGroup;
 			children = (
+				63B7773C2AFEA20900094D85 /* ViewModel */,
 				63879E4B2ADA7ABF00FA23BD /* ViewController */,
 				63879E4A2ADA7AB700FA23BD /* View */,
 			);
@@ -614,6 +632,15 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		636C64532B00C2F400919E45 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				636C64542B00C30D00919E45 /* UserMyProfileViewModel.swift */,
+				636C64562B00C33B00919E45 /* UserMyProfileUpdateViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		63879E442ADA7A6700FA23BD /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -647,6 +674,30 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		63B777342AFE04E200094D85 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				63B777352AFE04FD00094D85 /* AdminRootViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		63B777392AFE81C200094D85 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				63B7773A2AFE81D900094D85 /* AdminNoticeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		63B7773C2AFEA20900094D85 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				63B7773D2AFEA22000094D85 /* AdminNoticeDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		63D855EE2AD81261008429BC /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -666,6 +717,7 @@
 				630EDE162ADFBC8300B37982 /* Extension_ToastView.swift */,
 				63B5A2242AEB627900105AB5 /* Extension_UIImage.swift */,
 				D16D42762AF4B09A0083EB17 /* Extension_Date.swift */,
+				63B777372AFE6A2B00094D85 /* Extension_UIViewController.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -683,6 +735,7 @@
 		63F777CB2AF1375800A3DF2B /* UserMyProfilePage */ = {
 			isa = PBXGroup;
 			children = (
+				636C64532B00C2F400919E45 /* ViewModel */,
 				63F777CD2AF137A600A3DF2B /* View */,
 				63F777CC2AF1379200A3DF2B /* ViewController */,
 			);
@@ -871,6 +924,7 @@
 				D14ECB442AD917D600FF7853 /* Extension_UIView.swift in Sources */,
 				D18CDD022AFDC1B8001BA91C /* AdminRegisterViewModel.swift in Sources */,
 				2730BC7A2AD9577C00BFA23C /* UserRegisterViewController.swift in Sources */,
+				636C64552B00C30D00919E45 /* UserMyProfileViewModel.swift in Sources */,
 				D1E018672ADCEC0C00D1C53D /* AdminRootView.swift in Sources */,
 				D1E018632ADCEBE000D1C53D /* AdminNoticeView.swift in Sources */,
 				0744286D2ADD0B1B00EB7D05 /* QrCodeViewController.swift in Sources */,
@@ -892,6 +946,7 @@
 				078055152AEA08D700DB2F39 /* AdminTableView.swift in Sources */,
 				63163E6D2AE11EF200186315 /* QRcodeCheckViewController.swift in Sources */,
 				630CE14B2ADD1B5E001EC547 /* TabbarViewController.swift in Sources */,
+				63B7773E2AFEA22000094D85 /* AdminNoticeDetailViewModel.swift in Sources */,
 				D1E0186D2ADCEC3800D1C53D /* AdminRegisterViewController.swift in Sources */,
 				2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */,
 				074428772ADFBBB000EB7D05 /* CommunityCell.swift in Sources */,
@@ -899,8 +954,10 @@
 				63D855F22AD812A0008429BC /* ColorGuide.swift in Sources */,
 				2730BC882ADC1DC500BFA23C /* UserManageController.swift in Sources */,
 				63F777D52AF13F1D00A3DF2B /* UserMyProfileUpdateViewController.swift in Sources */,
+				63B777362AFE04FD00094D85 /* AdminRootViewModel.swift in Sources */,
 				D16D42772AF4B09A0083EB17 /* Extension_Date.swift in Sources */,
 				630CE1532ADD5CB8001EC547 /* Account.swift in Sources */,
+				07E23F6D2B01A9DB00406FFD /* UserRootViewModel.swift in Sources */,
 				63B5A2252AEB627900105AB5 /* Extension_UIImage.swift in Sources */,
 				D1E0187D2ADCEE0000D1C53D /* CustomTextCell.swift in Sources */,
 				D1E0186F2ADCEC4B00D1C53D /* AdminLoginView.swift in Sources */,
@@ -939,6 +996,8 @@
 				D1E018612ADCEB9600D1C53D /* AdminNoticeDetailViewController.swift in Sources */,
 				D17A82322AFC6CDA00FDE8C4 /* LoginViewModel.swift in Sources */,
 				2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */,
+				636C64572B00C33B00919E45 /* UserMyProfileUpdateViewModel.swift in Sources */,
+				63B7773B2AFE81D900094D85 /* AdminNoticeViewModel.swift in Sources */,
 				D1E0187F2ADCEE0000D1C53D /* TextFieldCell.swift in Sources */,
 				D16142212AF225A100628295 /* BlockViewController.swift in Sources */,
 				D16920A72ADFBB9F00BE1A2B /* UserMyPageView.swift in Sources */,
@@ -958,6 +1017,7 @@
 				D1E0187C2ADCEE0000D1C53D /* LabelCell.swift in Sources */,
 				D16142172AF1F52E00628295 /* ReportView.swift in Sources */,
 				07997FF92AD843BD002ACFCB /* UserRootModel.swift in Sources */,
+				63B777382AFE6A2B00094D85 /* Extension_UIViewController.swift in Sources */,
 				2782A4BE2AEB88E500B110F9 /* CustomButton.swift in Sources */,
 				27E24B802ADF8A790031122F /* UserRegisterViewIDPWController.swift in Sources */,
 				D15C22302AE50F7D002C4213 /* Protocol_Delegate.swift in Sources */,

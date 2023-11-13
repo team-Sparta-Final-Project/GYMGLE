@@ -4,8 +4,13 @@ import FirebaseDatabase
 import Firebase
 import Kingfisher
 import FirebaseAuth
+import Combine
 
 class BoardDetailViewController: UIViewController {
+    
+    var viewModel:BoardDetailViewModel = BoardDetailViewModel()
+    
+    var disposableBag = Set<AnyCancellable>()
     
     let first = UserCommunityView()
     
@@ -16,49 +21,61 @@ class BoardDetailViewController: UIViewController {
     var tableData:[Any] = []
     var profileData:[Profile] = []
     
-    var board: Board?
+    var board: Board? {
+        didSet{
+            self.viewModel.board = board
+        }
+    }
     var comment: Comment?
-    var boardUid: String?
+    var boardUid: String? {
+        didSet{
+            self.viewModel.boardUid = boardUid
+        }
+    }
     
     let viewConfigure = BoardDetailView()
     
     var imageTapGesture = UITapGestureRecognizer()
     
-    var reloadClosure = {}
-    var profileDownloadClosure = {}
+    private func setBindings(){
+        self.viewModel.$tableData.sink{
+            self.tableData = $0
+        }.store(in: &disposableBag)
+        
+        self.viewModel.$profileData.sink{
+            if $0.isEmpty {
+                
+            }else {
+                self.profileData = $0
+                if self.profileData[0].nickName == "탈퇴한 회원"{
+                    self.viewConfigure.commentSection.textField.placeholder = "탈퇴한 회원의 글입니다."
+                    self.viewConfigure.commentSection.textField.isEnabled = false
+                    self.viewConfigure.commentSection.button.isHidden = true
+                }
+
+                self.viewConfigure.tableView.reloadData()
+            }
+            
+        }.store(in: &disposableBag)
+
+    }
     
     override func loadView() {
-        reloadClosure = {
-            if self.profileData[0].nickName == "탈퇴한 회원"{
-                self.viewConfigure.commentSection.textField.placeholder = "탈퇴한 회원의 글입니다."
-                self.viewConfigure.commentSection.textField.isEnabled = false
-                self.viewConfigure.commentSection.button.isHidden = true
-            }
-            self.viewConfigure.tableView.reloadData()
-        }
-        profileDownloadClosure = { self.downloadProfiles(complition: self.reloadClosure) }
-        
-        downloadComments(complition: profileDownloadClosure)
+        view = viewConfigure
+        setBindings()
+        viewModel.loadData()
         
         viewConfigure.tableView.dataSource = self
         viewConfigure.tableView.delegate = self
         viewConfigure.commentSection.commentButtonDelegate = self
         
-        view = viewConfigure
-        
-        
         let endEditGesture = UITapGestureRecognizer(target: self, action: #selector(endEdit))
         viewConfigure.tableView.addGestureRecognizer(endEditGesture)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = .black
-        
     }
 }
 //MARK: - @objc 모음 익스텐션
@@ -66,7 +83,6 @@ extension BoardDetailViewController {
     
     @objc func endEdit(_ sender: UITapGestureRecognizer){
         self.view.endEditing(true)
-        downloadComments(complition: profileDownloadClosure)
     }
 }
 
@@ -169,7 +185,8 @@ extension BoardDetailViewController:BoardProfileInfoButtonDelegate {
                     self.updateBoard()
                 }))
                 alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: {_ in
-                    self.deleteBoard()
+                    self.viewModel.deleteBoard()
+                    self.navigationController?.popViewController(animated: true)
                 }))
                 
             }else {
@@ -183,7 +200,7 @@ extension BoardDetailViewController:BoardProfileInfoButtonDelegate {
                     
                 }))
                 alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: {_ in
-                    self.deleteComment(commentUid)
+                    self.viewModel.deleteComment(commentUid)
                 }))
             }else {
                 alert.addAction(UIAlertAction(title: "신고하기", style: .destructive, handler: {_ in
@@ -290,118 +307,20 @@ extension BoardDetailViewController : MFMailComposeViewControllerDelegate {
         } catch let error {
             print("오류 발생: \(error)")
         }
-        downloadComments(complition: profileDownloadClosure)
-        
+        viewModel.loadData()
     }
     
-    
-    func deleteComment(_ commentUid:String){
-        ref.child("boards/\(boardUid!)/comments").child("\(commentUid)").setValue(nil)
-        
-        // Firebase에서 현재 commentCount를 가져옴
-        userCommunityViewController.getCommentCountForBoard(boardUid: boardUid!) { [self] commentCount in
-            // commentCount를 1 감소시키고 Firebase에 업데이트
-            let updatedCommentCount = commentCount - 1
-            let boardRef = ref.child("boards/\(boardUid!)")
-            boardRef.updateChildValues(["commentCount": updatedCommentCount])
-        }
-        downloadComments(complition: profileDownloadClosure)
-    }
     
     func updateComment(_ commentUid:String){
         ref.child("boards/\(boardUid!)/comments").child("\(commentUid)").setValue(nil)
-        downloadComments(complition: profileDownloadClosure)
+        viewModel.loadData()
     }
     
     
-    func downloadComments( complition: @escaping () -> () ){
-        
-        ref.child("boards/\(boardUid!)/comments").observeSingleEvent(of: .value) { [self] DataSnapshot,arg  in
-            guard let value = DataSnapshot.value as? [String:Any] else {
-                self.tableData = [self.board!]
-                complition()
-                return
-            }
-            var temp:[String:Comment] = [:]
-            for i in value {
-                do {
-                    let JSONdata = try JSONSerialization.data(withJSONObject: i.value)
-                    let comment = try JSONDecoder().decode(Comment.self, from: JSONdata)
-                    temp.updateValue(comment, forKey: i.key)
-                } catch let error {
-                    print("테스트 - \(error)")
-                }
-            }
-            self.tableData = [self.board!]
-            self.tableData += temp.sorted(by: { $0.1.date < $1.1.date })
-            
-            complition()
-            
-        }
-    }
-    //MARK: - 프로필데이터
-    func downloadProfiles( complition: @escaping () -> () ){
-        profileData.removeAll()
-        var count = tableData.count {
-            didSet(oldVal){
-                if count == 0 {
-                    
-                    for i in tempOrder {
-                        self.profileData.append(tempProfiles[i]!)
-                    }
-                    
-                    complition()
-                }
-            }
-        }
-        var tempOrder:[String] = []
-        var tempProfiles:[String:Profile] = [:]
-        
-        let emptyProfile = Profile(image: URL(fileURLWithPath: "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F2513B53E55DB206927"), nickName: "탈퇴한 회원")
-        for i in tableData {
-            var profile = emptyProfile
-            if i is Board {
-                let temp = i as! Board
-                tempOrder.append(temp.uid)
-                ref.child("accounts/\(temp.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot    in
-                    do {
-                        if !(DataSnapshot.value! is NSNull) {
-                            let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
-                            profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
-                        }
-                        tempProfiles.updateValue(profile, forKey: temp.uid)
-                        count -= 1
-                    }catch {
-                        print("테스트 - faili")
-                    }
-                }
-            }else {
-                let temp = i as! (key: String, value: Comment)
-                tempOrder.append(temp.key)
-                ref.child("accounts/\(temp.value.uid)/profile").observeSingleEvent(of: .value) {DataSnapshot  in
-                    do {
-                        if !(DataSnapshot.value! is NSNull) {
-                            let JSONdata = try JSONSerialization.data(withJSONObject: DataSnapshot.value!)
-                            profile = try JSONDecoder().decode(Profile.self, from: JSONdata)
-                        }
-                        tempProfiles.updateValue(profile, forKey: temp.key)
-                        count -= 1
-                    }catch {
-                        print("테스트 - faili")
-                    }
-                }
-            }
-        }
-    }
-    
-    func deleteBoard(){
-        ref.child("boards/\(boardUid!)").setValue(nil)
-        navigationController?.popViewController(animated: true)
-    }
     func updateBoard(){
         let userCommunityWriteViewController = UserCommunityWriteViewController()
         userCommunityWriteViewController.isUpdate = true
-        userCommunityWriteViewController.fromBoardClosure = {self.downloadComments(complition: self.profileDownloadClosure)}
+        userCommunityWriteViewController.fromBoardClosure = {self.viewModel.loadData()}
         userCommunityWriteViewController.boardContent = board?.content
         userCommunityWriteViewController.boardUid = boardUid
         //        userCommunityWriteViewController.modalPresentationStyle = .fullScreen

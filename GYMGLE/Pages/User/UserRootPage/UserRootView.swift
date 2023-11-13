@@ -12,18 +12,42 @@ import Then
 import Charts
 
 class UserRootView: UIView {
-    
-//    var user: User? {
-//        didSet {
-//            healthName.text = user?.name
-//            let isGym = user?.isInGym
-//            if isGym == true{
-//                nowUserNumber.text = "1"
-//            }else{
-//                nowUserNumber.text = "0"
+//    var viewModel: UserRootViewModel? {
+//            didSet {
+//                bindViewModel()
 //            }
 //        }
-//    }
+//
+//        // ... (이하 생략)
+//
+//        func bindViewModel() {
+//            guard let viewModel = viewModel else { return }
+//
+//            viewModel.userNameSubject
+//                .sink { [weak self] userName in
+//                    self?.healthName.text = userName
+//                }
+//                .store(in: &cancellables)
+//
+//            viewModel.gymInUserCountSubject
+//                .sink { [weak self] count in
+//                    self?.nowUserNumber.text = count
+//                }
+//                .store(in: &cancellables)
+//
+//            viewModel.yesterUserCountSubject
+//                .sink { [weak self] count in
+//                    self?.yesterUserNumber.text = count
+//                }
+//                .store(in: &cancellables)
+//
+//            viewModel.noticeSubject
+//                .sink { [weak self] notice in
+//                    self?.noticeText.text = notice
+//                }
+//                .store(in: &cancellables)
+//        }
+    
     var noticeWrite: Notice? {
         didSet {
             noticeText.text = noticeWrite?.content
