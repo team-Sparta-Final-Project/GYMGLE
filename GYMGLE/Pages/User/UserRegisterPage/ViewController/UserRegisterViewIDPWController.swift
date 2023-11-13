@@ -9,7 +9,7 @@ class UserRegisterViewIDPWController: UIViewController {
     
     let buttonTitle = "회원가입"
     
-    let cells = ["회원 이메일","회원 비밀번호"]
+    let cells = ["회원 이메일","회원 비밀번호","이름","전화번호"]
     
     var idCell:TextFieldCell = TextFieldCell()
     var pwCell:TextFieldCell = TextFieldCell()
@@ -87,6 +87,11 @@ class UserRegisterViewIDPWController: UIViewController {
         
         
     }
+    @objc func emailButtonClicked(){
+        
+        print("\n\n\n 유저레지스터뷰IDPW컨트롤러의 92번째 objc 함수 보시면 됩니다. \n\n\n")
+    }
+
     
     
 }
@@ -170,6 +175,10 @@ extension UserRegisterViewIDPWController {
 
 //UserRegisterViewIDPWController
 extension UserRegisterViewIDPWController: UserTableViewDelegate {
+    func emailButtonTarget(cell: TextFieldCell) {
+        cell.CheckButton.addTarget(self, action: #selector(emailButtonClicked), for: .touchUpInside)
+    }
+    
     func textViewTarget(cell: CustomTextCell) {
         
     }
@@ -183,7 +192,6 @@ extension UserRegisterViewIDPWController: UserTableViewDelegate {
     }
     
     func dateButtonTarget(cell: LabelCell, text: String) {
-        
     }
     
     func heightConfigure(height: Int, empty: Int) {

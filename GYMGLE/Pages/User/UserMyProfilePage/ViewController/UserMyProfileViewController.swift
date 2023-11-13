@@ -251,9 +251,10 @@ extension UserMyProfileViewController: UITableViewDataSource  {
 
 extension UserMyProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let boardDetailVC = BoardDetailViewController()
+        let board = post.sorted(by: {$0.date > $1.date})[indexPath.section]
+        let boardDetailVC = BoardDetailViewController(board: board)
         boardDetailVC.boardUid = keys[indexPath.section]
-        boardDetailVC.board = post.sorted(by: {$0.date > $1.date})[indexPath.section]
+        
         navigationController?.pushViewController(boardDetailVC, animated: true)
     }    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

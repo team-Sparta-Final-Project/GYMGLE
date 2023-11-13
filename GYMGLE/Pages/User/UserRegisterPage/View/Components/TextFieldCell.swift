@@ -10,6 +10,7 @@ class TextFieldCell:UITableViewCell {
         $0.textColor = ColorGuide.textHint
         
     }
+    lazy var CheckButton:UIButton = UIButton()
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -56,8 +57,7 @@ class TextFieldCell:UITableViewCell {
     
     
     func setButton(_ title:String){
-        lazy var CheckButton = UIButton.GYMGLEWhiteButtonPreset(title)
-        
+        CheckButton = UIButton.GYMGLEWhiteButtonPreset(title)
         self.contentView.addSubview(CheckButton)
         CheckButton.snp.makeConstraints{
             $0.right.equalToSuperview()
