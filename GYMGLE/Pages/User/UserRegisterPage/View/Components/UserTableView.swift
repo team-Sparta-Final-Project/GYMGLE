@@ -5,6 +5,7 @@ protocol UserTableViewDelegate {
     func heightConfigure(height:Int,empty:Int)
     func dateButtonTarget(cell:LabelCell,text:String)
     func textFieldTarget(cell:TextFieldCell)
+    func textViewTarget(cell:CustomTextCell)
 }
 
 class UserTableView: UITableView {
@@ -81,6 +82,7 @@ extension UserTableView: UITableViewDataSource {
         }
         else if cellData[indexPath.row] == "textView" {
             let cell = CustomTextCell()
+            myDelegate?.textViewTarget(cell: cell)
             return cell
         }else {
             let cell = TextFieldCell()

@@ -107,12 +107,16 @@ extension UserCommunityWriteViewController: UITextViewDelegate {
           guard let boardText = first.writePlace.text else { return }
           let currentDate = Date()
           if isUpdate {
-            let ref = Database.database().reference().child("boards/\(boardUid!)")
-            do {
-              ref.updateChildValues(["content":boardText,"isUpdated":true])
-            } catch {
-              print("게시물을 저장하는 동안 오류 발생: \(error)")
-            }
+              if boardText == boardContent{
+                  print("테스트 - 같은내용으로 작성함 내용수정 불가")
+              } else {
+                  let ref = Database.database().reference().child("boards/\(boardUid!)")
+                  do {
+                      ref.updateChildValues(["content":boardText,"isUpdated":true])
+                  } catch {
+                      print("게시물을 저장하는 동안 오류 발생: \(error)")
+                  }
+              }
           } else {
             // 이 부분에서 DataManager.shared.profile을 사용하여 프로필 정보를 가져옵니다.
             if let profile = DataManager.shared.profile {
@@ -167,6 +171,7 @@ extension UserCommunityWriteViewController: UITextViewDelegate {
         if let text = userCommunityWriteView.writePlace.text {
             self.createdBoard()
             dismiss(animated: true, completion: nil)
+            self.fromBoardClosure()
         }
     }
     
