@@ -61,25 +61,6 @@ class UserRegisterViewIDPWController: UIViewController {
         }
     }
     
-    func showToast(message: String) {
-        let toastView = ToastView()
-        toastView.configure()
-        toastView.text = message
-        view.addSubview(toastView)
-        toastView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
-            toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
-            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
-        ])
-        UIView.animate(withDuration: 2.5, delay: 0.2) { //2.5초
-            toastView.alpha = 0
-        } completion: { _ in
-            toastView.removeFromSuperview()
-        }
-    }
-    
     func setCustomBackButton() {
         navigationController?.navigationBar.topItem?.title = "회원등록"
         navigationController?.navigationBar.tintColor = .black
@@ -98,7 +79,7 @@ class UserRegisterViewIDPWController: UIViewController {
     
     @objc func buttonClicked(){
         if isCellEmpty{
-            showToast(message: "모든 칸을 입력해 주세요.")
+            self.showToastStatic(message: "모든 칸을 입력해 주세요.", view: self.view)
         }
         else {
             createUser()
@@ -129,11 +110,11 @@ extension UserRegisterViewIDPWController {
                 switch error.localizedDescription {
                 case "The email address is badly formatted.":
                     print("이메일 잘못됨")
-                    self.showToast(message: "이메일 형식이 잘못되었습니다.")
+                    self.showToastStatic(message: "이메일 형식이 잘못되었습니다.", view: self.view)
                 case "The email address is already in use by another account.":
-                    self.showToast(message: "중복된 이메일 주소입니다.")
+                    self.showToastStatic(message: "중복된 이메일 주소입니다.", view: self.view)
                 case "The password must be 6 characters long or more.":
-                    self.showToast(message: "비밀번호는 6자 이상이어야 합니다.")
+                    self.showToastStatic(message: "비밀번호는 6자 이상이어야 합니다.", view: self.view)
                 default:
                     print("테스트 - 알수없는오류")
                 }

@@ -27,7 +27,6 @@ final class UserManageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //❗️ 서치델리게이트와 테이블뷰델리게이트 대리자 선언
         setBinding()
         viewConfigure.customSearchBar.delegate = self
