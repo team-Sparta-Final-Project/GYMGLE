@@ -76,7 +76,7 @@ final class AdminRootViewModel {
             break
         case (0, 4):
             let adminRegisterVC = AdminRegisterViewController()
-            adminRegisterVC.gymInfo = DataManager.shared.realGymInfo
+            adminRegisterVC.viewModel.gymInfo = DataManager.shared.realGymInfo
             delegate?.navigationVC(VC: adminRegisterVC)
             break
         case (0, 5):

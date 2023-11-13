@@ -20,9 +20,9 @@ final class UserMyProfileViewModel {
     init(dataManager: DataManager = DataManager.shared) {
         self.dataManager = dataManager
     }
-    var postList: [Board] {
-        return self.getPost()
-    }
+//    var postList: [Board] {
+//        //return self.getPost()
+//    }
     
     var numberOfRowsInSection: Int {
         return 1
@@ -33,28 +33,7 @@ final class UserMyProfileViewModel {
     }
     
     
-    func getPost() -> [Board] {
-        var posts: [Board] = []
-        guard let userUid = self.dataManager. userUid else {
-            return posts
-        }
-        
-        let ref = Database.database().reference().child("boards")
-        let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid)")
-        
-        query.observeSingleEvent(of: .value) { dataSnapshot in
-            guard let value = dataSnapshot.value as? [String: [String: Any]] else { return }
-            do {
-                let jsonArray = value.values.compactMap { $0 as [String: Any] }
-                let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
-                posts = try JSONDecoder().decode([Board].self, from: jsonData)
-            } catch let error {
-                print("포스트 디코딩 에러: \(error)")
-            }
-        }
-        
-        return posts
-    }
+    
     
 //    func getPost(completion: @escaping () -> Void) {
 //        self.post.removeAll()
