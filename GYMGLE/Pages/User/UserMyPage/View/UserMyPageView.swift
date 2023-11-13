@@ -47,7 +47,7 @@ private extension UserMyPageView {
         tableView.snp.makeConstraints {
             $0.top.equalTo(myPageLabel.snp.bottom).offset(48)
             $0.left.right.equalToSuperview()
-            $0.height.equalTo(52*7 + 20)
+            $0.height.equalTo(52*8 + 20)
         }
     }
 }

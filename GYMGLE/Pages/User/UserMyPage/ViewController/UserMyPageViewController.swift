@@ -81,6 +81,20 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
             alert.addAction(UIAlertAction(title: "취소", style: .cancel))
             present(alert, animated: true, completion: nil)
             break
+        case (0, 4):
+            // 비밀번호 변경
+            viewModel.resetPassword(email: (Auth.auth().currentUser?.email)!) { [weak self] reset in
+                if reset {
+                    let alert = UIAlertController(title: "비밀번호 재설정", message: "비밀번호 재설정 이메일이 전송되었습니다. 이메일을 확인해주세요.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default))
+                    self?.present(alert, animated: true, completion: nil)
+                } else {
+                    let alert = UIAlertController(title: "비밀번호 재설정", message: "비밀번호 재설정 이메일 전송에 실패했습니다..", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default))
+                    self?.present(alert, animated: true, completion: nil)
+                }
+            }
+            break
         case (1, 0):
             guard let appleUrl = URL(string: "https://difficult-shock-122.notion.site/e56d3be418464be0b3262bff1afaeaca?pvs=4")   else { return }
             let safariViewController = SFSafariViewController(url: appleUrl)
