@@ -13,7 +13,6 @@ import FirebaseStorage
 final class UserMyProfileUpdateViewModel {
     
     
-    
     // 이미지를 스토리지에 올리기
     func uploadImage(image: UIImage, completion: @escaping (URL?) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.2) else { return }
