@@ -20,9 +20,7 @@ final class UserMyProfileViewModel {
     init(dataManager: DataManager = DataManager.shared) {
         self.dataManager = dataManager
     }
-//    var postList: [Board] {
-//        //return self.getPost()
-//    }
+
     
     var numberOfRowsInSection: Int {
         return 1
@@ -32,9 +30,7 @@ final class UserMyProfileViewModel {
         return 10
     }
     
-    
-    
-    
+
 //    func getPost(completion: @escaping () -> Void) {
 //        self.post.removeAll()
 //        let ref = Database.database().reference().child("boards")
