@@ -1,8 +1,11 @@
 import UIKit
 import FirebaseDatabase
 import FirebaseAuth
+import Combine
 
 final class UserManageViewController: UIViewController {
+    
+    let viewModel = UserManageViewModel()
     
     let viewConfigure = UserManageView()
     let pageTitle = ""
@@ -12,8 +15,8 @@ final class UserManageViewController: UIViewController {
     
     //❗️서치를 하기 위한 변수 생성
     var cells:[User] = []
-
     var filteredUserList: [User] = []
+    var disposableBag = Set<AnyCancellable>()
 
     let cellHeight = 56
 
@@ -26,7 +29,7 @@ final class UserManageViewController: UIViewController {
         super.viewDidLoad()
         
         //❗️ 서치델리게이트와 테이블뷰델리게이트 대리자 선언
-
+        setBinding()
         viewConfigure.customSearchBar.delegate = self
         viewConfigure.customSearchBar.showsCancelButton = false
         viewConfigure.customSearchBar.setValue("취소", forKey: "cancelButtonText")
@@ -37,10 +40,14 @@ final class UserManageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) { 
         navigationController?.navigationBar.isHidden = false
         setCustomBackButton()
-        userDataRead {
-            self.cells = DataManager.shared.userList.sorted(by: { $0.startSubscriptionDate < $1.startSubscriptionDate })
+        viewModel.userDataRead()
+    }
+    
+    func setBinding(){
+        self.viewModel.$cells.sink{
+            self.cells = $0
             self.viewConfigure.tableView.reloadData()
-        }
+        }.store(in: &disposableBag)
     }
 }
 
@@ -149,7 +156,7 @@ extension UserManageViewController: UITableViewDelegate {
         if editingStyle == .delete {
             if isFiltering() {
                 DispatchQueue.main.async {
-                    self.userDeleted(completion: {
+                    self.viewModel.userDelete(completion: {
                         self.filteredUserList.remove(at: indexPath.row)
                         tableView.deleteRows(at: [indexPath], with: .automatic)
                         
@@ -157,7 +164,7 @@ extension UserManageViewController: UITableViewDelegate {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.userDeleted(completion: {
+                    self.viewModel.userDelete(completion: {
                         self.cells.remove(at: indexPath.row)
                         tableView.deleteRows(at: [indexPath], with: .automatic)
                     }, id: self.cells[indexPath.row].account.id)

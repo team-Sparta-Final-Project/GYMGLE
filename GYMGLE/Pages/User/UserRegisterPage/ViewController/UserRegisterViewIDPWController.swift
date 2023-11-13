@@ -5,6 +5,8 @@ import FirebaseDatabase
 
 class UserRegisterViewIDPWController: UIViewController {
     
+    let viewModel = UserRegisterViewModel()
+    
     let buttonTitle = "회원가입"
     
     let cells = ["회원 이메일","회원 비밀번호"]
@@ -187,6 +189,10 @@ extension UserRegisterViewIDPWController {
 
 //UserRegisterViewIDPWController
 extension UserRegisterViewIDPWController: UserTableViewDelegate {
+    func textViewTarget(cell: CustomTextCell) {
+        
+    }
+    
     func textFieldTarget(cell: TextFieldCell) {
         if cell.placeHolderLabel.text == "회원 이메일" {
             idCell = cell

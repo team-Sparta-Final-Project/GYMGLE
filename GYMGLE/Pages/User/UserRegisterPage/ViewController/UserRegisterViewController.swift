@@ -4,6 +4,8 @@ import FirebaseDatabase
 
 final class UserRegisterViewController: UIViewController {
     
+    let viewModel = UserRegisterViewModel()
+    
     let buttonTitle = "다음"
     
     let cells = ["이름","전화번호","등록일","마감일","추가 정보"]
@@ -19,6 +21,7 @@ final class UserRegisterViewController: UIViewController {
     var phoneCell:TextFieldCell = TextFieldCell()
     var startCell:LabelCell = LabelCell()
     var endCell:LabelCell = LabelCell()
+    var textViewCell:CustomTextCell = CustomTextCell()
     
     private var isCellEmpty = true
     private var isEndDateEmpty = true
@@ -90,7 +93,8 @@ private extension UserRegisterViewController {
             startCell.label.text = "등록일 : " + emptyUser.startSubscriptionDate.formatted(date:.complete, time: .omitted)
             endCell.label.text = "등록일 : " + emptyUser.endSubscriptionDate.formatted(date:.complete, time: .omitted)
             
-            self.viewConfigure.textView.text = emptyUser.userInfo
+//            self.viewConfigure.textView.text = emptyUser.userInfo
+            self.textViewCell.textView.text = emptyUser.userInfo
         }else {
             startCell.label.text = "등록일 : " + emptyUser.startSubscriptionDate.formatted(date:.complete, time: .omitted)
         }
@@ -121,8 +125,7 @@ private extension UserRegisterViewController {
             showToast(message: "등록 마감 날짜가 지정되어 있지 않습니다.")
         }
         else {
-
-            let info = self.viewConfigure.textView.text
+            let info = self.textViewCell.textView.text
             if nowEdit {
                 emptyUser.name = nameCell.textField.text ?? ""
                 emptyUser.number = phoneCell.textField.text ?? ""
@@ -130,25 +133,7 @@ private extension UserRegisterViewController {
                 emptyUser.endSubscriptionDate = endDate
                 emptyUser.userInfo = info ?? "정보없음"
                 
-                do {
-                    let userData = try JSONEncoder().encode(emptyUser)
-                    let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
-                    
-                    let ref = Database.database().reference()
-                    // 어카운트 접근해서 id값이 편집하려는 유저 id와 동일한 것 받아와서 uid값 찾아내기
-                    ref.child("accounts").queryOrdered(byChild: "account/id").queryEqual(toValue: "\(emptyUser.account.id)").observeSingleEvent(of: .value) { DataSnapshot in
-                        guard let value = DataSnapshot.value as? [String:Any] else { return }
-                        var uid = ""
-                        for i in value.keys {
-                            uid = i
-                        }
-                        ref.child("accounts/\(uid)").setValue(userJSON)
-                        completion()
-                    }
-                }catch{
-                    print("JSON 인코딩 에러")
-                    completion()
-                }
+                viewModel.update(user: emptyUser)
             } else {
                 let IdPwVC = UserRegisterViewIDPWController()
                 IdPwVC.viewConfigure.segmented.isHidden = true
@@ -242,6 +227,10 @@ extension UserRegisterViewController: UserTableViewDelegate {
         }else if cell.placeHolderLabel.text == "전화번호"{
             phoneCell = cell
         }
+    }
+    
+    func textViewTarget(cell: CustomTextCell) {
+        self.textViewCell = cell
     }
     
     func dateButtonTarget(cell: LabelCell, text:String) {
