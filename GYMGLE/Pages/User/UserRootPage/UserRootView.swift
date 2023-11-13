@@ -7,9 +7,8 @@
 
 import SnapKit
 import UIKit
-import SwiftUI
 import Then
-import Charts
+import Combine
 
 class UserRootView: UIView {
 //    var viewModel: UserRootViewModel? {
