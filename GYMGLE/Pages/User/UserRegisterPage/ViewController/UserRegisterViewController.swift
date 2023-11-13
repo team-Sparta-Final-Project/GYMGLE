@@ -204,6 +204,10 @@ extension UserRegisterViewController: BottomSheetControllerDelegate {
 }
 
 extension UserRegisterViewController: UserTableViewDelegate {
+    func emailButtonTarget(cell: TextFieldCell) {
+        
+    }
+    
     func textFieldTarget(cell: TextFieldCell) {
         if cell.placeHolderLabel.text == "이름" {
             nameCell = cell

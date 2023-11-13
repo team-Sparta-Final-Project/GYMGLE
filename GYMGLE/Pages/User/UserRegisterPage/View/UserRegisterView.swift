@@ -7,7 +7,7 @@ class UserRegisterView: UIView {
     lazy var textView = CustomTextView()
     lazy var scrollView = UIScrollView()
     
-    let items = ["회원", "트레이너"]
+    let items = ["회원", "트레이너"] // 수정후에는 지울것
     lazy var segmented = UISegmentedControl(items: items)
 
     //MARK: - View 자체 라이프사이클
@@ -27,7 +27,7 @@ class UserRegisterView: UIView {
         centerTableView()
 //        addTextView()
         
-        segmentedConfigure()
+//        segmentedConfigure()
         
         
     }

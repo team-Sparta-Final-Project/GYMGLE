@@ -510,8 +510,8 @@
 		2730BC6B2AD9571600BFA23C /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				2730BC792AD9577C00BFA23C /* UserRegisterViewController.swift */,
 				27E24B7F2ADF8A790031122F /* UserRegisterViewIDPWController.swift */,
+				2730BC792AD9577C00BFA23C /* UserRegisterViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";

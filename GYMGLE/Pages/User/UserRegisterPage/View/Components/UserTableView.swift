@@ -6,6 +6,7 @@ protocol UserTableViewDelegate {
     func dateButtonTarget(cell:LabelCell,text:String)
     func textFieldTarget(cell:TextFieldCell)
     func textViewTarget(cell:CustomTextCell)
+    func emailButtonTarget(cell:TextFieldCell)
 }
 
 class UserTableView: UITableView {
@@ -33,8 +34,6 @@ class UserTableView: UITableView {
 
         self.separatorStyle = .none
         self.clipsToBounds = false
-        
-        
         
     }
     
@@ -84,7 +83,15 @@ extension UserTableView: UITableViewDataSource {
             let cell = CustomTextCell()
             myDelegate?.textViewTarget(cell: cell)
             return cell
-        }else {
+        }else if cellData[indexPath.row] == "회원 이메일" {
+            let cell = TextFieldCell()
+            cell.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
+            cell.placeHolderLabel.text = cellData[indexPath.row]
+            cell.setButton("인증")
+            myDelegate?.emailButtonTarget(cell: cell)
+            return cell
+        }
+        else {
             let cell = TextFieldCell()
             cell.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
             cell.placeHolderLabel.text = cellData[indexPath.row]
