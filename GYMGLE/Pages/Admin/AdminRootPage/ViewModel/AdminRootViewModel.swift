@@ -27,13 +27,13 @@ final class AdminRootViewModel {
         } catch _ as NSError { }
     }
     
-    func deleteAccount() {
+    func deleteAccount(completion: @escaping () -> Void) {
         // 계정 삭제
         if let user = Auth.auth().currentUser {
             user.delete { error in
                 if error != nil {
                 } else {
-//                    self.delegate?.navigationVC(VC: AdminLoginViewController())
+                    completion()
                 }
             }
             //탈퇴한 헬스장의 유저들 삭제
@@ -50,5 +50,6 @@ final class AdminRootViewModel {
             userRef.removeValue()
             self.signOut()
         } else {}
+        completion()
     }
 }

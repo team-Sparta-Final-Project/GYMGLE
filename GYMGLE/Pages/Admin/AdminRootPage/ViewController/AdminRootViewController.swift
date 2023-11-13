@@ -37,7 +37,6 @@ private extension AdminRootViewController {
     func configuredView() {
         navigationController?.navigationBar.isHidden = true
         adminRootView.adminTableView.adminRootDelegate = self
-        self.delegate = self
         guard let gymName = viewModel.dataManager.realGymInfo?.gymName, let gymPhoneNumber = viewModel.dataManager.realGymInfo?.gymPhoneNumber else { return }
         adminRootView.dataSetting("\(gymName)", "\(gymPhoneNumber)")
         allButtonTapped()
@@ -69,29 +68,28 @@ extension AdminRootViewController {
 
 extension AdminRootViewController: AdminTableViewDelegate {
     func didSelectCell(at indexPath: IndexPath) {
-        func didSelectCell(at indexPath: IndexPath) {
             switch (indexPath.section, indexPath.row) {
             case (0, 0):
                 // 공지사항을 선택한 경우
                 self.navigationController?.pushViewController(AdminNoticeViewController(), animated: true)
                 break
             case (0, 1):
-                // 회원등록 선택한 경우
-                self.navigationController?.pushViewController(UserRegisterViewController(), animated: true)
-                break
-            case (0, 2):
                 // 회원관리를 선택한 경우
                 self.navigationController?.pushViewController(UserManageViewController(), animated: true)
                 break
-            case (0, 3):
+            case (0, 2):
                 // QR스캐너를 선택한 경우
                 self.navigationController?.pushViewController(QRcodeCheckViewController(), animated: true)
                 break
-            case (0, 4):
+            case (0, 3):
                 // 정보변경을 선택한 경우
                 let adminRegisterVC = AdminRegisterViewController()
-                adminRegisterVC.gymInfo = DataManager.shared.realGymInfo
+                adminRegisterVC.viewModel.gymInfo = DataManager.shared.realGymInfo
                 self.navigationController?.pushViewController(adminRegisterVC, animated: true)
+                break
+            case (0, 4):
+                // 회원등록 선택한 경우 ❌❌❌ -> 비밀번호 재설정 넣기
+               // self.navigationController?.pushViewController(UserRegisterViewController(), animated: true)
                 break
             case (0, 5):
                 if isAdmin == false {
@@ -101,7 +99,9 @@ extension AdminRootViewController: AdminTableViewDelegate {
                                                   message: "정말로 계정 탈퇴를 하시겠습니까?",
                                                   preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-                        self.viewModel.deleteAccount()
+                        self.viewModel.deleteAccount {
+                            self.navigationController?.pushViewController(AdminLoginViewController(), animated: true)
+                        }
                     }))
                     alert.addAction(UIAlertAction(title: "취소", style: .cancel))
                     present(alert, animated: true, completion: nil)
@@ -123,7 +123,6 @@ extension AdminRootViewController: AdminTableViewDelegate {
                 break
             default:
                 break
-            }
         }
     }
 }
