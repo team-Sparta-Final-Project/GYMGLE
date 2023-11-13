@@ -26,6 +26,7 @@ final class AdminRootViewController: UIViewController, SFSafariViewControllerDel
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         configuredView()
@@ -89,7 +90,7 @@ extension AdminRootViewController: AdminTableViewDelegate {
                 break
             case (0, 4):
                 // 회원등록 선택한 경우 ❌❌❌ -> 비밀번호 재설정 넣기
-               // self.navigationController?.pushViewController(UserRegisterViewController(), animated: true)
+                self.navigationController?.pushViewController(UserRegisterViewController(), animated: true)
                 break
             case (0, 5):
                 if isAdmin == false {

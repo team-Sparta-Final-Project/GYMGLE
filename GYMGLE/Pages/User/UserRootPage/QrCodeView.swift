@@ -38,6 +38,12 @@ class QrCodeView: UIView {
         return button
     }()
     
+    lazy var deletedUserButton: UIButton = {
+        let button = UIButton()
+        button.buttonMakeUI(backgroundColor: .white, cornerRadius: 16, borderWidth: 0, borderColor: ColorGuide.textHint.cgColor, setTitle: "탈퇴하기", font: FontGuide.size16Bold, setTitleColor: ColorGuide.main)
+        return button
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -59,6 +65,7 @@ private extension QrCodeView {
         addSubview(qrViewImage)
         addSubview(qrLabel)
         addSubview(backButton)
+        addSubview(deletedUserButton)
         
         qrViewPlace.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(0)
@@ -69,7 +76,7 @@ private extension QrCodeView {
             $0.trailing.equalToSuperview().offset(-62)
             $0.leading.equalToSuperview().offset(62)
             $0.height.equalTo(270)
-            $0.top.equalToSuperview().offset(100)
+            $0.top.equalToSuperview().offset(180)
         }
         qrLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-72)
@@ -79,7 +86,15 @@ private extension QrCodeView {
         backButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-24)
             $0.leading.equalToSuperview().offset(24)
-            $0.bottom.equalToSuperview().offset(-100)
+            $0.bottom.equalToSuperview().offset(-80)
+        }
+        deletedUserButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-28)
+            $0.top.equalToSuperview().offset(80)
+            $0.width.equalTo(85)
+            $0.height.equalTo(34)
         }
     }
 }
+
+
