@@ -15,8 +15,8 @@ final class QrCodeViewModel: ObservableObject { //ObservableObject: 이벤트를
     @Published var isHidden: Bool = true
     var dataManager: DataManager
     
-    init(dataManager: DataManager) {
-        self.dataManager = DataManager.shared
+    init(dataManager: DataManager = DataManager.shared) {
+        self.dataManager = dataManager
     }
     
     func generateQRCode(data: String) -> UIImage {

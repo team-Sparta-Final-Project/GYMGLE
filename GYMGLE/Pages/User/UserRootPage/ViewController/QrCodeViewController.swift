@@ -14,7 +14,7 @@ import FirebaseAuth
 final class QrCodeViewController: UIViewController {
     
     private let qrcodeView = QrCodeView()
-    var viewModel: QrCodeViewModel = QrCodeViewModel(dataManager: DataManager.shared)
+    var viewModel: QrCodeViewModel = QrCodeViewModel()
     var disposableBag = Set<AnyCancellable>()
     
     override func loadView() {

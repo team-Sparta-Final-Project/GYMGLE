@@ -8,12 +8,13 @@
 import FirebaseAuth
 import FirebaseDatabase
 import Foundation
+import Combine
 
 final class AdminRootViewModel {
     
-  
     let ref = Database.database().reference()
     var dataManager: DataManager
+    @Published var isAdmin: Bool = true
     
     init(dataManager: DataManager = DataManager.shared) {
         self.dataManager = dataManager
