@@ -44,6 +44,7 @@ private extension InitialViewController {
     func addButtonMethod() {
         initialView.adminButton.addTarget(self, action: #selector(adminButtonTapped), for: .touchUpInside)
         initialView.loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        initialView.registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
     }
     
     @objc func adminButtonTapped() {
@@ -55,9 +56,20 @@ private extension InitialViewController {
         guard let id = initialView.idTextField.text, let pw = initialView.passwordTextField.text else { return }
         viewModel.signIn(id: id, password: pw)
     }
+    
+    @objc func registerButtonTapped() {
+        let vc = UserRegisterViewIDPWController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension InitialViewController: LoginViewModelDelegate {
+    func tempLogin() {
+        let vc = QrCodeViewController()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
     func loginFailure() {
         let alert = UIAlertController(title: "로그인 실패",
                                       message: "유효한 계정이 아닙니다.",

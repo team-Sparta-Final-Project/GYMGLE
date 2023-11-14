@@ -7,6 +7,7 @@
 
 import UIKit
 import SafariServices
+import Firebase
 import Combine
 
 final class AdminRootViewController: UIViewController, SFSafariViewControllerDelegate {
@@ -15,6 +16,7 @@ final class AdminRootViewController: UIViewController, SFSafariViewControllerDel
     
     private let adminRootView = AdminRootView()
     var viewModel: AdminRootViewModel = AdminRootViewModel()
+    var loginViewModel = LoginViewModel()
     weak var delegate: AdminTableViewDelegate?
     var disposableBag = Set<AnyCancellable>()
     
@@ -87,8 +89,18 @@ extension AdminRootViewController: AdminTableViewDelegate {
                 self.navigationController?.pushViewController(adminRegisterVC, animated: true)
                 break
             case (0, 4):
-                // 회원등록 선택한 경우 ❌❌❌ -> 비밀번호 재설정 넣기
-                self.navigationController?.pushViewController(UserRegisterViewController(), animated: true)
+                // 비밀번호 재설정
+                loginViewModel.resetPassword(email: (Auth.auth().currentUser?.email)!) { [weak self] reset in
+                    if reset {
+                        let alert = UIAlertController(title: "비밀번호 재설정", message: "비밀번호 재설정 이메일이 전송되었습니다. 이메일을 확인해주세요.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "확인", style: .default))
+                        self?.present(alert, animated: true, completion: nil)
+                    } else {
+                        let alert = UIAlertController(title: "비밀번호 재설정", message: "비밀번호 재설정 이메일 전송에 실패했습니다..", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "확인", style: .default))
+                        self?.present(alert, animated: true, completion: nil)
+                    }
+                }
                 break
             case (0, 5):
                 self.viewModel.$isAdmin.sink { [weak self] in

@@ -37,6 +37,8 @@ class InitialView: UIView {
     
     lazy var loginButton: UIButton = UIButton.GYMGLEButtonPreset("로그인")
     
+    lazy var registerButton: UIButton = UIButton.GYMGLEButtonPreset("회원가입")
+    
     lazy var adminButton = UIButton().then {
         $0.buttonMakeUI(backgroundColor: .white, cornerRadius: 20, borderWidth: 0.5, borderColor: ColorGuide.shadowBorder.cgColor, setTitle: "관리자모드", font: FontGuide.size14Bold, setTitleColor: ColorGuide.main)
     }
@@ -47,7 +49,7 @@ class InitialView: UIView {
         super .init(frame: frame)
         self.backgroundColor = ColorGuide.background
         
-        addSubviews(imageView, loginLabel, idTextField, passwordTextField, loginButton, adminButton)
+        addSubviews(imageView, loginLabel, idTextField, passwordTextField, loginButton, registerButton, adminButton)
         
         imageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(88)
@@ -76,6 +78,13 @@ class InitialView: UIView {
             $0.top.equalTo(passwordTextField.snp.bottom).offset(20)
             $0.left.right.equalToSuperview().inset(28)
             $0.height.equalTo(44)
+        }
+        
+        registerButton.snp.makeConstraints {
+            $0.top.equalTo(loginButton.snp.bottom).offset(10)
+            $0.left.equalTo(loginButton.snp.left)
+            $0.right.equalTo(loginButton.snp.right)
+            $0.height.equalTo(loginButton.snp.height)
         }
         
         adminButton.snp.makeConstraints {
