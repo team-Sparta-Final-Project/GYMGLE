@@ -239,7 +239,7 @@ class LoginViewModel {
                         self.getGymInfo() {
                             self.delegate?.userLogin()
                         }
-                    } else if adminUid == "" {
+                    } else if adminUid == "임시" {
                         self.delegate?.tempLogin()
                     }
                 }
