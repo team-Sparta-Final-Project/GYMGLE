@@ -182,7 +182,9 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
             } else if (userUidList.first(where: {$0 == stringValue}) != nil) {
                 showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
                 self.captureSession.stopRunning()
-                //self.navigationController?.pushViewController(<#T##viewController: UIViewController##UIViewController#>, animated: true)
+                let userRegisterDateVC = UserRegisterDateViewController()
+                userRegisterDateVC.userUid = stringValue
+                self.navigationController?.pushViewController(userRegisterDateVC, animated: true)
             } else {
                 showToast(message: "회원이 아닙니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
                 self.captureSession.stopRunning()
