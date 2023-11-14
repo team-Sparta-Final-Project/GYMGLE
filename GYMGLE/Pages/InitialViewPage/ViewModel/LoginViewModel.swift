@@ -275,7 +275,6 @@ class LoginViewModel {
     }
     
     // MARK: - 회원탈퇴
-    
     func deleteAccount(completion: @escaping () -> ()) {
         // 계정 삭제
         if let user = Auth.auth().currentUser {
@@ -294,5 +293,15 @@ class LoginViewModel {
             print("로그인 정보가 존재하지 않습니다.")
         }
     }
-
+    
+    // MARK: - 비밀번호 재설정
+    func resetPassword(email: String, completion: @escaping (Bool) -> ()) {
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error {
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
+    }
 }

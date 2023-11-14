@@ -12,11 +12,8 @@ class AdminRegisterViewController: UIViewController {
     
     // MARK: - Properties
     private let adminRegisterView = AdminRegisterView()
-    private var isServiceCheck: Bool = false
     var viewModel: AdminRegisterViewModel = AdminRegisterViewModel()
     var disposableBag = Set<AnyCancellable>()
-    var gymInfo: GymInfo?
-    var parameters: [String: [String]] = [:]
     
     // MARK: - Life Cycle
     override func loadView() {
@@ -98,8 +95,8 @@ private extension AdminRegisterViewController {
                     alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                 }
-                parameters = ["b_no":[adminRegisterView.registerNumberTextField.text!]]
-                self.viewModel.loadAPI(parameters: parameters) { [weak self] in
+                viewModel.parameters = ["b_no":[adminRegisterView.registerNumberTextField.text!]]
+                self.viewModel.loadAPI(parameters: viewModel.parameters) { [weak self] in
                     guard let self else { return }
                     DispatchQueue.main.async {
                         self.viewModel.validCheck { isValid in
@@ -152,7 +149,7 @@ private extension AdminRegisterViewController {
     }
     
     @objc func registerButtonTapped() {
-        if !viewModel.isIdDuplicated && !viewModel.isNumberDuplicated && viewModel.isValid && viewModel.allValid && isServiceCheck {
+        if !viewModel.isIdDuplicated && !viewModel.isNumberDuplicated && viewModel.isValid && viewModel.allValid && viewModel.isServiceCheck {
             viewModel.createUser(id: adminRegisterView.idTextField.text!, pw: adminRegisterView.passwordTextField.text!, gymName: adminRegisterView.adminNameTextField.text!, gymPhoneNumber: adminRegisterView.phoneTextField.text!, gymNumber: adminRegisterView.registerNumberTextField.text!)
         }
         else if (self.adminRegisterView.adminNameTextField.text?.isEmpty != nil && self.adminRegisterView.phoneTextField.text?.isEmpty != nil && DataManager.shared.realGymInfo != nil) {
@@ -169,9 +166,9 @@ private extension AdminRegisterViewController {
     @objc func checkButtonTapped(sender: UIButton) {
         sender.isSelected.toggle()
         if sender.isSelected == true {
-            isServiceCheck = true
+            viewModel.isServiceCheck = true
         } else {
-            isServiceCheck = false
+            viewModel.isServiceCheck = false
         }
     }
     
@@ -225,8 +222,7 @@ extension AdminRegisterViewController: UITextFieldDelegate {
 extension AdminRegisterViewController {
     fileprivate func setBindings() {
         self.viewModel.$gymInfo.sink { (gymInfo: GymInfo?) in
-            self.gymInfo = gymInfo
-            if self.gymInfo != nil {
+            if gymInfo != nil {
                 self.adminRegisterView.adminNameTextField.text = gymInfo?.gymName
                 self.adminRegisterView.phoneTextField.text = gymInfo?.gymPhoneNumber
                 self.adminRegisterView.registerNumberTextField.text = gymInfo?.gymnumber

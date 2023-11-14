@@ -16,6 +16,8 @@ class AdminRegisterViewModel: ObservableObject {
     var emailValid: Bool = false
     var pwValid: Bool = false
     var allValid: Bool = false
+    var isServiceCheck: Bool = false
+    var parameters: [String: [String]] = [:]
     
     @Published var gymInfo: GymInfo?
     
