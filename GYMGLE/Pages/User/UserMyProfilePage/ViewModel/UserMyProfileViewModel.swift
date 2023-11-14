@@ -5,7 +5,7 @@
 //  Created by 박성원 on 11/12/23.
 //
 
-import UIKit
+import Foundation
 import FirebaseDatabase
 import FirebaseAuth
 
