@@ -20,6 +20,9 @@
 		07997FF72AD843A5002ACFCB /* UserRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07997FF62AD843A5002ACFCB /* UserRootViewController.swift */; };
 		07997FF92AD843BD002ACFCB /* UserRootModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07997FF82AD843BD002ACFCB /* UserRootModel.swift */; };
 		07E23F6D2B01A9DB00406FFD /* UserRootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E23F6C2B01A9DB00406FFD /* UserRootViewModel.swift */; };
+		07E23F742B03135F00406FFD /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 07E23F732B03135F00406FFD /* SwiftSMTP */; };
+		07E23F762B03141C00406FFD /* EmailSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E23F752B03141C00406FFD /* EmailSender.swift */; };
+		07E23F7C2B0357A500406FFD /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 07E23F7B2B0357A500406FFD /* SwiftSMTP */; };
 		2730BBB82AD6668200BFA23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBB72AD6668200BFA23C /* AppDelegate.swift */; };
 		2730BBBA2AD6668200BFA23C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBB92AD6668200BFA23C /* SceneDelegate.swift */; };
 		2730BBBC2AD6668200BFA23C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2730BBBB2AD6668200BFA23C /* ViewController.swift */; };
@@ -53,6 +56,9 @@
 		2765F7A52B01ADB200C0AFF5 /* UserManageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2765F7A42B01ADB200C0AFF5 /* UserManageViewModel.swift */; };
 		2765F7A72B01ADEB00C0AFF5 /* UserRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2765F7A62B01ADEB00C0AFF5 /* UserRegisterViewModel.swift */; };
 		2765F7A92B01ADFF00C0AFF5 /* BoardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2765F7A82B01ADFF00C0AFF5 /* BoardDetailViewModel.swift */; };
+		2765F7B02B03043100C0AFF5 /* UserLoginTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2765F7AF2B03043100C0AFF5 /* UserLoginTableView.swift */; };
+		2765F7B22B0304A300C0AFF5 /* LoginUserRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2765F7B12B0304A300C0AFF5 /* LoginUserRegisterView.swift */; };
+		2765F7B42B03428500C0AFF5 /* UserRegisterDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2765F7B32B03428500C0AFF5 /* UserRegisterDateViewController.swift */; };
 		2782A4B62AEA466D00B110F9 /* BottomSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4B52AEA466D00B110F9 /* BottomSheetController.swift */; };
 		2782A4B82AEA46BB00B110F9 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */; };
 		2782A4BC2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4BB2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift */; };
@@ -137,6 +143,7 @@
 		07997FF62AD843A5002ACFCB /* UserRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootViewController.swift; path = GYMGLE/Pages/User/UserRootPage/UserRootViewController.swift; sourceTree = SOURCE_ROOT; };
 		07997FF82AD843BD002ACFCB /* UserRootModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootModel.swift; path = GYMGLE/Pages/User/UserRootPage/UserRootModel.swift; sourceTree = SOURCE_ROOT; };
 		07E23F6C2B01A9DB00406FFD /* UserRootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRootViewModel.swift; sourceTree = "<group>"; };
+		07E23F752B03141C00406FFD /* EmailSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSender.swift; sourceTree = "<group>"; };
 		2730BBB42AD6668200BFA23C /* GYMGLE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GYMGLE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2730BBB72AD6668200BFA23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2730BBB92AD6668200BFA23C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -163,6 +170,9 @@
 		2765F7A42B01ADB200C0AFF5 /* UserManageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManageViewModel.swift; sourceTree = "<group>"; };
 		2765F7A62B01ADEB00C0AFF5 /* UserRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegisterViewModel.swift; sourceTree = "<group>"; };
 		2765F7A82B01ADFF00C0AFF5 /* BoardDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailViewModel.swift; sourceTree = "<group>"; };
+		2765F7AF2B03043100C0AFF5 /* UserLoginTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginTableView.swift; sourceTree = "<group>"; };
+		2765F7B12B0304A300C0AFF5 /* LoginUserRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserRegisterView.swift; sourceTree = "<group>"; };
+		2765F7B32B03428500C0AFF5 /* UserRegisterDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegisterDateViewController.swift; sourceTree = "<group>"; };
 		2782A4B52AEA466D00B110F9 /* BottomSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetController.swift; sourceTree = "<group>"; };
 		2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		2782A4BB2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewDateOnly.swift; sourceTree = "<group>"; };
@@ -237,6 +247,7 @@
 			files = (
 				2730BC1B2AD77C7F00BFA23C /* FirebaseMessaging in Frameworks */,
 				2730BC192AD77C7F00BFA23C /* FirebaseDatabaseSwift in Frameworks */,
+				07E23F7C2B0357A500406FFD /* SwiftSMTP in Frameworks */,
 				2730BC152AD77C7F00BFA23C /* FirebaseAnalyticsSwift in Frameworks */,
 				2730BBF42AD6B9DC00BFA23C /* QRCode in Frameworks */,
 				2730BBFA2AD6BA1600BFA23C /* Then in Frameworks */,
@@ -247,6 +258,7 @@
 				D1635A462AE0F9CD00CDEF11 /* FirebaseAuth in Frameworks */,
 				0761A5222AD93D47002EECED /* Charts.framework in Frameworks */,
 				2730BC172AD77C7F00BFA23C /* FirebaseDatabase in Frameworks */,
+				07E23F742B03135F00406FFD /* SwiftSMTP in Frameworks */,
 				2730BBE82AD66F0000BFA23C /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -502,6 +514,7 @@
 			isa = PBXGroup;
 			children = (
 				D1E018742ADCEDF100D1C53D /* UserRegisterView.swift */,
+				2765F7B12B0304A300C0AFF5 /* LoginUserRegisterView.swift */,
 				2730BC6E2AD9573300BFA23C /* Components */,
 			);
 			path = View;
@@ -510,8 +523,9 @@
 		2730BC6B2AD9571600BFA23C /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				2730BC792AD9577C00BFA23C /* UserRegisterViewController.swift */,
 				27E24B7F2ADF8A790031122F /* UserRegisterViewIDPWController.swift */,
+				2730BC792AD9577C00BFA23C /* UserRegisterViewController.swift */,
+				2765F7B32B03428500C0AFF5 /* UserRegisterDateViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -527,6 +541,7 @@
 				D1E018792ADCEE0000D1C53D /* TextFieldCell.swift */,
 				D1E018762ADCEE0000D1C53D /* LabelCell.swift */,
 				D1E018822ADCEEED00D1C53D /* CustomTextField.swift */,
+				2765F7AF2B03043100C0AFF5 /* UserLoginTableView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -712,6 +727,7 @@
 			children = (
 				2730BBB72AD6668200BFA23C /* AppDelegate.swift */,
 				2730BBB92AD6668200BFA23C /* SceneDelegate.swift */,
+				07E23F752B03141C00406FFD /* EmailSender.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -866,6 +882,8 @@
 				D1635A452AE0F9CD00CDEF11 /* FirebaseAuth */,
 				63DF7C2D2AF2663F00B66EFC /* FirebaseStorage */,
 				D16D42742AF3C90E0083EB17 /* Kingfisher */,
+				07E23F732B03135F00406FFD /* SwiftSMTP */,
+				07E23F7B2B0357A500406FFD /* SwiftSMTP */,
 			);
 			productName = GYMGLE;
 			productReference = 2730BBB42AD6668200BFA23C /* GYMGLE.app */;
@@ -902,6 +920,7 @@
 				2730BBF82AD6BA1600BFA23C /* XCRemoteSwiftPackageReference "Then" */,
 				2730BC112AD77C7F00BFA23C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				D16D42732AF3C90E0083EB17 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				07E23F722B03135F00406FFD /* XCRemoteSwiftPackageReference "Swift-SMTP" */,
 			);
 			productRefGroup = 2730BBB52AD6668200BFA23C /* Products */;
 			projectDirPath = "";
@@ -964,11 +983,13 @@
 				2730BC882ADC1DC500BFA23C /* UserManageController.swift in Sources */,
 				63F777D52AF13F1D00A3DF2B /* UserMyProfileUpdateViewController.swift in Sources */,
 				63B777362AFE04FD00094D85 /* AdminRootViewModel.swift in Sources */,
+				2765F7B42B03428500C0AFF5 /* UserRegisterDateViewController.swift in Sources */,
 				D16D42772AF4B09A0083EB17 /* Extension_Date.swift in Sources */,
 				630CE1532ADD5CB8001EC547 /* Account.swift in Sources */,
 				07E23F6D2B01A9DB00406FFD /* UserRootViewModel.swift in Sources */,
 				63B5A2252AEB627900105AB5 /* Extension_UIImage.swift in Sources */,
 				D1E0187D2ADCEE0000D1C53D /* CustomTextCell.swift in Sources */,
+				2765F7B02B03043100C0AFF5 /* UserLoginTableView.swift in Sources */,
 				2765F7A92B01ADFF00C0AFF5 /* BoardDetailViewModel.swift in Sources */,
 				D1E0186F2ADCEC4B00D1C53D /* AdminLoginView.swift in Sources */,
 				D1E018692ADCEC1A00D1C53D /* AdminRootViewController.swift in Sources */,
@@ -979,6 +1000,7 @@
 				0744287B2AE0E2D200EB7D05 /* UserCommunityWriteViewController.swift in Sources */,
 				074428732ADFB36800EB7D05 /* UserCommunityView.swift in Sources */,
 				0744286F2ADD0D8800EB7D05 /* QrCodeView.swift in Sources */,
+				2765F7B22B0304A300C0AFF5 /* LoginUserRegisterView.swift in Sources */,
 				275A12E92AF2152100CC72EE /* BoardDetailContentCell.swift in Sources */,
 				D1E018812ADCEE0000D1C53D /* CustomTextView.swift in Sources */,
 				2730BC8F2ADC206B00BFA23C /* CustomSearchBar.swift in Sources */,
@@ -1020,6 +1042,7 @@
 				630CE14D2ADD5C8A001EC547 /* User.swift in Sources */,
 				638748512AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift in Sources */,
 				D161421F2AF2258E00628295 /* BlockView.swift in Sources */,
+				07E23F762B03141C00406FFD /* EmailSender.swift in Sources */,
 				2730BC372AD806AA00BFA23C /* InitialView.swift in Sources */,
 				2782A4B82AEA46BB00B110F9 /* BottomSheetView.swift in Sources */,
 				275A12ED2AF22E8A00CC72EE /* BoardDetailCommentSection.swift in Sources */,
@@ -1175,7 +1198,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3L52QK9JPU;
+				DEVELOPMENT_TEAM = JDJ85BC4GX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GYMGLE/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GYMGLE;
@@ -1259,6 +1282,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		07E23F722B03135F00406FFD /* XCRemoteSwiftPackageReference "Swift-SMTP" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/IBM-Swift/Swift-SMTP";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 		2730BBE62AD66EFF00BFA23C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1310,6 +1341,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		07E23F732B03135F00406FFD /* SwiftSMTP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 07E23F722B03135F00406FFD /* XCRemoteSwiftPackageReference "Swift-SMTP" */;
+			productName = SwiftSMTP;
+		};
+		07E23F7B2B0357A500406FFD /* SwiftSMTP */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftSMTP;
+		};
 		2730BBE72AD66F0000BFA23C /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2730BBE62AD66EFF00BFA23C /* XCRemoteSwiftPackageReference "SnapKit" */;

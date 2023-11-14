@@ -1,8 +1,8 @@
 import UIKit
 
-class UserRegisterView: UIView {
+class LoginUserRegisterView: UIView {
     //MARK: - UI 컴포넌트 선언부
-    lazy var tableView = UserTableView()
+    lazy var tableView = UserLoginTableView()
     lazy var button:UIButton = UIButton.GYMGLEButtonPreset("버튼 타이틀")
     lazy var textView = CustomTextView()
     lazy var scrollView = UIScrollView()

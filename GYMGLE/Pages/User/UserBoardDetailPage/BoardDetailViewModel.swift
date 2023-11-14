@@ -2,17 +2,18 @@ import Firebase
 import Foundation
 import Combine
 
-class BoardDetailViewModel: ObservableObject {
+class BoardDetailViewModel: ObservableObject{
     
-    var board:Board?
+    var board:Board
     var boardUid:String?
     
-    @Published var tableData:[Any] = []
+    var tableData:[Any] = []
     @Published var profileData:[Profile] = []
     let ref = Database.database().reference()
     
-    init(){
+    init(board:Board){
         print("테스트 - 뷰모델 불러옴")
+        self.board = board
     }
     func loadData(){
         downloadComments {
@@ -90,7 +91,7 @@ class BoardDetailViewModel: ObservableObject {
         
         ref.child("boards/\(boardUid!)/comments").observeSingleEvent(of: .value) { [self] DataSnapshot,arg  in
             guard let value = DataSnapshot.value as? [String:Any] else {
-                self.tableData = [self.board!]
+                self.tableData = [self.board]
                 complition()
                 return
             }
@@ -104,7 +105,7 @@ class BoardDetailViewModel: ObservableObject {
                     print("테스트 - \(error)")
                 }
             }
-            self.tableData = [self.board!]
+            self.tableData = [self.board]
             self.tableData += temp.sorted(by: { $0.1.date < $1.1.date })
             
             complition()
@@ -113,7 +114,6 @@ class BoardDetailViewModel: ObservableObject {
     }
     
     func downloadProfiles(){
-        profileData.removeAll()
         var count = tableData.count {
             didSet(oldVal){
                 if count == 0 {

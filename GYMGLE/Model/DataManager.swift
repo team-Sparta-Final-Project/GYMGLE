@@ -15,4 +15,5 @@ final class DataManager {
     var userList:[User] = []
     var noticeList:[Notice] = []
     var log:[InAndOut] = []
-}
+    
+    }
