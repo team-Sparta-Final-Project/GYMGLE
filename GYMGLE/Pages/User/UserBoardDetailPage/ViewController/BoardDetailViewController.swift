@@ -8,25 +8,14 @@ import Combine
 
 class BoardDetailViewController: UIViewController {
     
-    var viewModel:BoardDetailViewModel = BoardDetailViewModel()
+    var viewModel:BoardDetailViewModel
     
     var disposableBag = Set<AnyCancellable>()
     
-    let first = UserCommunityView()
-    
     let userCommunityViewController = UserCommunityViewController()
-    let second = CommunityCell()
-    let ref = Database.database().reference()
     
-    var tableData:[Any] = []
-    var profileData:[Profile] = []
+    let ref = Database.database().reference() //
     
-    var board: Board? {
-        didSet{
-            self.viewModel.board = board
-        }
-    }
-    var comment: Comment?
     var boardUid: String? {
         didSet{
             self.viewModel.boardUid = boardUid
@@ -37,22 +26,26 @@ class BoardDetailViewController: UIViewController {
     
     var imageTapGesture = UITapGestureRecognizer()
     
-    private func setBindings(){
-        self.viewModel.$tableData.sink{
-            self.tableData = $0
-        }.store(in: &disposableBag)
+    init(board:Board){
+        self.viewModel = BoardDetailViewModel(board: board)
+        super .init(nibName: nil, bundle: nil)
         
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setBindings(){        
         self.viewModel.$profileData.sink{
             if $0.isEmpty {
                 
             }else {
-                self.profileData = $0
-                if self.profileData[0].nickName == "탈퇴한 회원"{
+                if $0.first!.nickName == "탈퇴한 회원"{
                     self.viewConfigure.commentSection.textField.placeholder = "탈퇴한 회원의 글입니다."
                     self.viewConfigure.commentSection.textField.isEnabled = false
                     self.viewConfigure.commentSection.button.isHidden = true
                 }
-
                 self.viewConfigure.tableView.reloadData()
             }
             
@@ -61,6 +54,7 @@ class BoardDetailViewController: UIViewController {
     }
     
     override func loadView() {
+        
         view = viewConfigure
         setBindings()
         viewModel.loadData()
@@ -99,15 +93,15 @@ extension BoardDetailViewController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableData.count
+        return viewModel.tableData.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if tableData[indexPath.row] is Board {
-            let content = tableData[indexPath.row] as! Board
-            let profile = profileData[indexPath.row]
+        if viewModel.tableData[indexPath.row] is Board {
+            let content = viewModel.tableData[indexPath.row] as! Board
+            let profile = viewModel.profileData[indexPath.row]
             let cell = BoardDetailContentCell()
             cell.selectionStyle = .none
             cell.profileLine.profileDelegate = self
@@ -117,11 +111,11 @@ extension BoardDetailViewController: UITableViewDataSource {
             cell.profileLine.writerLabel.text = profile.nickName
             cell.profileLine.timeLabel.text = content.date.timeAgo()
             cell.profileLine.profileImage.kf.setImage(with: profile.image, for: .normal)
-            cell.profileLine.writerUid = board!.uid
+            cell.profileLine.writerUid = viewModel.board.uid
             
             cell.contentLabel.text = content.content
             cell.likeCount.text = "좋아요 \(content.likeCount)개"
-            cell.commentCount.text = "댓글 \(tableData.count - 1)개"
+            cell.commentCount.text = "댓글 \(viewModel.tableData.count - 1)개"
             
             let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/likes/\(boardUid!)")
             ref.observeSingleEvent(of: .value) { (snapshot) in
@@ -133,9 +127,9 @@ extension BoardDetailViewController: UITableViewDataSource {
             }
             
             return cell
-        } else if tableData[indexPath.row] is (key: String, value: Comment) {
-            let dic = tableData[indexPath.row] as! (key: String, value: Comment)
-            let profile = profileData[indexPath.row]
+        } else if viewModel.tableData[indexPath.row] is (key: String, value: Comment) {
+            let dic = viewModel.tableData[indexPath.row] as! (key: String, value: Comment)
+            let profile = viewModel.profileData[indexPath.row]
             let comment = dic.value
             let cell = BoardDetailCommentCell()
             cell.profileLine.profileDelegate = self
@@ -152,13 +146,12 @@ extension BoardDetailViewController: UITableViewDataSource {
             
             cell.contentLabel.text = comment.comment
             
-            self.comment = comment
             
             return cell
         }else {
             let cell = BoardDetailCommentCell()
             cell.profileLine.profileDelegate = self
-            print("테스트 - \n\n\n\(type(of:tableData[indexPath.row]))\n\n\n")
+            print("테스트 - \n\n\n\(type(of:viewModel.tableData[indexPath.row]))\n\n\n")
             return cell
         }
     }
@@ -180,7 +173,7 @@ extension BoardDetailViewController:BoardProfileInfoButtonDelegate {
         let alert = UIAlertController(title: "메뉴", message: "확인", preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel))
         if isBoard {
-            if board?.uid == Auth.auth().currentUser?.uid {
+            if viewModel.board.uid == Auth.auth().currentUser?.uid {
                 alert.addAction(UIAlertAction(title: "수정", style: .default, handler: {_ in
                     self.updateBoard()
                 }))
@@ -191,7 +184,7 @@ extension BoardDetailViewController:BoardProfileInfoButtonDelegate {
                 
             }else {
                 alert.addAction(UIAlertAction(title: "신고하기", style: .destructive, handler: {_ in
-                    self.reportContent(content: self.board!)
+                    self.reportContent(content: self.viewModel.board)
                 }))
             }
         }else{
@@ -299,7 +292,7 @@ extension BoardDetailViewController : MFMailComposeViewControllerDelegate {
         let userCommunityWriteViewController = UserCommunityWriteViewController()
         userCommunityWriteViewController.isUpdate = true
         userCommunityWriteViewController.fromBoardClosure = {self.viewModel.loadData()}
-        userCommunityWriteViewController.boardContent = board?.content
+        userCommunityWriteViewController.boardContent = viewModel.board.content
         userCommunityWriteViewController.boardUid = boardUid
         //        userCommunityWriteViewController.modalPresentationStyle = .fullScreen
         self.present(userCommunityWriteViewController, animated: true)

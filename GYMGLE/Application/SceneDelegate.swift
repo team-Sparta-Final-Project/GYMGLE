@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.overrideUserInterfaceStyle = .light
         let navi = UINavigationController(rootViewController: InitialViewController())
         window?.rootViewController = navi
-//        window?.rootViewController = BoardDetailViewController()
+//        window?.rootViewController = UserRegisterDateViewController()
         window?.makeKeyAndVisible()
     }
 

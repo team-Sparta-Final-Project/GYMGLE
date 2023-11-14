@@ -13,17 +13,18 @@ import FirebaseDatabase
 class UserCommunityViewController: UIViewController, CommunityTableViewDelegate {
     
     func didSelectCell(at indexPath: IndexPath) {
-        let destinationViewController = BoardDetailViewController()
+        let destinationViewController:BoardDetailViewController
         if first.nowSearching {
             let data = first.filteredPost[indexPath.row]
+            destinationViewController = BoardDetailViewController(board: data)
             let key = first.filteredKeys[indexPath.row]
-            destinationViewController.board = data
             destinationViewController.boardUid = key
+            
 
         }else {
             let data = first.posts[indexPath.row]
+            destinationViewController = BoardDetailViewController(board: data)
             let key = first.keys[indexPath.row]
-            destinationViewController.board = data
             destinationViewController.boardUid = key
         }
         
