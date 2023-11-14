@@ -227,7 +227,7 @@ extension AdminRegisterViewController {
                 self.adminRegisterView.phoneTextField.text = gymInfo?.gymPhoneNumber
                 self.adminRegisterView.registerNumberTextField.text = gymInfo?.gymnumber
                 self.adminRegisterView.idTextField.text = gymInfo?.gymAccount.id
-                self.adminRegisterView.passwordTextField.text = gymInfo?.gymAccount.password
+                self.adminRegisterView.passwordTextField.text = ""
                 self.adminRegisterView.idTextField.isEnabled = false
                 self.adminRegisterView.passwordTextField.isEnabled = false
                 self.adminRegisterView.registerNumberTextField.isEnabled = false

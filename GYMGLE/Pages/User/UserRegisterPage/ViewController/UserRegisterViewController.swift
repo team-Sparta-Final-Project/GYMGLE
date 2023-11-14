@@ -12,7 +12,7 @@ final class UserRegisterViewController: UIViewController {
     let labelCells = ["등록일","마감일","추가 정보"]
     let buttonText = ["날짜","날짜"]
     
-    var emptyUser = User(account: Account(id: "", password: "", accountType: 2), name: "", number: "", startSubscriptionDate: Date(), endSubscriptionDate: Date(), userInfo: "", isInGym: false, adminUid: DataManager.shared.gymUid!)
+    var emptyUser = User(account: Account(id: "", accountType: 2), name: "", number: "", startSubscriptionDate: Date(), endSubscriptionDate: Date(), userInfo: "", isInGym: false, adminUid: DataManager.shared.gymUid!)
     
     var nowEdit = false
     var editIndex = 0
