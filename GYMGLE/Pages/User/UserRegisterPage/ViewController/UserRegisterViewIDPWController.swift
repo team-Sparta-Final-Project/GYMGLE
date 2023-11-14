@@ -87,11 +87,21 @@ class UserRegisterViewIDPWController: UIViewController {
         
         
     }
-    @objc func emailButtonClicked(){
-        
-        print("\n\n\n 유저레지스터뷰IDPW컨트롤러의 92번째 objc 함수 보시면 됩니다. \n\n\n")
-    }
-
+    
+//    @objc func emailButtonClicked() {
+//        guard let id = idCell.textField.text else {
+//            return
+//        }
+//
+//        // 이메일이 비어있는지 확인
+//        guard !id.isEmpty else {
+//            print("확인할 이메일: \(id)")
+//            showToastStatic(message: "이메일을 입력해 주세요.", view: view)
+//            return
+//        }
+//
+//        
+//    }
     
     
 }
@@ -133,6 +143,7 @@ extension UserRegisterViewIDPWController {
                         userRef.setValue(userJSON)
                         
                     }
+                    
                     Auth.auth().signIn(withEmail: DataManager.shared.id!, password: DataManager.shared.pw!) { result, error in
                         if let error = error {
                             print("재로그인 에러")
@@ -154,6 +165,21 @@ extension UserRegisterViewIDPWController {
                     }
                     let vc = AdminRootViewController()
                     self.navigationController?.pushViewController(vc, animated: true)
+                    // Firebase에서 이메일 인증 메일을 보내는 코드
+                    Auth.auth().currentUser?.sendEmailVerification { [weak self] (error) in
+                        guard let self = self else { return }
+
+                        if let error = error {
+                            print("이메일 인증 메일 전송 실패: \(error.localizedDescription)")
+                            // TODO: 실패에 대한 처리
+                        } else {
+                            print("이메일 인증 메일 전송 성공!")
+                            // TODO: 성공에 대한 처리
+                            // 여기에 인증 완료 후의 동작을 추가.
+                            self.showToastStatic(message: "이메일 인증 메일을 확인해 주세요.", view: self.view ?? UIView())
+
+                        }
+                    }
                 } catch {
                     print("JSON 인코딩 에러")
                 }
