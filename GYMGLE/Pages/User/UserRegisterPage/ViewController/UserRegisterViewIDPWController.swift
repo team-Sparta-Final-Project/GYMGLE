@@ -99,16 +99,12 @@ class UserRegisterViewIDPWController: UIViewController {
         guard let id = idCell.textField.text else {
             return
         }
-
         // 이메일이 비어있는지 확인
-
         guard !id.isEmpty else {
             print("확인할 이메일: \(id)")
             showToastStatic(message: "이메일을 입력해 주세요.", view: view)
             return
         }
-
-
         // 백그라운드 스레드에서 이메일 보내기
         DispatchQueue.global().async {
             user_email = id

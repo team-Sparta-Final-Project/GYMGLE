@@ -17,9 +17,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
 //        window?.overrideUserInterfaceStyle = .light
-//        let navi = UINavigationController(rootViewController: InitialViewController())
-//        window?.rootViewController = navi
-        window?.rootViewController = UserRegisterViewIDPWController()
+        let navi = UINavigationController(rootViewController: InitialViewController())
+        window?.rootViewController = navi
+//        window?.rootViewController = UserRegisterViewIDPWController()
         window?.makeKeyAndVisible()
     }
 
