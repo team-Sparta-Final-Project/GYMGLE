@@ -13,6 +13,7 @@ import FirebaseDatabase
 final class QrCodeViewModel: ObservableObject { //ObservableObject: 이벤트를 방출할 수 있는 인스턴스 (해당 인스턴스를 Subscriber가 구독하여 사용할 수 있다는 의미)
     
     @Published var isHidden: Bool = true
+    @Published var adminUid: String = ""
     var dataManager: DataManager
     
     init(dataManager: DataManager = DataManager.shared) {
@@ -48,9 +49,7 @@ final class QrCodeViewModel: ObservableObject { //ObservableObject: 이벤트를
         if let user = Auth.auth().currentUser {
             user.delete { error in
                 if error != nil {
-                } else {
-                    completion()
-                }
+                } else {}
             }
             //탈퇴한 헬스장의 유저들 삭제
             let ref = Database.database().reference()
@@ -66,5 +65,12 @@ final class QrCodeViewModel: ObservableObject { //ObservableObject: 이벤트를
         } else {}
         completion()
     }
-    
+    func getAdminUid() {
+        let ref = Database.database().reference().child("accounts")
+        ref.child("\(Auth.auth().currentUser!.uid)").child("adminUid").observeSingleEvent(of: .value) { DataSnapshot in
+            if let value = DataSnapshot.value as? String {
+                self.adminUid = value
+            }
+        }
+    }
 }
