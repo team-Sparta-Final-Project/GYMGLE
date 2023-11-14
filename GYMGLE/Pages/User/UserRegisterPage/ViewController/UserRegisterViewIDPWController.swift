@@ -18,6 +18,8 @@ class UserRegisterViewIDPWController: UIViewController {
     
     var idCell:TextFieldCell = TextFieldCell()
     var pwCell:TextFieldCell = TextFieldCell()
+    var nameCell:TextFieldCell = TextFieldCell()
+    var phoneCell:TextFieldCell = TextFieldCell()
     
     let viewConfigure = LoginUserRegisterView()
     
@@ -40,8 +42,6 @@ class UserRegisterViewIDPWController: UIViewController {
         
         self.viewConfigure.tableView.dataSource = self
         self.viewConfigure.button.backgroundColor = .lightGray
-        viewConfigure.button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) { // 네비게이션바 보여주기
@@ -50,8 +50,12 @@ class UserRegisterViewIDPWController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        viewConfigure.button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
+        
         idCell.textField.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
         pwCell.textField.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
+        nameCell.textField.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
+        phoneCell.textField.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         viewConfigure.endEditing(true)
@@ -72,8 +76,7 @@ class UserRegisterViewIDPWController: UIViewController {
     
     
     @objc private func didChangeText(){
-        // TODO: 중복확인하고 비밀번호가 달라지면 다시 버튼이 비활성화 됨 : 아이디 중복확인하고 비밀번호 바꿔도 버튼 활성화되게 고칠것
-        if idCell.textField.text != "" && pwCell.textField.text != ""{
+        if idCell.textField.text != "" && pwCell.textField.text != "" && nameCell.textField.text != "" && phoneCell.textField.text != "" {
             isCellEmpty = false
         }else{
             isCellEmpty = true
@@ -92,20 +95,20 @@ class UserRegisterViewIDPWController: UIViewController {
         
     }
     
-//    @objc func emailButtonClicked() {
-//        guard let id = idCell.textField.text else {
-//            return
-//        }
-//
-//        // 이메일이 비어있는지 확인
-//        guard !id.isEmpty else {
-//            print("확인할 이메일: \(id)")
-//            showToastStatic(message: "이메일을 입력해 주세요.", view: view)
-//            return
-//        }
-//
-//        
-//    }
+    @objc func emailButtonClicked() {
+        guard let id = idCell.textField.text else {
+            return
+        }
+
+        // 이메일이 비어있는지 확인
+        guard !id.isEmpty else {
+            print("확인할 이메일: \(id)")
+            showToastStatic(message: "이메일을 입력해 주세요.", view: view)
+            return
+        }
+
+        
+    }
     
     
 }
@@ -117,8 +120,10 @@ extension UserRegisterViewIDPWController {
     func createUser() {
         guard let id = idCell.textField.text else { return }
         guard let pw = pwCell.textField.text else { return }
+        guard let name = nameCell.textField.text else { return }
+        guard let phone = phoneCell.textField.text else { return }
 
-        let tempUser = User(account: Account(id: id, password: pw, accountType: 1), name: "임시이름", number: "임시번호", startSubscriptionDate: Date(timeIntervalSince1970: 0), endSubscriptionDate: Date(timeIntervalSince1970: 0), userInfo: "임시", isInGym: false, adminUid: "임시")
+        let tempUser = User(account: Account(id: id, password: pw, accountType: 1), name: name, number: phone, startSubscriptionDate: Date(timeIntervalSince1970: 0), endSubscriptionDate: Date(timeIntervalSince1970: 0), userInfo: "정보없음", isInGym: false, adminUid: "정보없음")
         
         Auth.auth().createUser(withEmail: id, password: pw) { result, error in
             if let error = error {
@@ -223,17 +228,22 @@ extension UserRegisterViewIDPWController: UITableViewDataSource {
             pwCell = cell
             return cell
         }
-        else if cellData[indexPath.row] == "" {
-            return EmptyCell()
+        else if cellData[indexPath.row] == "이름" {
+            let cell = TextFieldCell()
+            cell.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
+            cell.placeHolderLabel.text = cellData[indexPath.row]
+            nameCell = cell
+            return cell
+        }
+        else if cellData[indexPath.row] == "전화번호" {
+            let cell = TextFieldCell()
+            cell.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
+            cell.placeHolderLabel.text = cellData[indexPath.row]
+            phoneCell = cell
+            return cell
         }
         else {
-            let cell = TextFieldCell()
-            cell.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
-            cell.placeHolderLabel.text = cellData[indexPath.row]
-            cell.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
-            
-            return cell
-
+            return EmptyCell()
         }
     }
 
