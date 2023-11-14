@@ -13,6 +13,7 @@ protocol LoginViewModelDelegate: AnyObject {
     func userLogin()
     func trainerLogin()
     func loginFailure()
+    func tempLogin()
 }
 
 class LoginViewModel {
@@ -238,6 +239,8 @@ class LoginViewModel {
                         self.getGymInfo() {
                             self.delegate?.userLogin()
                         }
+                    } else if adminUid == "" {
+                        self.delegate?.tempLogin()
                     }
                 }
             }
