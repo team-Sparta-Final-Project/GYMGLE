@@ -162,7 +162,7 @@ extension BoardDetailViewController: UITableViewDataSource {
 extension BoardDetailViewController:BoardProfileInfoButtonDelegate {
     func profileImageTappedAtComment(writerUid: String) {
         let vc = UserMyProfileViewController()
-        vc.userUid = writerUid
+        vc.viewModel.userUid = writerUid
         let naviVC = UINavigationController(rootViewController: vc)
         
         self.present(naviVC, animated: true)
