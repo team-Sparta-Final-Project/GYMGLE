@@ -75,19 +75,13 @@ extension TextFieldCell: UITextFieldDelegate{
             self.placeHolderLabel.transform = CGAffineTransform(translationX: 0, y: -16)
             self.placeHolderLabel.font = UIFont.systemFont(ofSize: 10)
         }
-        
-        
-
-//        self.placeHolderLabel.snp.makeConstraints{
-//            $0.top.equalToSuperview()
-//            $0.bottom.equalToSuperview().inset(30)
-//        }
-        
-        
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        print("테스트 - \(textField.text)")
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        print("테스트 - 수정끝")
         if self.textField.text == "" {
             UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut) {
                 self.placeHolderLabel.transform = CGAffineTransform(translationX: 0, y: 0)
@@ -96,8 +90,8 @@ extension TextFieldCell: UITextFieldDelegate{
         }
     }
 
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        print("테스트 - 텍스트필드 수정중...")
-        return true
-    }
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        print("테스트 - 텍스트필드 수정중...")
+//        return true
+//    }
 }

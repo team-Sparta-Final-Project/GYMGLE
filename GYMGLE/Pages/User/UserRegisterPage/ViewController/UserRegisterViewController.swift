@@ -102,40 +102,7 @@ private extension UserRegisterViewController {
 
     //updatedUser
     func userDataUpdate(completion: @escaping() -> Void) {
-        if isCellEmpty {
-            self.showToastStatic(message: "작성 안된 곳이 있습니다.", view: self.view)
-        }else if isEndDateEmpty {
-            self.showToastStatic(message: "등록 마감 날짜가 지정되어 있지 않습니다.", view: self.view)
-        }
-        else {
-            let info = self.textViewCell.textView.text
-            if nowEdit {
-                emptyUser.name = nameCell.textField.text ?? ""
-                emptyUser.number = phoneCell.textField.text ?? ""
-                emptyUser.startSubscriptionDate = startDate
-                emptyUser.endSubscriptionDate = endDate
-                emptyUser.userInfo = info ?? "정보없음"
-                
-                viewModel.update(user: emptyUser)
-            } else {
-                let IdPwVC = UserRegisterViewIDPWController()
-                IdPwVC.viewConfigure.segmented.isHidden = true
-                
-                emptyUser.name = nameCell.textField.text ?? ""
-                emptyUser.number = phoneCell.textField.text ?? ""
-                emptyUser.startSubscriptionDate = startDate
-                emptyUser.endSubscriptionDate = Date().addingTimeInterval(60*60*24*365)
-                emptyUser.userInfo = info ?? "정보없음"
-                
-                if viewConfigure.textView.isHidden {
-                    emptyUser.account.accountType = 1 
-                }
-                IdPwVC.needIdPwUser = emptyUser
-                navigationController?.pushViewController(IdPwVC, animated: true)
-            }
-        }
     }
-    
     func setCustomBackButton() {
         navigationController?.navigationBar.topItem?.title = "회원등록"
         navigationController?.navigationBar.tintColor = .black

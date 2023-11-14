@@ -53,6 +53,8 @@
 		2765F7A52B01ADB200C0AFF5 /* UserManageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2765F7A42B01ADB200C0AFF5 /* UserManageViewModel.swift */; };
 		2765F7A72B01ADEB00C0AFF5 /* UserRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2765F7A62B01ADEB00C0AFF5 /* UserRegisterViewModel.swift */; };
 		2765F7A92B01ADFF00C0AFF5 /* BoardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2765F7A82B01ADFF00C0AFF5 /* BoardDetailViewModel.swift */; };
+		2765F7B02B03043100C0AFF5 /* UserLoginTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2765F7AF2B03043100C0AFF5 /* UserLoginTableView.swift */; };
+		2765F7B22B0304A300C0AFF5 /* LoginUserRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2765F7B12B0304A300C0AFF5 /* LoginUserRegisterView.swift */; };
 		2782A4B62AEA466D00B110F9 /* BottomSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4B52AEA466D00B110F9 /* BottomSheetController.swift */; };
 		2782A4B82AEA46BB00B110F9 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */; };
 		2782A4BC2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782A4BB2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift */; };
@@ -163,6 +165,8 @@
 		2765F7A42B01ADB200C0AFF5 /* UserManageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManageViewModel.swift; sourceTree = "<group>"; };
 		2765F7A62B01ADEB00C0AFF5 /* UserRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRegisterViewModel.swift; sourceTree = "<group>"; };
 		2765F7A82B01ADFF00C0AFF5 /* BoardDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailViewModel.swift; sourceTree = "<group>"; };
+		2765F7AF2B03043100C0AFF5 /* UserLoginTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginTableView.swift; sourceTree = "<group>"; };
+		2765F7B12B0304A300C0AFF5 /* LoginUserRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserRegisterView.swift; sourceTree = "<group>"; };
 		2782A4B52AEA466D00B110F9 /* BottomSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetController.swift; sourceTree = "<group>"; };
 		2782A4B72AEA46BB00B110F9 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		2782A4BB2AEA78E900B110F9 /* BottomSheetViewDateOnly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewDateOnly.swift; sourceTree = "<group>"; };
@@ -502,6 +506,7 @@
 			isa = PBXGroup;
 			children = (
 				D1E018742ADCEDF100D1C53D /* UserRegisterView.swift */,
+				2765F7B12B0304A300C0AFF5 /* LoginUserRegisterView.swift */,
 				2730BC6E2AD9573300BFA23C /* Components */,
 			);
 			path = View;
@@ -527,6 +532,7 @@
 				D1E018792ADCEE0000D1C53D /* TextFieldCell.swift */,
 				D1E018762ADCEE0000D1C53D /* LabelCell.swift */,
 				D1E018822ADCEEED00D1C53D /* CustomTextField.swift */,
+				2765F7AF2B03043100C0AFF5 /* UserLoginTableView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -969,6 +975,7 @@
 				07E23F6D2B01A9DB00406FFD /* UserRootViewModel.swift in Sources */,
 				63B5A2252AEB627900105AB5 /* Extension_UIImage.swift in Sources */,
 				D1E0187D2ADCEE0000D1C53D /* CustomTextCell.swift in Sources */,
+				2765F7B02B03043100C0AFF5 /* UserLoginTableView.swift in Sources */,
 				2765F7A92B01ADFF00C0AFF5 /* BoardDetailViewModel.swift in Sources */,
 				D1E0186F2ADCEC4B00D1C53D /* AdminLoginView.swift in Sources */,
 				D1E018692ADCEC1A00D1C53D /* AdminRootViewController.swift in Sources */,
@@ -979,6 +986,7 @@
 				0744287B2AE0E2D200EB7D05 /* UserCommunityWriteViewController.swift in Sources */,
 				074428732ADFB36800EB7D05 /* UserCommunityView.swift in Sources */,
 				0744286F2ADD0D8800EB7D05 /* QrCodeView.swift in Sources */,
+				2765F7B22B0304A300C0AFF5 /* LoginUserRegisterView.swift in Sources */,
 				275A12E92AF2152100CC72EE /* BoardDetailContentCell.swift in Sources */,
 				D1E018812ADCEE0000D1C53D /* CustomTextView.swift in Sources */,
 				2730BC8F2ADC206B00BFA23C /* CustomSearchBar.swift in Sources */,

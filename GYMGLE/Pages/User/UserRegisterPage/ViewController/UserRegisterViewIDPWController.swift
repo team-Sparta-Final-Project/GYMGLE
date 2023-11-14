@@ -11,30 +11,34 @@ class UserRegisterViewIDPWController: UIViewController {
     
     let cells = ["회원 이메일","회원 비밀번호","이름","전화번호"]
     
+    var cellData:[String] = []
+    
+    let cellHeight = 45
+    let emptyCellHeight = 24
+    
     var idCell:TextFieldCell = TextFieldCell()
     var pwCell:TextFieldCell = TextFieldCell()
     
-    var needIdPwUser:User?
-    
-    let viewConfigure = UserRegisterView()
+    let viewConfigure = LoginUserRegisterView()
     
     private var isCellEmpty = true
     private var isNotVerified = true
     
     override func loadView() {
-        cellTypeConfigure(cell: cells,labelOrder: [],buttonText: [])
-        // 높이설정
-        heightConfigure(height: 45, empty: 24)
-        
         viewConfigure.textView.isHidden = true
         viewConfigure.button.setTitle(buttonTitle, for: .normal)
         
         view = viewConfigure
+        
+        let maped = cells.map{ [$0] }
+        let joined = Array(maped.joined(separator: [""]))
+        cellData = joined
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.viewConfigure.tableView.myDelegate = self
+        
+        self.viewConfigure.tableView.dataSource = self
         self.viewConfigure.button.backgroundColor = .lightGray
         viewConfigure.button.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         
@@ -103,11 +107,8 @@ extension UserRegisterViewIDPWController {
     func createUser() {
         guard let id = idCell.textField.text else { return }
         guard let pw = pwCell.textField.text else { return }
-        
-        var user = needIdPwUser
-        user?.account.id = id
-        user?.account.password = pw
-        user?.adminUid = DataManager.shared.gymUid!
+
+        let tempUser = User(account: Account(id: id, password: pw, accountType: 1), name: "임시이름", number: "임시번호", startSubscriptionDate: Date(timeIntervalSince1970: 0), endSubscriptionDate: Date(timeIntervalSince1970: 0), userInfo: "임시", isInGym: false, adminUid: "임시")
         
         Auth.auth().createUser(withEmail: id, password: pw) { result, error in
             if let error = error {
@@ -125,7 +126,7 @@ extension UserRegisterViewIDPWController {
                 }
             } else {
                 do {
-                    let userData = try JSONEncoder().encode(user)
+                    let userData = try JSONEncoder().encode(tempUser)
                     let userJSON = try JSONSerialization.jsonObject(with: userData, options: [])
                     
                     if let user = result?.user {
@@ -133,7 +134,7 @@ extension UserRegisterViewIDPWController {
                         userRef.setValue(userJSON)
                         
                     }
-                    Auth.auth().signIn(withEmail: DataManager.shared.id!, password: DataManager.shared.pw!) { result, error in
+                    Auth.auth().signIn(withEmail: id, password: pw) { result, error in
                         if let error = error {
                             print("재로그인 에러")
                         } else {
@@ -174,36 +175,50 @@ extension UserRegisterViewIDPWController {
 }
 
 //UserRegisterViewIDPWController
-extension UserRegisterViewIDPWController: UserTableViewDelegate {
-    func emailButtonTarget(cell: TextFieldCell) {
-        cell.CheckButton.addTarget(self, action: #selector(emailButtonClicked), for: .touchUpInside)
+
+
+extension UserRegisterViewIDPWController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cellData.count
     }
-    
-    func textViewTarget(cell: CustomTextCell) {
-        
-    }
-    
-    func textFieldTarget(cell: TextFieldCell) {
-        if cell.placeHolderLabel.text == "회원 이메일" {
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if cellData[indexPath.row] == "회원 이메일" {
+            let cell = TextFieldCell()
+            cell.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
+            cell.placeHolderLabel.text = cellData[indexPath.row]
+            cell.setButton("인증")
+            cell.CheckButton.addTarget(self, action: #selector(emailButtonClicked), for: .touchUpInside)
             idCell = cell
-        }else if cell.placeHolderLabel.text == "회원 비밀번호"{
+            return cell
+        }else if cellData[indexPath.row] == "회원 비밀번호" {
+            let cell = TextFieldCell()
+            cell.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
+            cell.placeHolderLabel.text = cellData[indexPath.row]
             pwCell = cell
+            return cell
+        }
+        else if cellData[indexPath.row] == "" {
+            return EmptyCell()
+        }
+        else {
+            let cell = TextFieldCell()
+            cell.contentView.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
+            cell.placeHolderLabel.text = cellData[indexPath.row]
+            cell.layer.addBorder([.bottom], color: ColorGuide.shadowBorder, width: 1.0)
+            
+            return cell
+
         }
     }
-    
-    func dateButtonTarget(cell: LabelCell, text: String) {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if cellData[indexPath.row] == "" {
+            return CGFloat(emptyCellHeight)
+        } else {
+            return CGFloat(cellHeight)
+        }
     }
-    
-    func heightConfigure(height: Int, empty: Int) {
-        viewConfigure.tableView.cellHeight = height
-        viewConfigure.tableView.emptyCellHeight = empty
-    }
-    
-    func cellTypeConfigure(cell: [String], labelOrder: [String], buttonText: [String]) {
-        let maped = cell.map{ [$0] }
-        let joined = Array(maped.joined(separator: [""]))
-        viewConfigure.tableView.cellData = joined
-        
-    }
-    
+
 }
+
