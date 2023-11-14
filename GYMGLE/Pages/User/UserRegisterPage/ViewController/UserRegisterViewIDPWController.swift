@@ -2,9 +2,9 @@ import UIKit
 import FirebaseAuth
 import FirebaseCore
 import FirebaseDatabase
+import SwiftSMTP
 
-class UserRegisterViewIDPWController: UIViewController {
-    
+class UserRegisterViewIDPWController: UIViewController {    
     let viewModel = UserRegisterViewModel()
     
     let buttonTitle = "회원가입"
@@ -92,20 +92,38 @@ class UserRegisterViewIDPWController: UIViewController {
         
     }
     
-//    @objc func emailButtonClicked() {
-//        guard let id = idCell.textField.text else {
-//            return
-//        }
-//
-//        // 이메일이 비어있는지 확인
-//        guard !id.isEmpty else {
-//            print("확인할 이메일: \(id)")
-//            showToastStatic(message: "이메일을 입력해 주세요.", view: view)
-//            return
-//        }
-//
-//        
-//    }
+    @objc func emailButtonClicked() {
+        guard let id = idCell.textField.text else {
+            return
+        }
+
+        guard !id.isEmpty else {
+            print("확인할 이메일: \(id)")
+            showToastStatic(message: "이메일을 입력해 주세요.", view: view)
+            return
+        }
+
+        // 백그라운드 스레드에서 이메일 보내기
+        DispatchQueue.global().async {
+            user_email = id
+            self.sendEmail()
+        }
+    }
+
+    func sendEmail() {
+        smtp.send(mail) { (error) in
+            DispatchQueue.main.async {
+                if let error = error {
+                    print("이메일 전송 실패: \(error.localizedDescription)")
+                    // 실패에 대한 처리 (UI 업데이트 등)
+                } else {
+                    print("이메일 전송 성공!")
+                    self.showToastStatic(message: "이메일을 성공적으로 보냈습니다.", view: self.view ?? UIView())
+                    // 성공에 대한 처리 (UI 업데이트 등)
+                }
+            }
+        }
+    }
     
     
 }
@@ -148,6 +166,7 @@ extension UserRegisterViewIDPWController {
                         if let error = error {
                             print("재로그인 에러")
                         } else {
+                            
                             if let user = result?.user {
                                 let ref = Database.database().reference().child("accounts/\(user.uid)/account/accountType")
                                 ref.observeSingleEvent(of: .value) { (snapshot) in
@@ -165,21 +184,32 @@ extension UserRegisterViewIDPWController {
                     }
                     let vc = AdminRootViewController()
                     self.navigationController?.pushViewController(vc, animated: true)
-                    // Firebase에서 이메일 인증 메일을 보내는 코드
-                    Auth.auth().currentUser?.sendEmailVerification { [weak self] (error) in
-                        guard let self = self else { return }
-
-                        if let error = error {
-                            print("이메일 인증 메일 전송 실패: \(error.localizedDescription)")
-                            // TODO: 실패에 대한 처리
-                        } else {
-                            print("이메일 인증 메일 전송 성공!")
-                            // TODO: 성공에 대한 처리
-                            // 여기에 인증 완료 후의 동작을 추가.
-                            self.showToastStatic(message: "이메일 인증 메일을 확인해 주세요.", view: self.view ?? UIView())
-
-                        }
-                    }
+//                    Auth.auth().currentUser?.sendEmailVerification { [weak self] (error) in
+//                        guard let self = self else { return }
+//
+//                        if let error = error {
+//                            print("이메일 인증 메일 전송 실패: \(error.localizedDescription)")
+//                            // TODO: 실패에 대한 처리
+//                        } else {
+//                            print("이메일 인증 메일 전송 성공!")
+//                            // TODO: 성공에 대한 처리
+//                            self.showToastStatic(message: "이메일 인증 메일을 확인해 주세요.", view: self.view ?? UIView())
+//                            
+//                        }
+//                    }
+                    // 사용자의 이메일이 인증되었는지 확인
+//                                    if let user = result?.user {
+//                                        if user.isEmailVerified {
+//                                            // 인증이 완료되면 메인 화면으로 이동
+//                                            let mainVC = UserRootViewController() // UserRootViewController는 실제로 사용하는 화면으로 대체 필요
+//                                            self.navigationController?.pushViewController(mainVC, animated: true)
+//                                        } else {
+//                                            // 인증이 완료되지 않았을 경우 알림
+//                                            let alertController = UIAlertController(title: "이메일 인증", message: "이메일이 인증되지 않았습니다.", preferredStyle: .alert)
+//                                            alertController.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+//                                            self.present(alertController, animated: true, completion: nil)
+//                                        }
+//                                    }
                 } catch {
                     print("JSON 인코딩 에러")
                 }
