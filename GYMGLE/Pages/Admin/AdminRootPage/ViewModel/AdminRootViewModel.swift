@@ -66,7 +66,7 @@ final class AdminRootViewModel {
             delegate?.navigationVC(VC: AdminNoticeViewController())
             break
         case (0, 1):
-            delegate?.navigationVC(VC: UserRegisterViewController())
+            delegate?.navigationVC(VC: UserRegisterDateViewController())
             break
         case (0, 2):
             delegate?.navigationVC(VC: UserManageViewController())

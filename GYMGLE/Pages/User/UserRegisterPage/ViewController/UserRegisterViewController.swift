@@ -99,10 +99,46 @@ private extension UserRegisterViewController {
             startCell.label.text = "등록일 : " + emptyUser.startSubscriptionDate.formatted(date:.complete, time: .omitted)
         }
     }
-
+    func showToast(message: String) {
+        let toastView = ToastView()
+        toastView.configure()
+        toastView.text = message
+        view.addSubview(toastView)
+        toastView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            toastView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            toastView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            toastView.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
+            toastView.heightAnchor.constraint(equalToConstant: view.frame.height / 17),
+        ])
+        UIView.animate(withDuration: 2.5, delay: 0.2) { //2.5초
+            toastView.alpha = 0
+        } completion: { _ in
+            toastView.removeFromSuperview()
+        }
+    }
     //updatedUser
     func userDataUpdate(completion: @escaping() -> Void) {
+        if isCellEmpty {
+            showToast(message: "작성 안된 곳이 있습니다.")
+        }else if isEndDateEmpty {
+            showToast(message: "등록 마감 날짜가 지정되어 있지 않습니다.")
+        }
+        else {
+            let info = self.textViewCell.textView.text
+            if nowEdit {
+                emptyUser.name = nameCell.textField.text ?? ""
+                emptyUser.number = phoneCell.textField.text ?? ""
+                emptyUser.startSubscriptionDate = startDate
+                emptyUser.endSubscriptionDate = endDate
+                emptyUser.userInfo = info ?? "정보없음"
+                
+                viewModel.update(user: emptyUser)
+                navigationController?.popViewController(animated: true)
+            }
+        }
     }
+    
     func setCustomBackButton() {
         navigationController?.navigationBar.topItem?.title = "회원등록"
         navigationController?.navigationBar.tintColor = .black
@@ -171,10 +207,6 @@ extension UserRegisterViewController: BottomSheetControllerDelegate {
 }
 
 extension UserRegisterViewController: UserTableViewDelegate {
-    func emailButtonTarget(cell: TextFieldCell) {
-        
-    }
-    
     func textFieldTarget(cell: TextFieldCell) {
         if cell.placeHolderLabel.text == "이름" {
             nameCell = cell
