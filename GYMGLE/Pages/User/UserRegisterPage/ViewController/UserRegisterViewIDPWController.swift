@@ -70,7 +70,6 @@ class UserRegisterViewIDPWController: UIViewController {
     }
     
     func setCustomBackButton() {
-        navigationController?.navigationBar.topItem?.title = "회원등록"
         navigationController?.navigationBar.tintColor = .black
     }
     
