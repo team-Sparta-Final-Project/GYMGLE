@@ -173,3 +173,4 @@ extension UserRegisterDateViewController: UserTableViewDelegate {
         viewConfigure.tableView.buttonText = buttonText
     }
 }
+
