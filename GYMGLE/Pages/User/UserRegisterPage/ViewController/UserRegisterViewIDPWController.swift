@@ -144,7 +144,7 @@ extension UserRegisterViewIDPWController {
         guard let name = nameCell.textField.text else { return }
         guard let phone = phoneCell.textField.text else { return }
 
-        let tempUser = User(account: Account(id: id, password: pw, accountType: 1), name: name, number: phone, startSubscriptionDate: Date(timeIntervalSince1970: 0), endSubscriptionDate: Date(timeIntervalSince1970: 0), userInfo: "정보없음", isInGym: false, adminUid: "정보없음")
+        let tempUser = User(account: Account(id: id, password: pw, accountType: 1), name: name, number: phone, startSubscriptionDate: Date(timeIntervalSince1970: 0), endSubscriptionDate: Date(timeIntervalSince1970: 0), userInfo: "", isInGym: false, adminUid: "")
         
         Auth.auth().createUser(withEmail: id, password: pw) { result, error in
             if let error = error {

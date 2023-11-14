@@ -14,7 +14,7 @@ final class UserRegisterDateViewController: UIViewController {
     
     let userUid = "9CNxzPW1abevRkJTJPB9dvPRRZw2"
     
-    var emptyUser = User(account: Account(id: "", password: "", accountType: 2), name: "", number: "", startSubscriptionDate: Date(), endSubscriptionDate: Date(), userInfo: "", isInGym: false, adminUid: "DataManager.shared.gymUid!")
+    var emptyUser = User(account: Account(id: "", password: "", accountType: 2), name: "", number: "", startSubscriptionDate: Date(), endSubscriptionDate: Date(), userInfo: "", isInGym: false, adminUid: "")
         
     var startCell:LabelCell = LabelCell()
     var endCell:LabelCell = LabelCell()
