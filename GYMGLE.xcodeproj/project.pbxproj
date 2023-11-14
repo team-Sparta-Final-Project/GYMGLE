@@ -76,6 +76,7 @@
 		63163E6D2AE11EF200186315 /* QRcodeCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */; };
 		63163E6F2AE11F0700186315 /* QRcodeCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */; };
 		632E7F182AF1201E00490C59 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E7F172AF1201E00490C59 /* Board.swift */; };
+		636639C52B033ACD00D5D614 /* QrCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636639C42B033ACD00D5D614 /* QrCodeViewModel.swift */; };
 		636C64552B00C30D00919E45 /* UserMyProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636C64542B00C30D00919E45 /* UserMyProfileViewModel.swift */; };
 		636C64572B00C33B00919E45 /* UserMyProfileUpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636C64562B00C33B00919E45 /* UserMyProfileUpdateViewModel.swift */; };
 		638748512AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638748502AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift */; };
@@ -139,9 +140,9 @@
 		0744287A2AE0E2D200EB7D05 /* UserCommunityWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityWriteViewController.swift; sourceTree = "<group>"; };
 		0761A5212AD93D47002EECED /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = System/Library/Frameworks/Charts.framework; sourceTree = SDKROOT; };
 		078055142AEA08D700DB2F39 /* AdminTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTableView.swift; sourceTree = "<group>"; };
-		07997FF42AD84390002ACFCB /* UserRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootView.swift; path = GYMGLE/Pages/User/UserRootPage/UserRootView.swift; sourceTree = SOURCE_ROOT; };
-		07997FF62AD843A5002ACFCB /* UserRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootViewController.swift; path = GYMGLE/Pages/User/UserRootPage/UserRootViewController.swift; sourceTree = SOURCE_ROOT; };
-		07997FF82AD843BD002ACFCB /* UserRootModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootModel.swift; path = GYMGLE/Pages/User/UserRootPage/UserRootModel.swift; sourceTree = SOURCE_ROOT; };
+		07997FF42AD84390002ACFCB /* UserRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootView.swift; path = GYMGLE/Pages/User/UserRootPage/View/UserRootView.swift; sourceTree = SOURCE_ROOT; };
+		07997FF62AD843A5002ACFCB /* UserRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootViewController.swift; path = GYMGLE/Pages/User/UserRootPage/ViewController/UserRootViewController.swift; sourceTree = SOURCE_ROOT; };
+		07997FF82AD843BD002ACFCB /* UserRootModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRootModel.swift; path = GYMGLE/Pages/User/UserRootPage/ViewModel/UserRootModel.swift; sourceTree = SOURCE_ROOT; };
 		07E23F6C2B01A9DB00406FFD /* UserRootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRootViewModel.swift; sourceTree = "<group>"; };
 		07E23F752B03141C00406FFD /* EmailSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSender.swift; sourceTree = "<group>"; };
 		2730BBB42AD6668200BFA23C /* GYMGLE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GYMGLE.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -190,6 +191,7 @@
 		63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckViewController.swift; sourceTree = "<group>"; };
 		63163E6E2AE11F0700186315 /* QRcodeCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRcodeCheckView.swift; sourceTree = "<group>"; };
 		632E7F172AF1201E00490C59 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		636639C42B033ACD00D5D614 /* QrCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QrCodeViewModel.swift; sourceTree = "<group>"; };
 		636C64542B00C30D00919E45 /* UserMyProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyProfileViewModel.swift; sourceTree = "<group>"; };
 		636C64562B00C33B00919E45 /* UserMyProfileUpdateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyProfileUpdateViewModel.swift; sourceTree = "<group>"; };
 		638748502AF7F11600D01E66 /* UserMyProfileBoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMyProfileBoardTableViewCell.swift; sourceTree = "<group>"; };
@@ -407,12 +409,9 @@
 		2730BC392AD8084600BFA23C /* UserRootPage */ = {
 			isa = PBXGroup;
 			children = (
-				07E23F6C2B01A9DB00406FFD /* UserRootViewModel.swift */,
-				07997FF42AD84390002ACFCB /* UserRootView.swift */,
-				07997FF82AD843BD002ACFCB /* UserRootModel.swift */,
-				07997FF62AD843A5002ACFCB /* UserRootViewController.swift */,
-				0744286E2ADD0D8800EB7D05 /* QrCodeView.swift */,
-				0744286C2ADD0B1B00EB7D05 /* QrCodeViewController.swift */,
+				636639C32B033AB100D5D614 /* ViewController */,
+				636639C22B033AA000D5D614 /* View */,
+				636639C12B033A8E00D5D614 /* ViewModel */,
 			);
 			path = UserRootPage;
 			sourceTree = "<group>";
@@ -652,6 +651,34 @@
 			isa = PBXGroup;
 			children = (
 				63163E6C2AE11EF200186315 /* QRcodeCheckViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		636639C12B033A8E00D5D614 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				07997FF82AD843BD002ACFCB /* UserRootModel.swift */,
+				07E23F6C2B01A9DB00406FFD /* UserRootViewModel.swift */,
+				636639C42B033ACD00D5D614 /* QrCodeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		636639C22B033AA000D5D614 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				07997FF42AD84390002ACFCB /* UserRootView.swift */,
+				0744286E2ADD0D8800EB7D05 /* QrCodeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		636639C32B033AB100D5D614 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				07997FF62AD843A5002ACFCB /* UserRootViewController.swift */,
+				0744286C2ADD0B1B00EB7D05 /* QrCodeViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1036,6 +1063,7 @@
 				D16920A72ADFBB9F00BE1A2B /* UserMyPageView.swift in Sources */,
 				275A12E12AF1FEEB00CC72EE /* BoardDetailCommentCell.swift in Sources */,
 				2730BC972ADC2DF500BFA23C /* ManageLabelCell.swift in Sources */,
+				636639C52B033ACD00D5D614 /* QrCodeViewModel.swift in Sources */,
 				630CE1622ADD62AD001EC547 /* DataManager.swift in Sources */,
 				D1E0187E2ADCEE0000D1C53D /* EmptyCell.swift in Sources */,
 				2765F7A72B01ADEB00C0AFF5 /* UserRegisterViewModel.swift in Sources */,

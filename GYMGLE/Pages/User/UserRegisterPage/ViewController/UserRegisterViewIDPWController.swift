@@ -181,7 +181,7 @@ extension UserRegisterViewIDPWController {
                                     if let accountType = snapshot.value as? Int {
                                         if accountType == 1 {
                                             let adminRootVC = AdminRootViewController()
-                                            adminRootVC.isAdmin = false
+                                            adminRootVC.viewModel.isAdmin = false
                                             self.navigationController?.pushViewController(adminRootVC, animated: true)
                                             return
                                         }

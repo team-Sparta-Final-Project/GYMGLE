@@ -12,8 +12,6 @@ import FirebaseStorage
 
 final class UserMyProfileUpdateViewModel {
     
-    
-    
     // 이미지를 스토리지에 올리기
     func uploadImage(image: UIImage, completion: @escaping (URL?) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.2) else { return }
@@ -34,16 +32,35 @@ final class UserMyProfileUpdateViewModel {
 //        }
     }
     
-    func saveProfile(newProfile: Profile, completion: @escaping () -> Void) {
+    func saveProfile(newProfile: Profile) {
         let ref = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/profile")
         do {
             let profileData = try JSONEncoder().encode(newProfile)
             let profileJSON = try JSONSerialization.jsonObject(with: profileData, options: [])
             ref.setValue(profileJSON)
-            completion()
         } catch {
             print("테스트 - error")
+        }
+    }
+    
+    func viewDisappearEvent(image: UIImage, nickName: String, completion: @escaping () -> Void) {
+        self.uploadImage(image: image) { url in
+            guard let url = url else { return }
+            let myProfile = Profile(image: url, nickName: nickName)
+            DataManager.shared.profile = myProfile
+            self.saveProfile(newProfile: myProfile)
             completion()
+        }
+    }
+    
+    func nickNameDuplicateCheck(target: String, completion: @escaping (Bool) -> Void) {
+        let ref = Database.database().reference().child("accounts")
+        ref.queryOrdered(byChild: "profile/nickName").queryEqual(toValue: target).observeSingleEvent(of: .value) { snapshot in
+            if snapshot.exists() {
+                completion(true)
+                return
+            }
+            completion(false)
         }
     }
 }

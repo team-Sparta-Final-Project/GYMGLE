@@ -83,7 +83,7 @@ extension AdminLoginViewController: LoginViewModelDelegate {
     
     func trainerLogin() {
         let adminRootVC = AdminRootViewController()
-        adminRootVC.isAdmin = false
+        adminRootVC.viewModel.isAdmin = false
         let vc = UINavigationController(rootViewController: adminRootVC)
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)

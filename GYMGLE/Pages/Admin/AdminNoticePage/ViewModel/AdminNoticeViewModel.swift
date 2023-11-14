@@ -5,15 +5,18 @@
 //  Created by 박성원 on 11/11/23.
 //
 
-import UIKit
+import Foundation
 import FirebaseAuth
 import FirebaseDatabase
+import Combine
 
-final class AdminNoticeViewModel {
+
+final class AdminNoticeViewModel: ObservableObject {
     
     
     private let ref = Database.database().reference()
     private let userID = Auth.auth().currentUser?.uid
+    @Published var isAdmin: Bool = true
     
     private var dataManager: DataManager
     

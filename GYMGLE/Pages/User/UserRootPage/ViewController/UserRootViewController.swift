@@ -110,7 +110,7 @@ class UserRootViewController: UIViewController {
     
     @objc func inButtonClick() {
         let QrCodeViewController = QrCodeViewController()
-        QrCodeViewController.user = DataManager.shared.userInfo
+        //QrCodeViewController.user = DataManager.shared.userInfo
         self.present(QrCodeViewController, animated: true)
     }
     
