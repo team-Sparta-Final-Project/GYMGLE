@@ -169,28 +169,9 @@ extension UserRegisterViewIDPWController {
                         userRef.setValue(userJSON)
                         
                     }
-                    Auth.auth().signIn(withEmail: id, password: pw) { result, error in
-                        if let error = error {
-                            print("재로그인 에러")
-                        } else {
-                            
-                            if let user = result?.user {
-                                let ref = Database.database().reference().child("accounts/\(user.uid)/account/accountType")
-                                ref.observeSingleEvent(of: .value) { (snapshot) in
-                                    if let accountType = snapshot.value as? Int {
-                                        if accountType == 1 {
-                                            let adminRootVC = AdminRootViewController()
-                                            adminRootVC.viewModel.isAdmin = false
-                                            self.navigationController?.pushViewController(adminRootVC, animated: true)
-                                            return
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
                     let vc = QrCodeViewController()
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
 //                    Auth.auth().currentUser?.sendEmailVerification { [weak self] (error) in
 //                        guard let self = self else { return }
 //

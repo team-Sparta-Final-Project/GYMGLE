@@ -71,7 +71,7 @@ extension QrCodeViewController {
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
             self.viewModel.deleteAccount {
-                self.navigationController?.pushViewController(AdminLoginViewController(), animated: true)
+                self.dismiss(animated: true)
             }
         }))
         alert.addAction(UIAlertAction(title: "취소", style: .cancel))

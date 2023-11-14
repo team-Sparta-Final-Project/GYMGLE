@@ -228,19 +228,21 @@ class LoginViewModel {
                         }
                         // 회원 일때
                     } else if accountType == 2 {
-                        do {
-                            let userInfoData = try JSONSerialization.data(withJSONObject: userData, options: [])
-                            let userInfo = try JSONDecoder().decode(User.self, from: userInfoData)
-                            DataManager.shared.userInfo = userInfo
-                        } catch {
-                            print("Decoding error: \(error.localizedDescription)")
+                        if adminUid == "임시" {
+                            self.delegate?.tempLogin()
+                        } else {
+                            do {
+                                let userInfoData = try JSONSerialization.data(withJSONObject: userData, options: [])
+                                let userInfo = try JSONDecoder().decode(User.self, from: userInfoData)
+                                DataManager.shared.userInfo = userInfo
+                            } catch {
+                                print("Decoding error: \(error.localizedDescription)")
+                            }
+                            DataManager.shared.gymUid = adminUid
+                            self.getGymInfo() {
+                                self.delegate?.userLogin()
+                            }
                         }
-                        DataManager.shared.gymUid = adminUid
-                        self.getGymInfo() {
-                            self.delegate?.userLogin()
-                        }
-                    } else if adminUid == "임시" {
-                        self.delegate?.tempLogin()
                     }
                 }
             }
