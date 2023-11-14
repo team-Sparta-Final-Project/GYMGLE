@@ -10,7 +10,7 @@ import FirebaseDatabase
 import Foundation
 import Combine
 
-final class AdminRootViewModel {
+final class AdminRootViewModel: ObservableObject {
     
     let ref = Database.database().reference()
     var dataManager: DataManager

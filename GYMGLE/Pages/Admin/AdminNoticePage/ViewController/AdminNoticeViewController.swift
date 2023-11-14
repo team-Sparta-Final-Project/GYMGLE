@@ -6,16 +6,15 @@
 //
 
 import UIKit
-import FirebaseAuth
-import FirebaseCore
-import FirebaseDatabase
+import Combine
 
 final class AdminNoticeViewController: UIViewController {
     
     // MARK: - properties
     private let adminNoticeView = AdminNoticeView()
-    private var viewModel: AdminNoticeViewModel!
-    var isAdmin: Bool?
+    var viewModel: AdminNoticeViewModel = AdminNoticeViewModel()
+    var disposableBag = Set<AnyCancellable>()
+
     // MARK: - life cycle
     override func loadView() {
         view = adminNoticeView
@@ -24,7 +23,6 @@ final class AdminNoticeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
-        viewModel = AdminNoticeViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,12 +46,20 @@ private extension AdminNoticeViewController {
     }
     func buttonTappedSetting() {
         adminNoticeView.noticeCreateButton.addTarget(self, action: #selector(noticeCreateButtonTapped), for: .touchUpInside)
-        switch isAdmin {
-        case false: 
-            adminNoticeView.noticeCreateButton.isHidden = true
-        default:
-            adminNoticeView.noticeCreateButton.isHidden = false
-        }
+        self.viewModel.$isAdmin.sink { isAdmin in
+            switch isAdmin {
+            case false:
+                self.adminNoticeView.noticeCreateButton.isHidden = true
+            default:
+                self.adminNoticeView.noticeCreateButton.isHidden = false
+            }
+        }.store(in: &disposableBag)
+//        switch isAdmin {
+//        case false: 
+//            adminNoticeView.noticeCreateButton.isHidden = true
+//        default:
+//            adminNoticeView.noticeCreateButton.isHidden = false
+//        }
     }
     func tableSetting() {
         adminNoticeView.noticeTableView.dataSource = self
@@ -104,7 +110,7 @@ extension AdminNoticeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let adminNoticeDetailVC = AdminNoticeDetailViewController()
-        adminNoticeDetailVC.isUser = isAdmin
+        adminNoticeDetailVC.isUser = viewModel.isAdmin
         adminNoticeDetailVC.noticeInfo = viewModel.notice.sorted{ $0.date > $1.date }[indexPath.section]
         navigationController?.pushViewController(adminNoticeDetailVC, animated: true)
     }

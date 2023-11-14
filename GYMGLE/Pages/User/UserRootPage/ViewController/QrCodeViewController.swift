@@ -30,7 +30,7 @@ final class QrCodeViewController: UIViewController {
 private extension QrCodeViewController {
     
     func configuredView() {
-        if self.viewModel.dataManager.userInfo?.adminUid == "default" { // 첫 등록 화면 시 큐알 코드
+        if self.viewModel.dataManager.userInfo?.adminUid == "임시" { // 첫 등록 화면 시 큐알 코드
             guard let userUid = Auth.auth().currentUser?.uid else {return}
             let qrCodeImage = viewModel.generateQRCode(data: "\(userUid)")
             let welcomeName = "사장님께 보여주시면 등록이 됩니다."
