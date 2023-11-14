@@ -38,7 +38,7 @@ final class TabbarViewController: UITabBarController {
                 
         //let qrCodeVC =  BoardDetailViewController() //테스트코드 나중에 지울것
         let qrCodeVC =  QrCodeViewController() //테스트코드 나중에 지울것
-        qrCodeVC.isHidden = false
+        qrCodeVC.viewModel.isHidden = false
         let myVC = UINavigationController(rootViewController: UserMyPageViewController())
         
 
