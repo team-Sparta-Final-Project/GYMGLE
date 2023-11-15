@@ -11,7 +11,6 @@ import Foundation
 struct Account: Codable { // 계정
     
     var id: String
-    var password: String
     var accountType: Int // enum 으로 할 것 ❗️
 }
 

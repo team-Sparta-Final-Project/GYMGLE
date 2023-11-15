@@ -160,7 +160,7 @@ extension AdminRegisterViewModel {
     
     // MARK: - 회원가입
     func createUser(id: String, pw: String, gymName: String, gymPhoneNumber: String, gymNumber: String) {
-        let gymInfo = GymInfo(gymAccount: Account(id: id, password: pw, accountType: 0),
+        let gymInfo = GymInfo(gymAccount: Account(id: id, accountType: 0),
                               gymName: gymName,
                               gymPhoneNumber: gymPhoneNumber,
                               gymnumber: gymNumber)

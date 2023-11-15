@@ -73,7 +73,6 @@ class UserRegisterViewIDPWController: UIViewController {
     }
     
     func setCustomBackButton() {
-        navigationController?.navigationBar.topItem?.title = "회원등록"
         navigationController?.navigationBar.tintColor = .black
     }
     
@@ -228,7 +227,7 @@ extension UserRegisterViewIDPWController {
         guard let name = nameCell.textField.text else { return }
         guard let phone = phoneCell.textField.text else { return }
 
-        let tempUser = User(account: Account(id: id, password: pw, accountType: 1), name: name, number: phone, startSubscriptionDate: Date(timeIntervalSince1970: 0), endSubscriptionDate: Date(timeIntervalSince1970: 0), userInfo: "", isInGym: false, adminUid: "")
+        let tempUser = User(account: Account(id: id, accountType: 2), name: name, number: phone, startSubscriptionDate: Date(timeIntervalSince1970: 0), endSubscriptionDate: Date(timeIntervalSince1970: 0), userInfo: "임시", isInGym: false, adminUid: "임시")
         
         Auth.auth().createUser(withEmail: id, password: pw) { result, error in
             if let error = error {
@@ -254,28 +253,9 @@ extension UserRegisterViewIDPWController {
                         userRef.setValue(userJSON)
                         
                     }
-                    Auth.auth().signIn(withEmail: id, password: pw) { result, error in
-                        if let error = error {
-                            print("재로그인 에러")
-                        } else {
-                            
-                            if let user = result?.user {
-                                let ref = Database.database().reference().child("accounts/\(user.uid)/account/accountType")
-                                ref.observeSingleEvent(of: .value) { (snapshot) in
-                                    if let accountType = snapshot.value as? Int {
-                                        if accountType == 1 {
-                                            let adminRootVC = AdminRootViewController()
-                                            adminRootVC.viewModel.isAdmin = false
-                                            self.navigationController?.pushViewController(adminRootVC, animated: true)
-                                            return
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    let vc = AdminRootViewController()
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    let vc = QrCodeViewController()
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
 //                    Auth.auth().currentUser?.sendEmailVerification { [weak self] (error) in
 //                        guard let self = self else { return }
 //
