@@ -5,6 +5,8 @@ import Combine
 class UserRegisterViewModel: ObservableObject {
     let ref = Database.database().reference()
     
+
+    
     func update(user:User){
         do {
             let userData = try JSONEncoder().encode(user)

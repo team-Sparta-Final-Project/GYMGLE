@@ -184,7 +184,8 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
                 self.captureSession.stopRunning()
                 let userRegisterDateVC = UserRegisterDateViewController()
                 userRegisterDateVC.userUid = stringValue
-                self.navigationController?.pushViewController(userRegisterDateVC, animated: true)
+                userRegisterDateVC.modalPresentationStyle = .fullScreen
+                self.present(userRegisterDateVC, animated: true)
             } else {
                 showToast(message: "회원이 아닙니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
                 self.captureSession.stopRunning()

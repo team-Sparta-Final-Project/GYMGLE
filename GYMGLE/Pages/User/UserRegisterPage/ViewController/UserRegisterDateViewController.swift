@@ -20,7 +20,11 @@ final class UserRegisterDateViewController: UIViewController {
     var endCell:LabelCell = LabelCell()
     var textViewCell:CustomTextCell = CustomTextCell()
     
-    private var isEndDateEmpty = true
+    private var isEndDateEmpty = true {
+        didSet{
+            self.viewConfigure.button.backgroundColor = ColorGuide.main
+        }
+    }
     
     var startDate = Date()
     var endDate = Date(timeIntervalSinceNow: 60*60*24*30)
@@ -119,7 +123,7 @@ extension UserRegisterDateViewController {
     @objc private func buttonClicked(){
         DispatchQueue.main.async {
             self.userDataUpdate {
-                self.navigationController?.popViewController(animated: true)
+                self.dismiss(animated: true)
             }
         }
     }
