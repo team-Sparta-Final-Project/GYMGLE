@@ -5,6 +5,11 @@ import FirebaseDatabase
 import SwiftSMTP
 
 class UserRegisterViewIDPWController: UIViewController {    
+    
+    var isEmailVerified = false
+    
+    var verificationCodeTextField: UITextField!
+    
     let viewModel = UserRegisterViewModel()
     
     let buttonTitle = "회원가입"
@@ -61,14 +66,17 @@ class UserRegisterViewIDPWController: UIViewController {
         viewConfigure.endEditing(true)
     }
     
-    private func buttonOnCheck(){
-        if isCellEmpty{
+    private func buttonOnCheck() {
+        if isCellEmpty {
             self.viewConfigure.button.backgroundColor = .lightGray
-        }else{
-            self.viewConfigure.button.backgroundColor = ColorGuide.main
+        } else {
+            if isEmailVerified {
+                self.viewConfigure.button.backgroundColor = ColorGuide.main
+            } else {
+                self.viewConfigure.button.backgroundColor = .lightGray
+            }
         }
     }
-    
     func setCustomBackButton() {
         navigationController?.navigationBar.tintColor = .black
     }
@@ -82,41 +90,40 @@ class UserRegisterViewIDPWController: UIViewController {
         }
         buttonOnCheck()
     }
-    
-    @objc func buttonClicked(){
-        if isCellEmpty{
+    @objc func buttonClicked() {
+        if isCellEmpty {
             self.showToastStatic(message: "모든 칸을 입력해 주세요.", view: self.view)
+        } else {
+            if isEmailVerified {
+                createUser()
+            } else {
+                self.showToastStatic(message: "이메일 인증이 필요합니다.", view: self.view)
+            }
         }
-        else {
-            createUser()
-        }
-        
-        
     }
     
     @objc func emailButtonClicked() {
         guard let id = idCell.textField.text else {
             return
         }
-
         // 이메일이 비어있는지 확인
-
         guard !id.isEmpty else {
             print("확인할 이메일: \(id)")
             showToastStatic(message: "이메일을 입력해 주세요.", view: view)
             return
         }
-
-
         // 백그라운드 스레드에서 이메일 보내기
         DispatchQueue.global().async {
             user_email = id
             self.sendEmail()
+            print(user_email)
+            print(content)
         }
     }
-
+    
     func sendEmail() {
         smtp.send(mail) { (error) in
+            print(error)
             DispatchQueue.main.async {
                 if let error = error {
                     print("이메일 전송 실패: \(error.localizedDescription)")
@@ -125,11 +132,46 @@ class UserRegisterViewIDPWController: UIViewController {
                     print("이메일 전송 성공!")
                     self.showToastStatic(message: "이메일을 성공적으로 보냈습니다.", view: self.view ?? UIView())
                     // 성공에 대한 처리 (UI 업데이트 등)
+                    self.showVerificationCodeInputAlert()
                 }
             }
         }
     }
     
+    func showVerificationCodeInputAlert() {
+        let alertController = UIAlertController(title: "인증 코드 입력", message: "이메일로 전송된 코드를 입력하세요.", preferredStyle: .alert)
+
+        alertController.addTextField { textField in
+            textField.placeholder = "인증 코드"
+        }
+
+        let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            guard let verificationCode = alertController.textFields?.first?.text, !verificationCode.isEmpty else {
+                // 인증 코드가 비어있는 경우
+                self?.showToastStatic(message: "인증 코드를 입력해 주세요.", view: self?.view ?? UIView())
+                return
+            }
+
+            // TODO: 입력된 인증 코드를 검증하는 로직을 추가 (서버에서 확인하거나, 이메일로 전송된 코드와 비교 등)
+
+            if verificationCode == certiNumber {
+                self?.showToastStatic(message: "이메일 인증이 성공했습니다.", view: self?.view ?? UIView())
+                self?.isEmailVerified = true
+                self?.buttonOnCheck() // 버튼 색상 업데이트
+                // TODO: 인증 성공 시 추가 처리 로직을 여기에 추가
+            } else {
+                self?.showToastStatic(message: "인증 코드가 일치하지 않습니다.", view: self?.view ?? UIView())
+            }
+        }
+
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
+    }
+
     
 }
 
@@ -172,32 +214,6 @@ extension UserRegisterViewIDPWController {
                     let vc = QrCodeViewController()
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
-//                    Auth.auth().currentUser?.sendEmailVerification { [weak self] (error) in
-//                        guard let self = self else { return }
-//
-//                        if let error = error {
-//                            print("이메일 인증 메일 전송 실패: \(error.localizedDescription)")
-//                            // TODO: 실패에 대한 처리
-//                        } else {
-//                            print("이메일 인증 메일 전송 성공!")
-//                            // TODO: 성공에 대한 처리
-//                            self.showToastStatic(message: "이메일 인증 메일을 확인해 주세요.", view: self.view ?? UIView())
-//                            
-//                        }
-//                    }
-                    // 사용자의 이메일이 인증되었는지 확인
-//                                    if let user = result?.user {
-//                                        if user.isEmailVerified {
-//                                            // 인증이 완료되면 메인 화면으로 이동
-//                                            let mainVC = UserRootViewController() // UserRootViewController는 실제로 사용하는 화면으로 대체 필요
-//                                            self.navigationController?.pushViewController(mainVC, animated: true)
-//                                        } else {
-//                                            // 인증이 완료되지 않았을 경우 알림
-//                                            let alertController = UIAlertController(title: "이메일 인증", message: "이메일이 인증되지 않았습니다.", preferredStyle: .alert)
-//                                            alertController.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
-//                                            self.present(alertController, animated: true, completion: nil)
-//                                        }
-//                                    }
                 } catch {
                     print("JSON 인코딩 에러")
                 }
