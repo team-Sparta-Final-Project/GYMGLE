@@ -44,27 +44,21 @@ final class QrCodeViewModel: ObservableObject { //ObservableObject: 이벤트를
         } catch _ as NSError { }
     }
     
-    func deleteAccount(completion: @escaping () -> Void) {
-        // 계정 삭제
+    func deleteAccount(completion: @escaping () -> ()) {
         if let user = Auth.auth().currentUser {
             user.delete { error in
-                if error != nil {
-                } else {}
-            }
-            //탈퇴한 헬스장의 유저들 삭제
-            let ref = Database.database().reference()
-            let query = ref.child("accounts").queryOrdered(byChild: "account/id").queryEqual(toValue: DataManager.shared.userInfo?.account.id)
-            query.observeSingleEvent(of: .value) { snapshot in
-                for child in snapshot.children {
-                    if let snapshot = child as? DataSnapshot {
-                        snapshot.ref.removeValue()
-                    }
+                if let error = error {
+                    print("delete Error : ", error)
+                } else {
+                    self.signOut()
+                    let userRef = Database.database().reference().child("accounts").child(user.uid)
+                    userRef.removeValue()
+                    completion()
                 }
             }
-            self.signOut()
         } else {}
-        completion()
     }
+    
     func getAdminUid() {
         let ref = Database.database().reference().child("accounts")
         ref.child("\(Auth.auth().currentUser!.uid)").child("adminUid").observeSingleEvent(of: .value) { DataSnapshot in

@@ -21,7 +21,6 @@ final class QRcodeCheckViewController: UIViewController {
         super.viewDidLoad()
         qrCodeSetting()
         readAdminUid()
-        readUserUid()
     }
 }
 
@@ -118,25 +117,16 @@ private extension QRcodeCheckViewController {
         }
     }
     
-//    func readUser(){ -> 전페이지에서 이름과 전화번호, 이메일, 비밀번호 db에 저장하면 이걸로 쓰면 됨 (전페이지 이메일 텍스트필드 받아오기)❌못씀 ? 관리자는 이메일 주소 모름
-//        let ref = Database.database().reference().child("accounts")
-//        let query = ref.queryOrdered(byChild: "account/id").queryEqual(toValue: "apple2@gmail.com")
-//        query.observeSingleEvent(of: .value) { snapshot in
-//            guard let userSnapshot = snapshot.value as? [String:[String:Any]] else {
-//                return
-//            }
-//            print("테스트 - \(userSnapshot.keys)")
-//        }
-//    }
-    
-    func readUserUid() { // -> 전페이지에서 이름과 전화번호, 이메일, 비밀번호 db에 저장해서 uid로 저장이 되면 uid 다가져와서 그 중에 있으면 찍히는 걸로 하기
+    func readUserUid(completion: @escaping () -> Void) {
         self.userUidList.removeAll()
         let ref = Database.database().reference().child("accounts")
-        ref.observeSingleEvent(of: .value) { snapshot in
+        let query = ref.queryOrdered(byChild: "adminUid").queryEqual(toValue: "임시")
+        query.observeSingleEvent(of: .value) { snapshot in
             guard let userSnapshot = snapshot.value as? [String:[String:Any]] else {
                 return
             }
             self.userUidList.append(contentsOf: userSnapshot.keys)
+            completion()
         }
     }
     
@@ -173,26 +163,28 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject, let stringValue = readableObject.stringValue else {
                 return
             }
-            if (DataManager.shared.userList.first(where: {$0.account.id == stringValue}) != nil) {
-                createdInAndOutLog(id: stringValue)
-                
-                showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
-                self.captureSession.stopRunning()
-                AudioServicesPlaySystemSound(SystemSoundID(1000))
-            } else if (userUidList.first(where: {$0 == stringValue}) != nil) {
-                showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
-                self.captureSession.stopRunning()
-                let userRegisterDateVC = UserRegisterDateViewController()
-                userRegisterDateVC.userUid = stringValue
-                userRegisterDateVC.modalPresentationStyle = .fullScreen
-                self.present(userRegisterDateVC, animated: true)
-            } else {
-                showToast(message: "회원이 아닙니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
-                self.captureSession.stopRunning()
-                AudioServicesPlaySystemSound(SystemSoundID(1006))
+            readUserUid {
+                if (DataManager.shared.userList.first(where: {$0.account.id == stringValue}) != nil) {
+                    self.createdInAndOutLog(id: stringValue)
+                    
+                    self.showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
+                    self.captureSession.stopRunning()
+                    AudioServicesPlaySystemSound(SystemSoundID(1000))
+                } else if (self.userUidList.first(where: {$0 == stringValue}) != nil) {
+                    
+                    self.showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
+                    self.captureSession.stopRunning()
+                    let userRegisterDateVC = UserRegisterDateViewController()
+                    userRegisterDateVC.userUid = stringValue
+                    userRegisterDateVC.modalPresentationStyle = .fullScreen
+                    self.present(userRegisterDateVC, animated: true)
+                } else {
+                    self.showToast(message: "회원이 아닙니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
+                    self.captureSession.stopRunning()
+                    AudioServicesPlaySystemSound(SystemSoundID(1006))
+                }
             }
             readAdminUid()
-            readUserUid()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 self.captureSession.startRunning()
             }
