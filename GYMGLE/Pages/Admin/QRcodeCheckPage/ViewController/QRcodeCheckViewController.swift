@@ -7,25 +7,25 @@
 
 import UIKit
 import AVFoundation
-import FirebaseDatabase
-import FirebaseAuth
+import Combine
 
 final class QRcodeCheckViewController: UIViewController {
     
     // MARK: - properties
     // 실시간 캡처를 수행하기 선언(AVCaptureSession: 오디오 및 비디오 데이터 스트림을 캡처하고 처리하기 위한 핵심 구성 요소)
     private let captureSession = AVCaptureSession()
-    private var userUidList: [String] = []
+    var viewModel: QRCodeCheckViewModel = QRCodeCheckViewModel()
+    var disposableBag = Set<AnyCancellable>()
+    
     // MARK: - lifr cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         qrCodeSetting()
-        readAdminUid()
+        viewModel.readAdminUid()
     }
 }
 
 // MARK: - extension custom func
-
 private extension QRcodeCheckViewController {
     
     func qrCodeSetting() {
@@ -51,17 +51,13 @@ private extension QRcodeCheckViewController {
             
             // QR 코드 제한영역 설정
             output.rectOfInterest = rectConverted
-            
             setGuideCrossLineView()
-           
             // input 에서 output 으로의 데이터 흐름을 시작
             DispatchQueue.main.async {
                 self.captureSession.startRunning()
             }
-            
         }
-        catch {
-        }
+        catch {}
     }
     func setVideoLayer(rectOfInterest: CGRect) -> CGRect{
         let videoLayer = AVCaptureVideoPreviewLayer(session: captureSession)
@@ -99,51 +95,6 @@ private extension QRcodeCheckViewController {
     @objc func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
-
-    func readAdminUid(){
-        let ref = Database.database().reference().child("accounts")
-        let query = ref.queryOrdered(byChild: "adminUid").queryEqual(toValue: DataManager.shared.gymUid)
-        query.observeSingleEvent(of: .value) { snapshot in
-            guard let userSnapshot = snapshot.value as? [String:[String:Any]] else {
-                return
-            }
-            do {
-                let jsonArray = userSnapshot.values.compactMap { $0 as [String: Any] }
-                let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
-                let user = try JSONDecoder().decode([User].self, from: jsonData)
-                DataManager.shared.userList = user
-            } catch let error {
-            }
-        }
-    }
-    
-    func readUserUid(completion: @escaping () -> Void) {
-        self.userUidList.removeAll()
-        let ref = Database.database().reference().child("accounts")
-        let query = ref.queryOrdered(byChild: "adminUid").queryEqual(toValue: "임시")
-        query.observeSingleEvent(of: .value) { snapshot in
-            guard let userSnapshot = snapshot.value as? [String:[String:Any]] else {
-                return
-            }
-            self.userUidList.append(contentsOf: userSnapshot.keys)
-            completion()
-        }
-    }
-    
-    func createdInAndOutLog(id: String) { //큐알코드를 찍었을 때
-        let ref = Database.database().reference().child("users").child(DataManager.shared.gymUid!)
-        if let currentedTimePlusOne = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) {
-            let nAndOutLog = InAndOut(id: id, inTime: Date(), outTime: currentedTimePlusOne, sinceInAndOutTime: 0.0)
-            do {
-                let inAndOutLogData = try JSONEncoder().encode(nAndOutLog)
-                let inAndOutLogJSON = try JSONSerialization.jsonObject(with: inAndOutLogData, options: [])
-                ref.child("gymInAndOutLog").childByAutoId().setValue(inAndOutLogJSON)
-            } catch {
-                
-            }
-        }
-    }
-
 }
 // MARK: - AVCaptureMetadataOutputObjectsDelegate
 
@@ -163,28 +114,29 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject, let stringValue = readableObject.stringValue else {
                 return
             }
-            readUserUid {
-                if (DataManager.shared.userList.first(where: {$0.account.id == stringValue}) != nil) {
-                    self.createdInAndOutLog(id: stringValue)
-                    
-                    self.showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
-                    self.captureSession.stopRunning()
-                    AudioServicesPlaySystemSound(SystemSoundID(1000))
-                } else if (self.userUidList.first(where: {$0 == stringValue}) != nil) {
-                    
-                    self.showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
-                    self.captureSession.stopRunning()
-                    let userRegisterDateVC = UserRegisterDateViewController()
-                    userRegisterDateVC.userUid = stringValue
-                    userRegisterDateVC.modalPresentationStyle = .fullScreen
-                    self.present(userRegisterDateVC, animated: true)
-                } else {
-                    self.showToast(message: "회원이 아닙니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
-                    self.captureSession.stopRunning()
-                    AudioServicesPlaySystemSound(SystemSoundID(1006))
-                }
+            viewModel.readUserUid {
+                self.viewModel.$userUidList.sink { [weak self] in
+                    guard let self = self else {return}
+                    if (DataManager.shared.userList.first(where: {$0.account.id == stringValue}) != nil) {
+                        self.viewModel.createdInAndOutLog(id: stringValue)
+                        self.showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
+                        self.captureSession.stopRunning()
+                        AudioServicesPlaySystemSound(SystemSoundID(1000))
+                    } else if ($0.first(where: {$0 == stringValue}) != nil) {
+                        self.showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
+                        self.captureSession.stopRunning()
+                        let userRegisterDateVC = UserRegisterDateViewController()
+                        userRegisterDateVC.userUid = stringValue
+                        userRegisterDateVC.modalPresentationStyle = .fullScreen
+                        self.present(userRegisterDateVC, animated: true)
+                    } else {
+                        self.showToast(message: "회원이 아닙니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
+                        self.captureSession.stopRunning()
+                        AudioServicesPlaySystemSound(SystemSoundID(1006))
+                    }
+                }.store(in: &self.disposableBag)
             }
-            readAdminUid()
+            self.viewModel.readAdminUid()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 self.captureSession.startRunning()
             }
