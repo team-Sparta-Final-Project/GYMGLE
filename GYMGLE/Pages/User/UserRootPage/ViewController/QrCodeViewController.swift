@@ -25,6 +25,15 @@ final class QrCodeViewController: UIViewController {
         super.viewDidLoad()
         viewModel.getAdminUid()
         configuredView()
+        
+        viewModel.observe {
+            self.dismiss(animated: true)
+            self.navigationController?.popViewController(animated: true)
+            let vc = TabbarViewController()
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true)
+            
+        }
     }
 }
 

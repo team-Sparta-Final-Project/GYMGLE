@@ -185,7 +185,7 @@ extension UserRegisterViewIDPWController {
         guard let name = nameCell.textField.text else { return }
         guard let phone = phoneCell.textField.text else { return }
 
-        let tempUser = User(account: Account(id: id, accountType: 2), name: name, number: phone, startSubscriptionDate: Date(timeIntervalSince1970: 0), endSubscriptionDate: Date(timeIntervalSince1970: 0), userInfo: "임시", isInGym: false, adminUid: "임시")
+        let tempUser = User(account: Account(id: id, accountType: 2), name: name, number: phone, startSubscriptionDate: Date(timeIntervalSinceReferenceDate: 0), endSubscriptionDate: Date(timeIntervalSinceReferenceDate: 0), userInfo: "임시", isInGym: false, adminUid: "임시")
         
         Auth.auth().createUser(withEmail: id, password: pw) { result, error in
             if let error = error {
@@ -211,6 +211,7 @@ extension UserRegisterViewIDPWController {
                         userRef.setValue(userJSON)
                         
                     }
+                    self.navigationController?.popViewController(animated: false)
                     let vc = QrCodeViewController()
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
