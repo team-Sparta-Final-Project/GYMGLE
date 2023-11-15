@@ -12,7 +12,6 @@ class BoardDetailViewModel: ObservableObject{
     let ref = Database.database().reference()
     
     init(board:Board){
-        print("테스트 - 뷰모델 불러옴")
         self.board = board
     }
     func loadData(){

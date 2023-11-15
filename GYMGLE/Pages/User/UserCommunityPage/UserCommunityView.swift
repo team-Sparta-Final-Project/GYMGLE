@@ -152,7 +152,6 @@ class UserCommunityView: UIView,UITableViewDelegate {
         var count = self.posts.count {
             didSet(oldVal){
                 if count == 0 {
-                    print("테스트 - \(profilesWithKey) dsadsasad")
                     for i in temp {
                         self.profiles.append(profilesWithKey[i]!)
                     }

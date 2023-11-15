@@ -30,11 +30,4 @@ class UserRegisterViewModel: ObservableObject {
     func register(uid:String,start:Date,end:Date,userInfo:String){
         ref.child("accounts/\(uid)").updateChildValues(["adminUid":DataManager.shared.gymUid!,"startSubscriptionDate":Int(start.timeIntervalSinceReferenceDate),"endSubscriptionDate":Int(end.timeIntervalSinceReferenceDate),"userInfo":userInfo])
     }
-    
-    func observe(uid:String){
-        ref.child("accounts/\(uid)/adminUid").observe(.value) { snapshot in
-            print("테스트 - \(snapshot)")
-            
-        }
-    }
 }

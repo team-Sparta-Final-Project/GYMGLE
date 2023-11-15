@@ -26,14 +26,6 @@ final class QrCodeViewController: UIViewController {
         viewModel.getAdminUid()
         configuredView()
         
-        viewModel.observe {
-            self.dismiss(animated: true)
-            self.navigationController?.popViewController(animated: true)
-            let vc = TabbarViewController()
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true)
-            
-        }
     }
 }
 
@@ -50,6 +42,13 @@ private extension QrCodeViewController {
                 self.qrcodeView.backButton.isHidden = true
                 self.qrcodeView.deletedUserButton.isHidden = false
                 self.qrcodeView.deletedUserButton.addTarget(self, action: #selector(deletedUserButtonTapped), for: .touchUpInside)
+                viewModel.observe {
+                    self.dismiss(animated: true)
+                    self.navigationController?.popViewController(animated: true)
+                    let vc = TabbarViewController()
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                }
             } else { // 출입 인증 시스템 큐알 코드
                 let userId = DataManager.shared.userInfo?.account.id
                 let qrCodeImage = viewModel.generateQRCode(data: "\(userId ?? "")")

@@ -79,6 +79,7 @@ final class QrCodeViewModel: ObservableObject { //ObservableObject: 이벤트를
         ref.child("accounts/\(Auth.auth().currentUser!.uid)/adminUid").observe(.value) { snapshot in
             guard let value = snapshot.value as? String else {return}
             if value != "임시"{
+                ref.removeAllObservers()
                 completion()
             }
             

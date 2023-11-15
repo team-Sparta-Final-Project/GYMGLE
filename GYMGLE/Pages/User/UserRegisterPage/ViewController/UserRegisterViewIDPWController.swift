@@ -211,10 +211,11 @@ extension UserRegisterViewIDPWController {
                         userRef.setValue(userJSON)
                         
                     }
-                    self.navigationController?.popViewController(animated: false)
+                    
                     let vc = QrCodeViewController()
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
+                    self.navigationController?.popViewController(animated: false)
                 } catch {
                     print("JSON 인코딩 에러")
                 }

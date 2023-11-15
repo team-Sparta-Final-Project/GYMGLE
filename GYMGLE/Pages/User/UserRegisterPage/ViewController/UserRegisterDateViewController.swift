@@ -52,8 +52,6 @@ final class UserRegisterDateViewController: UIViewController {
         
         startCell.label.text = "등록일 : " + startDate.formatted(date:.complete, time: .omitted)
         
-        viewModel.observe(uid: userUid)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
