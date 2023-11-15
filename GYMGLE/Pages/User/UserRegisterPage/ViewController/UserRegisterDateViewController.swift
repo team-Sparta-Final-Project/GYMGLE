@@ -80,6 +80,7 @@ private extension UserRegisterDateViewController {
         else {
             guard let info = self.textViewCell.textView.text else {return}
             viewModel.register(uid: userUid ,start: startDate, end: endDate, userInfo: info)
+            completion()
         }
     }
     

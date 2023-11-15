@@ -73,4 +73,16 @@ final class QrCodeViewModel: ObservableObject { //ObservableObject: 이벤트를
             }
         }
     }
+    
+    func observe(_ completion: @escaping () -> ()){
+        let ref = Database.database().reference()
+        ref.child("accounts/\(Auth.auth().currentUser!.uid)/adminUid").observe(.value) { snapshot in
+            guard let value = snapshot.value as? String else {return}
+            if value != "임시"{
+                completion()
+            }
+            
+        }
+    }
+
 }
