@@ -37,8 +37,14 @@ class InitialView: UIView {
     
     lazy var loginButton: UIButton = UIButton.GYMGLEButtonPreset("로그인")
     
-    lazy var registerButton: UIButton = UIButton.GYMGLEButtonPreset("회원가입")
+    private lazy var divider = UIView().then {
+        $0.backgroundColor = .gray
+    }
     
+    lazy var registerButton = UIButton().then {
+        $0.buttonMakeUI(backgroundColor: .clear, cornerRadius: 10, borderWidth: 0, borderColor: UIColor.clear.cgColor, setTitle: "회원가입", font: FontGuide.size14Bold, setTitleColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.61))
+    }
+
     lazy var adminButton = UIButton().then {
         $0.buttonMakeUI(backgroundColor: .white, cornerRadius: 20, borderWidth: 0.5, borderColor: ColorGuide.shadowBorder.cgColor, setTitle: "관리자모드", font: FontGuide.size14Bold, setTitleColor: ColorGuide.main)
     }
@@ -49,7 +55,7 @@ class InitialView: UIView {
         super .init(frame: frame)
         self.backgroundColor = ColorGuide.background
         
-        addSubviews(imageView, loginLabel, idTextField, passwordTextField, loginButton, registerButton, adminButton)
+        addSubviews(imageView, loginLabel, idTextField, passwordTextField, loginButton, divider, registerButton, adminButton)
         
         imageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(88)
@@ -80,11 +86,16 @@ class InitialView: UIView {
             $0.height.equalTo(44)
         }
         
+        divider.snp.makeConstraints {
+            $0.top.equalTo(loginButton.snp.bottom).offset(25)
+            $0.left.right.equalToSuperview().inset(30)
+            $0.height.equalTo(0.5)
+        }
+        
         registerButton.snp.makeConstraints {
-            $0.top.equalTo(loginButton.snp.bottom).offset(10)
-            $0.left.equalTo(loginButton.snp.left)
-            $0.right.equalTo(loginButton.snp.right)
-            $0.height.equalTo(loginButton.snp.height)
+            $0.top.equalTo(loginButton.snp.bottom).offset(30)
+            $0.left.right.equalToSuperview().inset(45)
+            $0.height.equalTo(46)
         }
         
         adminButton.snp.makeConstraints {
