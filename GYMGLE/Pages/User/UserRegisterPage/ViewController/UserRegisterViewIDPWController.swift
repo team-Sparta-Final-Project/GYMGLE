@@ -5,6 +5,9 @@ import FirebaseDatabase
 import SwiftSMTP
 
 class UserRegisterViewIDPWController: UIViewController {    
+    
+    var verificationCodeTextField: UITextField!
+    
     let viewModel = UserRegisterViewModel()
     
     let buttonTitle = "회원가입"
@@ -99,25 +102,24 @@ class UserRegisterViewIDPWController: UIViewController {
         guard let id = idCell.textField.text else {
             return
         }
-
         // 이메일이 비어있는지 확인
-
         guard !id.isEmpty else {
             print("확인할 이메일: \(id)")
             showToastStatic(message: "이메일을 입력해 주세요.", view: view)
             return
         }
-
-
         // 백그라운드 스레드에서 이메일 보내기
         DispatchQueue.global().async {
             user_email = id
             self.sendEmail()
+            print(user_email)
+            print(content)
         }
     }
-
+    
     func sendEmail() {
         smtp.send(mail) { (error) in
+            print(error)
             DispatchQueue.main.async {
                 if let error = error {
                     print("이메일 전송 실패: \(error.localizedDescription)")
@@ -126,11 +128,93 @@ class UserRegisterViewIDPWController: UIViewController {
                     print("이메일 전송 성공!")
                     self.showToastStatic(message: "이메일을 성공적으로 보냈습니다.", view: self.view ?? UIView())
                     // 성공에 대한 처리 (UI 업데이트 등)
+                    self.showVerificationCodeInputAlert()
                 }
             }
         }
     }
     
+    func showVerificationCodeInputAlert() {
+        let alertController = UIAlertController(title: "인증 코드 입력", message: "이메일로 전송된 코드를 입력하세요.", preferredStyle: .alert)
+
+        alertController.addTextField { textField in
+            textField.placeholder = "인증 코드"
+        }
+
+        let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            guard let verificationCode = alertController.textFields?.first?.text, !verificationCode.isEmpty else {
+                // 인증 코드가 비어있는 경우
+                self?.showToastStatic(message: "인증 코드를 입력해 주세요.", view: self?.view ?? UIView())
+                return
+            }
+
+            // TODO: 입력된 인증 코드를 검증하는 로직을 추가 (서버에서 확인하거나, 이메일로 전송된 코드와 비교 등)
+
+            if verificationCode == certiNumber {
+                self?.showToastStatic(message: "이메일 인증이 성공했습니다.", view: self?.view ?? UIView())
+                // TODO: 인증 성공 시 추가 처리 로직을 여기에 추가
+            } else {
+                self?.showToastStatic(message: "인증 코드가 일치하지 않습니다.", view: self?.view ?? UIView())
+            }
+        }
+
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
+    }
+
+    // 이메일 전송 성공 시 호출되는 함수
+//    func showVerificationCodeInputField() {
+//        // 텍스트 필드 생성
+//        self.verificationCodeTextField = UITextField()
+//        self.verificationCodeTextField.placeholder = "인증 코드 입력"
+//        self.verificationCodeTextField.borderStyle = .roundedRect
+//        self.verificationCodeTextField.translatesAutoresizingMaskIntoConstraints = false
+//        self.view.addSubview(self.verificationCodeTextField)
+//
+//        // 제약 조건 설정 (원하는 위치에 따라 수정)
+//        NSLayoutConstraint.activate([
+//            self.verificationCodeTextField.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+//            self.verificationCodeTextField.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+//            self.verificationCodeTextField.widthAnchor.constraint(equalToConstant: 200),
+//            self.verificationCodeTextField.heightAnchor.constraint(equalToConstant: 40)
+//        ])
+//
+//        // 확인 버튼 추가
+//        let confirmButton = UIButton()
+//        confirmButton.setTitle("확인", for: .normal)
+//        confirmButton.addTarget(self, action: #selector(confirmButtonClicked), for: .touchUpInside)
+//        confirmButton.translatesAutoresizingMaskIntoConstraints = false
+//        self.view.addSubview(confirmButton)
+//
+//        // 제약 조건 설정 (원하는 위치에 따라 수정)
+//        NSLayoutConstraint.activate([
+//            confirmButton.topAnchor.constraint(equalTo: self.verificationCodeTextField.bottomAnchor, constant: 10),
+//            confirmButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+//        ])
+//    }
+
+    // 확인 버튼 클릭 시 호출되는 함수
+    @objc func confirmButtonClicked() {
+        guard let verificationCode = self.verificationCodeTextField.text, !verificationCode.isEmpty else {
+            // 인증 코드가 비어있는 경우
+            showToastStatic(message: "인증 코드를 입력해 주세요.", view: view)
+            return
+        }
+
+        // TODO: 입력된 인증 코드를 검증하는 로직을 추가 (서버에서 확인하거나, 이메일로 전송된 코드와 비교 등)
+
+        // 예시: 입력된 코드가 "123456"인 경우에만 성공으로 간주
+        if verificationCode == "123456" {
+            showToastStatic(message: "이메일 인증이 성공했습니다.", view: view)
+            // TODO: 인증 성공 시 추가 처리 로직을 여기에 추가
+        } else {
+            showToastStatic(message: "인증 코드가 일치하지 않습니다.", view: view)
+        }
+    }
     
 }
 
