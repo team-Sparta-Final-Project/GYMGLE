@@ -12,6 +12,13 @@ class TextFieldCell:UITableViewCell {
     }
     lazy var CheckButton:UIButton = UIButton()
     
+    var isPhoneCell = false
+    let charSet:CharacterSet = {
+        var set = CharacterSet.decimalDigits
+        set.insert(charactersIn: "0123456789-")
+        return set.inverted
+    }()
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super .init(style: style, reuseIdentifier: reuseIdentifier)
@@ -83,6 +90,17 @@ extension TextFieldCell: UITextFieldDelegate{
                 self.placeHolderLabel.font = FontGuide.size14Bold
             }
         }
+    }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if isPhoneCell {
+            if string.count > 0{
+                guard string.rangeOfCharacter(from: charSet) == nil else{
+                    return false
+                }
+            }
+            return true
+        }
+        return true
     }
 
 }

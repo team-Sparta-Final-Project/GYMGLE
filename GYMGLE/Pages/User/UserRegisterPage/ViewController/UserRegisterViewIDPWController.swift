@@ -61,6 +61,7 @@ class UserRegisterViewIDPWController: UIViewController {
         pwCell.textField.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
         nameCell.textField.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
         phoneCell.textField.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
+        phoneCell.isPhoneCell = true
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         viewConfigure.endEditing(true)
@@ -81,6 +82,21 @@ class UserRegisterViewIDPWController: UIViewController {
         navigationController?.navigationBar.tintColor = .black
     }
     
+    func phoneRegex(number:String) -> Bool{
+        do {
+            let regex = "^01([0|1|6|7|8|9]?)-([0-9]{3,4})-([0-9]{4})$"
+            let phoneRegex = try NSRegularExpression(pattern: regex)
+            let range = NSRange(location: 0, length: number.count)
+            if phoneRegex.firstMatch(in: number, range: range) != nil {
+                return true
+            }else {
+                return false
+            }
+        }catch let error {
+            print("테스트 - \(error)")
+            return false
+        }
+    }
     
     @objc private func didChangeText(){
         if idCell.textField.text != "" && pwCell.textField.text != "" && nameCell.textField.text != "" && phoneCell.textField.text != "" {
@@ -93,7 +109,10 @@ class UserRegisterViewIDPWController: UIViewController {
     @objc func buttonClicked() {
         if isCellEmpty {
             self.showToastStatic(message: "모든 칸을 입력해 주세요.", view: self.view)
-        } else {
+        }else if !phoneRegex(number: phoneCell.textField.text!) {
+            self.showToastStatic(message: "형식을 맞춰 주세요.\n010-****-****", view: self.view)
+        }
+        else {
             if isEmailVerified {
                 createUser()
             } else {
@@ -140,20 +159,20 @@ class UserRegisterViewIDPWController: UIViewController {
     
     func showVerificationCodeInputAlert() {
         let alertController = UIAlertController(title: "인증 코드 입력", message: "이메일로 전송된 코드를 입력하세요.", preferredStyle: .alert)
-
+        
         alertController.addTextField { textField in
             textField.placeholder = "인증 코드"
         }
-
+        
         let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
             guard let verificationCode = alertController.textFields?.first?.text, !verificationCode.isEmpty else {
                 // 인증 코드가 비어있는 경우
                 self?.showToastStatic(message: "인증 코드를 입력해 주세요.", view: self?.view ?? UIView())
                 return
             }
-
+            
             // TODO: 입력된 인증 코드를 검증하는 로직을 추가 (서버에서 확인하거나, 이메일로 전송된 코드와 비교 등)
-
+            
             if verificationCode == certiNumber {
                 self?.showToastStatic(message: "이메일 인증이 성공했습니다.", view: self?.view ?? UIView())
                 self?.isEmailVerified = true
@@ -163,15 +182,15 @@ class UserRegisterViewIDPWController: UIViewController {
                 self?.showToastStatic(message: "인증 코드가 일치하지 않습니다.", view: self?.view ?? UIView())
             }
         }
-
+        
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-
+        
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
-
+        
         present(alertController, animated: true, completion: nil)
     }
-
+    
     
 }
 
@@ -184,7 +203,7 @@ extension UserRegisterViewIDPWController {
         guard let pw = pwCell.textField.text else { return }
         guard let name = nameCell.textField.text else { return }
         guard let phone = phoneCell.textField.text else { return }
-
+        
         let tempUser = User(account: Account(id: id, accountType: 2), name: name, number: phone, startSubscriptionDate: Date(timeIntervalSinceReferenceDate: 0), endSubscriptionDate: Date(timeIntervalSinceReferenceDate: 0), userInfo: "임시", isInGym: false, adminUid: "임시")
         
         Auth.auth().createUser(withEmail: id, password: pw) { result, error in
@@ -242,7 +261,7 @@ extension UserRegisterViewIDPWController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cellData.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if cellData[indexPath.row] == "회원 이메일" {
             let cell = TextFieldCell()
@@ -277,7 +296,7 @@ extension UserRegisterViewIDPWController: UITableViewDataSource {
             return EmptyCell()
         }
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if cellData[indexPath.row] == "" {
             return CGFloat(emptyCellHeight)
@@ -285,6 +304,5 @@ extension UserRegisterViewIDPWController: UITableViewDataSource {
             return CGFloat(cellHeight)
         }
     }
-
+    
 }
-

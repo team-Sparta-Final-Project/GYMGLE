@@ -148,7 +148,6 @@ extension UserCommunityViewController {
         var count = self.first.posts.count {
             didSet(oldVal){
                 if count == 0 {
-                    print("테스트ㅁㄴㅇ - \(tempProfiles)")
                     for i in temp {
                         self.first.profiles.append(tempProfiles[i]!)
                     }
