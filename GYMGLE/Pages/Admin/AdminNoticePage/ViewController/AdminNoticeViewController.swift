@@ -23,6 +23,7 @@ final class AdminNoticeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -31,6 +32,8 @@ final class AdminNoticeViewController: UIViewController {
         setCustomBackButton()
         viewModel.getNoticeList {
             self.adminNoticeView.noticeTableView.reloadData()
+            print("테스트 - \(self.viewModel.notice)")
+            print("테스트 - \(self.viewModel.notice.count)")
         }
     }
 }
@@ -110,8 +113,8 @@ extension AdminNoticeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let adminNoticeDetailVC = AdminNoticeDetailViewController()
-        adminNoticeDetailVC.isUser = viewModel.isAdmin
-        adminNoticeDetailVC.noticeInfo = viewModel.notice.sorted{ $0.date > $1.date }[indexPath.section]
+        adminNoticeDetailVC.viewModel.isUser = viewModel.isAdmin
+        adminNoticeDetailVC.viewModel.noticeInfo = viewModel.notice.sorted{ $0.date > $1.date }[indexPath.section]
         navigationController?.pushViewController(adminNoticeDetailVC, animated: true)
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

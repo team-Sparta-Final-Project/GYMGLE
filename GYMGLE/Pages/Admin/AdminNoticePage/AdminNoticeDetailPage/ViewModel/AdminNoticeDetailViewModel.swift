@@ -8,11 +8,14 @@
 import Foundation
 import FirebaseAuth
 import FirebaseDatabase
+import Combine
 
 final class AdminNoticeDetailViewModel {
     
     private let ref = Database.database().reference()
     private let userID = Auth.auth().currentUser?.uid
+    @Published var isUser: Bool = true
+    @Published var noticeInfo: Notice?
     
     func createdNoticeData(notice: Notice, completion: @escaping () -> Void) {
         do {
