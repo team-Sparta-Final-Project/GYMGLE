@@ -2,6 +2,9 @@
   <img src="https://github.com/team-Sparta-Final-Project/GYMGLE/assets/101612441/48ed02c0-92c9-4533-a66c-30f9989405c8">
 </p>
 
+[![Download on the App Store](https://link-to-your-app-store-badge-image)](https://apps.apple.com/kr/app/gymgle/id6471544103)
+
+
 
 # GYMGLE 헬스 어플
 ## 어플 소개
