@@ -4,21 +4,14 @@
 
 [![Download on the App Store](https://link-to-your-app-store-badge-image)](https://apps.apple.com/kr/app/gymgle/id6471544103)
 
+<h1 align="center">GYMGLE 헬스 어플</h1>
+<h2 align="center">어플 소개</h2>
 
-
-<center>
-
-# GYMGLE 헬스 어플
-## 어플 소개
 불규칙한 식습관과 낮아지는 운동량으로 인기가 많아진 헬스!<br/><br/>
 
-그러나 헬스장을 이용할때 사람이 너무많아 불쾌했던 경험 있지않으신가요.<br/><br/>
+그러나 헬스장을 이용할 때 사람이 너무 많아 불쾌했던 경험 있지 않으신가요.<br/><br/>
 
-실시간 운동중인 인원을 미리 파악한 후 조금 더 쾌적한 헬스장이용을 해보세요☺️<br/>
-
-<br/>
-
-</center>
+실시간 운동 중인 인원을 미리 파악한 후 조금 더 쾌적한 헬스장 이용을 해보세요☺️<br/>
 
 <div align="center">
   
