@@ -1,7 +1,8 @@
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=DC5448&height=300&section=header&text=GYMGLE🍎%20&fontSize=90&fontColor=ffffff" />
 </p>
-![Frame 127](https://github.com/team-Sparta-Final-Project/GYMGLE/assets/101612441/c47121f4-b7a5-418f-97d9-3e1e53569cba)!
+
+<img width="262" alt="Screenshot 2023-10-06 at 4 04 59 PM" src="[https://github.com/NabaeCamp/DayWeather/assets/119504454/8dc8a738-fc88-47ad-b504-8a704c8fca11](https://github.com/team-Sparta-Final-Project/GYMGLE/assets/101612441/c47121f4-b7a5-418f-97d9-3e1e53569cba)">
 
 
 # GYMGLE 헬스 어플
