@@ -9,10 +9,10 @@ DoubleK JP Management.
     <tr>
      <td align="center" valign="top" width="14.28%">
        <a href="https://github.com/2rang2">
-       <img src="https://avatars.githubusercontent.com/u/139103064?v=4" width="100px;" alt="2rang2"/>
+       <img src="https://avatars.githubusercontent.com/u/139103064?v=4" width="100px;" alt="공성표"/>
        <br />
          <sub>
-           <b>이랑</b>
+           <b>공성표</b>
          </sub>
        </a>
        <br />
@@ -23,10 +23,10 @@ DoubleK JP Management.
      </td>
      <td align="center" valign="top" width="14.28%">
        <a href="https://github.com/cheshire0105">
-       <img src="https://avatars.githubusercontent.com/u/106953561?v=4" width="100px;" alt="조계성"/>
+       <img src="https://avatars.githubusercontent.com/u/106953561?v=4" width="100px;" alt="박성원"/>
        <br />
          <sub>
-           <b>조계성</b>
+           <b>박성원</b>
          </sub>
        </a>
        <br />
@@ -51,10 +51,10 @@ DoubleK JP Management.
     </td>
       <td align="center" valign="top" width="14.28%">
        <a href="https://github.com/Madman-dev">
-       <img src="https://avatars.githubusercontent.com/u/119504454?v=4" width="100px;" alt="이동준"/>
+       <img src="https://avatars.githubusercontent.com/u/119504454?v=4" width="100px;" alt="조규연"/>
        <br />
          <sub>
-           <b>이동준</b>
+           <b>조규연</b>
          </sub>
        </a>
        <br />
