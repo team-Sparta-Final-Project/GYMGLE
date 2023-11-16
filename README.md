@@ -1,6 +1,7 @@
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=DC5448&height=300&section=header&text=GYMGLE🍎%20&fontSize=90&fontColor=ffffff" />
 </p>
+![Uploading Frame 127.png…]()
 
 # GYMGLE 헬스 어플
 ## 어플 소개
