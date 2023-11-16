@@ -2,6 +2,13 @@
   <img src="https://capsule-render.vercel.app/api?type=waving&color=DC5448&height=300&section=header&text=GYMGLE🍎%20&fontSize=90&fontColor=ffffff" />
 </p>
 
+# GYMGLE 헬스 어플
+## 어플 소개
+불규칙한 식습관과 낮아지는 운동량으로 인기가 많아진 헬스!
+그러나 헬스장을 이용할때 사람이 너무많아 불쾌했던 경험 있지않으신가요.
+실시간 운동중인 인원을 미리 파악한 후 조금 더 쾌적한 헬스장이용을 해보세요☺️
+<br/>
+
 <div align="center">
   
 ## 🧑‍🤝‍🧑 Team Members (구성원)
