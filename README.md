@@ -1,7 +1,8 @@
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=DC5448&height=300&section=header&text=GYMGLE🍎%20&fontSize=90&fontColor=ffffff" />
 </p>
-![Uploading Frame 127.png…]()
+![Frame 127](https://github.com/team-Sparta-Final-Project/GYMGLE/assets/101612441/c47121f4-b7a5-418f-97d9-3e1e53569cba)!
+
 
 # GYMGLE 헬스 어플
 ## 어플 소개
