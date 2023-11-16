@@ -20,8 +20,8 @@
   <tbody>
     <tr>
      <td align="center" valign="top" width="14.28%">
-       <a href="https://github.com/2rang2">
-       <img src="https://avatars.githubusercontent.com/u/139103064?v=4" width="100px;" alt="공성표"/>
+       <a href="https://github.com/ThePerfectMartini?tab=repositories">
+       <img src="https://avatars.githubusercontent.com/u/98042509?v=4" width="100px;" alt="공성표"/>
        <br />
          <sub>
            <b>공성표</b>
@@ -34,8 +34,8 @@
        <br />
      </td>
      <td align="center" valign="top" width="14.28%">
-       <a href="https://github.com/cheshire0105">
-       <img src="https://avatars.githubusercontent.com/u/106953561?v=4" width="100px;" alt="박성원"/>
+       <a href="https://github.com/tjddnjs549">
+       <img src="https://avatars.githubusercontent.com/u/82648421?v=4" width="100px;" alt="박성원"/>
        <br />
          <sub>
            <b>박성원</b>
@@ -62,8 +62,8 @@
        <br />
     </td>
       <td align="center" valign="top" width="14.28%">
-       <a href="https://github.com/Madman-dev">
-       <img src="https://avatars.githubusercontent.com/u/119504454?v=4" width="100px;" alt="조규연"/>
+       <a href="https://github.com/Alpaca38/">
+       <img src="https://avatars.githubusercontent.com/u/137505484?v=4" width="100px;" alt="조규연"/>
        <br />
          <sub>
            <b>조규연</b>
