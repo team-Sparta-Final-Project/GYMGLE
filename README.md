@@ -1,7 +1,4 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=DC5448&height=300&section=header&text=GYMGLE🍎%20&fontSize=90&fontColor=ffffff" />
-</p>
-<p align="center">
   <img src="https://github.com/team-Sparta-Final-Project/GYMGLE/assets/101612441/48ed02c0-92c9-4533-a66c-30f9989405c8">
 </p>
 
