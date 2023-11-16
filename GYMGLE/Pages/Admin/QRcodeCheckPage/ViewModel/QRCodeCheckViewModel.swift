@@ -12,7 +12,7 @@ import FirebaseAuth
 final class QRCodeCheckViewModel {
     
     
-    @Published var userUidList: [String] = []
+    var userUidList: [String] = []
     
     func readAdminUid(){
         let ref = Database.database().reference().child("accounts")
