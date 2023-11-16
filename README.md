@@ -1,4 +1,4 @@
 # GYMGLE
 DoubleK JP Management.
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=GYMGLE🍎&fontSize=90&textColor=FF0000"/>
+![header](https://capsule-render.vercel.app/api?type=waving&color=ff6d1c&height=300&section=header&text=☀️GYMGLE🍎%20&fontSize=90&fontColor=ffffff)
