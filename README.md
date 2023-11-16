@@ -2,8 +2,7 @@
   <img src="https://github.com/team-Sparta-Final-Project/GYMGLE/assets/101612441/48ed02c0-92c9-4533-a66c-30f9989405c8">
 </p>
 
-[![Download on the App Store](https://link-to-your-app-store-badge-image)](https://apps.apple.com/kr/app/gymgle/id6471544103)
-[<img width="200" alt="appstore" src="https://apps.apple.com/kr/app/gymgle/id6471544103")
+[<img width="200" alt="appstore" src="https://github.com/nbcamp-archive/kkuk-ios/assets/26790710/72caf6ff-b829-4608-98d9-16d42d0a3eb0">](https://apps.apple.com/kr/app/gymgle/id6471544103)
 
 
 
