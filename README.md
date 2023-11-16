@@ -3,6 +3,8 @@
 </p>
 
 [![Download on the App Store](https://link-to-your-app-store-badge-image)](https://apps.apple.com/kr/app/gymgle/id6471544103)
+[<img width="200" alt="appstore" src="https://apps.apple.com/kr/app/gymgle/id6471544103")
+
 
 
 # GYMGLE 헬스 어플
