@@ -1243,7 +1243,7 @@
 				INFOPLIST_FILE = GYMGLE/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GYMGLE;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSCameraUsageDescription = "앱이 카메라에 접근해도 되겠습니까?";
+				INFOPLIST_KEY_NSCameraUsageDescription = "앱이 QR코드를 인식할 수 있도록 카메라에 접근해도 되겠습니까?\n";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1277,7 +1277,7 @@
 				INFOPLIST_FILE = GYMGLE/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GYMGLE;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSCameraUsageDescription = "앱이 카메라에 접근해도 되겠습니까?";
+				INFOPLIST_KEY_NSCameraUsageDescription = "앱이 QR코드를 인식할 수 있도록 카메라에 접근해도 되겠습니까?\n";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
