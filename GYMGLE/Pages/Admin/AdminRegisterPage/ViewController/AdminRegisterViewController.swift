@@ -151,9 +151,11 @@ private extension AdminRegisterViewController {
     @objc func registerButtonTapped() {
         if !viewModel.isIdDuplicated && !viewModel.isNumberDuplicated && viewModel.isValid && viewModel.allValid && viewModel.isServiceCheck {
             viewModel.createUser(id: adminRegisterView.idTextField.text!, pw: adminRegisterView.passwordTextField.text!, gymName: adminRegisterView.adminNameTextField.text!, gymPhoneNumber: adminRegisterView.phoneTextField.text!, gymNumber: adminRegisterView.registerNumberTextField.text!)
+            navigationController?.popViewController(animated: true)
         }
         else if (self.adminRegisterView.adminNameTextField.text?.isEmpty != nil && self.adminRegisterView.phoneTextField.text?.isEmpty != nil && DataManager.shared.realGymInfo != nil) {
             viewModel.updatedAdminInfo(gymName: adminRegisterView.adminNameTextField.text ?? "", gymPhoneNumber: adminRegisterView.phoneTextField.text ?? "")
+            navigationController?.popViewController(animated: true)
         }
         else {
             let alert = UIAlertController(title: "등록할 수 없습니다.",

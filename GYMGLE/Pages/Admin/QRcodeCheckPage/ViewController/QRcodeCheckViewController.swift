@@ -115,14 +115,12 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
                 return
             }
             viewModel.readUserUid {
-                self.viewModel.$userUidList.sink { [weak self] in
-                    guard let self = self else {return}
                     if (DataManager.shared.userList.first(where: {$0.account.id == stringValue}) != nil) {
                         self.viewModel.createdInAndOutLog(id: stringValue)
                         self.showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
                         self.captureSession.stopRunning()
                         AudioServicesPlaySystemSound(SystemSoundID(1000))
-                    } else if ($0.first(where: {$0 == stringValue}) != nil) {
+                    } else if (self.viewModel.userUidList.first(where: {$0 == stringValue}) != nil) {
                         self.showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
                         self.captureSession.stopRunning()
                         let userRegisterDateVC = UserRegisterDateViewController()
@@ -134,8 +132,8 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
                         self.captureSession.stopRunning()
                         AudioServicesPlaySystemSound(SystemSoundID(1006))
                     }
-                }.store(in: &self.disposableBag)
             }
+            self.captureSession.stopRunning()
             self.viewModel.readAdminUid()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 self.captureSession.startRunning()
