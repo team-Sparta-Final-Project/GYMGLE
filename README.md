@@ -143,7 +143,7 @@ QRCode를 이용해 헬스장 입퇴실을 아주 간편하게 할 수 있습니
 
 
 
-### 3. 커뮤니티 화면
+### 4. 커뮤니티 화면
 
 <img width="1024" alt="모음4" src="https://github.com/tjddnjs549/Flutter_work/assets/82648421/fbec49e1-e66f-40e7-b23c-ba5906afdb2f">
 
