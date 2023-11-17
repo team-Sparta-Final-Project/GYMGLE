@@ -24,7 +24,7 @@ class ReportView: UIView {
         reportButton.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
-        
+
     }
     
     required init?(coder: NSCoder) {
