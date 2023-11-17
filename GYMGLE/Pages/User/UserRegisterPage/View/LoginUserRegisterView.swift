@@ -54,9 +54,7 @@ class LoginUserRegisterView: UIView {
     
     //MARK: - 센터 테이블 뷰
     private func centerTableView(){
-        
-        tableView.clipsToBounds = true
-        
+                
         self.addSubview(tableView)
         tableView.snp.makeConstraints{
             $0.top.equalToSuperview().inset(132)
