@@ -1,3 +1,4 @@
+
 <p align="center">
   <img src="https://github.com/team-Sparta-Final-Project/GYMGLE/assets/101612441/48ed02c0-92c9-4533-a66c-30f9989405c8">
 </p>
@@ -116,4 +117,50 @@ QRCode를 이용해 헬스장 입퇴실을 아주 간편하게 할 수 있습니
 | 사용한 디자인패턴 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | MVC → MVVM |
 | 비동기 처리 프레임워크&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Combine |
 
+## UI 화면
 
+### 1. 로그인 & 가입 화면
+<img width="1024" alt="모음1" src="https://github.com/tjddnjs549/Flutter_work/assets/82648421/f8b9614e-7ad6-4c40-94c3-9325106fa4a3">
+
+- 관리자 회원 가입 및 로그인 : 관리자 로그인 화면에서 회원 가입을 눌러 정보 기입 후, 하단 버튼 누르면 가입 완료 / 가입 후 자동 로그인 서비스 이용 가능
+
+-  유저 회원 가입 및 로그인 : 유저 로그인 화면에서 회원 가입을 눌러 정보 기입 후, 하단 버튼을 누르면 자신의 고유 큐알코드 생성 -> 생성된 큐알코드를 스캐너에 인식하면 가입 완료 / 가입만 하면 자동 로그인 이용 가능
+
+
+### 2. 유저 홈 & 프로필 화면
+<img width="1024" alt="모음2" src="https://github.com/tjddnjs549/Flutter_work/assets/82648421/7379f21e-323b-4fdc-b2d8-b2371b800bcd">
+
+- 유저 홈 화면에서 실시간 헬스장 이용자 수와 저번주 현재 시간의 이용자 수를 볼 수 있습니다. 또한 큐알 코드 서비스를 이용하여 입실할 수 있습니다.
+
+- 마이페이지에서 프로필 설정 및 비밀번호 변경, 로그아웃, 탈퇴 기능 이용할 수 있습니다.
+
+### 3. 관리자 화면
+<img width="1024" alt="모음3" src="https://github.com/tjddnjs549/Flutter_work/assets/82648421/bee0a887-e836-4662-849f-e5267b46e195">
+
+- 관리자 홈 화면에서는 공지사항 관리, 회원 관리, 정보 변경, 로그아웃, 탈퇴 기능을 이용할 수 있습니다.
+
+- 또한, 회원들의 큐알코드를 인식할 수 있는 스캐너 기능을 이용할 수 있습니다.
+
+
+
+### 3. 커뮤니티 화면
+
+<img width="1024" alt="모음4" src="https://github.com/tjddnjs549/Flutter_work/assets/82648421/fbec49e1-e66f-40e7-b23c-ba5906afdb2f">
+
+- 사람들의 게시글을 볼 수 화면으로, 게시글을 클릭 시 댓글이 달려 있는 화면을 볼 수 있습니다. 그 화면에서는 좋아요 및 댓글 달기 기능, 신고 및 차단 기능을 사용할 수 있습니다.
+
+
+## 파일 구조
+
+<img width="715" alt="스크린샷 2023-11-17 오전 10 19 07" src="https://github.com/tjddnjs549/Flutter_work/assets/82648421/f636eb85-78e5-4fee-a96a-67301c349fc7">
+
+- 페이지 폴더마다 View, ViewController, ViewModel 폴더를 만들고 그 안에 파일 생성
+
+
+## 추후 개발 계획 및 개선 사항
+
+1. 전화 번호 인증 및 소셜 로그인 구현
+2. 멀티 플랫폼 - 안드로이드
+3. 회원들을 위한 운동 보조 기능 - 운동량 차트, 인바디 그래프 등등
+4. 다크 모드 및 가로 모드 지원
+5. 폰팩터별 다른 UI지원 (아이패드, 애플워치 등)
