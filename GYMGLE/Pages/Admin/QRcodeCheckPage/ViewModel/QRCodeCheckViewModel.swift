@@ -14,7 +14,7 @@ final class QRCodeCheckViewModel {
     
     var userUidList: [String] = []
     
-    func readAdminUid(){
+    func readAdminUid(completion: @escaping () -> Void){
         let ref = Database.database().reference().child("accounts")
         let query = ref.queryOrdered(byChild: "adminUid").queryEqual(toValue: DataManager.shared.gymUid)
         query.observeSingleEvent(of: .value) { snapshot in
@@ -26,6 +26,7 @@ final class QRCodeCheckViewModel {
                 let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
                 let user = try JSONDecoder().decode([User].self, from: jsonData)
                 DataManager.shared.userList = user
+                completion()
             } catch let error {
             }
         }
