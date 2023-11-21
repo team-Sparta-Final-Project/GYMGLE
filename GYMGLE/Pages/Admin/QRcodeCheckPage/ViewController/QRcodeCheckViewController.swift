@@ -114,13 +114,14 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject, let stringValue = readableObject.stringValue else {
                 return
             }
+            if (DataManager.shared.userList.first(where: {$0.account.id == stringValue}) != nil) {
+                self.viewModel.createdInAndOutLog(id: stringValue)
+                self.showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
+                self.captureSession.stopRunning()
+                AudioServicesPlaySystemSound(SystemSoundID(1000))
+            }
             viewModel.readUserUid {
-                    if (DataManager.shared.userList.first(where: {$0.account.id == stringValue}) != nil) {
-                        self.viewModel.createdInAndOutLog(id: stringValue)
-                        self.showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
-                        self.captureSession.stopRunning()
-                        AudioServicesPlaySystemSound(SystemSoundID(1000))
-                    } else if (self.viewModel.userUidList.first(where: {$0 == stringValue}) != nil) {
+                    if (self.viewModel.userUidList.first(where: {$0 == stringValue}) != nil) {
                         self.showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
                         self.captureSession.stopRunning()
                         let userRegisterDateVC = UserRegisterDateViewController()
