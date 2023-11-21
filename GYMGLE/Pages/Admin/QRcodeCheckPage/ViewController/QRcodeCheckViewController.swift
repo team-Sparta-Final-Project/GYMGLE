@@ -21,7 +21,7 @@ final class QRcodeCheckViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         qrCodeSetting()
-        viewModel.readAdminUid()
+        viewModel.readAdminUid{}
     }
 }
 
@@ -114,29 +114,34 @@ extension QRcodeCheckViewController: AVCaptureMetadataOutputObjectsDelegate {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject, let stringValue = readableObject.stringValue else {
                 return
             }
-            if (DataManager.shared.userList.first(where: {$0.account.id == stringValue}) != nil) {
-                self.viewModel.createdInAndOutLog(id: stringValue)
-                self.showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
+            if stringValue.hasSuffix(".com") || stringValue.hasSuffix(".net") || stringValue.hasSuffix("co.kr") {
+                viewModel.readAdminUid {
+                    if (DataManager.shared.userList.first(where: {$0.account.id == stringValue}) != nil) {
+                        self.viewModel.createdInAndOutLog(id: stringValue)
+                        self.showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
+                        AudioServicesPlaySystemSound(SystemSoundID(1000))
+                    } else {
+                        self.showToast(message: "회원이 아닙니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
+                        AudioServicesPlaySystemSound(SystemSoundID(1006))
+                    }
+                }
                 self.captureSession.stopRunning()
-                AudioServicesPlaySystemSound(SystemSoundID(1000))
-            }
-            viewModel.readUserUid {
+            } else {
+                viewModel.readUserUid {
                     if (self.viewModel.userUidList.first(where: {$0 == stringValue}) != nil) {
                         self.showToast(message: "확인했습니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
-                        self.captureSession.stopRunning()
                         let userRegisterDateVC = UserRegisterDateViewController()
                         userRegisterDateVC.userUid = stringValue
                         userRegisterDateVC.modalPresentationStyle = .fullScreen
                         self.present(userRegisterDateVC, animated: true)
                     } else {
                         self.showToast(message: "회원이 아닙니다!", view: self.view, bottomAnchor: -80, widthAnchor: 160, heightAnchor: 50)
-                        self.captureSession.stopRunning()
                         AudioServicesPlaySystemSound(SystemSoundID(1006))
                     }
+                }
+                self.captureSession.stopRunning()
             }
-            self.captureSession.stopRunning()
-            self.viewModel.readAdminUid()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 2.5) {
                 self.captureSession.startRunning()
             }
         }
