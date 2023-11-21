@@ -37,10 +37,10 @@ class UserCommunityWriteView: UIView, UITextViewDelegate {
 //        텍스트뷰의 델리게이트를 이용해서 델리게이트 함수 / 텍스트뷰값을 가져올 수 있는 함수가 있음
 //        텍스트뷰에 쓰여진 텍스트값을 가져오는것
     }
-    private(set) lazy var countNumberLabel = UILabel().then {
-        $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .center)
-        $0.text = "\(writePlace.text.count)/400"
-    }
+//    private(set) lazy var countNumberLabel = UILabel().then {
+//        $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .center)
+//        $0.text = "\(writePlace.text.count)/400"
+//    }
     private(set) lazy var addButton = UIButton().then {
         $0.backgroundColor = ColorGuide.main
         $0.setTitleColor(ColorGuide.white, for: .normal)
@@ -65,7 +65,7 @@ class UserCommunityWriteView: UIView, UITextViewDelegate {
         addSubview(writePlace)
         addSubview(mirrorPlace)
         addSubview(addButton)
-        addSubview(countNumberLabel)
+//        addSubview(countNumberLabel)
         addSubview(backButton)
         
         backButton.snp.makeConstraints {
@@ -97,9 +97,9 @@ class UserCommunityWriteView: UIView, UITextViewDelegate {
             $0.bottom.equalToSuperview().multipliedBy(0.9)
             $0.height.equalTo(44)
         }
-        countNumberLabel.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.top.equalTo(writePlace.snp.bottom).offset(2)
-        }
+//        countNumberLabel.snp.makeConstraints {
+//            $0.trailing.equalToSuperview().offset(-20)
+//            $0.top.equalTo(writePlace.snp.bottom).offset(2)
+//        }
     }
 }

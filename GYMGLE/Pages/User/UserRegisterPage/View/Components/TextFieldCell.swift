@@ -22,7 +22,6 @@ class TextFieldCell:UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super .init(style: style, reuseIdentifier: reuseIdentifier)
-                        
         textField.textColor = ColorGuide.textHint
         textField.font = FontGuide.size14Bold
         
@@ -31,7 +30,7 @@ class TextFieldCell:UITableViewCell {
         
         self.layer.frame.size.width = 344.5
         self.backgroundColor = .clear
-        self.contentView.clipsToBounds = true
+        self.contentView.clipsToBounds = false
         
         makeUI()
         
@@ -59,7 +58,6 @@ class TextFieldCell:UITableViewCell {
     
     func makeUI(){
 //        self.contentView.backgroundColor = .gray
-        self.contentView.clipsToBounds = true
     }
     
     

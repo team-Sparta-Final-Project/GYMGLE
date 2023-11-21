@@ -55,7 +55,6 @@ class UserRegisterView: UIView {
     //MARK: - 센터 테이블 뷰
     private func centerTableView(){
         
-        tableView.clipsToBounds = true
         
         self.addSubview(tableView)
         tableView.snp.makeConstraints{

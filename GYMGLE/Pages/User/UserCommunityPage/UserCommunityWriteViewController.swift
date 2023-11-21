@@ -57,18 +57,18 @@ extension UserCommunityWriteViewController {
         self.dismiss(animated: true)
     }
     
-    @objc private func keyboardWillShow(_ notification: Notification) {
-        if let userInfo = notification.userInfo,
-           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            let keyboardHeight = keyboardFrame.height
-            let textFieldFrameInWindow = userCommunityWriteView.countNumberLabel.convert(userCommunityWriteView.countNumberLabel.bounds, to: nil)
-            let maxY = textFieldFrameInWindow.maxY
-            if maxY > (userCommunityWriteView.frame.size.height - keyboardHeight) {
-                let scrollOffset = maxY - (userCommunityWriteView.frame.size.height - keyboardHeight)
-                userCommunityWriteView.frame.origin.y = -scrollOffset
-            }
-        }
-    }
+//    @objc private func keyboardWillShow(_ notification: Notification) {
+//        if let userInfo = notification.userInfo,
+//           let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+//            let keyboardHeight = keyboardFrame.height
+//            let textFieldFrameInWindow = userCommunityWriteView.countNumberLabel.convert(userCommunityWriteView.countNumberLabel.bounds, to: nil)
+//            let maxY = textFieldFrameInWindow.maxY
+//            if maxY > (userCommunityWriteView.frame.size.height - keyboardHeight) {
+//                let scrollOffset = maxY - (userCommunityWriteView.frame.size.height - keyboardHeight)
+//                userCommunityWriteView.frame.origin.y = -scrollOffset
+//            }
+//        }
+//    }
     @objc private func keyboardWillHide(_ notification: Notification) {
         userCommunityWriteView.frame.origin.y = 0
     }
@@ -156,18 +156,18 @@ extension UserCommunityWriteViewController: UITextViewDelegate {
     }
     
     
-    func textViewDidChange(_ textView: UITextView) {
-        if userCommunityWriteView.writePlace.text.count > 1000 {
-            userCommunityWriteView.writePlace.deleteBackward()
-        }
-        userCommunityWriteView.countNumberLabel.text = "\(userCommunityWriteView.writePlace.text.count)/1000"
-        
-        if userCommunityWriteView.writePlace.text.count > 880 {
-            let attributedString = NSMutableAttributedString(string: "\(userCommunityWriteView.writePlace.text.count)/1000")
-            attributedString.addAttribute(.foregroundColor, value: ColorGuide.main, range: ("\(userCommunityWriteView.writePlace.text.count)/1000" as NSString).range(of:"\(userCommunityWriteView.writePlace.text.count)"))
-            userCommunityWriteView.countNumberLabel.attributedText = attributedString
-        }
-    }
+//    func textViewDidChange(_ textView: UITextView) {
+//        if userCommunityWriteView.writePlace.text.count > 1000 {
+//            userCommunityWriteView.writePlace.deleteBackward()
+//        }
+//        userCommunityWriteView.countNumberLabel.text = "\(userCommunityWriteView.writePlace.text.count)/1000"
+//        
+//        if userCommunityWriteView.writePlace.text.count > 880 {
+//            let attributedString = NSMutableAttributedString(string: "\(userCommunityWriteView.writePlace.text.count)/1000")
+//            attributedString.addAttribute(.foregroundColor, value: ColorGuide.main, range: ("\(userCommunityWriteView.writePlace.text.count)/1000" as NSString).range(of:"\(userCommunityWriteView.writePlace.text.count)"))
+//            userCommunityWriteView.countNumberLabel.attributedText = attributedString
+//        }
+//    }
 }
 
 
