@@ -184,8 +184,7 @@ class LoginViewModel {
                 if let userData = snapshot.value as? [String: Any],
                    let gymInfoJSON = userData["gymInfo"] as? [String: Any],
                    let gymAcoount = gymInfoJSON["gymAccount"] as? [String: Any],
-                   let id = gymAcoount["id"] as? String,
-                   let pw = gymAcoount["password"] as? String {
+                   let id = gymAcoount["id"] as? String {
                     do {
                         let gymInfoData = try JSONSerialization.data(withJSONObject: gymInfoJSON, options: [])
                         let gymInfo = try JSONDecoder().decode(GymInfo.self, from: gymInfoData)
@@ -195,7 +194,6 @@ class LoginViewModel {
                     }
                     DataManager.shared.gymUid = currentUser.uid
                     DataManager.shared.id = id
-                    DataManager.shared.pw = pw
                     self.delegate?.adminLogin()
                 }
             }
