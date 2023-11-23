@@ -6,9 +6,6 @@
 //
 
 import UIKit
-import FirebaseAuth
-import FirebaseCore
-import Firebase
 
 final class UserMyProfileViewController: UIViewController {
 
@@ -52,7 +49,7 @@ private extension UserMyProfileViewController {
     }
     
     func buttonSetting() {
-        if self.viewModel.userUid == Auth.auth().currentUser?.uid { // 내 프로필 진입 시
+        if self.viewModel.userUid == viewModel.userID { // 내 프로필 진입 시
             userMyProfileView.updateButton.addTarget(self, action: #selector(updateButtonButtoned), for: .touchUpInside)
             userMyProfileView.updateButton.titleLabel?.text = "프로필 수정"
             navigationController?.navigationBar.topItem?.title = "마이페이지"
@@ -73,7 +70,7 @@ private extension UserMyProfileViewController {
     
     func dataSetting() {
         //자기가 들어오는 거면 싱글톤으로 보여주기
-        if self.viewModel.userUid == Auth.auth().currentUser?.uid {
+        if self.viewModel.userUid == viewModel.userID {
             self.viewModel.getBoardKeys{}
             DispatchQueue.main.async {
                 guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
@@ -112,10 +109,10 @@ extension UserMyProfileViewController {
         present(userMyProfileUpdateVC, animated: true)
     }
     @objc private func banButtonButtoned() {
-        if self.viewModel.userUid != Auth.auth().currentUser?.uid {
+        if self.viewModel.userUid != viewModel.userID {
             let alert = UIAlertController(title: "차단", message: "사용자를 차단하시겠습니까?", preferredStyle: .alert)
             let ok = UIAlertAction(title: "확인", style: .default) { _ in
-                self.block()
+                self.viewModel.block()
                 self.userMyProfileView.updateButton.setTitle("차단됨", for: .normal)
             }
             let cancel = UIAlertAction(title: "취소", style: .cancel) { cancelAction in
@@ -127,11 +124,7 @@ extension UserMyProfileViewController {
         }
     }
     
-    func block() {
-        let userRef = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/blockedUserList")
-        let blockedUserUid = self.viewModel.userUid
-        userRef.child("\(blockedUserUid!)").setValue(true)
-    }
+
 }
 
 // MARK: - UITableViewDataSource
@@ -155,11 +148,11 @@ extension UserMyProfileViewController: UITableViewDataSource  {
 // MARK: - UITableViewDelegate
 extension UserMyProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let board = post.sorted(by: {$0.date > $1.date})[indexPath.section]
-//        let boardDetailVC = BoardDetailViewController(board: board)
-//        boardDetailVC.boardUid = keys[indexPath.section]
+        let board = viewModel.post.sorted(by: {$0.date > $1.date})[indexPath.section]
+        let boardDetailVC = BoardDetailViewController(board: board)
+        boardDetailVC.boardUid = viewModel.keys[indexPath.section]
         
-//        navigationController?.pushViewController(boardDetailVC, animated: true)
+        navigationController?.pushViewController(boardDetailVC, animated: true)
     }    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return self.viewModel.heightForHeaderInSection

@@ -13,9 +13,8 @@ final class UserMyProfileViewModel {
     
     
     private let ref = Database.database().reference()
-    private let userID = Auth.auth().currentUser?.uid
-    
     private var dataManager: DataManager
+    let userID = Auth.auth().currentUser?.uid
     
     var gymName: String?
     var userUid: String?
@@ -103,5 +102,9 @@ final class UserMyProfileViewModel {
             }
         }
     }
-
+    func block() {
+        let userRef = Database.database().reference().child("accounts/\(Auth.auth().currentUser!.uid)/blockedUserList")
+        let blockedUserUid = self.userUid
+        userRef.child("\(blockedUserUid!)").setValue(true)
+    }
 }
