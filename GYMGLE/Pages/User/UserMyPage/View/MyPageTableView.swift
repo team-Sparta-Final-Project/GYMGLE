@@ -13,7 +13,7 @@ class MyPageTableView: UITableView {
     // MARK: - Properties
     
     lazy var cellContents = ["프로필을 설정해주세요.", "공지사항", "로그아웃", "탈퇴하기", "비밀번호 변경"]
-    lazy var secondOfCellContents = ["개인정보 처리방침", "서비스 이용약관", "앱 버전 1.1.0"]
+    lazy var secondOfCellContents = ["개인정보 처리방침", "서비스 이용약관", "앱 버전 1.1.1"]
     weak var myPageDelegate: MyPageTableViewDelegate?
     
     // MARK: - Initialization
