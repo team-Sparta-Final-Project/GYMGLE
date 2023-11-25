@@ -123,8 +123,6 @@ extension UserMyProfileViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
-    
-
 }
 
 // MARK: - UITableViewDataSource
