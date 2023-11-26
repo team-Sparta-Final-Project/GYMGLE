@@ -148,10 +148,12 @@ extension UserMyProfileUpdateViewController: PHPickerViewControllerDelegate {
                     DispatchQueue.main.async {
                         self.userMyprofileUpdateView.profileImageViewSetting(image: image.resized(to: CGSize(width: 100, height: 100)))
                     }
+                } else {
+                    DispatchQueue.main.async {
+                        self.showToast(message: "이미지 불러오기에 실패했습니다.", view: self.view, bottomAnchor: -120, widthAnchor: 260, heightAnchor: 40)
+                    }
                 }
             }
-        } else {
-            print("이미지 못 불러왔음!!!!")
-        }
+        } 
     }
 }
