@@ -44,9 +44,9 @@ private extension AdminNoticeDetailViewController {
     }
 
     func viewSetting() {
-        viewModel.$noticeInfo.sink { [weak self] in
+        viewModel.$noticeInfo.sink { [weak self] notice in
             guard let self = self else { return }
-            if let noticeInfo = $0 {
+            if let noticeInfo = notice {
                 adminNoticeDetailView.contentTextView.text = noticeInfo.content
                 adminNoticeDetailView.contentNumberLabel.text = "\(adminNoticeDetailView.contentTextView.text.count)/500"
                 adminNoticeDetailView.createButton.setTitle("수정하기", for: .normal)
