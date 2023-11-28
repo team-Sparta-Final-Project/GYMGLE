@@ -1,6 +1,12 @@
+//
+//  AdminRootView.swift
+//  GYMGLE
+//
+//  Created by 박성원 on 2023/10/13.
+//
 import UIKit
 
-class AdminTableView: UITableView {
+final class AdminTableView: UITableView {
     // MARK: - Properties
     
     lazy var cellContents = ["공지작성", "회원관리", "QR스캐너", "정보변경","비밀번호 재설정", "탈퇴하기"]
@@ -11,15 +17,19 @@ class AdminTableView: UITableView {
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
+        tableViewSetting()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func tableViewSetting() {
         self.separatorStyle = .none
         self.dataSource = self
         self.delegate = self
         self.isScrollEnabled = false
         self.register(MyPageTableViewCell.self, forCellReuseIdentifier: "MyPageCell")
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 

@@ -6,7 +6,7 @@
 //
 import UIKit
 import SnapKit
-
+import Then
 
 final class AdminRootView: UIView {
     

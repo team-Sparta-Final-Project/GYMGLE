@@ -7,7 +7,6 @@
 
 import UIKit
 import SafariServices
-import Firebase
 import Combine
 
 final class AdminRootViewController: UIViewController, SFSafariViewControllerDelegate {
@@ -15,8 +14,8 @@ final class AdminRootViewController: UIViewController, SFSafariViewControllerDel
     // MARK: - properties
     
     private let adminRootView = AdminRootView()
-    var viewModel: AdminRootViewModel = AdminRootViewModel()
-    var loginViewModel = LoginViewModel()
+    lazy var viewModel: AdminRootViewModel = AdminRootViewModel()
+    lazy var loginViewModel = LoginViewModel()
     weak var delegate: AdminTableViewDelegate?
     var disposableBag = Set<AnyCancellable>()
     
@@ -90,7 +89,8 @@ extension AdminRootViewController: AdminTableViewDelegate {
                 break
             case (0, 4):
                 // 비밀번호 재설정
-                loginViewModel.resetPassword(email: (Auth.auth().currentUser?.email)!) { [weak self] reset in
+                guard let userEmail = viewModel.userEmail else { return }
+                loginViewModel.resetPassword(email: userEmail) { [weak self] reset in
                     if reset {
                         let alert = UIAlertController(title: "비밀번호 재설정", message: "비밀번호 재설정 이메일이 전송되었습니다. 이메일을 확인해주세요.", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "확인", style: .default))
@@ -103,17 +103,22 @@ extension AdminRootViewController: AdminTableViewDelegate {
                 }
                 break
             case (0, 5):
-                self.viewModel.$isAdmin.sink { [weak self] in
+                self.viewModel.$isAdmin.sink { [weak self] isAdmin in
                     guard let self = self else { return }
-                    if $0 == false {
+                    if isAdmin == false {
                         showToast(message: "이 아이디는 탈퇴할 수 없습니다!", view: self.view, bottomAnchor: -120, widthAnchor: 220, heightAnchor: 30)
                     } else {
                         let alert = UIAlertController(title: "계정 탈퇴",
                                                       message: "정말로 계정 탈퇴를 하시겠습니까?",
                                                       preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-                            self.viewModel.deleteAccount {
-                                self.navigationController?.pushViewController(AdminLoginViewController(), animated: true)
+                            self.viewModel.deleteAccount { result in
+                                switch result {
+                                case .success:
+                                    self.navigationController?.pushViewController(AdminLoginViewController(), animated: true)
+                                case .failure:
+                                    self.showToast(message: "삭제하지 못했습니다.", view: self.view, bottomAnchor: -120, widthAnchor: 260, heightAnchor: 40)
+                                }
                             }
                         }))
                         alert.addAction(UIAlertAction(title: "취소", style: .cancel))
