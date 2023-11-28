@@ -90,7 +90,6 @@ extension AdminTableView: UITableViewDataSource {
                 cell.arrowImageView.isHidden = true
             }
         }
-        
         cell.selectionStyle = .none
         return cell
     }
