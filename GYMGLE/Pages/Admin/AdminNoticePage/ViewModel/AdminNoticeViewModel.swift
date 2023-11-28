@@ -13,18 +13,20 @@ import Combine
 
 final class AdminNoticeViewModel: ObservableObject {
     
-    
     private let ref = Database.database().reference()
     private let userID = Auth.auth().currentUser?.uid
+    
+    var noticeList: [Notice] = []
     @Published var isAdmin: Bool = true
     
-    private var dataManager: DataManager
+    var dataManager: DataManager
     
     init(dataManager: DataManager = DataManager.shared) {
         self.dataManager = dataManager
     }
+    
     var numberOfSections: Int {
-        return DataManager.shared.noticeList.count
+        return self.noticeList.count
     }
     
     var numberOfRowsInSection: Int {
@@ -35,25 +37,26 @@ final class AdminNoticeViewModel: ObservableObject {
         return 10
     }
     
-    var notice: [Notice] {
-        return dataManager.noticeList
-    }
-    
-    func getNoticeList( completion: @escaping () -> Void) {
-        ref.child("users/\(dataManager.gymUid!)/noticeList").observeSingleEvent(of: .value) { DataSnapshot in
-            guard let value = DataSnapshot.value as? [String:[String:Any]] else { return
-                completion()
+    func getNoticeList( completion: @escaping (Result<Void, Error>) -> Void) {
+        noticeList.removeAll()
+        guard let gymUid = dataManager.gymUid else { return }
+        ref.child("users/\(gymUid)/noticeList").observeSingleEvent(of: .value) { DataSnapshot in
+            
+            if DataSnapshot.exists() {
+                guard let value = DataSnapshot.value as? [String:[String:Any]] else { return }
+                do {
+                    let jsonArray = value.values.map { $0 as [String: Any] }
+                    let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
+                    let notices = try JSONDecoder().decode([Notice].self, from: jsonData)
+                    self.noticeList.insert(contentsOf: notices, at: 0)
+                    completion(.success(()))
+                } catch {
+                    completion(.failure(error))
+                }
+            } else {
+                completion(.success(()))
             }
-            do {
-                let jsonArray = value.values.compactMap { $0 as [String: Any] }
-                let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
-                let notices = try JSONDecoder().decode([Notice].self, from: jsonData)
-                self.dataManager.noticeList = notices
-                completion()
-            } catch let error {
-                print("테스트 - \(error)")
-                completion()
-            }
+            
         }
     }
     

@@ -44,7 +44,8 @@ private extension AdminNoticeDetailViewController {
     }
 
     func viewSetting() {
-        viewModel.$noticeInfo.sink { [self] in
+        viewModel.$noticeInfo.sink { [weak self] in
+            guard let self = self else { return }
             if let noticeInfo = $0 {
                 adminNoticeDetailView.contentTextView.text = noticeInfo.content
                 adminNoticeDetailView.contentNumberLabel.text = "\(adminNoticeDetailView.contentTextView.text.count)/500"
@@ -61,21 +62,24 @@ private extension AdminNoticeDetailViewController {
         adminNoticeDetailView.deletedButton.addTarget(self, action:  #selector(deletedButtonTapped), for: .touchUpInside)
         viewModel.$isUser.sink { [weak self] isUser in
             guard let self = self else { return }
-            switch isUser {
-            case false: //유저가 들어오면
-                adminNoticeDetailView.createButton.isHidden = true
-                adminNoticeDetailView.deletedButton.isHidden = true
-                adminNoticeDetailView.contentTextView.isEditable = false
-                adminNoticeDetailView.contentNumberLabel.isHidden = true
-            default:
-                adminNoticeDetailView.createButton.isHidden = false
-                adminNoticeDetailView.deletedButton.isHidden = false
-                adminNoticeDetailView.contentTextView.isEditable = true
-                adminNoticeDetailView.contentNumberLabel.isHidden = false
-            }
+            isUserSetting(isUser: isUser)
         }.store(in: &disposableBag)
-       
     }
+    
+    func isUserSetting(isUser: Bool) {
+        if isUser {
+            adminNoticeDetailView.createButton.isHidden = false
+            adminNoticeDetailView.deletedButton.isHidden = false
+            adminNoticeDetailView.contentTextView.isEditable = true
+            adminNoticeDetailView.contentNumberLabel.isHidden = false
+        } else {
+            adminNoticeDetailView.createButton.isHidden = true
+            adminNoticeDetailView.deletedButton.isHidden = true
+            adminNoticeDetailView.contentTextView.isEditable = false
+            adminNoticeDetailView.contentNumberLabel.isHidden = true
+        }
+    }
+
 }
 // MARK: - @objc func
 extension AdminNoticeDetailViewController {
@@ -84,20 +88,31 @@ extension AdminNoticeDetailViewController {
         if adminNoticeDetailView.contentTextView.text.isEmpty || adminNoticeDetailView.contentTextView.text == "500자 이내로 공지사항을 적어주세요!" {
             showToast(message: "내용물이 비었습니다.", view: self.view,  bottomAnchor: -80, widthAnchor: 220, heightAnchor: 30)
         } else {
-            viewModel.$noticeInfo.sink { [self] in
-                if $0 == nil {
+            viewModel.$noticeInfo.sink { [weak self] notice in
+                guard let self = self else { return }
+                if notice == nil {
                     let date = Date()
                     let content = adminNoticeDetailView.contentTextView.text
                     let newNotice = Notice(date: date, content: content ?? "")
-                    viewModel.createdNoticeData(notice: newNotice) {
-                        self.navigationController?.popViewController(animated: true)
+                    viewModel.createdNoticeData(notice: newNotice) { result in
+                        switch result {
+                        case .success:
+                            self.navigationController?.popViewController(animated: true)
+                        case .failure:
+                            self.showToast(message: "실패하셨습니다.", view: self.view, bottomAnchor: -120, widthAnchor: 240, heightAnchor: 40)
+                        }
                     }
                 } else {
-                    if var notice = $0 {
+                    if var notice = notice {
                         let oldContent = notice.content
                         notice.content = adminNoticeDetailView.contentTextView.text
-                        viewModel.updatedNoticeData(oldContent: oldContent, newNotice: notice) {
-                            self.navigationController?.popViewController(animated: true)
+                        viewModel.updatedNoticeData(oldContent: oldContent, newNotice: notice) {result in
+                            switch result {
+                            case .success:
+                                self.navigationController?.popViewController(animated: true)
+                            case .failure:
+                                self.showToast(message: "실패하셨습니다.", view: self.view, bottomAnchor: -120, widthAnchor: 240, heightAnchor: 40)
+                            }
                         }
                     }
                 }
@@ -110,14 +125,16 @@ extension AdminNoticeDetailViewController {
                                       message: "삭제하시겠습니까?",
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-            self.viewModel.$noticeInfo.sink { [weak self] in
-                guard let self = self else {return}
-                if let notice = $0 {
-                    viewModel.deletedNotice(notice: notice, completion: {
+            self.viewModel.$noticeInfo.sink { [weak self] notice in
+                guard let self = self, let notice = notice else { return }
+                self.viewModel.deletedNotice(notice: notice, completion: { result in
+                    switch result {
+                    case .success:
                         self.navigationController?.popViewController(animated: true)
-                        DataManager.shared.noticeList.removeAll(where: {$0.date == notice.date})
-                    })
-                }
+                    case .failure:
+                        self.showToast(message: "삭제하지 못했습니다.", view: self.view, bottomAnchor: -120, widthAnchor: 240, heightAnchor: 40)
+                    }
+                })
             }.store(in: &self.disposableBag)
         }))
         alert.addAction(UIAlertAction(title: "취소", style: .cancel))

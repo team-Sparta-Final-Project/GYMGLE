@@ -6,31 +6,26 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
 final class AdminNoticeView: UIView {
 
     // MARK: - UI Properties
-    lazy var pageTitleLabel: UILabel = {
-        let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size36Bold, textAligment: .center)
-        label.text = ""
-        return label
-    }()
+    private lazy var pageTitleLabel =  UILabel().then {
+        $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size36Bold, textAligment: .center)
+        $0.text = "공지사항"
+    }
     
-    lazy var noticeCreateButton: UIButton = {
-        let button = UIButton()
-        button.buttonImageMakeUI(backgroundColor: .white, image: "pencil", color: ColorGuide.black, cornerRadius: 10, borderWidth: 2.0, borderColor: ColorGuide.shadowBorder.cgColor)
-        return button
-    }()
+    lazy var noticeCreateButton =  UIButton().then {
+        $0.buttonImageMakeUI(backgroundColor: .white, image: "pencil", color: ColorGuide.black, cornerRadius: 10, borderWidth: 2.0, borderColor: ColorGuide.shadowBorder.cgColor)
+    }
     
-    lazy var noticeTableView: UITableView = {
-        let table = UITableView()
-        table.backgroundColor = ColorGuide.background
-        table.sectionHeaderTopPadding = 0
-        table.separatorStyle = .none
-        table.translatesAutoresizingMaskIntoConstraints = false
-        return table
-    }()
+    lazy var noticeTableView = UITableView().then {
+        $0.backgroundColor = ColorGuide.background
+        $0.sectionHeaderTopPadding = 0
+        $0.separatorStyle = .none
+    }
     
     // MARK: - init
     override init(frame: CGRect) {
@@ -45,24 +40,26 @@ final class AdminNoticeView: UIView {
 // MARK: - extension
 private extension AdminNoticeView {
     func viewMakeUI() {
-        let views = [pageTitleLabel, noticeCreateButton, noticeTableView]
-        for view in views {
-            self.addSubview(view)
+
+        addSubviews(pageTitleLabel,noticeCreateButton,noticeTableView)
+        
+        pageTitleLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(22)
+            make.top.equalToSuperview().inset(140)
         }
         
-        NSLayoutConstraint.activate([
-            pageTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            pageTitleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 140),
-            
-            noticeCreateButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 140),
-            noticeCreateButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            noticeCreateButton.heightAnchor.constraint(equalToConstant: 46),
-            noticeCreateButton.widthAnchor.constraint(equalToConstant: 46),
-            
-            noticeTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
-            noticeTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
-            noticeTableView.topAnchor.constraint(equalTo: self.pageTitleLabel.bottomAnchor, constant: 40),
-            noticeTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -0),
-        ])
+        noticeCreateButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(140)
+            make.trailing.equalToSuperview().inset(22)
+            make.height.equalTo(46)
+            make.width.equalTo(46)
+        }
+        
+        noticeTableView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(22)
+            make.trailing.equalToSuperview().inset(22)
+            make.bottom.equalToSuperview().inset(0)
+            make.top.equalTo(pageTitleLabel.snp.bottom).offset(40)
+        }
     }
 }
