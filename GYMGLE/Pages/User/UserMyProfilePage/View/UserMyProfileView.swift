@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Then
+import SnapKit
 import Kingfisher
 
 final class UserMyProfileView: UIView {
@@ -76,10 +78,8 @@ private extension UserMyProfileView {
     }
     
     func containerViewSetting() {
-        addSubviews(containerView)
-        
-        [containerView, labelStackView, updateButton, postCountLabel, postTableview].forEach {
-            self.containerView.addSubview($0)
+        [containerView, labelStackView, profileImageView, updateButton, postCountLabel, postTableview].forEach {
+            addSubview($0)
         }
         
         [gymName, nickName].forEach {
@@ -95,46 +95,37 @@ private extension UserMyProfileView {
         //profileImageView
         profileImageView.snp.makeConstraints { make in
             make.width.height.equalTo(100)
-            make.centerX.equalTo(self.snp.centerX)
+            make.centerX.equalToSuperview()
             make.top.equalTo(containerView.snp.top).offset(-50)
         }
         
         //labelStackView
         labelStackView.snp.makeConstraints { make in
-            make.centerX.equalTo(containerView.snp.centerX)
+            make.centerX.equalToSuperview()
             make.top.equalTo(profileImageView.snp.bottom).offset(8)
             make.width.equalTo(240)
         }
-        NSLayoutConstraint.activate([
-            labelStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0),
-            labelStackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 8),
-            labelStackView.widthAnchor.constraint(equalToConstant: 240),
-            
-            updateButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            updateButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            updateButton.topAnchor.constraint(equalTo: self.labelStackView.bottomAnchor, constant: 10),
-            
-            postCountLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            postCountLabel.topAnchor.constraint(equalTo: self.updateButton.bottomAnchor, constant: 30),
-            postCountLabel.bottomAnchor.constraint(equalTo: self.postTableview.topAnchor, constant: 0),
-            
-            postTableview.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            postTableview.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            postTableview.topAnchor.constraint(equalTo: postCountLabel.bottomAnchor, constant: 6),
-            postTableview.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0)
-        ])
         
-        NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: self.topAnchor, constant: 180),
-            containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
-            containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-            containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
-            
-            profileImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: -50),
-            profileImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            profileImageView.widthAnchor.constraint(equalToConstant: 100),
-            profileImageView.heightAnchor.constraint(equalToConstant: 100)
-        ])
+        //updateButton
+        updateButton.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(labelStackView.snp.bottom).offset(10)
+        }
+        
+        //postCountLabel
+        postCountLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(20)
+            make.top.equalTo(updateButton.snp.bottom).offset(30)
+            make.bottom.equalTo(postTableview.snp.top)
+        }
+        
+        //postTableview
+        postTableview.snp.makeConstraints { make in
+            make.leading.equalTo(containerView.snp.leading).offset(20)
+            make.trailing.equalTo(containerView.snp.trailing).offset(-20)
+            make.top.equalTo(postCountLabel.snp.bottom).offset(6)
+            make.bottom.equalTo(containerView.snp.bottom)
+        }
     }
 }
 // MARK: - extension custom func
