@@ -5,15 +5,18 @@
 //  Created by 박성원 on 11/14/23.
 //
 
-import Foundation
+
+import CoreImage.CIFilterBuiltins
 import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 
-final class QrCodeViewModel: ObservableObject { //ObservableObject: 이벤트를 방출할 수 있는 인스턴스 (해당 인스턴스를 Subscriber가 구독하여 사용할 수 있다는 의미)
+final class QrCodeViewModel: ObservableObject {
     
     @Published var isHidden: Bool = true
     @Published var adminUid: String = ""
+    
+    let userUid = Auth.auth().currentUser?.uid
     var dataManager: DataManager
     
     init(dataManager: DataManager = DataManager.shared) {
@@ -61,16 +64,16 @@ final class QrCodeViewModel: ObservableObject { //ObservableObject: 이벤트를
     
     func getAdminUid() {
         let ref = Database.database().reference().child("accounts")
-        ref.child("\(Auth.auth().currentUser!.uid)").child("adminUid").observeSingleEvent(of: .value) { DataSnapshot in
+        ref.child("\(userUid!)").child("adminUid").observeSingleEvent(of: .value) { DataSnapshot in
             if let value = DataSnapshot.value as? String {
                 self.adminUid = value
             }
         }
     }
     
-    func observe(_ completion: @escaping () -> ()){
+    func observe(_ completion: @escaping () -> Void){
         let ref = Database.database().reference()
-        ref.child("accounts/\(Auth.auth().currentUser!.uid)/adminUid").observe(.value) { snapshot in
+        ref.child("accounts/\(userUid!)/adminUid").observe(.value) { snapshot in
             guard let value = snapshot.value as? String else {return}
             if value != "임시"{
                 ref.removeAllObservers()

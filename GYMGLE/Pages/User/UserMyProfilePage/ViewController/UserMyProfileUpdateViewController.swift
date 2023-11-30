@@ -72,7 +72,7 @@ extension UserMyProfileUpdateViewController {
     @objc private func successedButtonTapped() {
         guard let nickName = userMyprofileUpdateView.nickNameTextField.text else {return}
         viewModel.nickNameDuplicateCheck(target: nickName , completion: { isDuplicated in
-            if !isDuplicated || viewModel.dataManager.profile?.nickName == self.userMyprofileUpdateView.nickNameTextField.text  {
+            if !isDuplicated || self.viewModel.dataManager.profile?.nickName == self.userMyprofileUpdateView.nickNameTextField.text  {
                 if self.userMyprofileUpdateView.nickNameTextField.text?.isEmpty == true {
                     DispatchQueue.main.async {
                         let alert = UIAlertController(title: "닉네임 칸이 비었습니다.",
