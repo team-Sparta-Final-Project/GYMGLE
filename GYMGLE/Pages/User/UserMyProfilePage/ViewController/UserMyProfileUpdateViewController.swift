@@ -8,12 +8,15 @@
 import UIKit
 import PhotosUI
 import Kingfisher
+import Combine
 
 final class UserMyProfileUpdateViewController: UIViewController {
 
     // MARK: - pripertise
     let userMyprofileUpdateView = UserMyProfileUpdateView()
     var viewModel: UserMyProfileUpdateViewModel = UserMyProfileUpdateViewModel()
+    var disposableBag = Set<AnyCancellable>()
+    
     // MARK: - life cycle
     override func loadView() {
         view = userMyprofileUpdateView
@@ -39,12 +42,12 @@ private extension UserMyProfileUpdateViewController {
         userMyprofileUpdateView.nickNameTextField.delegate = self
         allButtonSetting()
         // 프로필이 없을 경우 와 있을 경우 싱글톤에서 받아옴
-        if DataManager.shared.profile?.nickName == nil {
+        if viewModel.dataManager.profile?.nickName == nil {
             userMyprofileUpdateView.pageLabel.text = "프로필 추가"
         } else {
             userMyprofileUpdateView.pageLabel.text = "프로필 수정"
-            guard let nickName = DataManager.shared.profile?.nickName else { return }
-            guard let url = DataManager.shared.profile?.image else { return }
+            guard let nickName = viewModel.dataManager.profile?.nickName else { return }
+            guard let url = viewModel.dataManager.profile?.image else { return }
             userMyprofileUpdateView.dataSetting(nickName: nickName, imageUrl: url)
         }
     }
@@ -69,7 +72,7 @@ extension UserMyProfileUpdateViewController {
     @objc private func successedButtonTapped() {
         guard let nickName = userMyprofileUpdateView.nickNameTextField.text else {return}
         viewModel.nickNameDuplicateCheck(target: nickName , completion: { isDuplicated in
-            if !isDuplicated || DataManager.shared.profile?.nickName == self.userMyprofileUpdateView.nickNameTextField.text  {
+            if !isDuplicated || viewModel.dataManager.profile?.nickName == self.userMyprofileUpdateView.nickNameTextField.text  {
                 if self.userMyprofileUpdateView.nickNameTextField.text?.isEmpty == true {
                     DispatchQueue.main.async {
                         let alert = UIAlertController(title: "닉네임 칸이 비었습니다.",
