@@ -23,10 +23,12 @@ final class UserMyProfileView: UIView {
     }
     
     private lazy var gymName = UILabel().then {
+        $0.text = ""
         $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size14, textAligment: .center)
     }
     
     private lazy var nickName = UILabel().then {
+        $0.text = ""
         $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size19Bold, textAligment: .center)
     }
     
@@ -131,11 +133,9 @@ private extension UserMyProfileView {
 // MARK: - extension custom func
 
 extension UserMyProfileView {
-    func dataSetting(gym: String, name: String) {
+    func dataSetting(gym: String, name: String, imageUrl: URL) {
         gymName.text = gym
         nickName.text = name
-    }
-    func imageSetting(imageUrl: URL) {
         profileImageView.kf.setImage(with: imageUrl)
     }
 }
