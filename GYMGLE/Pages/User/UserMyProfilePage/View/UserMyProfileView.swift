@@ -131,10 +131,11 @@ private extension UserMyProfileView {
 // MARK: - extension custom func
 
 extension UserMyProfileView {
-    func dataSetting(gym: String, name: String, postCount: Int, imageUrl: URL) {
+    func dataSetting(gym: String, name: String) {
         gymName.text = gym
         nickName.text = name
-        postCountLabel.text = "작성한 글 \(postCount)개"
+    }
+    func imageSetting(imageUrl: URL) {
         profileImageView.kf.setImage(with: imageUrl)
     }
 }

@@ -8,18 +8,18 @@
 import Foundation
 import FirebaseDatabase
 import FirebaseAuth
+import Combine
 
 final class UserMyProfileViewModel {
     
-    
     private let ref = Database.database().reference()
-    private var dataManager: DataManager
     let userID = Auth.auth().currentUser?.uid
+    var dataManager: DataManager
     
     var gymName: String?
-    var userUid: String?
+    @Published var userUid: String?
     var keys: [String] = []
-    var post: [Board] = []
+    @Published var post: [Board] = []
     var nickName: String = ""
     var url: URL?
     
@@ -73,7 +73,7 @@ final class UserMyProfileViewModel {
         }
     }
     
-    func getBoardKeys(completion: @escaping () -> Void) {
+    func getBoardKeys() {
         self.keys.removeAll()
         let ref = Database.database().reference().child("boards")
         let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)").queryLimited(toLast: 500)
@@ -82,7 +82,6 @@ final class UserMyProfileViewModel {
                 if let snapshot = childSnapshot as? DataSnapshot,
                    let key = snapshot.key as? String  {
                     self.keys.insert(key, at: 0)
-                    completion()
                 }
             }
         }
