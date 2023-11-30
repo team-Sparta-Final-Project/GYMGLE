@@ -40,7 +40,6 @@ final class UserMyProfileBoardTableViewCell: UITableViewCell {
     }
     
     private lazy var countLabelStackView = UIStackView().then {
-        //let stack = UIStackView(arrangedSubviews: [likeCountLabel, commentCountLabel])
         $0.spacing = 10
         $0.axis = .horizontal
         $0.distribution = .fill
@@ -84,17 +83,26 @@ private extension UserMyProfileBoardTableViewCell {
             contentView.addSubview($0)
         }
         
-        NSLayoutConstraint.activate([
-            contentLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 14),
-            contentLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 12),
-            contentLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -60),
-            
-            countLabelStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 14),
-            countLabelStackView.topAnchor.constraint(equalTo: self.contentLabel.bottomAnchor, constant: 8),
-            countLabelStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -12),
-            
-            timeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -14),
-            timeLabel.centerYAnchor.constraint(equalTo: self.countLabelStackView.centerYAnchor, constant: 0)
-        ])
+        [likeCountLabel, commentCountLabel].forEach {
+            self.countLabelStackView.addArrangedSubview($0)
+        }
+        
+        //contentLabel
+        contentLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(14)
+            make.top.equalToSuperview().inset(12)
+            make.trailing.equalToSuperview().offset(-60)
+        }
+        //countLabelStackView
+        countLabelStackView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(14)
+            make.top.equalTo(contentLabel.snp.bottom).offset(8)
+            make.bottom.equalToSuperview().inset(12)
+        }
+        //timeLabel
+        timeLabel.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(14)
+            make.centerY.equalTo(countLabelStackView.snp.centerY)
+        }
     }
 }
