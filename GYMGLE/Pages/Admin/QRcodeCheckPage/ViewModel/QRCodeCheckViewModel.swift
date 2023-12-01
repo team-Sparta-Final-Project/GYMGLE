@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseDatabase
 import FirebaseAuth
-import 
+
 final class QRCodeCheckViewModel {
     
     
