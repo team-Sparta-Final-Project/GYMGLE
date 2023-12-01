@@ -6,62 +6,47 @@
 //
 import UIKit
 import SnapKit
-
+import Then
 
 final class AdminRootView: UIView {
     
     // MARK: - UIProperties
     
-    private lazy var scrollView: UIScrollView = {
-        let scroll = UIScrollView()
-        scroll.isScrollEnabled = true
-        scroll.showsVerticalScrollIndicator = false
-        scroll.backgroundColor = ColorGuide.background
-        scroll.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        scroll.translatesAutoresizingMaskIntoConstraints = false
-        return scroll
-    }()
+    private lazy var scrollView = UIScrollView().then {
+        $0.isScrollEnabled = true
+        $0.showsVerticalScrollIndicator = false
+        $0.backgroundColor = ColorGuide.background
+        $0.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    }
     
-    private lazy var contentView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private lazy var contentView = UIView()
 
-    private lazy var pageTitleLabel: UILabel = {
-        let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size36Bold, textAligment: .left)
-        label.text = "헬스장 관리"
-        return label
-    }()
-    private lazy var gymNameLabel: UILabel = {
-        let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16Bold, textAligment: .left)
-        label.text = "JP 헬스장"
-        return label
-    }()
-    private lazy var gymNumberLabel: UILabel = {
-        let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size14, textAligment: .left)
-        label.text = "010-0000-0000"
-        return label
-    }()
-    private lazy var gymLabelStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [gymNameLabel,gymNumberLabel])
-        stack.spacing = 2
-        stack.axis = .vertical
-        stack.distribution = .fill
-        stack.alignment = .fill
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
-    lazy var gymSettingButton: UIButton = {
-        let button = UIButton()
-        button.buttonMakeUI(backgroundColor: .white, cornerRadius: 16, borderWidth: 0, borderColor: ColorGuide.textHint.cgColor, setTitle: "로그아웃", font: FontGuide.size16Bold, setTitleColor: ColorGuide.main)
-        return button
-    }()
+    private lazy var pageTitleLabel = UILabel().then {
+        $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size36Bold, textAligment: .left)
+        $0.text = "헬스장 관리"
+    }
+    private lazy var gymNameLabel = UILabel().then {
+        $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16Bold, textAligment: .left)
+        $0.text = "JP 헬스장"
+    }
+    private lazy var gymNumberLabel = UILabel().then {
+        $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size14, textAligment: .left)
+        $0.text = "010-0000-0000"
+    }
+    
+    private lazy var gymLabelStackView = UIStackView().then {
+        $0.spacing = 2
+        $0.axis = .vertical
+        $0.distribution = .fill
+        $0.alignment = .fill
+    }
+    
+    lazy var gymSettingButton = UIButton().then {
+        $0.buttonMakeUI(backgroundColor: .white, cornerRadius: 16, borderWidth: 0, borderColor: ColorGuide.textHint.cgColor, setTitle: "로그아웃", font: FontGuide.size16Bold, setTitleColor: ColorGuide.main)
+    }
 
     lazy var adminTableView = AdminTableView()
+    
     // MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -81,47 +66,60 @@ final class AdminRootView: UIView {
 // MARK: - extension
 private extension AdminRootView {
     func viewMakeUI() {
-        
         topMakeUI()
     }
+    
     func topMakeUI() {
-        self.addSubview(scrollView)
+        addSubviews(scrollView)
         scrollView.addSubview(contentView)
         
-        let allView = [pageTitleLabel, gymLabelStackView, gymSettingButton, adminTableView]
-        for view in allView {
-            self.contentView.addSubview(view)
+        [pageTitleLabel, gymLabelStackView, gymSettingButton, adminTableView].forEach {
+            self.contentView.addSubview($0)
         }
-        NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo:  self.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            scrollView.topAnchor.constraint(equalTo: self.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            
-            contentView.leadingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            contentView.trailingAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.trailingAnchor, constant: 0),
-            contentView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 0),
-            contentView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor, constant: 0),
-            contentView.heightAnchor.constraint(equalToConstant: 700),
-            
-            pageTitleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 22),
-            pageTitleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 90),
-            pageTitleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -22),
-            
-            gymLabelStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 22),
-            gymLabelStackView.topAnchor.constraint(equalTo: self.pageTitleLabel.bottomAnchor, constant: 20),
-            gymLabelStackView.trailingAnchor.constraint(equalTo: self.gymSettingButton.leadingAnchor, constant: 0),
-            
-            gymSettingButton.centerYAnchor.constraint(equalTo: self.gymLabelStackView.centerYAnchor),
-            gymSettingButton.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -22),
-            gymSettingButton.widthAnchor.constraint(equalToConstant: 85),
-            gymSettingButton.heightAnchor.constraint(equalToConstant: 34)
-        ])
-        adminTableView.snp.makeConstraints {
-            $0.top.equalTo(gymLabelStackView.snp.bottom).offset(14)
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(52*9 + 20)
+        
+        [gymNameLabel,gymNumberLabel].forEach {
+            self.gymLabelStackView.addArrangedSubview($0)
+        }
+        
+        //scrollView
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(0)
+        }
+        
+        //contentView
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide)
+            make.height.equalTo(scrollView)
+        }
+        
+        //pageTitleLabel
+        pageTitleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(contentView.snp.leading).offset(22)
+            make.top.equalTo(contentView.snp.top).offset(90)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-22)
+        }
+        
+        //gymLabelStackView
+        gymLabelStackView.snp.makeConstraints { make in
+            make.leading.equalTo(contentView.snp.leading).offset(22)
+            make.top.equalTo(pageTitleLabel.snp.bottom).offset(20)
+            make.trailing.equalTo(gymSettingButton.snp.leading)
+        }
+        
+        //gymSettingButton
+        gymSettingButton.snp.makeConstraints { make in
+            make.centerY.equalTo(gymLabelStackView.snp.centerY)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-22)
+            make.height.equalTo(34)
+            make.width.equalTo(85)
+        }
+
+        //adminTableView
+        adminTableView.snp.makeConstraints { make in
+            make.top.equalTo(gymLabelStackView.snp.bottom).offset(14)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(52*9 + 20)
         }
     }
-   
 }

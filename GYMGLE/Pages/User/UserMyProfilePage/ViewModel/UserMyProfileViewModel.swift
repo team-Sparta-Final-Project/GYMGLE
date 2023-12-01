@@ -8,20 +8,22 @@
 import Foundation
 import FirebaseDatabase
 import FirebaseAuth
+import Combine
+
 
 final class UserMyProfileViewModel {
     
-    
     private let ref = Database.database().reference()
-    private var dataManager: DataManager
     let userID = Auth.auth().currentUser?.uid
+    var dataManager: DataManager
     
-    var gymName: String?
-    var userUid: String?
+    
+    @Published var gymName: String?
+    @Published var userUid: String?
     var keys: [String] = []
-    var post: [Board] = []
-    var nickName: String = ""
-    var url: URL?
+    @Published var post: [Board] = []
+    @Published var nickName: String?
+    @Published var url: URL?
     
     init(dataManager: DataManager = DataManager.shared) {
         self.dataManager = dataManager
@@ -36,7 +38,7 @@ final class UserMyProfileViewModel {
     }
     
 
-    func getProfile(completion: @escaping () -> Void) {
+    func getProfile() {
         guard let userUid = self.userUid else {return}
         let ref = Database.database().reference().child("accounts").child("\(userUid)").child("profile")
         ref.observeSingleEvent(of: .value) { dataSnapshot in
@@ -46,34 +48,35 @@ final class UserMyProfileViewModel {
                    let imageUrl = URL(string: imageUrlString) {
                     self.nickName = nickName
                     self.url = imageUrl
-                    completion()
                 } else {
-                    completion()
                 }
             }
         }
     }
     
-    func getPost(completion: @escaping () -> Void) {
+    func getPost(completion: @escaping (Result<Void,Error>) -> Void) {
         self.post.removeAll()
         let ref = Database.database().reference().child("boards")
         let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)")
         query.observeSingleEvent(of: .value) { dataSnapshot in
-            guard let value = dataSnapshot.value as? [String: [String: Any]] else { return }
-            do {
-                let jsonArray = value.values.compactMap { $0 as [String: Any] }
-                let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
-                let posts = try JSONDecoder().decode([Board].self, from: jsonData)
-                self.post.append(contentsOf: posts)
-                completion()
-            } catch let error {
-                print("테스트 - \(error)")
-                completion()
+            if dataSnapshot.exists() {
+                guard let value = dataSnapshot.value as? [String: [String: Any]] else { return }
+                do {
+                    let jsonArray = value.values.compactMap { $0 as [String: Any] }
+                    let jsonData = try JSONSerialization.data(withJSONObject: jsonArray)
+                    let posts = try JSONDecoder().decode([Board].self, from: jsonData)
+                    self.post.append(contentsOf: posts)
+                    completion(.success(()))
+                } catch let error {
+                    completion(.failure(error))
+                }
+            } else {
+                completion(.success(()))
             }
         }
     }
     
-    func getBoardKeys(completion: @escaping () -> Void) {
+    func getBoardKeys() {
         self.keys.removeAll()
         let ref = Database.database().reference().child("boards")
         let query = ref.queryOrdered(byChild: "uid").queryEqual(toValue: "\(userUid!)").queryLimited(toLast: 500)
@@ -82,13 +85,12 @@ final class UserMyProfileViewModel {
                 if let snapshot = childSnapshot as? DataSnapshot,
                    let key = snapshot.key as? String  {
                     self.keys.insert(key, at: 0)
-                    completion()
                 }
             }
         }
     }
     
-    func getGymName(completion: @escaping () -> Void) {
+    func getGymName() {
         let ref = Database.database().reference().child("accounts").child("\(userUid!)").child("adminUid")
         ref.observeSingleEvent(of: .value) { dataSnapshot in
             if let adminUid = dataSnapshot.value as? String {
@@ -96,7 +98,6 @@ final class UserMyProfileViewModel {
                 gymRef.observeSingleEvent(of: .value) { DataSnapshot in
                     if let gymName = DataSnapshot.value as? String {
                         self.gymName = gymName
-                        completion()
                     }
                 }
             }

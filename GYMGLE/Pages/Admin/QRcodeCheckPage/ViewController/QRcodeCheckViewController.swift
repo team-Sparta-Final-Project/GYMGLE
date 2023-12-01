@@ -7,7 +7,6 @@
 
 import UIKit
 import AVFoundation
-import Combine
 
 final class QRcodeCheckViewController: UIViewController {
     
@@ -15,7 +14,6 @@ final class QRcodeCheckViewController: UIViewController {
     // 실시간 캡처를 수행하기 선언(AVCaptureSession: 오디오 및 비디오 데이터 스트림을 캡처하고 처리하기 위한 핵심 구성 요소)
     private let captureSession = AVCaptureSession()
     var viewModel: QRCodeCheckViewModel = QRCodeCheckViewModel()
-    var disposableBag = Set<AnyCancellable>()
     
     // MARK: - lifr cycle
     override func viewDidLoad() {

@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import Combine
 
 final class UserMyProfileViewController: UIViewController {
 
     // MARK: - prirperties
     let userMyProfileView = UserMyProfileView()
     var viewModel: UserMyProfileViewModel = UserMyProfileViewModel()
+    var disposableBag = Set<AnyCancellable>()
     
     // MARK: - life cycle
     override func loadView() {
@@ -39,7 +41,8 @@ private extension UserMyProfileViewController {
     func viewWillAppearSetting() {
         navigationController?.navigationBar.isHidden = false
         tabBarController?.tabBar.isHidden = true
-        dataSetting()
+        profileDataSetting()
+        postDataSetting()
     }
     
     func tableViewSetting() {
@@ -49,16 +52,20 @@ private extension UserMyProfileViewController {
     }
     
     func buttonSetting() {
-        if self.viewModel.userUid == viewModel.userID { // 내 프로필 진입 시
-            userMyProfileView.updateButton.addTarget(self, action: #selector(updateButtonButtoned), for: .touchUpInside)
-            userMyProfileView.updateButton.titleLabel?.text = "프로필 수정"
-            navigationController?.navigationBar.topItem?.title = "마이페이지"
-            navigationController?.navigationBar.tintColor = .black
-        } else { //다른 사람 프로필 진입 시
-            userMyProfileView.updateButton.setTitle("사용자 차단", for: .normal)
-            userMyProfileView.updateButton.addTarget(self, action: #selector(banButtonButtoned), for: .touchUpInside)
-        }
+        viewModel.$userUid.sink { [weak self] userUid in
+            guard let self = self else { return }
+           if userUid == viewModel.userID { // 내 프로필 진입 시
+               userMyProfileView.updateButton.titleLabel?.text = "프로필 수정"
+               userMyProfileView.updateButton.addTarget(self, action: #selector(updateButtonButtoned), for: .touchUpInside)
+               navigationController?.navigationBar.topItem?.title = "마이페이지"
+               navigationController?.navigationBar.tintColor = .black
+           } else { //다른 사람 프로필 진입 시
+               userMyProfileView.updateButton.setTitle("사용자 차단", for: .normal)
+               userMyProfileView.updateButton.addTarget(self, action: #selector(banButtonButtoned), for: .touchUpInside)
+           }
+        }.store(in: &disposableBag)
     }
+    
     func profileIsNil() {
         if DataManager.shared.profile?.nickName == nil {
             let userMyProfileUpdateVC = UserMyProfileUpdateViewController()
@@ -68,32 +75,52 @@ private extension UserMyProfileViewController {
         }
     }
     
-    func dataSetting() {
-        //자기가 들어오는 거면 싱글톤으로 보여주기
-        if self.viewModel.userUid == viewModel.userID {
-            self.viewModel.getBoardKeys{}
-            DispatchQueue.main.async {
-                guard let gymName = DataManager.shared.realGymInfo?.gymName else { return }
-                guard let nickName = DataManager.shared.profile?.nickName else { return }
-                guard let url = DataManager.shared.profile?.image else { return }
-                self.userMyProfileView.dataSetting(gym: "\(gymName)", name: nickName, postCount: self.viewModel.post.count,imageUrl: url)
-            }
-            self.viewModel.getPost {
+    func profileDataSetting() {
+        self.viewModel.getBoardKeys()
+        self.viewModel.$userUid
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] userUid in
+                guard let self = self else { return }
+                if userUid == viewModel.userID {
+                    guard let gymName = viewModel.dataManager.realGymInfo?.gymName,
+                            let nickName = viewModel.dataManager.profile?.nickName,
+                            let url = viewModel.dataManager.profile?.image else { return }
+                    self.userMyProfileView.dataSetting(gym: "\(gymName)", name: nickName, imageUrl: url)
+                } else {
+                    self.viewModel.getProfile()
+                    self.viewModel.getGymName()
+                    self.viewModel.$url
+                        .combineLatest(self.viewModel.$gymName, self.viewModel.$nickName)
+                        .receive(on: DispatchQueue.main)
+                        .sink {[weak self] url, gymName, nickName in
+                            guard let url = url, let self = self, let gymName = gymName, let nickName = nickName else { return }
+                            self.userMyProfileView.dataSetting(gym: "\(gymName)", name: nickName, imageUrl: url)
+                        }.store(in: &disposableBag)
+                }
+            }.store(in: &disposableBag)
+    }
+    
+    func postDataSetting() {
+        viewModel.$userUid
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] userUid in
+                guard let self = self else { return }
+                if userUid == viewModel.userID {
+                    getPostDataSetting()
+                } else {
+                    getPostDataSetting()
+                }
+            }.store(in: &disposableBag)
+    }
+    
+    func getPostDataSetting() {
+        self.viewModel.getPost{ result in
+            switch result {
+            case .success:
                 self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.viewModel.post.count)개"
                 self.userMyProfileView.postTableview.reloadData()
-            }
-        } else { // 다른 사람이 들어오는거면 싱글톤이 아닌 uid를 사용해 서버를 통해서 보여주기
-            self.viewModel.getProfile {
-                self.viewModel.getBoardKeys {}
-                self.viewModel.getGymName {
-                    guard let url = self.viewModel.url else { return }
-                    guard let gymName = self.viewModel.gymName else { return }
-                    self.userMyProfileView.dataSetting(gym: gymName, name: self.viewModel.nickName, postCount: self.viewModel.post.count, imageUrl: url)
-                    self.viewModel.getPost {
-                        self.userMyProfileView.postCountLabel.text = "작성한 글 \(self.viewModel.post.count)개"
-                        self.userMyProfileView.postTableview.reloadData()
-                    }
-                }
+            case .failure:
+                self.showToast(message: "게시물을 불러오지 못했습니다", view: self.view, bottomAnchor: -120, widthAnchor: 300, heightAnchor: 40)
             }
         }
     }
@@ -123,8 +150,6 @@ extension UserMyProfileViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
-    
-
 }
 
 // MARK: - UITableViewDataSource

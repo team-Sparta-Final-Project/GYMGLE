@@ -12,8 +12,11 @@ import Combine
 
 final class AdminRootViewModel: ObservableObject {
     
-    let ref = Database.database().reference()
+    lazy var ref = Database.database().reference()
+    lazy var userEmail = Auth.auth().currentUser?.email
+    
     var dataManager: DataManager
+    
     @Published var isAdmin: Bool = true
     
     init(dataManager: DataManager = DataManager.shared) {
@@ -28,13 +31,13 @@ final class AdminRootViewModel: ObservableObject {
         } catch _ as NSError { }
     }
     
-    func deleteAccount(completion: @escaping () -> Void) {
+    func deleteAccount(completion: @escaping (Result<Void,Error>) -> Void) {
         // 계정 삭제
         if let user = Auth.auth().currentUser {
             user.delete { error in
                 if error != nil {
                 } else {
-                    completion()
+                    completion(.failure(error!))
                 }
             }
             //탈퇴한 헬스장의 유저들 삭제
@@ -51,6 +54,6 @@ final class AdminRootViewModel: ObservableObject {
             userRef.removeValue()
             self.signOut()
         } else {}
-        completion()
+        completion(.success(()))
     }
 }

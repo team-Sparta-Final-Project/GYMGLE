@@ -23,17 +23,19 @@ final class AdminNoticeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         allSetting()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         setCustomBackButton()
-        viewModel.getNoticeList {
-            self.adminNoticeView.noticeTableView.reloadData()
-            print("테스트 - \(self.viewModel.notice)")
-            print("테스트 - \(self.viewModel.notice.count)")
+        viewModel.getNoticeList { result in
+            switch result {
+            case .success:
+                self.adminNoticeView.noticeTableView.reloadData()
+            case .failure:
+                self.showToast(message: "공지사항을 불러오지 못했습니다.", view: self.view, bottomAnchor: -120, widthAnchor: 260, heightAnchor: 40)
+            }
         }
     }
 }
@@ -43,7 +45,6 @@ private extension AdminNoticeViewController {
     
     func allSetting() {
         adminNoticeView.backgroundColor = ColorGuide.background
-        self.adminNoticeView.pageTitleLabel.text = "공지사항"
         buttonTappedSetting()
         tableSetting()
     }
@@ -57,13 +58,8 @@ private extension AdminNoticeViewController {
                 self.adminNoticeView.noticeCreateButton.isHidden = false
             }
         }.store(in: &disposableBag)
-//        switch isAdmin {
-//        case false: 
-//            adminNoticeView.noticeCreateButton.isHidden = true
-//        default:
-//            adminNoticeView.noticeCreateButton.isHidden = false
-//        }
     }
+    
     func tableSetting() {
         adminNoticeView.noticeTableView.dataSource = self
         adminNoticeView.noticeTableView.delegate = self
@@ -89,37 +85,41 @@ extension AdminNoticeViewController {
 // MARK: - UITableViewDataSource
 extension AdminNoticeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRowsInSection
+        return  viewModel.noticeList.count == 0 ? 0 : viewModel.numberOfRowsInSection
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.numberOfSections
+        return viewModel.noticeList.count == 0 ? 0 : viewModel.numberOfSections
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AdminNoticeTableViewCell.identifier, for: indexPath) as! AdminNoticeTableViewCell
-
-        cell.nameLabel.text = DataManager.shared.realGymInfo?.gymName
-        cell.contentLabel.text = viewModel.notice.sorted{ $0.date > $1.date }[indexPath.section].content
-        cell.dateLabel.text = viewModel.dateToString(date: viewModel.notice.sorted{ $0.date > $1.date }[indexPath.section].date)
+        if viewModel.noticeList.count == 0 {
+            return UITableViewCell()
+        }
         
+        cell.nameLabel.text = viewModel.dataManager.realGymInfo?.gymName
+        cell.contentLabel.text = viewModel.noticeList.sorted{ $0.date > $1.date }[indexPath.section].content
+        cell.dateLabel.text = viewModel.dateToString(date: viewModel.noticeList.sorted{ $0.date > $1.date }[indexPath.section].date)
         cell.selectionStyle = .none
         return cell
     }
-    
 }
+
 // MARK: - UITableViewDelegate
 extension AdminNoticeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let adminNoticeDetailVC = AdminNoticeDetailViewController()
         adminNoticeDetailVC.viewModel.isUser = viewModel.isAdmin
-        adminNoticeDetailVC.viewModel.noticeInfo = viewModel.notice.sorted{ $0.date > $1.date }[indexPath.section]
+        adminNoticeDetailVC.viewModel.noticeInfo = viewModel.noticeList.sorted{ $0.date > $1.date }[indexPath.section]
         navigationController?.pushViewController(adminNoticeDetailVC, animated: true)
     }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return viewModel.heightForHeaderInSection
     }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView()
         header.isUserInteractionEnabled = false

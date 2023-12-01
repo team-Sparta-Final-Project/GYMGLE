@@ -103,7 +103,7 @@ extension UserMyPageViewController: MyPageTableViewDelegate {
             self.present(safariViewController, animated: true, completion: nil)
             break
         case (1, 1):
-            guard let appleUrl = URL(string: "https://difficult-shock-122.notion.site/f5ff3433117749c5a8bdc527eff556d1")   else { return }
+            guard let appleUrl = URL(string: "https://difficult-shock-122.notion.site/f5ff3433117749c5a8bdc527eff556d1") else { return }
             let safariViewController = SFSafariViewController(url: appleUrl)
             safariViewController.delegate = self
             safariViewController.modalPresentationStyle = .fullScreen

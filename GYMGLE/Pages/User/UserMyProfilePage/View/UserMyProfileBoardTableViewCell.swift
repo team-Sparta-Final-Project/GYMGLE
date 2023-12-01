@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Then
+import SnapKit
 
 final class UserMyProfileBoardTableViewCell: UITableViewCell {
 
@@ -22,47 +24,35 @@ final class UserMyProfileBoardTableViewCell: UITableViewCell {
     }
     // MARK: - UIProperties
 
-    private lazy var contentLabel: UILabel = {
-        let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .left)
-        label.numberOfLines = 3
-        return label
-    }()
+    private lazy var contentLabel = UILabel().then {
+        $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .left)
+        $0.numberOfLines = 3
+    }
     
-    private lazy var likeCountLabel: UILabel = {
-        let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.textHint, font: FontGuide.size14, textAligment: .left)
-        label.text = "좋아요 20개"
-        return label
-    }()
+    private lazy var likeCountLabel = UILabel().then {
+        $0.labelMakeUI(textColor: ColorGuide.textHint, font: FontGuide.size14, textAligment: .left)
+        $0.text = "좋아요 20개"
+    }
     
-    lazy var commentCountLabel: UILabel = {
-        let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.textHint, font: FontGuide.size14, textAligment: .left)
-        label.text = "답글 12개"
-        return label
-    }()
+    lazy var commentCountLabel = UILabel().then {
+        $0.labelMakeUI(textColor: ColorGuide.textHint, font: FontGuide.size14, textAligment: .left)
+        $0.text = "답글 12개"
+    }
     
-    private lazy var countLabelStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [likeCountLabel, commentCountLabel])
-        stack.spacing = 10
-        stack.axis = .horizontal
-        stack.distribution = .fill
-        stack.alignment = .fill
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
+    private lazy var countLabelStackView = UIStackView().then {
+        $0.spacing = 10
+        $0.axis = .horizontal
+        $0.distribution = .fill
+        $0.alignment = .fill
+    }
     
-    private lazy var timeLabel: UILabel = {
-        let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.textHint, font: FontGuide.size14, textAligment: .right)
-        label.text = "20시간 전"
-        return label
-    }()
+    private lazy var timeLabel = UILabel().then {
+        $0.labelMakeUI(textColor: ColorGuide.textHint, font: FontGuide.size14, textAligment: .right)
+        $0.text = "20시간 전"
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super .init(style: style, reuseIdentifier: reuseIdentifier)
-        configuredCell()
         cellSetting()
     }
     
@@ -85,25 +75,34 @@ private extension UserMyProfileBoardTableViewCell {
         self.layer.shadowOpacity = 0.4
         self.layer.shadowOffset = CGSize.zero
         self.layer.shadowRadius = 1
+        configuredCell()
     }
     
     func configuredCell() {
-        let views = [contentLabel, countLabelStackView, timeLabel]
-        for view in views {
-            contentView.addSubview(view)
+        [contentLabel, countLabelStackView, timeLabel].forEach {
+            contentView.addSubview($0)
         }
         
-        NSLayoutConstraint.activate([
-            contentLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 14),
-            contentLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 12),
-            contentLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -60),
-            
-            countLabelStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 14),
-            countLabelStackView.topAnchor.constraint(equalTo: self.contentLabel.bottomAnchor, constant: 8),
-            countLabelStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -12),
-            
-            timeLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -14),
-            timeLabel.centerYAnchor.constraint(equalTo: self.countLabelStackView.centerYAnchor, constant: 0)
-        ])
+        [likeCountLabel, commentCountLabel].forEach {
+            self.countLabelStackView.addArrangedSubview($0)
+        }
+        
+        //contentLabel
+        contentLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(14)
+            make.top.equalToSuperview().inset(12)
+            make.trailing.equalToSuperview().offset(-60)
+        }
+        //countLabelStackView
+        countLabelStackView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(14)
+            make.top.equalTo(contentLabel.snp.bottom).offset(8)
+            make.bottom.equalToSuperview().inset(12)
+        }
+        //timeLabel
+        timeLabel.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(14)
+            make.centerY.equalTo(countLabelStackView.snp.centerY)
+        }
     }
 }

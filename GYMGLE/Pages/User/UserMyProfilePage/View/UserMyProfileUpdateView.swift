@@ -6,98 +6,75 @@
 //
 
 import UIKit
+import Then
+import SnapKit
 
 final class UserMyProfileUpdateView: UIView {
 
-    
     // MARK: - UIProperties
-    lazy var pageLabel: UILabel = {
-        let label = UILabel()
-        label.text = "프로필 수정"
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size19Bold, textAligment: .center)
-        return label
-    }()
+    lazy var pageLabel = UILabel().then {
+        $0.text = "프로필 수정"
+        $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size19Bold, textAligment: .center)
+    }
     
-    lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.buttonImageMakeUI(backgroundColor: UIColor.clear, image: "xmark", color: ColorGuide.black, cornerRadius: 0.0, borderWidth: 0.0, borderColor: UIColor.white.cgColor)
-        return button
-    }()
+    lazy var backButton = UIButton().then {
+        $0.buttonImageMakeUI(backgroundColor: UIColor.clear, image: "xmark", color: ColorGuide.black, cornerRadius: 0.0, borderWidth: 0.0, borderColor: UIColor.white.cgColor)
+    }
     
-    lazy var successedButton: UIButton = {
-        let button = UIButton()
-        button.buttonMakeUI(backgroundColor: UIColor.clear, cornerRadius: 0.0, borderWidth: 0.0, borderColor: UIColor.clear.cgColor, setTitle: "완료", font: FontGuide.size19, setTitleColor: ColorGuide.black)
-        return button
-    }()
+    lazy var successedButton = UIButton().then {
+        $0.buttonMakeUI(backgroundColor: UIColor.clear, cornerRadius: 0.0, borderWidth: 0.0, borderColor: UIColor.clear.cgColor, setTitle: "완료", font: FontGuide.size19, setTitleColor: ColorGuide.black)
+    }
     
-    private let dividerView: UIView = {
-        let divider = UIView()
-        divider.backgroundColor = ColorGuide.textHint.withAlphaComponent(0.5)
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        return divider
-    }()
+    private let dividerView = UIView().then {
+        $0.backgroundColor = ColorGuide.textHint.withAlphaComponent(0.5)
+    }
     
-    lazy var profileImageView: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(systemName: "person.fill")?.resized(to: CGSize(width: 100, height: 100))
-        image.contentMode = .scaleAspectFit
-        image.clipsToBounds = true
-        image.tintColor = ColorGuide.main.withAlphaComponent(0.4)
-        image.backgroundColor = ColorGuide.textHint.withAlphaComponent(0.4)
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
-    }()
+    lazy var profileImageView = UIImageView().then {
+        $0.image = UIImage(systemName: "person.fill")?.resized(to: CGSize(width: 100, height: 100))
+        $0.contentMode = .scaleAspectFit
+        $0.clipsToBounds = true
+        $0.tintColor = ColorGuide.main.withAlphaComponent(0.4)
+        $0.backgroundColor = ColorGuide.textHint.withAlphaComponent(0.4)
+    }
     
-    lazy var imageButton: UIButton = {
-        let button = UIButton()
-        button.buttonImageMakeUI(image: "camera.circle.fill", color: ColorGuide.textHint)
-        button.backgroundColor = ColorGuide.white
-        button.layer.cornerRadius = 14
-        button.layer.borderWidth = 0.2
-        button.layer.borderColor = ColorGuide.textHint.cgColor
-        return button
-    }()
+    lazy var imageButton = UIButton().then {
+        $0.buttonImageMakeUI(image: "camera.circle.fill", color: ColorGuide.textHint)
+        $0.backgroundColor = ColorGuide.white
+        $0.layer.cornerRadius = 14
+        $0.layer.borderWidth = 0.2
+        $0.layer.borderColor = ColorGuide.textHint.cgColor
+    }
     
-    private lazy var nickNameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "닉네임"
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16Bold, textAligment: .left)
-        return label
-    }()
+    private lazy var nickNameLabel = UILabel().then {
+        $0.text = "닉네임"
+        $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16Bold, textAligment: .left)
+    }
     
-     lazy var nickNameTextField: UITextField = {
-        let textField = UITextField()
-        textField.layer.cornerRadius = 8.0
-        textField.layer.borderColor = ColorGuide.textHint.cgColor
-        textField.layer.borderWidth = 1.0
-        textField.textColor = ColorGuide.black
-        textField.placeholder = "닉네임을 입력해주세요."
-        textField.autocapitalizationType = .none // 자동으로 맨 앞을 대문자로 할건지
-        textField.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
-        textField.spellCheckingType = .no
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
-    }()
+    lazy var nickNameTextField = UITextField().then {
+        $0.layer.cornerRadius = 8.0
+        $0.layer.borderColor = ColorGuide.textHint.cgColor
+        $0.layer.borderWidth = 1.0
+        $0.textColor = ColorGuide.black
+        $0.placeholder = "닉네임을 입력해주세요."
+        $0.autocapitalizationType = .none // 자동으로 맨 앞을 대문자로 할건지
+        $0.autocorrectionType = .no // 틀린글자 있을 때 자동으로 잡아 줄지
+        $0.spellCheckingType = .no
+    }
 
-    private lazy var nickNameHintLabel: UILabel = {
-        let label = UILabel()
-        label.text = """
+    private lazy var nickNameHintLabel = UILabel().then {
+        $0.text = """
                      * 띄어쓰기 없이 한글, 영문, 숫자로 20자만 가능해요.
                     """
-        label.numberOfLines = 2
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size14, textAligment: .left)
-        return label
-    }()
+        $0.numberOfLines = 2
+        $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size14, textAligment: .left)
+    }
     
-    lazy var activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView()
-        indicator.color = ColorGuide.main
-        indicator.hidesWhenStopped = true
-        indicator.style = .large
-        indicator.stopAnimating()
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        return indicator
-    }()
+    lazy var activityIndicator = UIActivityIndicatorView().then {
+        $0.color = ColorGuide.main
+        $0.hidesWhenStopped = true
+        $0.style = .large
+        $0.stopAnimating()
+    }
     
     // MARK: - init
     override init(frame: CGRect) {
@@ -123,69 +100,84 @@ private extension UserMyProfileUpdateView {
         addLeftPadding()
         topViewSetting()
         middleViewSetting()
-        self.backgroundColor = ColorGuide.userBackGround
         bottomViewSetting()
+        self.backgroundColor = ColorGuide.userBackGround
     }
     
     func topViewSetting() {
-        let views = [backButton, pageLabel, successedButton, dividerView, activityIndicator]
-        for view in views { self.addSubview(view) }
+        addSubviews(backButton, pageLabel, successedButton, dividerView, activityIndicator)
         
-        NSLayoutConstraint.activate([
-            backButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-            backButton.centerYAnchor.constraint(equalTo: pageLabel.centerYAnchor, constant: 0),
-            backButton.widthAnchor.constraint(equalToConstant: 60),
-            backButton.heightAnchor.constraint(equalToConstant: 60),
-            
-            pageLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 70),
-            pageLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
-            
-            successedButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
-            successedButton.centerYAnchor.constraint(equalTo: pageLabel.centerYAnchor, constant: 0),
-            
-            dividerView.heightAnchor.constraint(equalToConstant: 1.2),
-            dividerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
-            dividerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-            dividerView.topAnchor.constraint(equalTo: pageLabel.bottomAnchor, constant: 12),
-            
-            activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
-            activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0),
-        ])
+        //backButton
+        backButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(10)
+            make.centerY.equalTo(pageLabel.snp.centerY)
+            make.width.height.equalTo(60)
+        }
+        //pageLabel
+        pageLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(70)
+            make.centerX.equalToSuperview()
+        }
+        
+        //successedButton
+        successedButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(30)
+            make.centerY.equalTo(pageLabel.snp.centerY)
+        }
+        
+        //dividerView
+        dividerView.snp.makeConstraints { make in
+            make.height.equalTo(1.2)
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(pageLabel.snp.bottom).offset(12)
+        }
+        
+        //activityIndicator
+        activityIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
     }
     
     func middleViewSetting() {
-        let views = [profileImageView, imageButton]
-        for view in views { self.addSubview(view) }
+        addSubviews(profileImageView, imageButton)
         
-        NSLayoutConstraint.activate([
-            profileImageView.topAnchor.constraint(equalTo: dividerView.bottomAnchor, constant: 40),
-            profileImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
-            profileImageView.widthAnchor.constraint(equalToConstant: 100),
-            profileImageView.heightAnchor.constraint(equalToConstant: 100),
-            
-            imageButton.trailingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 4),
-            imageButton.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: -8),
-        ])
+        //profileImageView
+        profileImageView.snp.makeConstraints { make in
+            make.top.equalTo(dividerView.snp.bottom).offset(40)
+            make.centerX.equalToSuperview()
+            make.height.width.equalTo(100)
+        }
+        
+        //imageButton
+        imageButton.snp.makeConstraints { make in
+            make.trailing.equalTo(profileImageView.snp.trailing).offset(4)
+            make.bottom.equalTo(profileImageView.snp.bottom).offset(-8)
+        }
     }
     
     func bottomViewSetting() {
-        let views = [nickNameLabel, nickNameTextField, nickNameHintLabel, activityIndicator]
-        for view in views { self.addSubview(view) }
         
-        NSLayoutConstraint.activate([
-            nickNameLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 40),
-            nickNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 32),
-            nickNameLabel.bottomAnchor.constraint(equalTo: nickNameTextField.topAnchor, constant: -10),
-
-            nickNameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 32),
-            nickNameTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -32),
-            nickNameTextField.heightAnchor.constraint(equalToConstant: 44),
-            nickNameTextField.bottomAnchor.constraint(equalTo: nickNameHintLabel.topAnchor, constant: -10),
-
-            nickNameHintLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 32),
-            nickNameHintLabel.topAnchor.constraint(equalTo: nickNameTextField.bottomAnchor, constant: 10),
-            
-        ])
+        addSubviews(nickNameLabel, nickNameTextField, nickNameHintLabel)
+        
+        //nickNameLabel
+        nickNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(profileImageView.snp.bottom).offset(40)
+            make.leading.equalToSuperview().inset(32)
+            make.bottom.equalTo(nickNameTextField.snp.top).offset(-10)
+        }
+        
+        //nickNameTextField
+        nickNameTextField.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(32)
+            make.bottom.equalTo(nickNameHintLabel.snp.top).offset(-10)
+            make.height.equalTo(44)
+        }
+        
+        //nickNameHintLabel
+        nickNameHintLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(32)
+            make.top.equalTo(nickNameTextField.snp.bottom).offset(10)
+        }
     }
     
     func addLeftPadding() {

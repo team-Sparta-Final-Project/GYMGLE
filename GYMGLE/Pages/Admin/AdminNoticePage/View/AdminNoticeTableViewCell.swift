@@ -5,27 +5,24 @@
 //  Created by 조규연 on 10/16/23.
 //
 import UIKit
+import Then
+import SnapKit
 
 final class AdminNoticeTableViewCell: UITableViewCell {
     
     static let identifier = "AdminNoticeTableViewCell"
     // MARK: - CellUIProperties
-    lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .left)
-        return label
-    }()
-    lazy var contentLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 3
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .center)
-        return label
-    }()
-    lazy var dateLabel: UILabel = {
-        let label = UILabel()
-        label.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .right)
-        return label
-    }()
+    lazy var nameLabel = UILabel().then {
+        $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .left)
+    }
+    lazy var contentLabel = UILabel().then {
+        $0.numberOfLines = 3
+        $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .center)
+    }
+    lazy var dateLabel = UILabel().then {
+        $0.labelMakeUI(textColor: ColorGuide.black, font: FontGuide.size16, textAligment: .right)
+    }
+    
     // MARK: - init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
@@ -36,6 +33,7 @@ final class AdminNoticeTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         nameLabel.text = nil
@@ -56,27 +54,28 @@ private extension AdminNoticeTableViewCell {
     }
     
     func cellMakeUI() {
-        let views = [nameLabel, contentLabel, dateLabel]
-        for view in views {
-            self.contentView.addSubview(view)
+        [nameLabel, contentLabel, dateLabel].forEach {
+            self.contentView.addSubview($0)
         }
-        NSLayoutConstraint.activate([
-            //nameLabel
-            nameLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 20),
-            nameLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 14),
-            nameLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -20),
-            
-            //contentLabel
-            contentLabel.topAnchor.constraint(equalTo: self.nameLabel.bottomAnchor, constant: 14),
-            contentLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 20),
-            contentLabel.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor, constant: 0),
-            contentLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -20),
-            
-            //dateLabel
-            dateLabel.topAnchor.constraint(equalTo: self.contentLabel.bottomAnchor, constant: 14),
-            dateLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 20),
-            dateLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -20),
-            dateLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -14),
-        ])
+        //nameLabel
+        nameLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(20)
+            make.top.equalToSuperview().inset(14)
+            make.trailing.equalToSuperview().inset(20)
+        }
+        //contentLabel
+        contentLabel.snp.makeConstraints { make in
+            make.top.equalTo(nameLabel.snp.bottom).offset(14)
+            make.leading.equalToSuperview().inset(20)
+            make.centerX.equalTo(self.contentView.snp.centerX)
+            make.trailing.equalToSuperview().inset(20)
+        }
+        //dateLabel
+        dateLabel.snp.makeConstraints { make in
+            make.top.equalTo(contentLabel.snp.bottom).offset(14)
+            make.leading.equalToSuperview().inset(20)
+            make.trailing.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().inset(14)
+        }
     }
 }

@@ -14,10 +14,11 @@ final class AdminNoticeDetailViewModel {
     
     private let ref = Database.database().reference()
     private let userID = Auth.auth().currentUser?.uid
+    
     @Published var isUser: Bool = true
     @Published var noticeInfo: Notice?
     
-    func createdNoticeData(notice: Notice, completion: @escaping () -> Void) {
+    func createdNoticeData(notice: Notice, completion: @escaping (Result<Void, Error>) -> Void) {
         do {
             let userID = Auth.auth().currentUser?.uid
             let ref = Database.database().reference().child("users").child(userID!).child("noticeList")
@@ -26,15 +27,14 @@ final class AdminNoticeDetailViewModel {
             let noticeJSON = try JSONSerialization.jsonObject(with: noticeData, options: [])
             
             ref.childByAutoId().setValue(noticeJSON)
-            completion()
-        } catch {
-            completion()
+            completion(.success(()))
+        } catch let error {
+            completion(.failure(error))
         }
     }
     
-    func updatedNoticeData(oldContent: String, newNotice: Notice, completion: @escaping () -> Void) {
+    func updatedNoticeData(oldContent: String, newNotice: Notice, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let userID = userID else {
-            completion()
             return
         }
         do {
@@ -47,19 +47,16 @@ final class AdminNoticeDetailViewModel {
                    let key = snapshotValue.keys.first {
                     let updatedNoticeRef = self.ref.child("users").child(userID).child("noticeList").child(key)
                     updatedNoticeRef.setValue(noticeJSON)
-                    completion()
-                } else {
-                    completion()
-                }
+                    completion(.success(()))
+                } 
             }
-        } catch {
-            completion()
+        } catch let error{
+            completion(.failure(error))
         }
     }
     
-    func deletedNotice(notice: Notice, completion: @escaping () -> Void) {
+    func deletedNotice(notice: Notice, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let userID = userID else {
-            completion()
             return
         }
         do {
@@ -69,14 +66,16 @@ final class AdminNoticeDetailViewModel {
                 .observeSingleEvent(of: .value) { snapshot in
                     guard let value = snapshot.value as? [String: Any],
                           let key = value.keys.first else {
-                        completion()
                         return
                     }
-                    self.ref.child("users").child(userID).child("noticeList").child(key).removeValue()
-                    completion()
+                    self.ref.child("users").child(userID).child("noticeList").child(key).removeValue { error, _ in
+                        if let error = error {
+                            completion(.failure(error))
+                        } else {
+                            completion(.success(()))
+                        }
+                    }
                 }
-        } catch let error {
-            completion()
         }
     }
 }

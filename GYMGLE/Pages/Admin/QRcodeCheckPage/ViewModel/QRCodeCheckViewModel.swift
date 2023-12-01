@@ -13,7 +13,7 @@ final class QRCodeCheckViewModel {
     
     
     var userUidList: [String] = []
-    
+    var userList: [User] = []
     func readAdminUid(completion: @escaping () -> Void){
         let ref = Database.database().reference().child("accounts")
         let query = ref.queryOrdered(byChild: "adminUid").queryEqual(toValue: DataManager.shared.gymUid)
@@ -54,7 +54,6 @@ final class QRCodeCheckViewModel {
                 let inAndOutLogJSON = try JSONSerialization.jsonObject(with: inAndOutLogData, options: [])
                 ref.child("gymInAndOutLog").childByAutoId().setValue(inAndOutLogJSON)
             } catch {
-                
             }
         }
     }

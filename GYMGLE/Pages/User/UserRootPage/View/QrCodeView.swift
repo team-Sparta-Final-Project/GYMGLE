@@ -20,9 +20,7 @@ class QrCodeView: UIView {
         $0.layer.shadowRadius = 4
         $0.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
-    private lazy var qrViewImage = UIImageView().then {
-        $0.layer.cornerRadius = 20
-    }
+    private lazy var qrViewImage = UIImageView()
     
     private lazy var qrLabel: UILabel = {
         let label = UILabel()

@@ -10,7 +10,14 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
 
+
 final class UserMyProfileUpdateViewModel {
+   
+    let dataManager: DataManager
+    
+    init(dataManager: DataManager = DataManager.shared) {
+        self.dataManager = dataManager
+    }
     
     // 이미지를 스토리지에 올리기
     func uploadImage(image: UIImage, completion: @escaping (URL?) -> Void) {
